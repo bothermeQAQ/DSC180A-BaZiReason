@@ -1,97 +1,171 @@
 % !TEX TS-program = xelatex
+% !BIB TS-program = bibtex
 \documentclass[12pt,letterpaper]{article}
-\usepackage{style/dsc180reportstyle}
-\title{BaZiReason: Evaluating Tool-Augmented LLM Reliability in Traditional Chinese Calendar Reasoning}
-\author{Yonghao Wang\\DSC 180A, Fall 2026\\Domain D25 --- Advisor: Jingbo Shang}
-\date{}
+\usepackage{style/dsc180reportstyle} % import dsc180reportstyle.sty
+\usepackage{xeCJK} % Chinese calendar terms; the template ships this line commented out
+\setCJKmainfont{FandolSong-Regular.otf}[BoldFont=FandolSong-Bold.otf]
+\usepackage{tikz}
+% Drops the period a bibliography style adds after a title ending in "?".
+\providecommand{\nodot}[1]{\ifx.#1\else#1\fi}
 \setlength{\emergencystretch}{2em}
+
+\title{BaZiReason: Evaluating Tool-Augmented LLM Reliability\\in Traditional Chinese Calendar Reasoning}
+
+\author{Yonghao Wang \\\And
+  Jingbo Shang (Mentor) \\}
+
 \begin{document}
 \maketitle
+
 \begin{abstract}
-Chinese Four Pillars (BaZi) chart construction combines sexagenary cycles, solar-term transitions, and time conventions. This provides a constrained setting for studying language-model reliability without evaluating claims about destiny. BaZiReason asks whether deterministic context improves calendar-answer reliability, and which gains reflect preprocessing, faithful copying, or responses to explicit uncertainty policy. An independent audit of the initial 96-case checkpoint reproduced its software tests but identified duplicate inputs, incomplete boundary coverage, timezone-cache dependence, and insufficient experimental controls. The revised suite contains 152 synthetic cases, including all twelve month-start solar terms and matched missing-information cases. A separate Skyfield/JPL computation checks 24 solar-term timestamps: lunar-python differs by $-1.17$ to $+2.26$ seconds, whereas sxtwl is approximately 13--16 seconds earlier. These checks strengthen timestamp evidence without establishing complete-chart truth. The implemented experiment crosses context and uncertainty policy, adds corrupted-context and deterministic-copy controls, and preserves declared evaluation denominators after interruptions. No live language-model experiment has been run; H1--H3 remain untested. The checkpoint contributes an auditable diagnostic instrument and a controlled evaluation design, with explicit limits on label independence and interpretation of tool-assisted accuracy.
+Language models are increasingly used for questions whose answers follow from fixed rules applied to dates and times. In this setting a fluent answer can still be wrong, and a question that lacks necessary information should prompt a request for clarification rather than a guess. This project uses Chinese Four Pillars (BaZi) charts as a controlled test of both behaviors. A chart is a deterministic function of an instant and a declared convention, so every answer can be checked exactly; the project makes no claim about what a chart means. We built a 261-case benchmark in 70 matched families and an evaluation harness for three hypotheses. H1 asks whether direct answers degrade near solar-term and day boundaries, H2 whether supplying intermediate temporal facts improves accuracy beyond what copying a computed answer explains, and H3 whether an explicit uncertainty policy improves the decision to answer or to ask. An independent first-principles check reproduces every label. Zero-call baselines show that surface rules solve the easy missing-field cases but none of the cases whose answerability depends on calendar knowledge. Language-model experiments have not yet been run; they are the main work before the final report.
 \end{abstract}
-\noindent\textbf{Code:} \url{https://github.com/bothermeQAQ/DSC180A-BaZiReason}\\
-\textbf{Audited checkpoint:} November 3, 2026. Calendar diagnostics only.
+
+\begin{center}
+Code: \url{https://github.com/bothermeQAQ/DSC180A-BaZiReason}
+\end{center}
+
+\maketoc
+\clearpage
 
 \section{Introduction}
-\subsection{Research problem and scope}
-A calendar answer can be fluent and internally plausible while selecting the wrong reference clock or transition rule. BaZi construction makes these choices observable: a chart contains four ordered pairs for the year, month, day, and two-hour period. Each combines one of ten Heavenly Stems and one of twelve Earthly Branches in a sixty-position cycle. In the implementation profiles studied here, the year changes at the Lichun solar-term instant and months change at twelve alternating solar terms, called Jie. These boundaries follow solar motion rather than Gregorian month starts or Lunar New Year \citep{hko2025,lunar}.
 
-Small input changes can cause discrete output changes. A time near 23:00 raises a day-boundary convention question. A repeated daylight-saving wall time can represent two different instants; Python represents that ambiguity using the fold attribute \citep{zoneinfo}. A missing time, zone, or convention may prevent a unique answer. Reliability therefore involves deciding when an answer is supported as well as calculating pillars correctly.
+Chat assistants are used to convert times between zones, count days, or decide which calendar period an instant belongs to. These tasks have exact answers, but they combine several rules, lookups and conventions. Two failures matter for reliability. The first is a computation error, which is most likely near a boundary where a small mistake flips the answer. The second is a confident answer to a question that does not contain enough information. Both are easy to miss, because the output reads as plausible either way. Deterministic tools can compute such answers exactly, which makes calendar questions a natural place to ask what tool support actually contributes.
 
-The central question is: \emph{Can deterministic context improve the reliability of convention-specified Chinese calendar answers, and what explains any improvement?} Correctness means agreement with a named profile and, where available, external calendar evidence. It does not establish that a chart predicts personality, health, or future events. Nor does a correct answer copied from a tool establish improved internal reasoning.
+Chinese Four Pillars (BaZi, 八字) charts make these issues concrete. A chart consists of four sexagenary pairs (such as 甲子) for the year, month, day and two-hour period of an instant. Each pillar depends on a different rule. The year changes at the instant of the solar term 立春 (Lichun) rather than on 1 January or at Lunar New Year. The month changes at the instants of twelve solar terms called Jie, which follow the Sun's apparent longitude. The day follows a continuous 60-day cycle, and the hour follows two-hour branches whose first branch, 子, begins at 23:00. Computing a chart therefore requires modular arithmetic over long spans of days, astronomical boundary times, time-zone and daylight-saving rules, and a declared convention for the day boundary at 23:00, which practitioners resolve in two ways (here called sect 1 and sect 2). Because errors can be traced to a specific pillar, the task separates boundary knowledge from arithmetic. BaZi questions are already being posed to language models in benchmarks \citep{baziqa,detbenchmark}, so the task is also of practical interest. We evaluate only calendar correctness under a declared profile, not any claim about personality or fate.
 
-Three prospective hypotheses organize the study. H1 predicts more direct-model errors on boundary cases than on ordinary dates. H2 predicts higher exact pillar agreement when the same model receives a complete deterministic result; controls assess whether this amounts to copying or to useful preprocessing. H3 predicts fewer unsupported definitive answers when uncertainty policy is explicit. All remain untested by live models. The checkpoint establishes software and calendar evidence, not language-model performance.
+The central question is whether deterministic tools make language-model calendar answers more reliable, and what any improvement reflects. Three hypotheses organize the study:
+\begin{itemize}
+\item \textbf{H1 (boundaries).} Without tools, accuracy on the pillars affected by a boundary is lower close to that boundary than far from it.
+\item \textbf{H2 (tools).} Supplying intermediate temporal facts, but not the answer, raises exact accuracy. Gains from supplying the full answer are reported separately, because they can be achieved by copying.
+\item \textbf{H3 (uncertainty).} An explicit policy for when to answer and when to ask improves that decision on requests whose answerability depends on calendar knowledge, without increasing refusals of answerable requests.
+\end{itemize}
 
-\subsection{Related literature and prior work}
-PAL delegates execution to an interpreter after a model constructs an intermediate program \citep{pal}. Toolformer instead trains models to select and incorporate API calls \citep{toolformer}. BaZiReason implements fixed application-side context, without generated programs, learned API selection, or autonomous function calling. Those methods motivate separating language generation from computation, but their published gains do not transfer automatically to this task.
+The study's contribution is its controlled design rather than a new model. We contribute a benchmark in which boundary distance, supplied information and answerability vary while year, clock time, zone and convention are held fixed within each family. We also contribute an information ladder that separates help from intermediate facts, answer copying, and reliance on wrong context. Finally, we use a definition of answerability that makes abstention depend on knowledge rather than on surface cues: a request is answerable when every admissible completion of the missing information yields the same chart.
 
-TimeBench organizes temporal reasoning into multiple phenomena and compares model behavior across categories \citep{timebench}. That motivates stratified reporting. It does not establish that the particular boundaries selected here cause errors; H1 requires observations on these inputs and control of task composition.
+\subsection{Related work}
 
-BaZi-specific prior work substantially overlaps with the proposed setting. BaziQA-Benchmark evaluates contest questions conditioned on fixed chart contexts, separating downstream symbolic judgments from chart derivation \citep{baziqa}. The paper uses 200 questions from the 2021--2025 competitions; its current repository has expanded and revised data. Those versions should not be conflated. Contest answer keys permit scoring but do not establish the scientific validity of astrological prediction. This project uses neither contest questions nor personal birth profiles.
+\paragraph{Temporal and compositional reasoning.} TimeBench organizes temporal reasoning into a hierarchy of skills and finds a substantial gap between models and people \citep{timebench}. TempReason separates time--time from time--event reasoning \citep{tempreason}. Test of Time uses synthetic data to reduce the chance that models answer from memorized facts \citep{testoftime}. More generally, transformers struggle with multi-step compositional computation such as multiplication \citep{faithfate}, which is the kind of computation a day pillar requires. These benchmarks motivate per-skill reporting, but none controls how close an input is to a calendar boundary.
 
-The Deterministic Bazi Calendar Rules Benchmark already targets chart computation, Zi-hour and solar-boundary errors \citep{detbenchmark}. At the inspected commit, its solar solver and model runner raise an unimplemented-operation exception, and its README labels performance estimates provisional. Those estimates are not used as verified evidence. Current BaziQA chart code also exposes time conventions and uses lunar-python, so convention awareness and BaZi benchmarking are not novel in themselves.
+\paragraph{Tool use.} PAL lets a model write a program that an interpreter executes \citep{pal}. Toolformer trains a model to insert API calls \citep{toolformer}, and ReAct interleaves reasoning with actions \citep{react}. These methods show that delegating computation can help. When a tool returns the final answer, however, a correct output may only show that the model copied it. We therefore supply fixed tool outputs at increasing levels of information, so that the information each condition adds is known exactly.
 
-The feasible contribution is narrower: executable boundary and missing-information diagnostics, explicit provenance, matched inference conditions, controls for answer transmission and faulty tool context, and separate uncertainty-policy scoring. The study becomes meaningful LLM research only when actual models are evaluated under these contrasts. The present deliverable is its instrument and research design.
+\paragraph{Reliance on supplied context.} Models sometimes ignore context that conflicts with what they memorized \citep{longpre}, yet readily accept coherent external evidence even when it is wrong \citep{xie}. ClashEval quantifies how often retrieved errors are adopted \citep{clasheval}. Our corrupted-context condition tests this behavior with calendar errors that are internally consistent (for example, the month from the wrong side of a Jie), alongside an error that breaks a checkable rule.
 
-\subsection{Data, computation, and evaluation design}
-\paragraph{Versioned synthetic data.}
-The initial 96-case artifact is preserved in Git at tag \nolinkurl{audit/pre-review-a50f967}. Independent regeneration and a fresh installation reproduced its 42 tests. Inspection nevertheless found four identical Shanghai inputs among its timezone rows, only six of twelve Jie, and same-date 00:00 examples that were not adjacent to the preceding 23:00 examples. Test success therefore did not establish sufficient design coverage.
+\paragraph{Abstention and ambiguity.} AmbigQA shows that many natural questions admit several plausible answers \citep{ambigqa}. SelfAware finds that models often fail to recognize unanswerable questions \citep{selfaware}. A recent survey stresses that abstention must be evaluated together with over-abstention on answerable inputs \citep{abstention}. H3 follows this advice by pairing every incomplete request with complete or still-answerable counterparts.
 
-The revised suite, generated with seed 1802026, contains 152 original synthetic records (Table~\ref{tab:data}). There are 126 scorable computations, 16 ambiguous requests, six unsupported requests and four invalid inputs. Exact input/profile pairs are unique. Forty-eight cases bracket all twelve Jie in 2024 and 2025 by two minutes. Zi-hour groups now include successive 23:59:59 and 00:00:00 observations under both profiles. Timezone pairs represent distinct instants between groups. Ten new matched groups contain 24 omitted-versus-specified cases for convention, time, zone or DST fold. Their 14 scorable counterparts prevent ambiguity evaluation from rewarding indiscriminate refusal.
+\paragraph{BaZi benchmarks.} BaziQA evaluates reasoning over contest questions given precomputed charts \citep{baziqa}, so it does not test chart computation. A deterministic BaZi rules benchmark targets chart computation, including Zi-hour and solar-term errors, but at the inspected version its solar solver and model runner were unimplemented and its reported results provisional \citep{detbenchmark}. Our work differs in controlling boundary distance, tool information and answerability, and in verifying labels independently.
 
-\begin{table}[ht]
+\subsection{Data}
+
+The benchmark is synthetic and contains no personal birth data. Each record holds a request (a local wall-time string, an IANA time-zone key and an optional DST fold), a convention, the expected status and pillars, a family identifier, and design metadata that is never shown to a model. The profile is fixed: every pillar uses the instant converted to UTC+08:00, with no true-solar-time correction; boundaries are the Lichun and Jie instants of lunar-python 1.4.8 \citep{lunar}; and reference years are 1901--2099. Time zones come from the pinned IANA tzdata package and Python's \texttt{zoneinfo} fold semantics \citep{zoneinfo}. A request is \emph{ok} if every admissible completion gives the same chart. It is \emph{ambiguous} if completions disagree: an unspecified sect, a repeated wall time without fold, a time given only to the minute, or a missing time, zone or date. It is \emph{invalid} if the wall time does not exist or a value is malformed, and \emph{unsupported} if it uses another profile or falls outside the year range.
+
+Table~\ref{tab:data} summarizes the 261 cases: 225 answerable, 21 ambiguous, 8 invalid and 7 unsupported, in 70 families. No two families share a civil date, so related cases always stay in one family for resampling. Fourteen Jie ladders place six cases at fixed offsets around one Jie instant (Figure~\ref{fig:ladder}). They cover each of the twelve month-start Jie plus two extra Lichun events, in years from 1978 to 2047, at clock times from 04:00 to 20:00 so that no rung crosses the Zi hour. Four Zi ladders place six clock times from 21:30 to 01:30 under both sects. The H3 families are matched. For example, one family asks the same 23:30 question with and without a sect, and also asks 22:30 and 00:30 without a sect, which remain answerable because the sect cannot matter at those times. Likewise, a repeated 01:30 wall time without fold is ambiguous in Los Angeles, London and Chicago but answerable in New York and Denver, where both instants fall in the same two-hour branch. The whole file regenerates byte for byte from a seeded generator; two earlier development versions are kept unchanged in the repository.
+
+\begin{table}[htbp]
 \centering
-\caption{Revised suite. Counts describe diagnostic coverage, not independent population samples.}
+\caption{Composition of benchmark\_v3. A family groups related cases.}
 \label{tab:data}
-\begin{tabular}{lr@{\hspace{1em}}lr}
+\begin{tabular}{llrrl}
 \toprule
-Category & Count & Category & Count\\
+Family type & Purpose & Cases & Families & Nonanswer cases\\
 \midrule
-Ordinary noon dates & 20 & Jie boundary pairs & 48\\
-New-year contrasts & 8 & Zi/midnight profiles & 20\\
-Leap days & 4 & Equivalent time zones & 8\\
-DST gaps/folds & 8 & Legacy policy cases & 12\\
-Matched H3 cases & 24 & Total & 152\\
+Jie distance ladders & H1 & 84 & 14 & --\\
+Zi distance ladders (both sects) & H1 & 48 & 4 & --\\
+Equivalent instants in two zones & H2 & 12 & 6 & --\\
+Repeated DST wall times & H3 & 20 & 5 & 3 ambiguous\\
+Nonexistent DST wall times & H3 & 4 & 2 & 2 invalid\\
+Unspecified sect & H3 & 30 & 6 & 6 ambiguous\\
+Minute-precision times & H3 & 14 & 5 & 4 ambiguous\\
+Missing time, zone or date & H3 & 16 & 8 & 8 ambiguous\\
+Invalid dates, times or zone keys & H3 & 10 & 4 & 6 invalid\\
+Unsupported profiles or years & H3 & 11 & 4 & 7 unsupported\\
+Ordinary instants & baseline & 12 & 12 & --\\
+\midrule
+Total & & 261 & 70 & 36\\
 \bottomrule
 \end{tabular}
 \end{table}
 
-Each JSONL record specifies an input, selected profile, category, group ID, expected status and optional pillars, implementation version, validation status, and boundary metadata. Groups retain related transition sides, timezone equivalents, profile variants and missing-field counterparts. Equivalent normalized inputs do not cross groups. Future splits and resampling must preserve those groups. The sample is deliberately boundary enriched and cannot estimate natural request prevalence. Ordinary dates are not matched controls for every transition, so H1 initially supports a descriptive comparison rather than a causal difficulty claim.
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[x=1cm,y=1cm,font=\small]
+\draw[->] (0,0) -- (13.6,0) node[right] {time};
+\draw[very thick] (6.8,-0.25) -- (6.8,0.95) node[above] {Jie instant};
+\foreach \x/\l/\c in {0.6/$-5$ d/far,3.2/$-1$ h/mid,5.7/$-2$ min/near,7.9/$+2$ min/near,10.4/$+1$ h/mid,13.0/$+5$ d/far}{
+  \fill (\x,0) circle (2.4pt);
+  \node[below] at (\x,-0.12) {\l};
+  \node[below] at (\x,-0.55) {\footnotesize\textit{\c}};
+}
+\node at (3.2,0.55) {previous month (and year at 立春)};
+\node at (10.4,0.55) {new month};
+\end{tikzpicture}
+\caption{A Jie distance ladder. Year, zone, convention and clock time are fixed within the family; only the distance to the boundary varies. H1 compares near with far rungs on the month pillar, and on the year pillar at Lichun.}
+\label{fig:ladder}
+\end{figure}
 
-\paragraph{Computation contract.}
-The wrapper uses lunar-python 1.4.8 \citep{lunar}. It interprets a naive local wall time with IANA zone and optional fold, validates civil-time round trips, and converts the instant to fixed UTC+08:00 for \emph{all} pillars. This reference-clock task does not implement arbitrary birthplace-local charts. The admitted reference-year range is 1901--2099, a study restriction rather than a validated guarantee of the dependency's entire range. True solar time, local civil-clock charts, lunar-month boundaries and Lunar New Year year-boundary profiles are explicitly unsupported.
+Labels come from one engine, so we checked them independently. A separate implementation shares no code with lunar-python. It uses Julian Day Numbers for the day cycle, the standard stem rules for hours and months, and a published low-precision solar-longitude series \citep{meeus}. It reproduces the day and hour pillars of all 225 answerable cases, and the year and month pillars of every case at least 40 minutes from a Jie. The remaining 40 near-boundary cases were checked against the JPL DE421 ephemeris through Skyfield \citep{skyfield}. Lunar-python's boundary times differ from it by $-3.1$ to $+1.3$ seconds, and every case falls on the same side of its boundary. The checks also confirm, independently, the disagreement between completions that makes each sect, fold and minute case ambiguous. Two published Hong Kong Observatory day labels and one Lichun time provide small external anchors \citep{hko2025}.
 
-Sect 1 advances the day at 23:00; sect 2 retains the civil-date day until midnight. Both retain the library's 23:00-advanced hour stem. Deriving sect-2 hours from the displayed day would change this implementation's rule. Missing profiles require clarification, and repeated wall times require fold. Audit fixes load timezone bytes directly from the pinned tzdata package, avoiding the host constructor cache; extreme out-of-range conversions now return a controlled status instead of raising an overflow exception. These are scoped implementation choices, not universal calendrical assertions.
+\section{Planned evaluation}
 
-\paragraph{Reference evidence and its limits.}
-Expected pillars originate from lunar-python, and every label retains single-engine provenance. Replaying stored labels through that engine is an integrity check, not validation. The historical 184 agreeing sxtwl cells comprised 80 day, 52 year and 52 month checks, reducing to 117 distinct reference-date/pillar queries. All hours and solar-term-date year/month comparisons were excluded. The apparent sample size must not be interpreted as 184 independent validated charts.
+\subsection{Conditions}
 
-The revised suite has 270 agreeing day/year/month cells but only 169 distinct reference queries. The date-level comparator still excludes intra-day year/month crossings. A separately reported, explicitly convention-matched sxtwl hour comparison agrees on 126 cases. Both libraries share ShouXing astronomical lineage \citep{lunar,sxtwl}; such agreement cannot exclude shared errors. Two published HKO day labels and a minute-resolution Lichun value provide small external anchors \citep{hko2025}, without establishing complete-chart correctness.
+Every condition uses the same user request, the same rule card stating the year, month, day and hour rules, the same JSON output schema and the same decoding settings. Conditions differ only in the supplied context (Table~\ref{tab:conditions}). The rule card is shared so that tools add facts and computation, not rule knowledge. The fact conditions are computed from the request alone; they never contain pillars, and tests confirm that changing labels or metadata does not change any prompt. A deterministic copy of the full answer is the ceiling for the answer condition, so accuracy there measures transmission, not reasoning.
 
-A distinct numerical path now checks the disputed timestamps. Using Skyfield 1.53, JPL DE421, apparent geocentric solar longitude in the ecliptic of date, and bundled time-scale conversion, the audit computes all 24 Jie in 2024--2025 \citep{skyfield}. Relative to those results, lunar-python differs by $-1.168$ to $+2.261$ seconds and sxtwl by $-15.783$ to $-13.019$ seconds. Versions, kernel hash, definitions and every comparison are retained. This supports lunar-python's timestamps more closely for the selected years; it neither proves absolute accuracy nor diagnoses the libraries' discrepancy. No guessed correction or silent relabeling is applied. The two-minute benchmark offsets lie outside these observed discrepancies, while second-level tests assert only the selected engine's contract.
+\begin{table}[htbp]
+\centering
+\caption{Information ladder. Each model condition also has a minimal-policy variant for H3.}
+\label{tab:conditions}
+\begin{tabular}{@{}l>{\raggedright\arraybackslash}p{10.4cm}@{}}
+\toprule
+Condition & Supplied context\\
+\midrule
+direct & none\\
+time facts & admissible instants converted to UTC+08:00\\
+intermediate facts & the same instants, the surrounding Jie names and instants, and the day count from 2000-01-01\\
+computed answer & the engine's complete response\\
+corrupted answer & the complete response with one deterministic, plausible error\\
+\midrule
+copy (no model) & returns the computed answer; an answer-copy ceiling\\
+surface heuristic (no model) & rules on field presence and string shape only; a constant chart when it answers\\
+\bottomrule
+\end{tabular}
+\end{table}
 
-\paragraph{H2 controls: transmission, preprocessing and faulty context.}
-The direct condition receives input, profile, common computation rules and a structured schema, without labels or boundary annotations. The full-context condition additionally receives the complete computed answer. A deterministic copy baseline returns that context without any model call. Its executed 126/126 pillar agreement is tautological: it demonstrates why full-context accuracy alone cannot identify reasoning improvement.
+Corruptions follow the case. Within a day of a Jie, the month (and the year at Lichun) is taken from the other side of the boundary. From 21:00 to 01:59, the day pillar is moved one day across the 23:00 or midnight boundary. Otherwise, the hour stem is shifted so that it breaks the five-rats rule. For ambiguous requests, the corrupted tool answers confidently after filling in the missing value with a default. The explicit policy states that the model should answer when the information determines one chart and ask otherwise. It gives the sect and fold rules as examples. The minimal variant keeps the status vocabulary but omits these rules. Minute-precision requests are not mentioned in either policy, so they test whether the principle generalizes.
 
-Two additional conditions address this limitation. Timestamp-only context supplies normalization and provenance without pillars, output status or reasons, isolating preprocessing assistance. Corrupted context changes one scorable hour stem to another valid cycle pair while retaining its branch; all other fields and instructions match full context. Exact accuracy and erroneous-hour following measure this specific reliance mechanism. They do not reveal internal reasoning or general robustness to every tool error. The preprocessing output can also reveal that normalization failed, which is part of that condition's information advantage.
+\subsection{Outcomes and analysis}
 
-\paragraph{H3 policy ablation.}
-Each model context condition has explicit and minimal policy versions. Both retain identical input, selected convention, calendar/range rules and output schema. Only the explicit version instructs clarification for missing information and rejection for invalid or unsupported inputs. Thus the factor changes when to abstain, rather than withholding calendrical knowledge. The primary H3 contrast is direct explicit minus direct minimal in definitive-answer frequency on the 16 ambiguous cases; a negative difference is favorable. Full-context policy pairs are secondary because their supplied non-answer is an easier task.
+For H1 the primary outcome is the accuracy, in the direct condition, of the boundary-relevant pillars (month, and year at Lichun, for Jie ladders; day and hour for Zi ladders), compared within each family between near and far rungs. For H2 the primary contrast is intermediate facts minus direct in exact four-pillar accuracy on the 225 answerable cases. Secondary contrasts are time facts minus direct, which isolates time-zone normalization, needed for 26 answerable cases; computed answer minus intermediate facts, the extra effect of copying; and corrupted minus computed answer, together with the rate at which each corruption type is reproduced. For H3 the primary outcome is whether every decision in a matched family is correct. It is compared between explicit and minimal policy in the direct condition on the 16 families whose answerability depends on calendar knowledge. Secondary outcomes are policy accuracy on ambiguous cases, the false-refusal rate on answerable cases, scorable coverage, and the 15 surface-detectable families.
 
-Definitive-answer frequency is reported alongside correct ambiguity handling, valid-output rate and coverage on scorable inputs. Missing responses count as no definitive claim but also as policy/coverage failures; silence is not credited as successful uncertainty handling. Reasons are checked for nonblank structure, not semantic helpfulness. More diverse wording and independent clarification adjudication remain final-project work.
+Missing, unparseable and schema-invalid outputs count as failures in every denominator. Primary scores use strict JSON parsing; a lenient parse that removes code fences is reported separately, together with format-failure rates per condition. Each condition will run three trials. Paired differences are summarized with bootstrap intervals that resample whole families, and with exact McNemar tests on discordant pairs. With 70 families these are descriptive estimates for this benchmark, not population claims.
 
-\paragraph{Measurement and reproducibility.}
-Exact accuracy uses the 126 labeled observations per full trial. Joint exact accuracy additionally requires correct profile metadata. Per-pillar accuracy uses the same labeled denominator; invalid and missing outputs fail. Non-answer policy metrics use the 26 non-answer cases, with ambiguity reported separately. Repeated consistency compares complete valid responses, without equating consistency with correctness.
+\section{Current status and plan}
 
-The runner holds model, decoding settings, schema, attempts and cases constant, rotates condition order, and records requested/served model, prompt version/hash, timestamp, returned usage, latency and failures. A planned manifest is written before inference. Evaluation enforces its dataset hash, case IDs, methods and trials, retaining interruptions in denominators. Duplicate JSON keys and aliased trial identities are rejected. Descriptive paired intervals resample whole group IDs; small purposive samples and repeated related observations still limit interpretation. Monetary cost remains unknown unless measured.
+\paragraph{Completed.} The benchmark generator, the calendar wrapper and the evaluation harness are implemented and tested. The suite has 170 tests, which pass on Python 3.12 and 3.14. A run first writes a manifest declaring its cases, conditions and trials; scoring then checks every record against it. As a result, interrupted or mixed runs cannot silently shrink a denominator. Table~\ref{tab:baselines} reports the zero-call baselines on the full benchmark. They are deterministic controls, not language-model results, and they show that the design separates surface rules from calendar knowledge. The surface heuristic gets every surface-detectable family right but none of the 16 knowledge-dependent families, and it refuses 41\% of the answerable requests in those families. Overall decision accuracy is not informative on its own: a policy that always answers reaches 86\% because most cases are answerable. H3 is therefore scored on ambiguous cases and matched families.
 
-\paragraph{Research status and feasibility.}
-The audit independently reproduced the original software evidence and added regression, coverage and control tests, including a fresh Python 3.12 installation. Calendar results, mocks and deterministic controls are separately labeled. No configured API or usable local model was found in the inspected environment, so no live model experiment or H1--H3 result is reported. A representative 22-case selection supports a bounded pilot; it is a debugging sample, not a powered hypothesis test.
+\begin{table}[htbp]
+\centering
+\caption{Zero-call baselines on all 261 cases (deterministic controls, not LLM results).}
+\label{tab:baselines}
+\small
+\begin{tabular}{@{}lrrrrr@{}}
+\toprule
+ & Decision & Ambiguous & False & \multicolumn{2}{c}{Families fully correct}\\
+\cmidrule(l){5-6}
+Baseline & accuracy & handled & refusals & knowledge (16) & surface (15)\\
+\midrule
+Copy computed answer & 1.00 & 21/21 & 0/225 & 16 & 15\\
+Surface heuristic & 0.89 & 18/21 & 22/225 & 0 & 15\\
+Always ask & 0.08 & 21/21 & 225/225 & 0 & 0\\
+Always answer & 0.86 & 0/21 & 0/225 & 0 & 0\\
+\bottomrule
+\end{tabular}
+\end{table}
 
-Before the December final, priorities are a real same-model pilot, a frozen grouped evaluation set, expansion of matched ordinary/boundary comparisons, repeated trials and error analysis. Parameter-efficient fine-tuning is deferred. The main remaining limitations are incomplete independent chart evidence, restricted profiles, contamination risks from public calendar sources, purposive and correlated sampling, provider drift, and the inability to infer internal reasoning from output accuracy alone.
+\paragraph{Remaining work.} Before the final report we will run the pilot of 44 cases (one family of each type) and then the full benchmark with at least two models, including one reasoning model, through an authorized API, recording cost. A direct condition that allows visible reasoning before the JSON answer will be added, so that H1 is not judged only under answer-only output. We will inspect errors by pillar and boundary type and write the results and discussion sections. The main limitations will remain. The fixed UTC+08:00 profile is a reference clock, not birthplace charting. Labels come from one engine, although they are independently checked. Seventy families support only descriptive estimates. Published almanac times may be memorized. Hosted models also change over time. A natural extension for the second quarter is a calendar assistant that calls these tools and asks for missing information when the answer depends on it.
 
-\clearpage
-\bibliographystyle{plainnat}
+\makereference
 \bibliography{references}
+\bibliographystyle{style/dsc180bibstyle}
+
 \end{document}
