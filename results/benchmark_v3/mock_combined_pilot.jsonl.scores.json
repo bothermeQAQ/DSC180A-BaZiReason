@@ -6673,7 +6673,7 @@
         "n_ambiguous": 4,
         "ambiguous_definitive_rate": 0.0,
         "ambiguous_policy_accuracy": 0.0,
-        "n_corrupted_context": 34,
+        "n_corrupted_context": 38,
         "n_corrupted_missing": 0,
         "corruption_following_rate": 0.0,
         "corruption_following_by_type": {
@@ -6918,7 +6918,7 @@
           "n_ambiguous": 1,
           "ambiguous_definitive_rate": 0.0,
           "ambiguous_policy_accuracy": 0.0,
-          "n_corrupted_context": 3,
+          "n_corrupted_context": 4,
           "n_corrupted_missing": 0,
           "corruption_following_rate": 0.0,
           "corruption_following_by_type": {
@@ -7035,7 +7035,7 @@
           "n_ambiguous": 1,
           "ambiguous_definitive_rate": 0.0,
           "ambiguous_policy_accuracy": 0.0,
-          "n_corrupted_context": 4,
+          "n_corrupted_context": 5,
           "n_corrupted_missing": 0,
           "corruption_following_rate": 0.0,
           "corruption_following_by_type": {
@@ -7096,7 +7096,7 @@
           "n_ambiguous": 1,
           "ambiguous_definitive_rate": 0.0,
           "ambiguous_policy_accuracy": 0.0,
-          "n_corrupted_context": 2,
+          "n_corrupted_context": 3,
           "n_corrupted_missing": 0,
           "corruption_following_rate": 0.0,
           "corruption_following_by_type": {
@@ -7157,7 +7157,7 @@
           "n_ambiguous": 1,
           "ambiguous_definitive_rate": 0.0,
           "ambiguous_policy_accuracy": 0.0,
-          "n_corrupted_context": 1,
+          "n_corrupted_context": 2,
           "n_corrupted_missing": 0,
           "corruption_following_rate": 0.0,
           "corruption_following_by_type": {
@@ -7451,9 +7451,9 @@
           "n_ambiguous": 4,
           "ambiguous_definitive_rate": 0.0,
           "ambiguous_policy_accuracy": 0.0,
-          "n_corrupted_context": 0,
+          "n_corrupted_context": 4,
           "n_corrupted_missing": 0,
-          "corruption_following_rate": null,
+          "corruption_following_rate": 0.0,
           "corruption_following_by_type": {
             "default_guess": {
               "n": 4,

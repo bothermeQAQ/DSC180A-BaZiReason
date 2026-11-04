@@ -2,6 +2,8 @@
 
 Revision: 2026-11-03. This document describes the current design. The historical v1/v2 designs are in Git history and in `docs/audit_experiments.md`. No language-model hypothesis has been tested yet. Calendar diagnostics, deterministic controls and mocks are separate kinds of evidence.
 
+Checkpoint source: [`claude-checkpoint-fixes`](https://github.com/bothermeQAQ/DSC180A-BaZiReason/tree/claude-checkpoint-fixes). Record the submitted commit with `git rev-parse HEAD`; default `main` is an earlier snapshot.
+
 ## Question and hypotheses
 
 Can deterministic tools make language-model answers to convention-specified BaZi calendar questions more reliable, and what does any gain reflect?
@@ -13,6 +15,8 @@ Can deterministic tools make language-model answers to convention-specified BaZi
 | H3 uncertainty | `direct` minus `direct_minimal`: family-level all-decisions-correct on the 16 knowledge-dependent families (`comparisons.direct_minus_direct_minimal.h3_family_all_decisions_correct`) | Ambiguous policy accuracy, false-refusal rate, coverage, surface families, held-out minute-precision type |
 
 `bazireason.evaluator.PRIMARY_CONTRASTS` records the same pre-specification. A negative H1 difference, a positive H2 difference and a positive H3 difference support the hypotheses. None of them identifies an internal mechanism.
+
+Jie ladders match event, year, zone and profile, while date and clock offsets vary. Zi families intentionally vary clock time and sect. H1 therefore describes a within-family near/far pattern, not a pure causal effect of boundary distance. The full-answer minus intermediate contrast measures the added benefit of supplying complete answers, not an internal copying mechanism; time-facts gains may also reflect their salience and representation.
 
 ## Profile and answerability
 
@@ -83,7 +87,7 @@ Every model method has a `_minimal` variant.
 
 ## Metrics and analysis
 
-All metrics are computed per declared observation, and missing or schema-invalid outputs count as failures.
+All metrics retain their planned observations, including missing outputs. Missing and unparseable outputs fail accuracy and decision scores. Chart accuracy requires a valid full schema; nonanswer decision/policy credit instead requires the correct status, null pillars and nonblank reasons, even if the conventions echo or full schema is invalid. Format validity is reported separately.
 - **Accuracy:** exact four-pillar and per-pillar accuracy over the 225 scorable cases per trial; joint exact also requires the conventions echo.
 - **Answer/abstain:**
   - coverage: valid ok answers on scorable cases;
@@ -91,9 +95,9 @@ All metrics are computed per declared observation, and missing or schema-invalid
   - decision accuracy: answered when answerable, correct nonanswer otherwise;
   - nonanswer and ambiguous policy accuracy: correct status, null pillars, nonblank reasons; the conventions echo is not required.
 - **Definitive answers on nonanswers,** detected even in schema-invalid outputs.
-- **Corrupted context:** the following rate overall and by type. The denominator comes from the design, and missing records count as not followed.
+- **Corrupted context:** the following rate over all 244 designed corruptions per trial (225 answerable cases and 19 ambiguous default guesses), and by type: 77 day-rollover, 19 default-guess, 81 hour-stem and 67 Jie-side. Denominators come from the design, and missing records count as not followed.
 - **Format:** counts of missing, invalid-JSON, invalid-schema and call errors. A lenient parse that strips code fences or takes the outer braces is reported separately and never enters primary scores.
-- **Paired contrasts:** cluster bootstrap over families (default 1,000 seeded resamples) and exact McNemar counts and p-values. The H3 family-level contrast is reported per stratum. All are descriptive estimates for this 70-family benchmark.
+- **Paired contrasts:** cluster bootstrap over families (default 1,000 seeded resamples) and McNemar counts. McNemar p-values are exploratory: matched cases and repeated trials within families are not independent sampling units, so they do not establish confirmatory significance. The H3 family-level contrast is reported per stratum. All estimates describe this 70-family benchmark.
 
 Overall decision accuracy is dominated by answerable cases: always-answer scores 0.86. H3 is therefore judged on ambiguous cases and matched families.
 

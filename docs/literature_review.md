@@ -4,7 +4,7 @@ Sources verified 2026-11-03. Repository commits are recorded in [repositories.js
 
 ## Existing research
 
-**Gao et al. (2023), PAL.** [ICML/PMLR paper](https://proceedings.mlr.press/v202/gao23f.html). Read the paper and inspected the interpreter-based method. Models generate programs whose execution provides solutions. This motivates separating language generation from computation. Our treatment instead supplies a precomputed answer; it neither generates code nor tests PAL itself. We do not transfer PAL's reported gains to BaZiReason.
+**Gao et al. (2023), PAL.** [ICML/PMLR paper](https://proceedings.mlr.press/v202/gao23f.html). Read the paper and inspected the interpreter-based method. Models generate programs whose execution provides solutions. This motivates separating language generation from computation. Our treatments instead supply fixed temporal facts or a precomputed answer; they neither generate code nor test PAL itself. We do not transfer PAL's reported gains to BaZiReason.
 
 **Schick et al. (2023), Toolformer.** [NeurIPS paper](https://proceedings.neurips.cc/paper/2023/hash/d842425e4bf79ba039352da0f658a906-Abstract-Conference.html). The paper learns API selection and integration, including calendar-related tools. Our fixed application-side augmentation is a simpler intervention; calling it learned tool use or a tool-calling agent would be inaccurate.
 
@@ -29,9 +29,9 @@ BaZiReason can contribute an executable, small diagnostic suite with explicit pe
 - Reference agreement can conceal shared astronomical errors; observed 13.73-17.13 second timestamp differences remain unresolved.
 - Synthetic diagnostic sampling is boundary enriched and correlated, with very small subgroups.
 - The fixed UTC+8 reference clock is not a universal birth-location convention.
-- Tool context contains reference answers, so gains may reflect copying/formatting, not reasoning improvement.
+- Full-answer context contains reference answers. Its advantage over intermediate facts measures the benefit of supplying complete answers and changing their representation, not an internal copying mechanism.
 - Public source code, calendar rules and dates may appear in model training; secret new dates do not prove absence of contamination.
-- Missing conventions are operationally required even if some dates yield the same chart under both profiles; clarification scores depend on this stated policy.
+- Earlier v1/v2 policy required a selected sect even when both profiles agreed. In the current v3 design, omitted sects, repeated times and minute precision remain answerable when every admissible completion gives the same chart; clarification is required when completions disagree. Historical datasets retain their original labels.
 - Structured-output failures, provider errors, model drift and token truncation need separate logging.
 - The audit implements a convention-policy ablation; no live H3 result exists. Its minimal and explicit arms share computation rules and schema.
 

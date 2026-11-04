@@ -60,6 +60,7 @@ def is_nonanswer(value, status=None):
     """
     return (
         isinstance(value, dict)
+        and isinstance(value.get("status"), str)
         and value.get("status") in NONANSWERS
         and (status is None or value.get("status") == status)
         and "pillars" in value

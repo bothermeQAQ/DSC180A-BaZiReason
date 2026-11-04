@@ -111,7 +111,7 @@ def aggregate(scores):
     labeled = [s for s in scores if s["eligible"]]
     uncertain = [s for s in scores if not s["eligible"]]
     ambiguous = [s for s in uncertain if s["expected_status"] == "ambiguous"]
-    corrupted = [s for s in labeled if s["corruption_type"] is not None]
+    corrupted = [s for s in scores if s["corruption_type"] is not None]
     by_type = defaultdict(list)
     for s in scores:
         if s["corruption_type"] is not None:

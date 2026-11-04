@@ -5,6 +5,8 @@ Yonghao Wang · DSC 180A, Fall 2026 · Domain D25 (LLM Applications) · Mentor: 
 
 [Checkpoint report (PDF)](reports/checkpoint_report.pdf) · [Research design](docs/research_design.md) · [Results notes](results/README.md)
 
+**Checkpoint version:** use the [`claude-checkpoint-fixes` branch](https://github.com/bothermeQAQ/DSC180A-BaZiReason/tree/claude-checkpoint-fixes), which contains this report and implementation. Record its submitted commit with `git rev-parse HEAD`; the default `main` branch is an earlier snapshot.
+
 BaZiReason measures whether language models answer convention-specified Chinese Four Pillars (BaZi) calendar questions reliably. It asks whether they compute the four sexagenary pillars correctly, and whether they ask for clarification when a request does not determine a unique chart. It studies calendar computation only, not destiny prediction.
 
 **Status (checkpoint, November 2026):** the benchmark, calendar wrapper, independent label checks and evaluation harness are implemented and tested. Zero-call baselines have been run. **No language-model experiment has been run yet**, so H1–H3 are untested.
@@ -31,7 +33,7 @@ Each model condition has a `_minimal` policy variant. The zero-call controls are
 Declared target: Python 3.11+. Verified on CPython 3.14.2 and 3.12.14, macOS arm64; other platforms are untested. sxtwl may need a C++ compiler if no wheel is available.
 
 ```bash
-git clone https://github.com/bothermeQAQ/DSC180A-BaZiReason.git
+git clone --branch claude-checkpoint-fixes https://github.com/bothermeQAQ/DSC180A-BaZiReason.git
 cd DSC180A-BaZiReason
 python3 -m venv .venv
 source .venv/bin/activate
@@ -78,14 +80,14 @@ compute_chart({"datetime": "2025-02-03T22:12:28", "timezone": "Asia/Shanghai"}, 
 ## Verification
 
 ```bash
-pytest -q                       # 170 tests: engine contract, defects E1-E9, v3 design, oracle, CLI
+pytest -q                       # 176 tests: engine contract, defects E1-E9, v3 design, oracle, CLI, evaluator regressions
 ruff check src scripts tests
 ruff format --check src scripts tests
 python scripts/check_external_anchors.py
 bazireason diagnostics --output results/my_diagnostics.json
 ```
 
-`tests/test_independent_oracle.py` checks every label against `bazireason.oracle`, a first-principles implementation that shares no code with lunar-python. It uses Julian Day Numbers for days, the five-rats rule for hours, and Meeus's low-precision solar longitude for year and month. Year and month are deferred within about 40 minutes of a Jie, where this script checks them against JPL DE421:
+`tests/test_independent_oracle.py` checks day and hour pillars for all 249 admissible completions of the 225 answerable cases against `bazireason.oracle`, an implementation that shares no code with lunar-python. It uses Julian Day Numbers for days, the five-rats rule for hours, and Meeus's low-precision solar longitude for year and month. It checks year/month for 205 completions and separately checks nine sect/fold ambiguities. Near-Jie year/month checks are deferred to the following JPL DE421 boundary comparison, which also checks the ambiguous Jie-containing minutes:
 
 ```bash
 python -m pip install -e '.[dev,astronomy]'
@@ -128,13 +130,13 @@ Each run writes a manifest declaring its cases, methods, trials, prompt version,
 
 ## Metrics
 
-All metrics are per declared observation, and missing or schema-invalid outputs count as failures.
+All metrics retain their planned observations, including missing outputs. Missing and unparseable outputs fail accuracy and decision scores. Chart accuracy requires a valid full schema; nonanswer decision/policy credit instead uses the correct status, null pillars and nonblank reasons, even if the conventions echo or full schema is invalid. Format validity is reported separately.
 - **Accuracy:** exact four-pillar accuracy and per-pillar accuracy (225 scorable per trial); joint exact accuracy, which also requires the convention echo.
 - **Answer/abstain decisions:** coverage, false-refusal rate, decision accuracy, policy accuracy on nonanswers and ambiguous cases (no exact conventions echo required), and the definitive-answer rate on nonanswers.
-- **Corrupted context:** the following rate overall and by type. Its denominator comes from the design, not from the records.
+- **Corrupted context:** the following rate over all 244 designed corruptions per trial (225 answerable cases and 19 ambiguous default guesses), and by type: 77 day-rollover, 19 default-guess, 81 hour-stem and 67 Jie-side. Denominators come from the design, not from the records; missing observations count as not followed.
 - **Format:** failure counts and a separately reported lenient parse that strips code fences.
 
-The evaluator also reports the H1 ladder analysis (`h1_boundary`), H3 matched families (`h3_matched`), and paired contrasts with family-cluster bootstrap intervals and exact McNemar counts. All are descriptive for this 70-family benchmark.
+The evaluator also reports the H1 ladder analysis (`h1_boundary`), H3 matched families (`h3_matched`), and paired contrasts with family-cluster bootstrap intervals and McNemar counts. McNemar p-values are exploratory because matched cases and repeated trials within families are not independent sampling units; they do not establish confirmatory significance. All estimates describe this 70-family benchmark. Full-answer minus intermediate-context gains measure the added benefit of supplying complete answers, not an internal copying mechanism.
 
 ## Results so far
 

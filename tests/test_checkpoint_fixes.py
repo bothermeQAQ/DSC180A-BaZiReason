@@ -356,3 +356,92 @@ def test_tool_corrupted_records_match_design_corruption(v3):
     record = run_case(case, CopyContext(), "tool_corrupted")
     expected = corrupt_context(case, compute_chart(case["input"], case["convention"]))[1]
     assert record["corruption"] == expected and expected["type"] == "jie_side"
+
+
+# ---- Final review B1/B2: malformed statuses and all corruption types -------
+@pytest.mark.parametrize("bad_status", [[], {}], ids=["list", "object"])
+@pytest.mark.parametrize("reference_status", ["ok", "ambiguous"])
+def test_b1_malformed_status_retains_failure_and_missing_denominators(
+    v3, bad_status, reference_status
+):
+    case = next(c for c in v3 if c["expected"]["status"] == reference_status)
+    response = {
+        "status": bad_status,
+        "pillars": None,
+        "reason_codes": ["malformed_status"],
+        "conventions": None,
+    }
+    record = run_case(case, Fixture(json.dumps(response)), "direct")
+    assert record["error"] == "invalid_schema" and record["response"] == response
+    # A second declared trial is deliberately missing: neither failure may leave n.
+    overall = evaluate([case], [record], methods=["direct"], trials=2, bootstrap_samples=0)[
+        "methods"
+    ]["direct"]["overall"]
+    assert overall["n"] == 2 and overall["n_present"] == 1 and overall["n_missing"] == 1
+    assert overall["valid_output_rate"] == overall["status_accuracy"] == 0
+    assert overall["decision_accuracy"] == 0
+    assert overall["exact_accuracy"] == (0 if reference_status == "ok" else None)
+    assert overall["uncertainty_accuracy"] == (0 if reference_status == "ambiguous" else None)
+    assert overall["false_refusal_rate"] == (0 if reference_status == "ok" else None)
+    assert overall["format_failures"] == {
+        "missing": 1,
+        "invalid_json": 0,
+        "invalid_schema": 1,
+        "call_errors": 0,
+    }
+
+
+def test_b2_overall_corruption_includes_default_guesses_and_missing_records(v3):
+    records = [run_case(c, CopyContext(), "tool_corrupted") for c in v3]
+    full = evaluate(v3, records, methods=["tool_corrupted"], bootstrap_samples=0)
+    overall = full["methods"]["tool_corrupted"]["overall"]
+    expected_counts = {"day_rollover": 77, "default_guess": 19, "hour_stem": 81, "jie_side": 67}
+    assert overall["n_corrupted_context"] == 244 == 225 + 19
+    assert overall["n_corrupted_missing"] == 0 and overall["corruption_following_rate"] == 1
+    assert {
+        k: v["n"] for k, v in overall["corruption_following_by_type"].items()
+    } == expected_counts
+    assert sum(v["n"] for v in overall["corruption_following_by_type"].values()) == 244
+
+    default_guess = next(
+        r for r in records if (r["corruption"] or {}).get("type") == "default_guess"
+    )
+    scorable = next(r for r in records if (r["corruption"] or {}).get("type") == "hour_stem")
+    absent = {default_guess["case_id"], scorable["case_id"]}
+    partial = evaluate(
+        v3,
+        [r for r in records if r["case_id"] not in absent],
+        methods=["tool_corrupted"],
+        bootstrap_samples=0,
+    )
+    overall = partial["methods"]["tool_corrupted"]["overall"]
+    assert partial["missing_predictions"] == 2
+    assert overall["n_corrupted_context"] == 244 and overall["n_corrupted_missing"] == 2
+    assert overall["corruption_following_rate"] == 242 / 244
+    by_type = overall["corruption_following_by_type"]
+    assert by_type["default_guess"] == {"n": 19, "n_missing": 1, "following_rate": 18 / 19}
+    assert by_type["hour_stem"] == {"n": 81, "n_missing": 1, "following_rate": 80 / 81}
+    assert sum(v["n"] for v in by_type.values()) == 244
+
+
+def test_b2_default_guesses_have_nonempty_overall_denominator_without_scorable_cases(v3):
+    cases = [
+        c
+        for c in v3
+        if c["expected"]["status"] == "ambiguous"
+        and corrupt_context(c, compute_chart(c["input"], c["convention"]))[1] is not None
+    ]
+    assert len(cases) == 19
+    records = [run_case(c, CopyContext(), "tool_corrupted") for c in cases]
+    for present, numerator in ((records, 19), (records[1:], 18), ([], 0)):
+        overall = evaluate(cases, present, methods=["tool_corrupted"], bootstrap_samples=0)[
+            "methods"
+        ]["tool_corrupted"]["overall"]
+        assert overall["n_labeled"] == 0 and overall["n_corrupted_context"] == 19
+        assert overall["n_corrupted_missing"] == 19 - numerator
+        assert overall["corruption_following_rate"] == numerator / 19
+        assert overall["corruption_following_by_type"]["default_guess"] == {
+            "n": 19,
+            "n_missing": 19 - numerator,
+            "following_rate": numerator / 19,
+        }
