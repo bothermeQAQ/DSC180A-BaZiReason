@@ -1,99 +1,83 @@
-# Checkpoint status
+# Audited checkpoint status
 
-Snapshot: **2026-11-03, America/Los_Angeles**. This is a prepared submission package, not a completed course submission. Student review, mentor-specific checks and Gradescope submission remain.
+Updated **November 3, 2026**, America/Los_Angeles. Original snapshot: **a50f967**, preserved at **`audit/pre-review-a50f967`**. This is a prepared/reviewed package, not a Gradescope submission or a completed live-model study.
 
-Public repository: **https://github.com/bothermeQAQ/DSC180A-BaZiReason**. Publication verification is recorded below.
+Repository: https://github.com/bothermeQAQ/DSC180A-BaZiReason
 
-## Official compliance matrix
+## Public requirement compliance
 
 | Requirement | Status | Evidence / remaining action |
 |---|---|---|
-| Title, abstract, introduction PDF | PASS | Six-page report, literature/data included; generated, opened, text-checked and visually inspected |
-| Public code repository URL | PASS | Code, synthetic data, results, tests and README |
-| Data/dependency/reproduction README | PASS | Offline commands and bounded live-run instructions |
-| Course LaTeX template | PARTIAL | Attributed typography subset, portable font/plainnat changes; exact-style acceptance unverified |
-| Mentor-specific expectations/topic scope | NOT VERIFIED | User reports mentor openness; confirm final scope with Professor Shang |
-| Nov 6 checkpoint / Dec 4 final dates | VERIFIED PUBLICLY | Project and home pages agree; writing lesson has stale date text |
-| Exact submission hour/private instructions | NOT VERIFIED | Student must inspect Gradescope/Piazza |
-| Gradescope PDF and code submissions | NOT SUBMITTED | No course submission was attempted |
+| PDF title, abstract, introduction with problem/prior work/data | PASS | Revised seven-page PDF, compiled/text-checked and all pages visually inspected |
+| Public GitHub code and reproducible README | Existing public repo; revised upload verified below | Source, original/v2 data, declared controls, tests and exact commands |
+| Official template style | PARTIAL | XCharter text/math and Arial restored; used margins/title/abstract/citations retained; mono/plainnat deviations disclosed |
+| Deadline dates | VERIFIED PUBLICLY | November 6 checkpoint; December 4 final; exact hour not established publicly |
+| Mentor scope/additions and private instructions | NOT VERIFIED | Student checks Professor Shang, Gradescope/Piazza |
+| Course submission | NOT SUBMITTED | No submission action was attempted |
 
-## Completed deliverables and absolute paths
+## Current artifacts and absolute paths
 
-Project root: `/Users/botherme/Desktop/DSC180A_Quarter1_Project`
+Root: `/Users/botherme/Desktop/DSC180A_Quarter1_Project`
 
-- Report: `/Users/botherme/Desktop/DSC180A_Quarter1_Project/reports/checkpoint_report.pdf`
+- PDF: `/Users/botherme/Desktop/DSC180A_Quarter1_Project/reports/checkpoint_report.pdf`
 - Editable report: `/Users/botherme/Desktop/DSC180A_Quarter1_Project/reports/latex/checkpoint_report.tex`
-- Code and reproduction guide: `/Users/botherme/Desktop/DSC180A_Quarter1_Project/README.md`
-- Dataset: `/Users/botherme/Desktop/DSC180A_Quarter1_Project/data/synthetic/checkpoint.jsonl`
-- Computational observations: `/Users/botherme/Desktop/DSC180A_Quarter1_Project/results/calendar_diagnostics.json`
-- External checks: `/Users/botherme/Desktop/DSC180A_Quarter1_Project/results/external_anchor_checks.json`
-- Test log: `/Users/botherme/Desktop/DSC180A_Quarter1_Project/results/pytest.txt`
-- Requirements: `/Users/botherme/Desktop/DSC180A_Quarter1_Project/docs/course_requirements.md`
-- Literature: `/Users/botherme/Desktop/DSC180A_Quarter1_Project/docs/literature_review.md`
-- Design: `/Users/botherme/Desktop/DSC180A_Quarter1_Project/docs/research_design.md`
-- Source audit: `/Users/botherme/Desktop/DSC180A_Quarter1_Project/docs/source_audit.md`
-- Training plan: `/Users/botherme/Desktop/DSC180A_Quarter1_Project/docs/finetuning_plan.md`
-- Review handoff: `/Users/botherme/Desktop/DSC180A_Quarter1_Project/CLAUDE_REVIEW.md`
+- Prioritized findings: `/Users/botherme/Desktop/DSC180A_Quarter1_Project/AUDIT_FINDINGS.md`
+- Independent assessment: `/Users/botherme/Desktop/DSC180A_Quarter1_Project/ULTRA_REVIEW_REPORT.md`
+- Revised dataset: `/Users/botherme/Desktop/DSC180A_Quarter1_Project/data/synthetic/audit_v2.jsonl`
+- Original preserved dataset: `/Users/botherme/Desktop/DSC180A_Quarter1_Project/data/synthetic/checkpoint.jsonl`
+- Current verification: `/Users/botherme/Desktop/DSC180A_Quarter1_Project/results/audit/verification_summary.json`
+- Main calendar checks: `/Users/botherme/Desktop/DSC180A_Quarter1_Project/results/audit/calendar_diagnostics_v2.json`
+- Distinct astronomy check: `/Users/botherme/Desktop/DSC180A_Quarter1_Project/results/audit/independent_solar_terms.json`
+- Instructions: `/Users/botherme/Desktop/DSC180A_Quarter1_Project/README.md`
 
-## Verification actually performed
+## Actual verification
 
-| Check | Result |
-|---|---|
-| pytest (calendar, validation, boundaries, determinism, schema, metrics, prompts, HTTP fixtures, CLI smoke) | **42 PASS, 0 FAIL** |
-| Ruff lint and format | **PASS** |
-| Second clean venv installation + pytest | **42 PASS, 0 FAIL**, same host/Python |
-| Seeded dataset byte regeneration | **PASS** (tested) |
-| HKO external anchors | **PASS**: two civil-day values and one minute-resolution Lichun anchor |
-| Cross-implementation partial checks | **184 agree / 184**, correlated and shared astronomical lineage |
-| Solar-term precision comparison | **DISAGREEMENT**: twelve timestamps differ by 13.729553-17.126991 seconds |
-| PDF compilation/rendering/text/layout | **PASS**, six pages; harmless underfull line warning, no overfull boxes or unresolved references |
-| Live LLM pilot / H1 / H2 / H3 | **NOT RUN**: no configured model access detected |
-| Fine-tuning | **NOT RUN**: intentionally deferred |
-| Full independent chart correctness | **NOT ESTABLISHED** |
+- Original Git archive + fresh install: **42 PASS**, not assumed from the prior log.
+- Revised full suite: **106 PASS, 0 FAIL** on Python 3.14.2 and fresh Python 3.12.14 installation.
+- Ruff lint/format and dependency checks: **PASS**.
+- Both generated datasets reproduce committed bytes. V1 remains unchanged; V2 has **152 unique input/profile cases**, 126 scorable, 16 ambiguous, 6 unsupported, 4 invalid.
+- V1's 184 agreeing cells reduce to 117 distinct reference queries. V2 has 270/270 cells but 169 distinct queries; 126 separate matched-hour checks agree. All exclusions and shared-lineage limits are retained.
+- Skyfield 1.53/JPL DE421 independently computes 24 Jie 2024-2025: lunar-python residual −1.168115 to +2.261093 seconds; sxtwl residual −15.783111 to −13.018692 seconds. Not full-chart proof or root-cause diagnosis.
+- HKO checks: two day values and minute-resolution Lichun pass.
+- Deterministic copier: 152 records, **zero model calls**,126/126 exact matches by construction. No LLM or external-validation inference.
+- Representative combined smoke: 154 observations, 132 synthetic completion invocations plus 22 copy controls. Separate Python H3 wrapper smoke: 88 synthetic invocations. These are software fixtures.
+- Report: seven letter pages, all visually inspected; no overfull/clipped content, unresolved citations or placeholders. One harmless underfull-line warning remains. Residual template differences are documented.
 
-The numerical evidence is computational verification only. Eight mock observations and their scores are explicitly synthetic software smoke artifacts. No real LLM performance numbers, training gains or API costs are invented. No paid model calls were made. The 96 cases contain 80 labeled computations and 16 non-answer-policy cases (6 ambiguous, 6 unsupported, 4 invalid). All expected labels retain single-engine provenance.
+## What changed
 
-## Main executed commands
+Fixed timezone-cache/source dependence, extreme-date overflow, invalid-profile output representation, weak schema/duplicate JSON handling, aliased identities/method collection validation, late/lost manifests and evaluation selection mismatch. Added all 12Jie, actual adjacent midnight cases, distinct timezone groups, 24 matched missing/complete H3 cases, explicit/minimal policy, partial/corrupted context, zero-call copying, profile-aware accuracy, coverage and whole-group paired estimates. See `AUDIT_FINDINGS.md` for exact original locations, evidence and regressions.
+
+**NOT RUN / BLOCKED:** live LLM pilot/H1/H2/H3. No usable configured model endpoint/credentials or installed local inference were found in the inspected environment. No paid model calls, model-weight downloads or training occurred. No fine-tuning gain, live model score or astronomical certainty is invented. Original 42 tests and same-engine replay establish software behavior, not these hypotheses.
+
+## Reproduction commands executed
 
 ```bash
-python3 -m venv .venv
-.venv/bin/python -m pip install -e '.[dev]'
-.venv/bin/bazireason generate --seed 1802026
-.venv/bin/bazireason diagnostics
-.venv/bin/python scripts/check_external_anchors.py
-.venv/bin/pytest -q --junitxml=results/pytest.xml
-.venv/bin/ruff check src scripts tests
-.venv/bin/ruff format --check src scripts tests
-.venv/bin/bazireason run --backend mock --limit 4 --max-calls 8 --output results/mock_smoke.jsonl
-.venv/bin/bazireason evaluate --limit 4 --predictions results/mock_smoke.jsonl --output results/mock_smoke_metrics.json
-python3 -m venv tmp/clean-venv
-tmp/clean-venv/bin/python -m pip install -r requirements.txt
-tmp/clean-venv/bin/python -m pytest -q
+bazireason generate --dataset-version checkpoint_v1 --output tmp/audit/regenerated_v1.jsonl
+bazireason generate --dataset-version audit_v2 --output tmp/audit/regenerated_v2.jsonl
+bazireason diagnostics --data data/synthetic/audit_v2.jsonl --output results/audit/calendar_diagnostics_v2.json
+python scripts/check_external_anchors.py
+python scripts/check_solar_terms.py
+pytest -q --junitxml=results/audit/revised_pytest.xml
+ruff check src scripts tests
+ruff format --check src scripts tests
+tmp/review-py312/bin/python -m pip install -r requirements.txt
+tmp/review-py312/bin/python -m pytest -q -p no:cacheprovider
+python scripts/run_pilot.py --backend mock --design h3 --max-calls 88 --output tmp/audit/wrapper_h3_smoke.jsonl
 tectonic --keep-logs --outdir reports/latex reports/latex/checkpoint_report.tex
 cp reports/latex/checkpoint_report.pdf reports/checkpoint_report.pdf
-pdftoppm -r 85 -png reports/checkpoint_report.pdf tmp/pdfs/verified
+pdftoppm -r 85 -png reports/checkpoint_report.pdf tmp/audit-report-final/page
 ```
 
-Source research used live official course pages, GitHub repository snapshots and publication sources. Commands were scoped to this project; downloaded research code and venvs are ignored. No global Python/system settings were modified. No real secrets are in the committed files; fixture credentials and blank examples are marked accordingly.
+The astronomy command requires optional dependencies and an explicitly downloaded DE421 kernel. Exact setup, kernel hash, definitions and versions are retained. Original archive reproduction and zero-call/combined mock commands are in the audit documents. Secret scans exclude ignored research downloads/venvs; committed artifacts contain no real credentials. Git uses the existing GitHub noreply identity. No global Python/system configuration was modified.
 
-## Limitations and blockers
+## Remaining submission steps
 
-A live model experiment is BLOCKED by absent configured inference access, while its software pipeline is implemented and tested with fixtures. H3 needs a distinct policy ablation. Independent hour/full-chart validation and second-precision astronomy remain open research work. The fixed UTC+8 reference-clock contract is narrow and explicitly rejects local-clock/true-solar conventions. sxtwl's audited fork and installed distribution differ; see source audit. The course template was adapted rather than redistributed unchanged. These limits are stated in the report.
+1. Review the PDF and audit; understand the profile, reference and metric limits. Confirm topic scope and mentor additions with Professor Shang.
+2. Confirm template acceptance or import the full official style/custom bibliography through a functioning Overleaf download. XCharter restoration improves conformance but is not proof of an unchanged full template.
+3. Verify exact **November 6, 2026** hour and report/code assignment identities in Gradescope/Piazza.
+4. Submit the seven-page PDF and the public repository URL to the correct checkpoint assignments; inspect uploaded rendering/visibility. No submission has been made here.
+5. Obtain an authorized model endpoint for a bounded real pilot, freeze a grouped final evaluation and follow the prioritized December plan in `ULTRA_REVIEW_REPORT.md`. Do not report mocks or copying as LLM research results.
 
-## Exact remaining submission steps
+## Publication verification
 
-1. Read and understand the PDF/code; independently review with `CLAUDE_REVIEW.md`, especially clock and sect rules, source lineage and unsupported claims.
-2. Confirm final topic scope and report additions with Professor Shang. Confirm whether the adapted typography is acceptable; if exact files are required, import the full official style/bibliography in Overleaf and recompile/reinspect.
-3. Verify the **November 6, 2026** deadline's exact time and the correct checkpoint report/code assignments in Gradescope/Piazza. Public pages do not establish the hour.
-4. Submit `reports/checkpoint_report.pdf` to the report checkpoint and the public repository URL to the code checkpoint. Check uploaded PDF rendering and repository visibility. No submission has been made here.
-5. Preserve this checkpoint snapshot; later real runs must use new named result files and honest experimental status.
-
-## Publication and final integrity verification
-
-Publication was verified as recorded below. If publication ever needs to be repeated from a clone with no remote, the commands are `gh auth login`, `gh repo create DSC180A-BaZiReason --public --source=. --remote=origin --push`. Do not run repository creation against an existing unrelated repository.
-
-Publication **PASS**: created the new public repository and pushed `main`. An unauthenticated GitHub API request confirms `private=false`; downloading the public report returns the exact local PDF bytes. Evidence: `results/publication_verification.json`. The committed report SHA-256 is `b7247df972a4a5da0c97f83fc7094d35b3081627378a660e9d90a346941a65a0`.
-
-Additional access inspection confirms no configured standard/provider or BaZiReason API variables and no reachable Ollama (11434) or LM Studio-compatible (1234) model endpoint. See `results/model_access_inspection.json`; no credential values were printed or stored.
-
-Git commands executed: `git init -b main`, local author identity configured with GitHub noreply email, `git add .`, meaningful commits, `gh repo create DSC180A-BaZiReason --public --source=. --remote=origin --push`, and `git push`. Temporary source downloads, venvs and caches are excluded by `.gitignore`. The final remote/local commit comparison and clean working-tree check were performed after the documentation commit.
+The initial publication log in `results/publication_verification.json` describes a50f967 and the old report hash. It must not be used to certify the revised report. Revised remote/public visibility, report hash and preserved tag are checked after upload and recorded in `results/audit/publication_verification.json` when successful. Local/remote equality and a clean working tree are checked at the end of this review.

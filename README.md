@@ -1,26 +1,27 @@
 # BaZiReason
 
 **Evaluating Tool-Augmented LLM Reliability in Traditional Chinese Calendar Reasoning**
-
 Yonghao Wang · DSC 180A, Fall 2026 · Domain D25 · Advisor: Jingbo Shang
 
-[Checkpoint PDF](reports/checkpoint_report.pdf) · [Research design](docs/research_design.md) · [Submission status](CHECKPOINT_STATUS.md) · [Independent review handoff](CLAUDE_REVIEW.md)
+[Report](reports/checkpoint_report.pdf) · [Independent audit](AUDIT_FINDINGS.md) · [Review assessment](ULTRA_REVIEW_REPORT.md) · [Submission status](CHECKPOINT_STATUS.md)
 
-This academic project studies deterministic calendar computation and model reliability. It makes no claims about predicting destiny. The question is whether supplying deterministic calendar context improves a model's four-pillar agreement, consistency and handling of missing conventions.
+This project measures calendar-answer reliability under explicit implementation profiles. It does not study destiny prediction. It is currently **evaluation infrastructure with computational evidence**, not a completed empirical LLM study. No live model performance or training result exists; H1-H3 remain untested.
 
-**Current evidence:** a seeded 96-case synthetic suite, working calendar wrapper and paired inference/scoring pipeline. There are 80 labeled computations, 6 ambiguous requests, 6 unsupported requests and 4 invalid inputs. Calendar diagnostics show 184/184 selected cross-implementation checks agree, while 12 solar-term timestamps differ by 13.73-17.13 seconds. These partial, correlated checks share astronomical lineage; they do not establish full-chart ground truth. Two day anchors and one minute-level solar-term anchor were visually checked against HKO. **No live LLM results or training results exist. H1-H3 remain untested.**
+An independent audit reproduced the original 42 tests, found real validation/design weaknesses, and implemented repairs and controls. The original 96-case checkpoint and source remain preserved at Git tag **`audit/pre-review-a50f967`**. The revised suite has **152 unique input/profile cases**:126 scorable,16 ambiguous,6 unsupported,4 invalid.
 
-## Research questions
+Calendar evidence includes270 agreeing day/year/month cells (169 distinct reference queries),126 separately counted hour comparisons, and an independent JPL/Skyfield check of24 solar-term timestamps. These are partial, correlated checks, not independent proof of complete charts. [Calendar audit](docs/audit_calendar.md) explains exclusions and actual discrepancies.
 
-1. Do direct models make more errors near boundaries than on ordinary dates (H1)?
-2. Does same-model tool-provided context improve exact pillar accuracy (H2)?
-3. Does explicit ambiguity/convention representation reduce unsupported answers (H3)?
+## Research design
 
-H1 needs a properly sampled model run; H2 has implemented paired conditions; H3 additionally requires a prompt-policy ablation. See [design](docs/research_design.md) and [prior work](docs/literature_review.md). The treatment is application-provided context, not an autonomous tool-calling agent.
+- **H1:** descriptive direct-model error comparison between ordinary and boundary cases; stronger causal claims require matched strata.
+- **H2:** same-model full-context accuracy, with deterministic-copy, timestamp-only and corrupted-hour controls. Full context supplies the answer: accuracy alone cannot establish improved internal reasoning.
+- **H3:** explicit vs minimal nonanswer policy, holding inputs, computation rules and schema fixed. Report ambiguity-only definitive-answer rate together with policy correctness and scorable coverage.
 
-## Install
+[Design and estimands](docs/research_design.md) · [Experimental implementation audit](docs/audit_experiments.md) · [Literature](docs/literature_review.md)
 
-Python **3.11+** is the supported target; verified locally on CPython **3.14.2**, macOS arm64. Standard-library `zoneinfo` uses the pinned tzdata wheel. `sxtwl` may need a C++ compiler when no wheel exists for your platform. Other platforms/Python versions are not yet tested.
+## Installation
+
+Python 3.11+ is the declared target; actual audit verification uses **CPython 3.14.2 and 3.12.14 on macOS arm64**. Other platforms are untested. sxtwl may require a C++ compiler if a suitable wheel is unavailable. No global Python/system settings are changed by setup.
 
 ```bash
 git clone https://github.com/bothermeQAQ/DSC180A-BaZiReason.git
@@ -30,23 +31,24 @@ source .venv/bin/activate
 python -m pip install -r requirements.txt
 ```
 
-`pyproject.toml` pins direct runtime and verification dependencies; `requirements-lock.txt` records the tested Python environment's transitive versions. To reproduce that environment on a compatible platform, install the lock first, then `pip install --no-deps -e .`. PDF compilation additionally uses Tectonic (or a suitable XeLaTeX/BibTeX installation); PDF rendering uses Poppler. Neither is needed for calendar experiments. No API key, external dataset or model download is needed for the offline commands.
+Direct dependencies are pinned in `pyproject.toml`; `requirements-lock.txt` records the original tested transitive environment. For that lock, install `pip install -r requirements-lock.txt`, then `pip install --no-deps -e .` (normal build isolation installs declared build tools). Optional astronomy dependencies are separate and are not needed for the standard suite.
 
-## Reproduce checkpoint diagnostics
+## Reproduce the audited dataset and diagnostics
 
 Run from the repository root:
 
 ```bash
-bazireason generate --seed 1802026 --output data/synthetic/checkpoint.jsonl
-bazireason diagnostics --data data/synthetic/checkpoint.jsonl --output results/calendar_diagnostics.json
+bazireason generate --dataset-version audit_v2
+bazireason diagnostics --data data/synthetic/audit_v2.jsonl --output results/audit/calendar_diagnostics_v2.json
+python scripts/check_external_anchors.py
 pytest -q
 ruff check src scripts tests
 ruff format --check src scripts tests
 ```
 
-Generation overwrites the named dataset deterministically. The committed suite is original synthetic data, not personal records. No network is used by generation or diagnostics. Regenerating with the pinned dependencies reproduces its bytes; [SHA-256 manifest](results/artifact_hashes.json) records the snapshot. The CLI scripts under `scripts/` are equivalent wrappers (`python scripts/generate_dataset.py`, etc.).
+Seed 1802026 is the default. `generate --dataset-version checkpoint_v1` regenerates the original 96-case file. Both generators are byte-deterministic under the pinned dependencies. `data/synthetic/audit_pilot_ids.json` fixes a representative22-case pilot across all categories/statuses; it is not a powered sample. Original v1 diagnostics and mocks remain historical artifacts. New audit evidence stays under `results/audit/`.
 
-## Input contract
+## Calendar input contract
 
 ```python
 from bazireason.calendar_engine import compute_chart
@@ -56,72 +58,87 @@ result = compute_chart(
     {"datetime": "2025-02-03T22:12:28", "timezone": "Asia/Shanghai"},
     Convention(sect=2).to_dict(),
 )
-print(result)
 ```
 
-The input is a naive local wall time with seconds, an IANA zone, optional `fold=0/1`, and explicit convention. Repeated DST times require fold; nonexistent times are invalid. All pillars use the civil instant converted to **fixed UTC+08:00**. This reference-clock task does not implement arbitrary local-clock charts. Historical legal DST is normalized before computation.
+Inputs use naive ISO local wall time with seconds, an IANA zone and optional fold. Explicit tzdata TZif loading avoids host path/cache state. A repeated DST time needs fold 0/1; a nonexistent time is invalid. Legal civil instants are converted to **fixed UTC+08:00 for all pillars**. International records therefore test this reference-clock task, not local birthplace charting.
 
-Year/month use lunar-python's Lichun/Jie instants. Sect 1 advances the day at 23:00; sect 2 at midnight. **Both retain the library's 23:00-advanced hour stem**, including sect 2. True solar time, local civil-clock charting, lunar-year/month profiles and reference years outside 1901-2099 are unsupported. Missing time/zone/profile prompts clarification. The admitted year range is a study restriction, not a validated range guarantee from upstream.
+Year/month use lunar-python 1.4.8 Lichun/Jie instants. Sect 1 advances the day at 23:00; sect 2 at midnight. Both retain its 23:00-advanced hour stem, including sect 2. Missing profiles request clarification. True solar time, local civil-clock charts, lunar-year/month profiles and normalized years outside 1901-2099 are unsupported. The admitted range is a study restriction, not an upstream guarantee. Outputs include `ok/ambiguous/unsupported/invalid`, optional pillars, reason codes, conventions and provenance. Invalid profiles have no fictitious selected convention.
 
-Outputs distinguish `ok`, `ambiguous`, `unsupported`, `invalid`, with reason codes, convention metadata and engine provenance. Only ok outputs contain pillars. See [conventions and limitations](docs/research_design.md).
-
-## Synthetic smoke run
+## Offline controls and synthetic smoke
 
 ```bash
-bazireason run --backend mock --limit 4 --max-calls 8 --output results/my_mock.jsonl
-bazireason evaluate --limit 4 --predictions results/my_mock.jsonl --output results/my_mock_metrics.json
+bazireason run --data data/synthetic/audit_v2.jsonl --limit 152 \
+  --methods copy_context --max-calls 0 --output results/my_copy.jsonl
+bazireason evaluate --data data/synthetic/audit_v2.jsonl \
+  --predictions results/my_copy.jsonl --output results/my_copy_scores.json
+python scripts/run_pilot.py --backend mock --design combined --max-calls 132 \
+  --output results/my_mock_pilot.jsonl
 ```
 
-Existing prediction files are protected from overwrite; choose a new filename for each run. The mock is labeled `SYNTHETIC-MOCK-NOT-AN-LLM` and returns a fixed schema fixture without reading labels. Its metrics only test execution and **must not be cited as model performance**. Committed `mock_smoke*` artifacts demonstrate this path. HTTP adapter tests also use in-memory fixtures, not real paid calls.
+`copy_context` makes **zero model calls** and copies a fresh engine result. Its perfect reference agreement is tautological. Mock predictions use `SYNTHETIC-MOCK-NOT-AN-LLM`; their scores verify software only. Neither is LLM evidence. Prediction/manifest files are protected from overwrite; use new filenames for reruns.
 
-## Real model pilot (not run here)
+A planned manifest is written before inference. Evaluation automatically uses its declared cases, methods and trials, verifies the dataset hash, and rejects conflicting overrides. Interrupted/missing observations remain in denominators. Pre-audit artifacts without manifests retain legacy explicit-design evaluation support.
 
-Configure an OpenAI-compatible chat endpoint supporting JSON mode and the requested sampling fields. The program does not auto-load `.env` files. Copying `.env.example` alone does not configure access; export your own credentials locally. Never commit a real key.
+## Real pilot commands (NOT RUN)
+
+Configure an already authorized OpenAI-compatible chat endpoint supporting JSON mode and the requested parameters. The program reads exported variables, not `.env` files. Never commit credentials.
 
 ```bash
 export BAZIREASON_API_KEY='your-private-key'
 export BAZIREASON_BASE_URL='https://your-provider.example/v1'
-export BAZIREASON_MODEL='your-exact-model-id'
-bazireason run --backend api --limit 4 --max-calls 8 --trials 1 \
-  --temperature 0 --max-tokens 512 --output results/pilot.jsonl
-bazireason evaluate --limit 4 --trials 1 --predictions results/pilot.jsonl \
-  --output results/pilot_metrics.json
+export BAZIREASON_MODEL='your-exact-model-version'
+python scripts/run_pilot.py --backend api --design h3 --max-calls 88 \
+  --output results/live_h3_pilot.jsonl
+python scripts/run_pilot.py --backend api --design h2 --max-calls 88 \
+  --output results/live_h2_controls.jsonl
 ```
 
-Replace the illustrative URL/model with the provider's actual values. Use the same model for both methods. The first four cases are ordinary: this is a network/schema pilot, **not a boundary experiment**. For a full 96-case paired trial use `--limit 96 --max-calls 192`; for three repeats use `--trials 3 --max-calls 576` and evaluate with `--trials 3`. Check current provider pricing before expanding. Call and output-token bounds do not guarantee a dollar budget. No implicit retry or answer-repair is performed. Local OpenAI-compatible servers can use a dummy credential if required by their interface; support depends on endpoint fields. Native Anthropic and Ollama APIs are not separately implemented.
+Replace the illustrative provider values. The H3 pilot crosses direct/full context with minimal/explicit policy (88 calls). H2 uses direct, full context, timestamp-only and corrupted context (88 calls) plus22 zero-call copy records. A combined design uses132 completion calls plus22 controls. To minimize provider drift, prefer one combined run when affordable. These are invocation and output-token caps, **not dollar caps**; check current pricing before running. No paid API call was made in this audit.
 
-The runner alternates condition order, logs requested/served model and fingerprint when returned, prompt hashes, dataset hash, attempts, usage and latency, and flushes each completed observation. Error classes are retained without provider response bodies or credentials. Monetary cost remains null. Review provider errors/truncation before interpretation. A failed or missing call still counts as a failure in the declared evaluation denominator.
+`run_pilot.py` reads the22 IDs directly, runs the design, and scores the manifest into `OUTPUT.scores.json`. For repeated trials, set `--trials 3` and multiply the cap by 3. For full-suite experiments, use `bazireason run --data ... --limit 152 --methods ... --trials ... --max-calls ...`; the CLI refuses excess calls. Native Anthropic/Ollama protocols are not separately implemented. Local OpenAI-compatible servers may use a dummy key if required by their interface.
 
-## Output files and metrics
+Available model conditions: `direct`, `tool_context`, `tool_facts`, `tool_corrupted`, and their `_minimal` variants. Same computation rules/schema are used across policy versions. Rotation balances order; records retain requested/served model, versioned prompt hash, attempts, latency, usage and provider finish reason. No hidden repair/retry is performed. Missing/invalid outputs fail appropriate correctness/coverage metrics. API cost is null unless measured; errors omit sensitive bodies/headers.
 
-| Path | Meaning |
+## Independent solar-term reproduction (optional)
+
+```bash
+python -m pip install -e '.[dev,astronomy]'
+mkdir -p tmp/astronomy
+curl -fL https://ssd.jpl.nasa.gov/ftp/eph/planets/bsp/de421.bsp -o tmp/astronomy/de421.bsp
+python scripts/check_solar_terms.py
+```
+
+This downloads a public astronomical kernel, not model weights. The script performs no implicit download and logs kernel SHA-256, versions, reference frame/time scale, search precision and all 24 Jie 2024-2025 comparisons. Optional exact package versions are in `results/audit/astronomy_environment.txt`. Skyfield 1.53 apparent geocentric ecliptic-of-date results differ from lunar-python by −1.168 to +2.261 seconds; sxtwl is 13.019-15.783 seconds earlier. This is a separate numerical path supporting those selected timestamps, not proof of all chart fields or all years. No labels are silently corrected.
+
+## Metrics and evidence
+
+Exact and per-pillar accuracy use126 scorable observations per full v2 trial. Joint exact additionally requires matching convention metadata. Nonanswer policy correctness uses26 cases; ambiguity-only definitive frequency uses16. Coverage prevents blanket refusal from appearing successful. Missing output is not credited as a correct policy response. Reasons are format-checked, not semantically adjudicated. Descriptive paired group-bootstrap intervals preserve `group_id` dependence; they do not establish population generalization.
+
+| Artifact | Meaning |
 |---|---|
-| `data/synthetic/checkpoint.jsonl` | 96 generated cases, group IDs, profiles and single-engine reference labels |
-| `results/calendar_diagnostics.json` | Actual partial sxtwl comparisons and solar-term discrepancies; no LLM scores |
-| `results/external_anchor_checks.json` | HKO factual anchor checks, precision and source hash |
-| `results/mock_smoke*` | Clearly synthetic execution records and scorer smoke output |
-| `results/pytest.txt`, `pytest.xml`, `ruff.txt` | Executed verification evidence |
-| `results/artifact_hashes.json` | Dataset, report and diagnostics snapshot hashes |
-| `reports/checkpoint_report.pdf` | Checkpoint report |
-| `reports/latex/` | Editable report, bibliography and adapted course typography style |
-| `docs/sources/` | Source URLs, access metadata, repository commits and external anchor provenance |
+| `data/synthetic/checkpoint.jsonl` | Immutable historical 96-case dataset |
+| `data/synthetic/audit_v2.jsonl` | Revised152-case suite with all 12 Jie and matched H3 groups |
+| `results/audit/original_*` | Independent original test reproduction and bug/coverage evidence |
+| `results/audit/calendar_diagnostics_v2.json` | Main270 cells, unique coverage/exclusions, separate126 hour checks |
+| `results/audit/independent_solar_terms.json` | Distinct JPL/Skyfield comparison and kernel/version provenance |
+| `results/audit/deterministic_copy*` | Zero-call tautological copy control |
+| `results/audit/mock_controls*` | Synthetic operational smoke; no LLM results |
+| `results/audit/revised_*`, `clean_py312_*` | Executed test/lint/install evidence |
+| `AUDIT_FINDINGS.md`, `ULTRA_REVIEW_REPORT.md` | Prioritized defects, fixes and academic assessment |
 
-Exact match and per-pillar accuracy use only the 80 labeled observations per full trial. Status/schema/convention metrics use all 96. Uncertainty policy accuracy uses the 16 non-answer cases and does not semantically grade explanations. Repeated consistency compares complete valid structured responses. Full definitions, exclusions and prospective grouped inference are in [research_design.md](docs/research_design.md). Descriptive Wilson intervals do not account for grouped dependence.
-
-## Build and inspect the report
+## Report and submission
 
 ```bash
 tectonic --keep-logs --outdir reports/latex reports/latex/checkpoint_report.tex
 cp reports/latex/checkpoint_report.pdf reports/checkpoint_report.pdf
-pdftoppm -r 100 -png reports/checkpoint_report.pdf tmp/report
+mkdir -p tmp/report
+pdftoppm -r 100 -png reports/checkpoint_report.pdf tmp/report/page
 ```
 
-Create `tmp/` before rendering if it does not exist. The report uses an attributed typography subset of the official course template; font and bibliography substitutions are documented in [template_audit.md](docs/template_audit.md). Verify mentor/TA expectations if exact unmodified template files are required. The final PDF was rendered and visually inspected. The student must review its claims and the private submission instructions before submitting.
+Tectonic/Poppler are needed only for authoring/rendering, not experiments. [Template audit](docs/template_audit.md) records the exact source and any remaining font/bibliography deviations. See [course requirements](docs/course_requirements.md) and [checkpoint status](CHECKPOINT_STATUS.md) for current readiness. Gradescope/Piazza instructions and mentor-specific expectations still require student verification; no course submission has been attempted.
 
-## Known limitations and next work
+## Scope, attribution and remaining work
 
-No live LLM, H3 ablation, training, independent full-chart audit, hour cross-validation or second-precision astronomical adjudication has been performed. The current sample is small and correlated. Shared ShouXing reference lineage, limited profiles, public-source contamination and answer-copying effects limit conclusions. The optional [fine-tuning plan](docs/finetuning_plan.md) is deferred. Use [CLAUDE_REVIEW.md](CLAUDE_REVIEW.md) for independent review, and [CHECKPOINT_STATUS.md](CHECKPOINT_STATUS.md) for exact submission actions.
+The study needs actual same-model observations before scientific conclusions. The small grouped sample, reference lineage, limited conventions, public-fact contamination, provider drift and answer-transmission effects remain limits. No fine-tuning or model weights were downloaded. [Training plan](docs/finetuning_plan.md) remains optional and deferred.
 
-## Attribution and license
-
-Project code and original synthetic suite: MIT. lunar-python: 6tail, MIT. sxtwl and the original ShouXing astronomical calendar by Xu Jianwei are acknowledged; consult upstream distribution notices (metadata and fork-license differences are in the source audit). HKO anchors are small attributed calendar facts; upstream PDFs and contest data are not redistributed. Literature and official course template links are in the documentation. AI assistance was used for research, implementation, testing and drafting; Yonghao Wang must verify and understand the submitted work and follow the course's applicable disclosure rules.
+Project code/synthetic cases: MIT. lunar-python:6tail/MIT; sxtwl and Xu Jianwei's original ShouXing astronomy are acknowledged. Consult distribution notices and [source audit](docs/source_audit.md) for provenance/license distinctions. HKO calendar facts and course style are attributed; complete third-party datasets and personal birth records are not redistributed. AI assistance was used extensively; Yonghao Wang must review and understand the submitted work and follow applicable disclosure requirements.

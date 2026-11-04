@@ -1,3 +1,5 @@
+> **Historical handoff for commit a50f967.** This document preserves the initial review request. The subsequent independent audit, implemented fixes, current tests and remaining limitations are in [ULTRA_REVIEW_REPORT.md](ULTRA_REVIEW_REPORT.md) and [AUDIT_FINDINGS.md](AUDIT_FINDINGS.md). Original numerical statements below describe the preserved v1 snapshot.
+
 # Independent review handoff
 
 Review snapshot: 2026-11-03. Author: Yonghao Wang, DSC 180A Fall 2026, Domain D25 (advisor Jingbo Shang). AI assistance was used extensively; independent review is required before treating the implementation and report as trustworthy. This file is a handoff, not a claim that Claude has reviewed the project.

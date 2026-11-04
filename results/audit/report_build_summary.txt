@@ -1,0 +1,3 @@
+PASS: Tectonic generated 7 pages; no unresolved citations/placeholders.
+No overfull boxes. One underfull-line warning remains and is visually inspected.
+XCharter text/Charter math and Arial sans restored; mono/plainnat deviations disclosed.

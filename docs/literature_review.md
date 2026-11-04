@@ -33,8 +33,12 @@ BaZiReason can contribute an executable, small diagnostic suite with explicit pe
 - Public source code, calendar rules and dates may appear in model training; secret new dates do not prove absence of contamination.
 - Missing conventions are operationally required even if some dates yield the same chart under both profiles; clarification scores depend on this stated policy.
 - Structured-output failures, provider errors, model drift and token truncation need separate logging.
-- H3 needs its own convention-policy ablation. The implemented two-condition runner does not identify that causal effect.
+- The audit implements a convention-policy ablation; no live H3 result exists. Its minimal and explicit arms share computation rules and schema.
 
 ## Optional training literature
 
 [Hu et al., LoRA](https://arxiv.org/abs/2106.09685) and [Dettmers et al., QLoRA](https://arxiv.org/abs/2305.14314) motivate parameter-efficient adaptation; neither implies success for this task. See [finetuning_plan.md](finetuning_plan.md). No training has been performed.
+
+## Independent numerical reference added in review
+
+[Skyfield's documented solar-term routine](https://rhodesmill.org/skyfield/almanac.html#solar-terms), version1.53, with public JPL DE421 provides a distinct apparent-geocentric astronomical path. Executed24Jie comparisons 2024-2025 differ from lunar-python by -1.168 to +2.261 seconds and from sxtwl by -15.783 to -13.019 seconds. Definitions, kernel hash and raw values are in `results/audit/independent_solar_terms.json`. This supports selected timestamps, not complete charts or all years; no generic root cause is asserted.

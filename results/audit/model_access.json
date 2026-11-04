@@ -1,0 +1,25 @@
+{
+  "date": "2026-11-03",
+  "configured_variable_names": [],
+  "local_inference_binaries": {
+    "ollama": false,
+    "llama-server": false,
+    "mlx_lm.generate": false,
+    "lms": false
+  },
+  "local_inference_python_packages": {
+    "mlx_lm": false,
+    "llama_cpp": false,
+    "transformers": false
+  },
+  "endpoints": {
+    "http://localhost:11434/api/tags": {
+      "reachable": false,
+      "error_class": "URLError"
+    },
+    "http://localhost:1234/v1/models": {
+      "reachable": false,
+      "error_class": "URLError"
+    }
+  }
+}

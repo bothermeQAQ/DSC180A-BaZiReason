@@ -2,8 +2,9 @@
 % https://www.overleaf.com/read/swwcqhtsdwbg
 % Typography subset transcribed from the source editor; unused demonstration,
 % algorithm, appendix and contents helpers omitted. Title, abstract, margins,
-% paragraphs and natbib styling retained. Portable TeX Gyre fonts replace the
-% original XCharter/Arial/Fira Code combination. See docs/template_audit.md.
+% paragraphs and natbib styling retained. Review restores XCharter main/math
+% typography and Arial where installed; mono uses a portable fallback.
+% See docs/template_audit.md.
 \ProvidesPackage{style/dsc180reportstyle}
 \setlength{\footnotesep}{6.65\p@}
 \setlength{\skip\footins}{9\p@ \@plus 4\p@ \@minus 2\p@}
@@ -45,9 +46,10 @@
 \usepackage{natbib}
 \setcitestyle{aysep={}}
 \setlength{\bibsep}{-.1pt}
+\usepackage[bitstream-charter]{mathdesign}
 \usepackage[no-math]{fontspec}
 \defaultfontfeatures{Ligatures=TeX}
-\setmainfont{texgyrepagella-regular.otf}[BoldFont=texgyrepagella-bold.otf,
- ItalicFont=texgyrepagella-italic.otf,BoldItalicFont=texgyrepagella-bolditalic.otf]
-\setsansfont{texgyreheros-regular.otf}
+\setmainfont{XCharter-Roman.otf}[BoldFont=XCharter-Bold.otf,
+ ItalicFont=XCharter-Italic.otf,BoldItalicFont=XCharter-BoldItalic.otf]
+\IfFontExistsTF{Arial}{\setsansfont{Arial}}{\setsansfont{texgyreheros-regular.otf}}
 \setmonofont{texgyrecursor-regular.otf}[Scale=0.9]

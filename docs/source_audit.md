@@ -11,7 +11,7 @@ Audit date: 2026-11-03. Access metadata/hashes: `docs/sources/web_manifest.json`
 | PAL | Official PMLR HTML, downloaded PDF and extracted method discussion | Verified authors, ICML 2023, PMLR 202:10764-10799. No PAL experiment reproduced. |
 | Toolformer | Official NeurIPS publication/abstract and method description | Verified author list/venue. It trains API selection; fixed context here is a narrower intervention. |
 | TimeBench | Official ACL page and BibTeX | Verified seven authors and pp.1204-1228; hierarchy motivates stratified reporting. |
-| Python zoneinfo | Official docs | fold and IANA conversion; timezone data version pinned, system tzpath disabled in research module. |
+| Python zoneinfo | Official docs | fold and IANA conversion; timezone data version pinned; audit replaced process-wide TZPATH reset with direct tzdata resource loading. |
 | HKO 2025 February | Official index -> standalone February PDF -> rendered page visually inspected | Feb 3 day 癸卯; Feb 4 day 甲辰; Lichun Feb 3 22:10 (UTC+8, minute level). Small factual anchors only. Full almanac download initially failed; standalone page succeeded. |
 | LoRA / QLoRA | Official arXiv abstracts and metadata | Used only for deferred plan. No training claims. |
 | Qwen3-1.7B | Official model card and LICENSE fetched from Qwen Hugging Face repository | Apache-2.0 at access; freeze exact revision before any training. No weights downloaded. |
@@ -29,3 +29,9 @@ The supplied sxtwl fork docs show an obsolete `sxtwl.Lunar()` interface. Install
 ## Reuse and attribution
 
 Our Python code is original project code, MIT licensed. Dependency behavior and upstream regression values are attributed. ShouXing astronomy and its original author Xu Jianwei are acknowledged. No upstream complete repository, real birth profiles, contest questions or model weights are published. The course report style is a documented typography adaptation of the public teaching template, with a link to the original and no claim of original template authorship.
+
+## Independent review additions
+
+The review reproduced original 42tests from a Git archive in a fresh environment; see `results/audit/original_pytest.txt`. Exact snapshot is tagged `audit/pre-review-a50f967`. Current source and test evidence are described in `AUDIT_FINDINGS.md` and `docs/audit_calendar.md`. Current yuangu/sxtwl_cpp v2 source/API was checked in addition to the supplied older fork; no exact installed-wheel source provenance is assumed.
+
+Skyfield 1.53 (MIT; [PyPI release](https://pypi.org/project/skyfield/1.53/)) and JPL DE421 were installed/downloaded only for optional astronomy. Inspected actual `almanac_east_asia.solar_terms` source: apparent geocentric Sun, ecliptic of date, IAU2000B nutation. The kernel URL/hash, all package versions, bundled time-scale assumption and24unique term results are recorded. Its comparison is separate from ShouXing and limited to timestamp evidence. Model-access inspection again found no usable configured endpoint; no model/API performance is fabricated.

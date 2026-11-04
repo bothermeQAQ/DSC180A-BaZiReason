@@ -10,7 +10,7 @@ Use [Qwen/Qwen3-1.7B](https://huggingface.co/Qwen/Qwen3-1.7B) as an initial smal
 
 ## Data and splitting
 
-Generate a separate appropriately licensed synthetic training set (initially 2,000-10,000 cases, size subject to learning curves), never train on this 96-case checkpoint suite. Reserve held-out year blocks and transition groups, rather than random near-duplicate timestamp rows. Separate all variants of the same instant, transition, date/profile pair and wording template. Deduplicate exact inputs and normalized instants across splits. Keep externally checked anchors as validation evidence, not training demonstrations.
+Generate a separate appropriately licensed synthetic training set (initially 2,000-10,000 cases, size subject to learning curves), never train on either the original96-case checkpoint suite or the revised152-case audit suite. Reserve held-out year blocks and transition groups, rather than random near-duplicate timestamp rows. Separate all variants of the same instant, transition, date/profile pair and wording template. Deduplicate exact inputs and normalized instants across splits. Keep externally checked anchors as validation evidence, not training demonstrations.
 
 Use only original prompts and synthetic inputs/labels whose licensing has been audited; do not train on BaziQA contest questions or scraped personal records. Engine outputs are implementation labels with uncertainty; exclude unvalidated near-second transitions and disclose reference lineage. Publish split manifests/hashes before model tuning. Public pretraining contamination cannot be ruled out; memorization is tested through held-out years, unseen combinations, and controlled offsets, not asserted absent.
 

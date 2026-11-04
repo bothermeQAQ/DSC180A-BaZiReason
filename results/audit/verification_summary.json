@@ -1,0 +1,58 @@
+{
+  "date": "2026-11-03",
+  "original_commit": "a50f967",
+  "preserved_tag": "audit/pre-review-a50f967",
+  "original_pytest": {
+    "tests": 42,
+    "failed": 0,
+    "clean_environment": true
+  },
+  "revised_pytest": {
+    "tests": 106,
+    "failed": 0,
+    "python_versions": [
+      "3.14.2",
+      "3.12.14"
+    ]
+  },
+  "ruff": "PASS",
+  "format": "PASS",
+  "pip_check": "PASS",
+  "dataset_v1_unchanged": true,
+  "dataset_v2_byte_reproduction": "PASS",
+  "dataset_v2_cases": 152,
+  "dataset_v2_status_counts": {
+    "ok": 126,
+    "invalid": 4,
+    "ambiguous": 16,
+    "unsupported": 6
+  },
+  "v2_main_comparison_cells": 270,
+  "v2_distinct_reference_queries": 169,
+  "v2_supplementary_hours": 126,
+  "independent_jie_count": 24,
+  "independent_timestamp_summary": {
+    "lunar_python": {
+      "min_seconds": -1.168115,
+      "max_seconds": 2.261093
+    },
+    "sxtwl": {
+      "min_seconds": -15.783111,
+      "max_seconds": -13.018692
+    }
+  },
+  "pdf": {
+    "pages": 7,
+    "sha256": "848ae9a5bf2c55a13ef54aef01fe2182a6c8b895b947afff7337250840cb78c1",
+    "text_check": "PASS",
+    "all_pages_visually_inspected": true,
+    "overfull_boxes": false,
+    "remaining_warning": "One underfull line; visually no clipping or overlap",
+    "template": "XCharter text/math restored; mono/plainnat deviations disclosed"
+  },
+  "live_llm_experiments": "NOT RUN",
+  "paid_model_calls": 0,
+  "training": "NOT RUN",
+  "model_access_evidence": "results/audit/model_access.json",
+  "publication": "Pending independent remote verification for revised artifacts; prior publication log is historical"
+}
