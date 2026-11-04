@@ -1,0 +1,24 @@
+{
+  "original_snapshot": "a50f967",
+  "n_records": 96,
+  "unique_inputs": 93,
+  "exact_duplicate_input_ids": [
+    [
+      "BR-069",
+      "BR-071",
+      "BR-073",
+      "BR-075"
+    ]
+  ],
+  "cross_check_cells": 184,
+  "cells_by_pillar": {
+    "day": 80,
+    "year": 52,
+    "month": 52
+  },
+  "excluded_all_hour_cases": 80,
+  "solar_term_cases_without_year_month_checks": 24,
+  "unique_normalized_civil_date_pillar_cells_not_reference_queries": 115,
+  "unique_actual_reference_date_pillar_queries": 117,
+  "distinct_count_note": "Civil-date grouping differs from actual day lookup date for sect1late Zi; use117 for reference query count, not115."
+}

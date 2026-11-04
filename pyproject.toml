@@ -11,6 +11,7 @@ license = "MIT"
 dependencies = ["lunar-python==1.4.8", "httpx==0.28.1", "tzdata==2026.6"]
 
 [project.optional-dependencies]
+astronomy = ["skyfield==1.53"]
 dev = ["pytest==9.2.0", "ruff==0.17.3", "sxtwl==2.0.7", "pypdf==6.21.4"]
 
 [project.scripts]
