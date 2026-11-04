@@ -93,7 +93,13 @@ def test_equivalent_instants_and_china_historical_dst():
 
 def test_explicit_unsupported_and_missing_conventions():
     inputs = {"datetime": "2024-06-15T12:00:00", "timezone": "UTC"}
-    assert compute_chart(inputs)["status"] == "ambiguous"
+    # No sect: answerable at 20:00 UTC+08, where the sect cannot change any pillar...
+    assert compute_chart(inputs)["status"] == "ok"
+    assert compute_chart(inputs)["conventions"]["sect"] is None
+    # ...but ambiguous at 23:30 UTC+08, where the two sects give different days.
+    late = {"datetime": "2024-06-15T15:30:00", "timezone": "UTC"}
+    assert compute_chart(late)["status"] == "ambiguous"
+    assert compute_chart(late)["reason_codes"] == ["missing_convention"]
     assert compute_chart(inputs, {"sect": 2, "solar_time": "true_solar"})["status"] == "unsupported"
     assert compute_chart(inputs, {"sect": True})["status"] == "invalid"
     assert compute_chart(inputs, {"sect": 3})["status"] == "invalid"

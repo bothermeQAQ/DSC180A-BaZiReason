@@ -9,12 +9,15 @@ import pytest
 from bazireason.baselines import run_case
 from bazireason.calendar_engine import compute_chart
 from bazireason.cli import main
+from bazireason.controls import corrupt_context
 from bazireason.dataset_generator import generate_dataset, read_jsonl, write_jsonl
 from bazireason.evaluator import evaluate, paired_estimate
 from bazireason.llm_clients import Completion, SyntheticMockClient
 from bazireason.metrics import aggregate, score_case
 from bazireason.prompts import CALENDAR_SPEC, EXPLICIT_POLICY, build_messages
 from bazireason.schema import valid_response
+
+V1 = "data/synthetic/checkpoint.jsonl"
 
 
 @pytest.fixture(scope="module")
@@ -42,9 +45,15 @@ def test_controls_do_not_read_gold_or_mutate_reference(cases):
     c["expected"] = {"SENTINEL_LABEL": 999}
     assert facts == build_messages(c, "tool_facts", reference)
     assert "SENTINEL" not in json.dumps(facts)
-    supplied_facts = json.loads(facts[1]["content"].split("Normalized timestamp context:\n")[1])
-    assert set(supplied_facts) == {"normalized_datetime", "provenance"}
-    assert "pillars" not in supplied_facts and "status" not in supplied_facts
+    supplied_facts = json.loads(facts[1]["content"].split("Normalized time tool facts:\n")[1])
+    assert set(supplied_facts) == {
+        "reference_clock",
+        "input_precision",
+        "repeated_wall_time",
+        "candidates",
+        "normalization_error",
+    }
+    assert "pillars" not in json.dumps(supplied_facts) and "status" not in supplied_facts
     supplied_corrupt = json.loads(corrupt[1]["content"].split("Calendar tool context:\n")[1])
     assert supplied_corrupt["pillars"]["hour"] != reference["pillars"]["hour"]
     assert all(
@@ -76,9 +85,14 @@ def test_h2_corruption_adherence_is_distinct_from_accuracy(cases):
             return Completion(text, self.model, 0)
 
     record = run_case(cases[0], CopySuppliedContext(), "tool_corrupted")
-    result = aggregate([score_case(cases[0], record)])
+    # The corruption comes from the design, never from the (possibly missing) record.
+    corruption = corrupt_context(
+        cases[0], compute_chart(cases[0]["input"], cases[0]["convention"])
+    )[1]
+    assert corruption["type"] == "hour_stem" and record["corruption"] == corruption
+    result = aggregate([score_case(cases[0], record, corruption)])
     assert result["exact_accuracy"] == 0
-    assert result["corrupted_hour_following_rate"] == 1
+    assert result["corruption_following_rate"] == 1
     assert result["per_pillar_accuracy"]["day"] == 1
 
 
@@ -176,7 +190,18 @@ def test_cli_exact_selection_controls_and_early_manifest(cases, tmp_path, monkey
     monkeypatch.setattr(
         sys,
         "argv",
-        ["bazireason", "run", "--output", str(out), "--case-ids", ids, "--methods", "copy_context"],
+        [
+            "bazireason",
+            "run",
+            "--data",
+            V1,
+            "--output",
+            str(out),
+            "--case-ids",
+            ids,
+            "--methods",
+            "copy_context",
+        ],
     )
     main()
     records = read_jsonl(out)
@@ -188,7 +213,16 @@ def test_cli_exact_selection_controls_and_early_manifest(cases, tmp_path, monkey
     monkeypatch.setattr(
         sys,
         "argv",
-        ["bazireason", "evaluate", "--predictions", str(out), "--output", str(auto_scores)],
+        [
+            "bazireason",
+            "evaluate",
+            "--data",
+            V1,
+            "--predictions",
+            str(out),
+            "--output",
+            str(auto_scores),
+        ],
     )
     main()
     auto = json.loads(auto_scores.read_text())
@@ -203,7 +237,11 @@ def test_cli_exact_selection_controls_and_early_manifest(cases, tmp_path, monkey
 
     monkeypatch.setattr("bazireason.cli.SyntheticMockClient", InterruptedClient)
     interrupted = tmp_path / "interrupted.jsonl"
-    monkeypatch.setattr(sys, "argv", ["bazireason", "run", "--output", str(interrupted)])
+    monkeypatch.setattr(
+        sys,
+        "argv",
+        ["bazireason", "run", "--data", V1, "--limit", "4", "--output", str(interrupted)],
+    )
     with pytest.raises(KeyboardInterrupt):
         main()
     declared = json.loads((tmp_path / "interrupted.jsonl.manifest.json").read_text())
@@ -216,7 +254,9 @@ def test_manifest_prevents_silently_reducing_interrupted_denominator(cases, tmp_
     scores = tmp_path / "scores.json"
     write_jsonl(data, cases[:2])
     monkeypatch.setattr(
-        sys, "argv", ["bazireason", "run", "--data", str(data), "--output", str(out)]
+        sys,
+        "argv",
+        ["bazireason", "run", "--data", str(data), "--limit", "4", "--output", str(out)],
     )
     main()
     out.write_text(out.read_text().splitlines()[0] + "\n")

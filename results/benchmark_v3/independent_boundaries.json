@@ -1,0 +1,550 @@
+{
+  "kind": "independent_ephemeris_side_check_not_full_chart_validation",
+  "versions": {
+    "skyfield": "1.53",
+    "numpy": "2.5.4",
+    "jplephem": "2.24",
+    "lunar-python": "1.4.8"
+  },
+  "kernel": {
+    "name": "de421.bsp",
+    "sha256": "a20a7139da04cbc462454634918e9a9ca69127044e2cc9d4f9c16e238d2deedc"
+  },
+  "definition": "Apparent geocentric solar ecliptic longitude of date (IAU2000B nutation); Skyfield almanac_east_asia solar terms; bundled time-scale data.",
+  "n_events": 18,
+  "n_cases": 40,
+  "engine_minus_skyfield_seconds": {
+    "min": -3.121075,
+    "max": 1.323375
+  },
+  "side_disagreements": [],
+  "rows": [
+    {
+      "case_id": "B3-003",
+      "term": "立春",
+      "year": 1978,
+      "input": "1978-02-04T12:24:57",
+      "status": "ok",
+      "engine_side": "before",
+      "skyfield_side": "before",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-004",
+      "term": "立春",
+      "year": 1978,
+      "input": "1978-02-04T12:28:57",
+      "status": "ok",
+      "engine_side": "after",
+      "skyfield_side": "after",
+      "agrees": true
+    },
+    {
+      "term": "立春",
+      "year": 1978,
+      "engine_minus_skyfield_seconds": -0.451928,
+      "skyfield_jpl_utc8": "1978-02-04T12:26:57.451928+08:00",
+      "lunar_python_utc8": "1978-02-04T12:26:57+08:00"
+    },
+    {
+      "case_id": "B3-199",
+      "term": "立夏",
+      "year": 1980,
+      "input": "1980-05-05T16:43",
+      "status": "ok",
+      "engine_side": "before",
+      "skyfield_side": "before",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-200",
+      "term": "立夏",
+      "year": 1980,
+      "input": "1980-05-05T16:44",
+      "status": "ambiguous",
+      "engine_side": "inside",
+      "skyfield_side": "inside",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-201",
+      "term": "立夏",
+      "year": 1980,
+      "input": "1980-05-05T16:45",
+      "status": "ok",
+      "engine_side": "after",
+      "skyfield_side": "after",
+      "agrees": true
+    },
+    {
+      "term": "立夏",
+      "year": 1980,
+      "engine_minus_skyfield_seconds": -0.529324,
+      "skyfield_jpl_utc8": "1980-05-05T16:44:28.529324+08:00",
+      "lunar_python_utc8": "1980-05-05T16:44:28+08:00"
+    },
+    {
+      "case_id": "B3-009",
+      "term": "惊蛰",
+      "year": 1982,
+      "input": "1982-03-06T05:52:34",
+      "status": "ok",
+      "engine_side": "before",
+      "skyfield_side": "before",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-010",
+      "term": "惊蛰",
+      "year": 1982,
+      "input": "1982-03-06T05:56:34",
+      "status": "ok",
+      "engine_side": "after",
+      "skyfield_side": "after",
+      "agrees": true
+    },
+    {
+      "term": "惊蛰",
+      "year": 1982,
+      "engine_minus_skyfield_seconds": -1.317766,
+      "skyfield_jpl_utc8": "1982-03-06T05:54:35.317766+08:00",
+      "lunar_python_utc8": "1982-03-06T05:54:34+08:00"
+    },
+    {
+      "case_id": "B3-015",
+      "term": "清明",
+      "year": 1994,
+      "input": "1994-04-05T08:29:48",
+      "status": "ok",
+      "engine_side": "before",
+      "skyfield_side": "before",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-016",
+      "term": "清明",
+      "year": 1994,
+      "input": "1994-04-05T08:33:48",
+      "status": "ok",
+      "engine_side": "after",
+      "skyfield_side": "after",
+      "agrees": true
+    },
+    {
+      "term": "清明",
+      "year": 1994,
+      "engine_minus_skyfield_seconds": 1.323375,
+      "skyfield_jpl_utc8": "1994-04-05T08:31:46.676625+08:00",
+      "lunar_python_utc8": "1994-04-05T08:31:48+08:00"
+    },
+    {
+      "case_id": "B3-021",
+      "term": "立夏",
+      "year": 1997,
+      "input": "1997-05-05T19:17:26",
+      "status": "ok",
+      "engine_side": "before",
+      "skyfield_side": "before",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-022",
+      "term": "立夏",
+      "year": 1997,
+      "input": "1997-05-05T19:21:26",
+      "status": "ok",
+      "engine_side": "after",
+      "skyfield_side": "after",
+      "agrees": true
+    },
+    {
+      "term": "立夏",
+      "year": 1997,
+      "engine_minus_skyfield_seconds": -1.001098,
+      "skyfield_jpl_utc8": "1997-05-05T19:19:27.001098+08:00",
+      "lunar_python_utc8": "1997-05-05T19:19:26+08:00"
+    },
+    {
+      "case_id": "B3-202",
+      "term": "白露",
+      "year": 2000,
+      "input": "2000-09-07T15:58",
+      "status": "ok",
+      "engine_side": "before",
+      "skyfield_side": "before",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-203",
+      "term": "白露",
+      "year": 2000,
+      "input": "2000-09-07T15:59",
+      "status": "ambiguous",
+      "engine_side": "inside",
+      "skyfield_side": "inside",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-204",
+      "term": "白露",
+      "year": 2000,
+      "input": "2000-09-07T16:00",
+      "status": "ok",
+      "engine_side": "after",
+      "skyfield_side": "after",
+      "agrees": true
+    },
+    {
+      "term": "白露",
+      "year": 2000,
+      "engine_minus_skyfield_seconds": 0.533608,
+      "skyfield_jpl_utc8": "2000-09-07T15:59:09.466392+08:00",
+      "lunar_python_utc8": "2000-09-07T15:59:10+08:00"
+    },
+    {
+      "case_id": "B3-027",
+      "term": "芒种",
+      "year": 2003,
+      "input": "2003-06-06T10:17:43",
+      "status": "ok",
+      "engine_side": "before",
+      "skyfield_side": "before",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-028",
+      "term": "芒种",
+      "year": 2003,
+      "input": "2003-06-06T10:21:43",
+      "status": "ok",
+      "engine_side": "after",
+      "skyfield_side": "after",
+      "agrees": true
+    },
+    {
+      "term": "芒种",
+      "year": 2003,
+      "engine_minus_skyfield_seconds": -0.394038,
+      "skyfield_jpl_utc8": "2003-06-06T10:19:43.394038+08:00",
+      "lunar_python_utc8": "2003-06-06T10:19:43+08:00"
+    },
+    {
+      "case_id": "B3-033",
+      "term": "小暑",
+      "year": 2009,
+      "input": "2009-07-07T07:11:29",
+      "status": "ok",
+      "engine_side": "before",
+      "skyfield_side": "before",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-034",
+      "term": "小暑",
+      "year": 2009,
+      "input": "2009-07-07T07:15:29",
+      "status": "ok",
+      "engine_side": "after",
+      "skyfield_side": "after",
+      "agrees": true
+    },
+    {
+      "term": "小暑",
+      "year": 2009,
+      "engine_minus_skyfield_seconds": -0.497645,
+      "skyfield_jpl_utc8": "2009-07-07T07:13:29.497645+08:00",
+      "lunar_python_utc8": "2009-07-07T07:13:29+08:00"
+    },
+    {
+      "case_id": "B3-039",
+      "term": "立秋",
+      "year": 2012,
+      "input": "2012-08-07T10:28:33",
+      "status": "ok",
+      "engine_side": "before",
+      "skyfield_side": "before",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-040",
+      "term": "立秋",
+      "year": 2012,
+      "input": "2012-08-07T10:32:33",
+      "status": "ok",
+      "engine_side": "after",
+      "skyfield_side": "after",
+      "agrees": true
+    },
+    {
+      "term": "立秋",
+      "year": 2012,
+      "engine_minus_skyfield_seconds": 0.247279,
+      "skyfield_jpl_utc8": "2012-08-07T10:30:32.752721+08:00",
+      "lunar_python_utc8": "2012-08-07T10:30:33+08:00"
+    },
+    {
+      "case_id": "B3-045",
+      "term": "白露",
+      "year": 2016,
+      "input": "2016-09-07T12:49:05",
+      "status": "ok",
+      "engine_side": "before",
+      "skyfield_side": "before",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-046",
+      "term": "白露",
+      "year": 2016,
+      "input": "2016-09-07T12:53:05",
+      "status": "ok",
+      "engine_side": "after",
+      "skyfield_side": "after",
+      "agrees": true
+    },
+    {
+      "term": "白露",
+      "year": 2016,
+      "engine_minus_skyfield_seconds": -0.985227,
+      "skyfield_jpl_utc8": "2016-09-07T12:51:05.985227+08:00",
+      "lunar_python_utc8": "2016-09-07T12:51:05+08:00"
+    },
+    {
+      "case_id": "B3-205",
+      "term": "大雪",
+      "year": 2017,
+      "input": "2017-12-07T06:31",
+      "status": "ok",
+      "engine_side": "before",
+      "skyfield_side": "before",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-206",
+      "term": "大雪",
+      "year": 2017,
+      "input": "2017-12-07T06:32",
+      "status": "ambiguous",
+      "engine_side": "inside",
+      "skyfield_side": "inside",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-207",
+      "term": "大雪",
+      "year": 2017,
+      "input": "2017-12-07T06:33",
+      "status": "ok",
+      "engine_side": "after",
+      "skyfield_side": "after",
+      "agrees": true
+    },
+    {
+      "term": "大雪",
+      "year": 2017,
+      "engine_minus_skyfield_seconds": -0.140974,
+      "skyfield_jpl_utc8": "2017-12-07T06:32:39.140974+08:00",
+      "lunar_python_utc8": "2017-12-07T06:32:39+08:00"
+    },
+    {
+      "case_id": "B3-051",
+      "term": "寒露",
+      "year": 2021,
+      "input": "2021-10-08T09:37:03",
+      "status": "ok",
+      "engine_side": "before",
+      "skyfield_side": "before",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-052",
+      "term": "寒露",
+      "year": 2021,
+      "input": "2021-10-08T09:41:03",
+      "status": "ok",
+      "engine_side": "after",
+      "skyfield_side": "after",
+      "agrees": true
+    },
+    {
+      "term": "寒露",
+      "year": 2021,
+      "engine_minus_skyfield_seconds": 0.780356,
+      "skyfield_jpl_utc8": "2021-10-08T09:39:02.219644+08:00",
+      "lunar_python_utc8": "2021-10-08T09:39:03+08:00"
+    },
+    {
+      "case_id": "B3-057",
+      "term": "立冬",
+      "year": 2029,
+      "input": "2029-11-07T11:14:46",
+      "status": "ok",
+      "engine_side": "before",
+      "skyfield_side": "before",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-058",
+      "term": "立冬",
+      "year": 2029,
+      "input": "2029-11-07T11:18:46",
+      "status": "ok",
+      "engine_side": "after",
+      "skyfield_side": "after",
+      "agrees": true
+    },
+    {
+      "term": "立冬",
+      "year": 2029,
+      "engine_minus_skyfield_seconds": 0.706786,
+      "skyfield_jpl_utc8": "2029-11-07T11:16:45.293214+08:00",
+      "lunar_python_utc8": "2029-11-07T11:16:46+08:00"
+    },
+    {
+      "case_id": "B3-063",
+      "term": "大雪",
+      "year": 2034,
+      "input": "2034-12-07T09:34:49",
+      "status": "ok",
+      "engine_side": "before",
+      "skyfield_side": "before",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-064",
+      "term": "大雪",
+      "year": 2034,
+      "input": "2034-12-07T09:38:49",
+      "status": "ok",
+      "engine_side": "after",
+      "skyfield_side": "after",
+      "agrees": true
+    },
+    {
+      "term": "大雪",
+      "year": 2034,
+      "engine_minus_skyfield_seconds": -1.252225,
+      "skyfield_jpl_utc8": "2034-12-07T09:36:50.252225+08:00",
+      "lunar_python_utc8": "2034-12-07T09:36:49+08:00"
+    },
+    {
+      "case_id": "B3-069",
+      "term": "小寒",
+      "year": 2037,
+      "input": "2037-01-05T08:32:05",
+      "status": "ok",
+      "engine_side": "before",
+      "skyfield_side": "before",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-070",
+      "term": "小寒",
+      "year": 2037,
+      "input": "2037-01-05T08:36:05",
+      "status": "ok",
+      "engine_side": "after",
+      "skyfield_side": "after",
+      "agrees": true
+    },
+    {
+      "term": "小寒",
+      "year": 2037,
+      "engine_minus_skyfield_seconds": 0.409869,
+      "skyfield_jpl_utc8": "2037-01-05T08:34:04.590131+08:00",
+      "lunar_python_utc8": "2037-01-05T08:34:05+08:00"
+    },
+    {
+      "case_id": "B3-075",
+      "term": "立春",
+      "year": 2041,
+      "input": "2041-02-03T19:23:11",
+      "status": "ok",
+      "engine_side": "before",
+      "skyfield_side": "before",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-076",
+      "term": "立春",
+      "year": 2041,
+      "input": "2041-02-03T19:27:11",
+      "status": "ok",
+      "engine_side": "after",
+      "skyfield_side": "after",
+      "agrees": true
+    },
+    {
+      "term": "立春",
+      "year": 2041,
+      "engine_minus_skyfield_seconds": -0.557711,
+      "skyfield_jpl_utc8": "2041-02-03T19:25:11.557711+08:00",
+      "lunar_python_utc8": "2041-02-03T19:25:11+08:00"
+    },
+    {
+      "case_id": "B3-208",
+      "term": "清明",
+      "year": 2043,
+      "input": "2043-04-05T05:19",
+      "status": "ok",
+      "engine_side": "before",
+      "skyfield_side": "before",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-209",
+      "term": "清明",
+      "year": 2043,
+      "input": "2043-04-05T05:20",
+      "status": "ambiguous",
+      "engine_side": "inside",
+      "skyfield_side": "inside",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-210",
+      "term": "清明",
+      "year": 2043,
+      "input": "2043-04-05T05:21",
+      "status": "ok",
+      "engine_side": "after",
+      "skyfield_side": "after",
+      "agrees": true
+    },
+    {
+      "term": "清明",
+      "year": 2043,
+      "engine_minus_skyfield_seconds": -1.708546,
+      "skyfield_jpl_utc8": "2043-04-05T05:20:19.708546+08:00",
+      "lunar_python_utc8": "2043-04-05T05:20:18+08:00"
+    },
+    {
+      "case_id": "B3-081",
+      "term": "立春",
+      "year": 2047,
+      "input": "2047-02-04T06:16:05",
+      "status": "ok",
+      "engine_side": "before",
+      "skyfield_side": "before",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-082",
+      "term": "立春",
+      "year": 2047,
+      "input": "2047-02-04T06:20:05",
+      "status": "ok",
+      "engine_side": "after",
+      "skyfield_side": "after",
+      "agrees": true
+    },
+    {
+      "term": "立春",
+      "year": 2047,
+      "engine_minus_skyfield_seconds": -3.121075,
+      "skyfield_jpl_utc8": "2047-02-04T06:18:08.121075+08:00",
+      "lunar_python_utc8": "2047-02-04T06:18:05+08:00"
+    }
+  ],
+  "limitation": "Covers only the cases the low-precision oracle defers. Before 1972, Skyfield treats UTC with a fixed offset, so second-level residuals for those years partly reflect time-scale handling."
+}

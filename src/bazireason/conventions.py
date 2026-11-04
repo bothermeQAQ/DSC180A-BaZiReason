@@ -6,6 +6,21 @@ STEMS = "甲乙丙丁戊己庚辛壬癸"
 BRANCHES = "子丑寅卯辰巳午未申酉戌亥"
 CYCLE = tuple(STEMS[i % 10] + BRANCHES[i % 12] for i in range(60))
 PILLARS = ("year", "month", "day", "hour")
+# The twelve month-start solar terms in calendar order; 立春 starts the 寅 month.
+JIE = (
+    "小寒",
+    "立春",
+    "惊蛰",
+    "清明",
+    "立夏",
+    "芒种",
+    "小暑",
+    "立秋",
+    "白露",
+    "寒露",
+    "立冬",
+    "大雪",
+)
 
 
 @dataclass(frozen=True)
@@ -26,6 +41,7 @@ class Convention:
         return asdict(self)
 
 
+# Historical v1/v2 prompt text, kept so earlier prompt hashes stay explainable.
 CONVENTION_SPEC = (
     "Normalize the civil instant to fixed UTC+08:00 for ALL four pillars. "
     "This is an experimental reference-clock convention, not a universal local chart. "

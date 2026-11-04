@@ -11,17 +11,29 @@ import sys
 from pathlib import Path
 
 DESIGNS = {
-    "h2": ["direct", "tool_context", "tool_facts", "tool_corrupted", "copy_context"],
-    "h3": ["direct", "direct_minimal", "tool_context", "tool_context_minimal"],
-    "combined": [
+    "h2": [
         "direct",
-        "direct_minimal",
-        "tool_context",
-        "tool_context_minimal",
         "tool_facts",
+        "tool_intermediate",
+        "tool_context",
         "tool_corrupted",
         "copy_context",
     ],
+    "h3": ["direct", "direct_minimal", "tool_context", "tool_context_minimal", "heuristic_surface"],
+    "combined": [
+        "direct",
+        "direct_minimal",
+        "tool_facts",
+        "tool_intermediate",
+        "tool_intermediate_minimal",
+        "tool_context",
+        "tool_context_minimal",
+        "tool_corrupted",
+        "copy_context",
+        "heuristic_surface",
+    ],
+    # Zero model calls: answer-copy ceiling and three trivial floors.
+    "baselines": ["copy_context", "heuristic_surface", "always_abstain", "always_answer"],
 }
 
 
@@ -29,8 +41,8 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--backend", choices=["mock", "api"], default="mock")
     parser.add_argument("--design", choices=DESIGNS, default="h3")
-    parser.add_argument("--data", default="data/synthetic/audit_v2.jsonl")
-    parser.add_argument("--ids", default="data/synthetic/audit_pilot_ids.json")
+    parser.add_argument("--data", default="data/synthetic/benchmark_v3.jsonl")
+    parser.add_argument("--ids", default="data/synthetic/benchmark_v3_pilot_ids.json")
     parser.add_argument("--trials", type=int, default=1)
     parser.add_argument("--max-tokens", type=int, default=512)
     parser.add_argument("--max-calls", type=int, required=True)

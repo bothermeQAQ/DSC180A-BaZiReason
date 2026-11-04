@@ -1,0 +1,6842 @@
+{
+  "kind": "computational_diagnostics_not_llm_results",
+  "n_cases": 261,
+  "category_counts": {
+    "jie_ladder": 84,
+    "zi_ladder": 48,
+    "timezone_pair": 12,
+    "dst_fold": 20,
+    "dst_gap": 4,
+    "h3_sect": 30,
+    "h3_precision": 14,
+    "h3_missing": 16,
+    "invalid_input": 10,
+    "unsupported_input": 11,
+    "ordinary": 12
+  },
+  "status_counts": {
+    "ok": 225,
+    "ambiguous": 21,
+    "invalid": 8,
+    "unsupported": 7
+  },
+  "expected_status_counts": {
+    "ok": 225,
+    "ambiguous": 21,
+    "invalid": 8,
+    "unsupported": 7
+  },
+  "reference_replay": {
+    "kind": "same_engine_label_integrity_check_not_validation",
+    "agreements": 261,
+    "disagreement_case_ids": []
+  },
+  "reference_versions": {
+    "lunar-python": "1.4.8",
+    "sxtwl": "2.0.7"
+  },
+  "cross_implementation_checks": 539,
+  "cross_implementation_agreements": 539,
+  "cross_implementation_disagreements": [],
+  "checks": [
+    {
+      "case_id": "B3-001",
+      "pillar": "day",
+      "reference_date": "1978-01-30",
+      "lunar_python": "壬辰",
+      "sxtwl": "壬辰",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-001",
+      "pillar": "year",
+      "reference_date": "1978-01-30",
+      "lunar_python": "丁巳",
+      "sxtwl": "丁巳",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-001",
+      "pillar": "month",
+      "reference_date": "1978-01-30",
+      "lunar_python": "癸丑",
+      "sxtwl": "癸丑",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-002",
+      "pillar": "day",
+      "reference_date": "1978-02-04",
+      "lunar_python": "丁酉",
+      "sxtwl": "丁酉",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-003",
+      "pillar": "day",
+      "reference_date": "1978-02-04",
+      "lunar_python": "丁酉",
+      "sxtwl": "丁酉",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-004",
+      "pillar": "day",
+      "reference_date": "1978-02-04",
+      "lunar_python": "丁酉",
+      "sxtwl": "丁酉",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-005",
+      "pillar": "day",
+      "reference_date": "1978-02-04",
+      "lunar_python": "丁酉",
+      "sxtwl": "丁酉",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-006",
+      "pillar": "day",
+      "reference_date": "1978-02-09",
+      "lunar_python": "壬寅",
+      "sxtwl": "壬寅",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-006",
+      "pillar": "year",
+      "reference_date": "1978-02-09",
+      "lunar_python": "戊午",
+      "sxtwl": "戊午",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-006",
+      "pillar": "month",
+      "reference_date": "1978-02-09",
+      "lunar_python": "甲寅",
+      "sxtwl": "甲寅",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-007",
+      "pillar": "day",
+      "reference_date": "1982-03-01",
+      "lunar_python": "癸未",
+      "sxtwl": "癸未",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-007",
+      "pillar": "year",
+      "reference_date": "1982-03-01",
+      "lunar_python": "壬戌",
+      "sxtwl": "壬戌",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-007",
+      "pillar": "month",
+      "reference_date": "1982-03-01",
+      "lunar_python": "壬寅",
+      "sxtwl": "壬寅",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-008",
+      "pillar": "day",
+      "reference_date": "1982-03-06",
+      "lunar_python": "戊子",
+      "sxtwl": "戊子",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-009",
+      "pillar": "day",
+      "reference_date": "1982-03-06",
+      "lunar_python": "戊子",
+      "sxtwl": "戊子",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-010",
+      "pillar": "day",
+      "reference_date": "1982-03-06",
+      "lunar_python": "戊子",
+      "sxtwl": "戊子",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-011",
+      "pillar": "day",
+      "reference_date": "1982-03-06",
+      "lunar_python": "戊子",
+      "sxtwl": "戊子",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-012",
+      "pillar": "day",
+      "reference_date": "1982-03-11",
+      "lunar_python": "癸巳",
+      "sxtwl": "癸巳",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-012",
+      "pillar": "year",
+      "reference_date": "1982-03-11",
+      "lunar_python": "壬戌",
+      "sxtwl": "壬戌",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-012",
+      "pillar": "month",
+      "reference_date": "1982-03-11",
+      "lunar_python": "癸卯",
+      "sxtwl": "癸卯",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-013",
+      "pillar": "day",
+      "reference_date": "1994-03-31",
+      "lunar_python": "丙辰",
+      "sxtwl": "丙辰",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-013",
+      "pillar": "year",
+      "reference_date": "1994-03-31",
+      "lunar_python": "甲戌",
+      "sxtwl": "甲戌",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-013",
+      "pillar": "month",
+      "reference_date": "1994-03-31",
+      "lunar_python": "丁卯",
+      "sxtwl": "丁卯",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-014",
+      "pillar": "day",
+      "reference_date": "1994-04-05",
+      "lunar_python": "辛酉",
+      "sxtwl": "辛酉",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-015",
+      "pillar": "day",
+      "reference_date": "1994-04-05",
+      "lunar_python": "辛酉",
+      "sxtwl": "辛酉",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-016",
+      "pillar": "day",
+      "reference_date": "1994-04-05",
+      "lunar_python": "辛酉",
+      "sxtwl": "辛酉",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-017",
+      "pillar": "day",
+      "reference_date": "1994-04-05",
+      "lunar_python": "辛酉",
+      "sxtwl": "辛酉",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-018",
+      "pillar": "day",
+      "reference_date": "1994-04-10",
+      "lunar_python": "丙寅",
+      "sxtwl": "丙寅",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-018",
+      "pillar": "year",
+      "reference_date": "1994-04-10",
+      "lunar_python": "甲戌",
+      "sxtwl": "甲戌",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-018",
+      "pillar": "month",
+      "reference_date": "1994-04-10",
+      "lunar_python": "戊辰",
+      "sxtwl": "戊辰",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-019",
+      "pillar": "day",
+      "reference_date": "1997-04-30",
+      "lunar_python": "壬寅",
+      "sxtwl": "壬寅",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-019",
+      "pillar": "year",
+      "reference_date": "1997-04-30",
+      "lunar_python": "丁丑",
+      "sxtwl": "丁丑",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-019",
+      "pillar": "month",
+      "reference_date": "1997-04-30",
+      "lunar_python": "甲辰",
+      "sxtwl": "甲辰",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-020",
+      "pillar": "day",
+      "reference_date": "1997-05-05",
+      "lunar_python": "丁未",
+      "sxtwl": "丁未",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-021",
+      "pillar": "day",
+      "reference_date": "1997-05-05",
+      "lunar_python": "丁未",
+      "sxtwl": "丁未",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-022",
+      "pillar": "day",
+      "reference_date": "1997-05-05",
+      "lunar_python": "丁未",
+      "sxtwl": "丁未",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-023",
+      "pillar": "day",
+      "reference_date": "1997-05-05",
+      "lunar_python": "丁未",
+      "sxtwl": "丁未",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-024",
+      "pillar": "day",
+      "reference_date": "1997-05-10",
+      "lunar_python": "壬子",
+      "sxtwl": "壬子",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-024",
+      "pillar": "year",
+      "reference_date": "1997-05-10",
+      "lunar_python": "丁丑",
+      "sxtwl": "丁丑",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-024",
+      "pillar": "month",
+      "reference_date": "1997-05-10",
+      "lunar_python": "乙巳",
+      "sxtwl": "乙巳",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-025",
+      "pillar": "day",
+      "reference_date": "2003-06-01",
+      "lunar_python": "乙巳",
+      "sxtwl": "乙巳",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-025",
+      "pillar": "year",
+      "reference_date": "2003-06-01",
+      "lunar_python": "癸未",
+      "sxtwl": "癸未",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-025",
+      "pillar": "month",
+      "reference_date": "2003-06-01",
+      "lunar_python": "丁巳",
+      "sxtwl": "丁巳",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-026",
+      "pillar": "day",
+      "reference_date": "2003-06-06",
+      "lunar_python": "庚戌",
+      "sxtwl": "庚戌",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-027",
+      "pillar": "day",
+      "reference_date": "2003-06-06",
+      "lunar_python": "庚戌",
+      "sxtwl": "庚戌",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-028",
+      "pillar": "day",
+      "reference_date": "2003-06-06",
+      "lunar_python": "庚戌",
+      "sxtwl": "庚戌",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-029",
+      "pillar": "day",
+      "reference_date": "2003-06-06",
+      "lunar_python": "庚戌",
+      "sxtwl": "庚戌",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-030",
+      "pillar": "day",
+      "reference_date": "2003-06-11",
+      "lunar_python": "乙卯",
+      "sxtwl": "乙卯",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-030",
+      "pillar": "year",
+      "reference_date": "2003-06-11",
+      "lunar_python": "癸未",
+      "sxtwl": "癸未",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-030",
+      "pillar": "month",
+      "reference_date": "2003-06-11",
+      "lunar_python": "戊午",
+      "sxtwl": "戊午",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-031",
+      "pillar": "day",
+      "reference_date": "2009-07-02",
+      "lunar_python": "戊申",
+      "sxtwl": "戊申",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-031",
+      "pillar": "year",
+      "reference_date": "2009-07-02",
+      "lunar_python": "己丑",
+      "sxtwl": "己丑",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-031",
+      "pillar": "month",
+      "reference_date": "2009-07-02",
+      "lunar_python": "庚午",
+      "sxtwl": "庚午",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-032",
+      "pillar": "day",
+      "reference_date": "2009-07-07",
+      "lunar_python": "癸丑",
+      "sxtwl": "癸丑",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-033",
+      "pillar": "day",
+      "reference_date": "2009-07-07",
+      "lunar_python": "癸丑",
+      "sxtwl": "癸丑",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-034",
+      "pillar": "day",
+      "reference_date": "2009-07-07",
+      "lunar_python": "癸丑",
+      "sxtwl": "癸丑",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-035",
+      "pillar": "day",
+      "reference_date": "2009-07-07",
+      "lunar_python": "癸丑",
+      "sxtwl": "癸丑",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-036",
+      "pillar": "day",
+      "reference_date": "2009-07-12",
+      "lunar_python": "戊午",
+      "sxtwl": "戊午",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-036",
+      "pillar": "year",
+      "reference_date": "2009-07-12",
+      "lunar_python": "己丑",
+      "sxtwl": "己丑",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-036",
+      "pillar": "month",
+      "reference_date": "2009-07-12",
+      "lunar_python": "辛未",
+      "sxtwl": "辛未",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-037",
+      "pillar": "day",
+      "reference_date": "2012-08-02",
+      "lunar_python": "乙未",
+      "sxtwl": "乙未",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-037",
+      "pillar": "year",
+      "reference_date": "2012-08-02",
+      "lunar_python": "壬辰",
+      "sxtwl": "壬辰",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-037",
+      "pillar": "month",
+      "reference_date": "2012-08-02",
+      "lunar_python": "丁未",
+      "sxtwl": "丁未",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-038",
+      "pillar": "day",
+      "reference_date": "2012-08-07",
+      "lunar_python": "庚子",
+      "sxtwl": "庚子",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-039",
+      "pillar": "day",
+      "reference_date": "2012-08-07",
+      "lunar_python": "庚子",
+      "sxtwl": "庚子",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-040",
+      "pillar": "day",
+      "reference_date": "2012-08-07",
+      "lunar_python": "庚子",
+      "sxtwl": "庚子",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-041",
+      "pillar": "day",
+      "reference_date": "2012-08-07",
+      "lunar_python": "庚子",
+      "sxtwl": "庚子",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-042",
+      "pillar": "day",
+      "reference_date": "2012-08-12",
+      "lunar_python": "乙巳",
+      "sxtwl": "乙巳",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-042",
+      "pillar": "year",
+      "reference_date": "2012-08-12",
+      "lunar_python": "壬辰",
+      "sxtwl": "壬辰",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-042",
+      "pillar": "month",
+      "reference_date": "2012-08-12",
+      "lunar_python": "戊申",
+      "sxtwl": "戊申",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-043",
+      "pillar": "day",
+      "reference_date": "2016-09-02",
+      "lunar_python": "丁亥",
+      "sxtwl": "丁亥",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-043",
+      "pillar": "year",
+      "reference_date": "2016-09-02",
+      "lunar_python": "丙申",
+      "sxtwl": "丙申",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-043",
+      "pillar": "month",
+      "reference_date": "2016-09-02",
+      "lunar_python": "丙申",
+      "sxtwl": "丙申",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-044",
+      "pillar": "day",
+      "reference_date": "2016-09-07",
+      "lunar_python": "壬辰",
+      "sxtwl": "壬辰",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-045",
+      "pillar": "day",
+      "reference_date": "2016-09-07",
+      "lunar_python": "壬辰",
+      "sxtwl": "壬辰",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-046",
+      "pillar": "day",
+      "reference_date": "2016-09-07",
+      "lunar_python": "壬辰",
+      "sxtwl": "壬辰",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-047",
+      "pillar": "day",
+      "reference_date": "2016-09-07",
+      "lunar_python": "壬辰",
+      "sxtwl": "壬辰",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-048",
+      "pillar": "day",
+      "reference_date": "2016-09-12",
+      "lunar_python": "丁酉",
+      "sxtwl": "丁酉",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-048",
+      "pillar": "year",
+      "reference_date": "2016-09-12",
+      "lunar_python": "丙申",
+      "sxtwl": "丙申",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-048",
+      "pillar": "month",
+      "reference_date": "2016-09-12",
+      "lunar_python": "丁酉",
+      "sxtwl": "丁酉",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-049",
+      "pillar": "day",
+      "reference_date": "2021-10-03",
+      "lunar_python": "甲申",
+      "sxtwl": "甲申",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-049",
+      "pillar": "year",
+      "reference_date": "2021-10-03",
+      "lunar_python": "辛丑",
+      "sxtwl": "辛丑",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-049",
+      "pillar": "month",
+      "reference_date": "2021-10-03",
+      "lunar_python": "丁酉",
+      "sxtwl": "丁酉",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-050",
+      "pillar": "day",
+      "reference_date": "2021-10-08",
+      "lunar_python": "己丑",
+      "sxtwl": "己丑",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-051",
+      "pillar": "day",
+      "reference_date": "2021-10-08",
+      "lunar_python": "己丑",
+      "sxtwl": "己丑",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-052",
+      "pillar": "day",
+      "reference_date": "2021-10-08",
+      "lunar_python": "己丑",
+      "sxtwl": "己丑",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-053",
+      "pillar": "day",
+      "reference_date": "2021-10-08",
+      "lunar_python": "己丑",
+      "sxtwl": "己丑",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-054",
+      "pillar": "day",
+      "reference_date": "2021-10-13",
+      "lunar_python": "甲午",
+      "sxtwl": "甲午",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-054",
+      "pillar": "year",
+      "reference_date": "2021-10-13",
+      "lunar_python": "辛丑",
+      "sxtwl": "辛丑",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-054",
+      "pillar": "month",
+      "reference_date": "2021-10-13",
+      "lunar_python": "戊戌",
+      "sxtwl": "戊戌",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-055",
+      "pillar": "day",
+      "reference_date": "2029-11-02",
+      "lunar_python": "丙申",
+      "sxtwl": "丙申",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-055",
+      "pillar": "year",
+      "reference_date": "2029-11-02",
+      "lunar_python": "己酉",
+      "sxtwl": "己酉",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-055",
+      "pillar": "month",
+      "reference_date": "2029-11-02",
+      "lunar_python": "甲戌",
+      "sxtwl": "甲戌",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-056",
+      "pillar": "day",
+      "reference_date": "2029-11-07",
+      "lunar_python": "辛丑",
+      "sxtwl": "辛丑",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-057",
+      "pillar": "day",
+      "reference_date": "2029-11-07",
+      "lunar_python": "辛丑",
+      "sxtwl": "辛丑",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-058",
+      "pillar": "day",
+      "reference_date": "2029-11-07",
+      "lunar_python": "辛丑",
+      "sxtwl": "辛丑",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-059",
+      "pillar": "day",
+      "reference_date": "2029-11-07",
+      "lunar_python": "辛丑",
+      "sxtwl": "辛丑",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-060",
+      "pillar": "day",
+      "reference_date": "2029-11-12",
+      "lunar_python": "丙午",
+      "sxtwl": "丙午",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-060",
+      "pillar": "year",
+      "reference_date": "2029-11-12",
+      "lunar_python": "己酉",
+      "sxtwl": "己酉",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-060",
+      "pillar": "month",
+      "reference_date": "2029-11-12",
+      "lunar_python": "乙亥",
+      "sxtwl": "乙亥",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-061",
+      "pillar": "day",
+      "reference_date": "2034-12-02",
+      "lunar_python": "壬辰",
+      "sxtwl": "壬辰",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-061",
+      "pillar": "year",
+      "reference_date": "2034-12-02",
+      "lunar_python": "甲寅",
+      "sxtwl": "甲寅",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-061",
+      "pillar": "month",
+      "reference_date": "2034-12-02",
+      "lunar_python": "乙亥",
+      "sxtwl": "乙亥",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-062",
+      "pillar": "day",
+      "reference_date": "2034-12-07",
+      "lunar_python": "丁酉",
+      "sxtwl": "丁酉",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-063",
+      "pillar": "day",
+      "reference_date": "2034-12-07",
+      "lunar_python": "丁酉",
+      "sxtwl": "丁酉",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-064",
+      "pillar": "day",
+      "reference_date": "2034-12-07",
+      "lunar_python": "丁酉",
+      "sxtwl": "丁酉",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-065",
+      "pillar": "day",
+      "reference_date": "2034-12-07",
+      "lunar_python": "丁酉",
+      "sxtwl": "丁酉",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-066",
+      "pillar": "day",
+      "reference_date": "2034-12-12",
+      "lunar_python": "壬寅",
+      "sxtwl": "壬寅",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-066",
+      "pillar": "year",
+      "reference_date": "2034-12-12",
+      "lunar_python": "甲寅",
+      "sxtwl": "甲寅",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-066",
+      "pillar": "month",
+      "reference_date": "2034-12-12",
+      "lunar_python": "丙子",
+      "sxtwl": "丙子",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-067",
+      "pillar": "day",
+      "reference_date": "2036-12-31",
+      "lunar_python": "壬申",
+      "sxtwl": "壬申",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-067",
+      "pillar": "year",
+      "reference_date": "2036-12-31",
+      "lunar_python": "丙辰",
+      "sxtwl": "丙辰",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-067",
+      "pillar": "month",
+      "reference_date": "2036-12-31",
+      "lunar_python": "庚子",
+      "sxtwl": "庚子",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-068",
+      "pillar": "day",
+      "reference_date": "2037-01-05",
+      "lunar_python": "丁丑",
+      "sxtwl": "丁丑",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-069",
+      "pillar": "day",
+      "reference_date": "2037-01-05",
+      "lunar_python": "丁丑",
+      "sxtwl": "丁丑",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-070",
+      "pillar": "day",
+      "reference_date": "2037-01-05",
+      "lunar_python": "丁丑",
+      "sxtwl": "丁丑",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-071",
+      "pillar": "day",
+      "reference_date": "2037-01-05",
+      "lunar_python": "丁丑",
+      "sxtwl": "丁丑",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-072",
+      "pillar": "day",
+      "reference_date": "2037-01-10",
+      "lunar_python": "壬午",
+      "sxtwl": "壬午",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-072",
+      "pillar": "year",
+      "reference_date": "2037-01-10",
+      "lunar_python": "丙辰",
+      "sxtwl": "丙辰",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-072",
+      "pillar": "month",
+      "reference_date": "2037-01-10",
+      "lunar_python": "辛丑",
+      "sxtwl": "辛丑",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-073",
+      "pillar": "day",
+      "reference_date": "2041-01-29",
+      "lunar_python": "壬戌",
+      "sxtwl": "壬戌",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-073",
+      "pillar": "year",
+      "reference_date": "2041-01-29",
+      "lunar_python": "庚申",
+      "sxtwl": "庚申",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-073",
+      "pillar": "month",
+      "reference_date": "2041-01-29",
+      "lunar_python": "己丑",
+      "sxtwl": "己丑",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-074",
+      "pillar": "day",
+      "reference_date": "2041-02-03",
+      "lunar_python": "丁卯",
+      "sxtwl": "丁卯",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-075",
+      "pillar": "day",
+      "reference_date": "2041-02-03",
+      "lunar_python": "丁卯",
+      "sxtwl": "丁卯",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-076",
+      "pillar": "day",
+      "reference_date": "2041-02-03",
+      "lunar_python": "丁卯",
+      "sxtwl": "丁卯",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-077",
+      "pillar": "day",
+      "reference_date": "2041-02-03",
+      "lunar_python": "丁卯",
+      "sxtwl": "丁卯",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-078",
+      "pillar": "day",
+      "reference_date": "2041-02-08",
+      "lunar_python": "壬申",
+      "sxtwl": "壬申",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-078",
+      "pillar": "year",
+      "reference_date": "2041-02-08",
+      "lunar_python": "辛酉",
+      "sxtwl": "辛酉",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-078",
+      "pillar": "month",
+      "reference_date": "2041-02-08",
+      "lunar_python": "庚寅",
+      "sxtwl": "庚寅",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-079",
+      "pillar": "day",
+      "reference_date": "2047-01-30",
+      "lunar_python": "甲午",
+      "sxtwl": "甲午",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-079",
+      "pillar": "year",
+      "reference_date": "2047-01-30",
+      "lunar_python": "丙寅",
+      "sxtwl": "丙寅",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-079",
+      "pillar": "month",
+      "reference_date": "2047-01-30",
+      "lunar_python": "辛丑",
+      "sxtwl": "辛丑",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-080",
+      "pillar": "day",
+      "reference_date": "2047-02-04",
+      "lunar_python": "己亥",
+      "sxtwl": "己亥",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-081",
+      "pillar": "day",
+      "reference_date": "2047-02-04",
+      "lunar_python": "己亥",
+      "sxtwl": "己亥",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-082",
+      "pillar": "day",
+      "reference_date": "2047-02-04",
+      "lunar_python": "己亥",
+      "sxtwl": "己亥",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-083",
+      "pillar": "day",
+      "reference_date": "2047-02-04",
+      "lunar_python": "己亥",
+      "sxtwl": "己亥",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-084",
+      "pillar": "day",
+      "reference_date": "2047-02-09",
+      "lunar_python": "甲辰",
+      "sxtwl": "甲辰",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-084",
+      "pillar": "year",
+      "reference_date": "2047-02-09",
+      "lunar_python": "丁卯",
+      "sxtwl": "丁卯",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-084",
+      "pillar": "month",
+      "reference_date": "2047-02-09",
+      "lunar_python": "壬寅",
+      "sxtwl": "壬寅",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-085",
+      "pillar": "day",
+      "reference_date": "1981-03-17",
+      "lunar_python": "甲午",
+      "sxtwl": "甲午",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-085",
+      "pillar": "year",
+      "reference_date": "1981-03-17",
+      "lunar_python": "辛酉",
+      "sxtwl": "辛酉",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-085",
+      "pillar": "month",
+      "reference_date": "1981-03-17",
+      "lunar_python": "辛卯",
+      "sxtwl": "辛卯",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-086",
+      "pillar": "day",
+      "reference_date": "1981-03-17",
+      "lunar_python": "甲午",
+      "sxtwl": "甲午",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-086",
+      "pillar": "year",
+      "reference_date": "1981-03-17",
+      "lunar_python": "辛酉",
+      "sxtwl": "辛酉",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-086",
+      "pillar": "month",
+      "reference_date": "1981-03-17",
+      "lunar_python": "辛卯",
+      "sxtwl": "辛卯",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-087",
+      "pillar": "day",
+      "reference_date": "1981-03-18",
+      "lunar_python": "乙未",
+      "sxtwl": "乙未",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-087",
+      "pillar": "year",
+      "reference_date": "1981-03-17",
+      "lunar_python": "辛酉",
+      "sxtwl": "辛酉",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-087",
+      "pillar": "month",
+      "reference_date": "1981-03-17",
+      "lunar_python": "辛卯",
+      "sxtwl": "辛卯",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-088",
+      "pillar": "day",
+      "reference_date": "1981-03-18",
+      "lunar_python": "乙未",
+      "sxtwl": "乙未",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-088",
+      "pillar": "year",
+      "reference_date": "1981-03-17",
+      "lunar_python": "辛酉",
+      "sxtwl": "辛酉",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-088",
+      "pillar": "month",
+      "reference_date": "1981-03-17",
+      "lunar_python": "辛卯",
+      "sxtwl": "辛卯",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-089",
+      "pillar": "day",
+      "reference_date": "1981-03-18",
+      "lunar_python": "乙未",
+      "sxtwl": "乙未",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-089",
+      "pillar": "year",
+      "reference_date": "1981-03-18",
+      "lunar_python": "辛酉",
+      "sxtwl": "辛酉",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-089",
+      "pillar": "month",
+      "reference_date": "1981-03-18",
+      "lunar_python": "辛卯",
+      "sxtwl": "辛卯",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-090",
+      "pillar": "day",
+      "reference_date": "1981-03-18",
+      "lunar_python": "乙未",
+      "sxtwl": "乙未",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-090",
+      "pillar": "year",
+      "reference_date": "1981-03-18",
+      "lunar_python": "辛酉",
+      "sxtwl": "辛酉",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-090",
+      "pillar": "month",
+      "reference_date": "1981-03-18",
+      "lunar_python": "辛卯",
+      "sxtwl": "辛卯",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-091",
+      "pillar": "day",
+      "reference_date": "1981-03-17",
+      "lunar_python": "甲午",
+      "sxtwl": "甲午",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-091",
+      "pillar": "year",
+      "reference_date": "1981-03-17",
+      "lunar_python": "辛酉",
+      "sxtwl": "辛酉",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-091",
+      "pillar": "month",
+      "reference_date": "1981-03-17",
+      "lunar_python": "辛卯",
+      "sxtwl": "辛卯",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-092",
+      "pillar": "day",
+      "reference_date": "1981-03-17",
+      "lunar_python": "甲午",
+      "sxtwl": "甲午",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-092",
+      "pillar": "year",
+      "reference_date": "1981-03-17",
+      "lunar_python": "辛酉",
+      "sxtwl": "辛酉",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-092",
+      "pillar": "month",
+      "reference_date": "1981-03-17",
+      "lunar_python": "辛卯",
+      "sxtwl": "辛卯",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-093",
+      "pillar": "day",
+      "reference_date": "1981-03-17",
+      "lunar_python": "甲午",
+      "sxtwl": "甲午",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-093",
+      "pillar": "year",
+      "reference_date": "1981-03-17",
+      "lunar_python": "辛酉",
+      "sxtwl": "辛酉",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-093",
+      "pillar": "month",
+      "reference_date": "1981-03-17",
+      "lunar_python": "辛卯",
+      "sxtwl": "辛卯",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-094",
+      "pillar": "day",
+      "reference_date": "1981-03-17",
+      "lunar_python": "甲午",
+      "sxtwl": "甲午",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-094",
+      "pillar": "year",
+      "reference_date": "1981-03-17",
+      "lunar_python": "辛酉",
+      "sxtwl": "辛酉",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-094",
+      "pillar": "month",
+      "reference_date": "1981-03-17",
+      "lunar_python": "辛卯",
+      "sxtwl": "辛卯",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-095",
+      "pillar": "day",
+      "reference_date": "1981-03-18",
+      "lunar_python": "乙未",
+      "sxtwl": "乙未",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-095",
+      "pillar": "year",
+      "reference_date": "1981-03-18",
+      "lunar_python": "辛酉",
+      "sxtwl": "辛酉",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-095",
+      "pillar": "month",
+      "reference_date": "1981-03-18",
+      "lunar_python": "辛卯",
+      "sxtwl": "辛卯",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-096",
+      "pillar": "day",
+      "reference_date": "1981-03-18",
+      "lunar_python": "乙未",
+      "sxtwl": "乙未",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-096",
+      "pillar": "year",
+      "reference_date": "1981-03-18",
+      "lunar_python": "辛酉",
+      "sxtwl": "辛酉",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-096",
+      "pillar": "month",
+      "reference_date": "1981-03-18",
+      "lunar_python": "辛卯",
+      "sxtwl": "辛卯",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-097",
+      "pillar": "day",
+      "reference_date": "1997-08-26",
+      "lunar_python": "庚子",
+      "sxtwl": "庚子",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-097",
+      "pillar": "year",
+      "reference_date": "1997-08-26",
+      "lunar_python": "丁丑",
+      "sxtwl": "丁丑",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-097",
+      "pillar": "month",
+      "reference_date": "1997-08-26",
+      "lunar_python": "戊申",
+      "sxtwl": "戊申",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-098",
+      "pillar": "day",
+      "reference_date": "1997-08-26",
+      "lunar_python": "庚子",
+      "sxtwl": "庚子",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-098",
+      "pillar": "year",
+      "reference_date": "1997-08-26",
+      "lunar_python": "丁丑",
+      "sxtwl": "丁丑",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-098",
+      "pillar": "month",
+      "reference_date": "1997-08-26",
+      "lunar_python": "戊申",
+      "sxtwl": "戊申",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-099",
+      "pillar": "day",
+      "reference_date": "1997-08-27",
+      "lunar_python": "辛丑",
+      "sxtwl": "辛丑",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-099",
+      "pillar": "year",
+      "reference_date": "1997-08-26",
+      "lunar_python": "丁丑",
+      "sxtwl": "丁丑",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-099",
+      "pillar": "month",
+      "reference_date": "1997-08-26",
+      "lunar_python": "戊申",
+      "sxtwl": "戊申",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-100",
+      "pillar": "day",
+      "reference_date": "1997-08-27",
+      "lunar_python": "辛丑",
+      "sxtwl": "辛丑",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-100",
+      "pillar": "year",
+      "reference_date": "1997-08-26",
+      "lunar_python": "丁丑",
+      "sxtwl": "丁丑",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-100",
+      "pillar": "month",
+      "reference_date": "1997-08-26",
+      "lunar_python": "戊申",
+      "sxtwl": "戊申",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-101",
+      "pillar": "day",
+      "reference_date": "1997-08-27",
+      "lunar_python": "辛丑",
+      "sxtwl": "辛丑",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-101",
+      "pillar": "year",
+      "reference_date": "1997-08-27",
+      "lunar_python": "丁丑",
+      "sxtwl": "丁丑",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-101",
+      "pillar": "month",
+      "reference_date": "1997-08-27",
+      "lunar_python": "戊申",
+      "sxtwl": "戊申",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-102",
+      "pillar": "day",
+      "reference_date": "1997-08-27",
+      "lunar_python": "辛丑",
+      "sxtwl": "辛丑",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-102",
+      "pillar": "year",
+      "reference_date": "1997-08-27",
+      "lunar_python": "丁丑",
+      "sxtwl": "丁丑",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-102",
+      "pillar": "month",
+      "reference_date": "1997-08-27",
+      "lunar_python": "戊申",
+      "sxtwl": "戊申",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-103",
+      "pillar": "day",
+      "reference_date": "1997-08-26",
+      "lunar_python": "庚子",
+      "sxtwl": "庚子",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-103",
+      "pillar": "year",
+      "reference_date": "1997-08-26",
+      "lunar_python": "丁丑",
+      "sxtwl": "丁丑",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-103",
+      "pillar": "month",
+      "reference_date": "1997-08-26",
+      "lunar_python": "戊申",
+      "sxtwl": "戊申",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-104",
+      "pillar": "day",
+      "reference_date": "1997-08-26",
+      "lunar_python": "庚子",
+      "sxtwl": "庚子",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-104",
+      "pillar": "year",
+      "reference_date": "1997-08-26",
+      "lunar_python": "丁丑",
+      "sxtwl": "丁丑",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-104",
+      "pillar": "month",
+      "reference_date": "1997-08-26",
+      "lunar_python": "戊申",
+      "sxtwl": "戊申",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-105",
+      "pillar": "day",
+      "reference_date": "1997-08-26",
+      "lunar_python": "庚子",
+      "sxtwl": "庚子",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-105",
+      "pillar": "year",
+      "reference_date": "1997-08-26",
+      "lunar_python": "丁丑",
+      "sxtwl": "丁丑",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-105",
+      "pillar": "month",
+      "reference_date": "1997-08-26",
+      "lunar_python": "戊申",
+      "sxtwl": "戊申",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-106",
+      "pillar": "day",
+      "reference_date": "1997-08-26",
+      "lunar_python": "庚子",
+      "sxtwl": "庚子",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-106",
+      "pillar": "year",
+      "reference_date": "1997-08-26",
+      "lunar_python": "丁丑",
+      "sxtwl": "丁丑",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-106",
+      "pillar": "month",
+      "reference_date": "1997-08-26",
+      "lunar_python": "戊申",
+      "sxtwl": "戊申",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-107",
+      "pillar": "day",
+      "reference_date": "1997-08-27",
+      "lunar_python": "辛丑",
+      "sxtwl": "辛丑",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-107",
+      "pillar": "year",
+      "reference_date": "1997-08-27",
+      "lunar_python": "丁丑",
+      "sxtwl": "丁丑",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-107",
+      "pillar": "month",
+      "reference_date": "1997-08-27",
+      "lunar_python": "戊申",
+      "sxtwl": "戊申",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-108",
+      "pillar": "day",
+      "reference_date": "1997-08-27",
+      "lunar_python": "辛丑",
+      "sxtwl": "辛丑",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-108",
+      "pillar": "year",
+      "reference_date": "1997-08-27",
+      "lunar_python": "丁丑",
+      "sxtwl": "丁丑",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-108",
+      "pillar": "month",
+      "reference_date": "1997-08-27",
+      "lunar_python": "戊申",
+      "sxtwl": "戊申",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-109",
+      "pillar": "day",
+      "reference_date": "2013-11-29",
+      "lunar_python": "己亥",
+      "sxtwl": "己亥",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-109",
+      "pillar": "year",
+      "reference_date": "2013-11-29",
+      "lunar_python": "癸巳",
+      "sxtwl": "癸巳",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-109",
+      "pillar": "month",
+      "reference_date": "2013-11-29",
+      "lunar_python": "癸亥",
+      "sxtwl": "癸亥",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-110",
+      "pillar": "day",
+      "reference_date": "2013-11-29",
+      "lunar_python": "己亥",
+      "sxtwl": "己亥",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-110",
+      "pillar": "year",
+      "reference_date": "2013-11-29",
+      "lunar_python": "癸巳",
+      "sxtwl": "癸巳",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-110",
+      "pillar": "month",
+      "reference_date": "2013-11-29",
+      "lunar_python": "癸亥",
+      "sxtwl": "癸亥",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-111",
+      "pillar": "day",
+      "reference_date": "2013-11-30",
+      "lunar_python": "庚子",
+      "sxtwl": "庚子",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-111",
+      "pillar": "year",
+      "reference_date": "2013-11-29",
+      "lunar_python": "癸巳",
+      "sxtwl": "癸巳",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-111",
+      "pillar": "month",
+      "reference_date": "2013-11-29",
+      "lunar_python": "癸亥",
+      "sxtwl": "癸亥",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-112",
+      "pillar": "day",
+      "reference_date": "2013-11-30",
+      "lunar_python": "庚子",
+      "sxtwl": "庚子",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-112",
+      "pillar": "year",
+      "reference_date": "2013-11-29",
+      "lunar_python": "癸巳",
+      "sxtwl": "癸巳",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-112",
+      "pillar": "month",
+      "reference_date": "2013-11-29",
+      "lunar_python": "癸亥",
+      "sxtwl": "癸亥",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-113",
+      "pillar": "day",
+      "reference_date": "2013-11-30",
+      "lunar_python": "庚子",
+      "sxtwl": "庚子",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-113",
+      "pillar": "year",
+      "reference_date": "2013-11-30",
+      "lunar_python": "癸巳",
+      "sxtwl": "癸巳",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-113",
+      "pillar": "month",
+      "reference_date": "2013-11-30",
+      "lunar_python": "癸亥",
+      "sxtwl": "癸亥",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-114",
+      "pillar": "day",
+      "reference_date": "2013-11-30",
+      "lunar_python": "庚子",
+      "sxtwl": "庚子",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-114",
+      "pillar": "year",
+      "reference_date": "2013-11-30",
+      "lunar_python": "癸巳",
+      "sxtwl": "癸巳",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-114",
+      "pillar": "month",
+      "reference_date": "2013-11-30",
+      "lunar_python": "癸亥",
+      "sxtwl": "癸亥",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-115",
+      "pillar": "day",
+      "reference_date": "2013-11-29",
+      "lunar_python": "己亥",
+      "sxtwl": "己亥",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-115",
+      "pillar": "year",
+      "reference_date": "2013-11-29",
+      "lunar_python": "癸巳",
+      "sxtwl": "癸巳",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-115",
+      "pillar": "month",
+      "reference_date": "2013-11-29",
+      "lunar_python": "癸亥",
+      "sxtwl": "癸亥",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-116",
+      "pillar": "day",
+      "reference_date": "2013-11-29",
+      "lunar_python": "己亥",
+      "sxtwl": "己亥",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-116",
+      "pillar": "year",
+      "reference_date": "2013-11-29",
+      "lunar_python": "癸巳",
+      "sxtwl": "癸巳",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-116",
+      "pillar": "month",
+      "reference_date": "2013-11-29",
+      "lunar_python": "癸亥",
+      "sxtwl": "癸亥",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-117",
+      "pillar": "day",
+      "reference_date": "2013-11-29",
+      "lunar_python": "己亥",
+      "sxtwl": "己亥",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-117",
+      "pillar": "year",
+      "reference_date": "2013-11-29",
+      "lunar_python": "癸巳",
+      "sxtwl": "癸巳",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-117",
+      "pillar": "month",
+      "reference_date": "2013-11-29",
+      "lunar_python": "癸亥",
+      "sxtwl": "癸亥",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-118",
+      "pillar": "day",
+      "reference_date": "2013-11-29",
+      "lunar_python": "己亥",
+      "sxtwl": "己亥",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-118",
+      "pillar": "year",
+      "reference_date": "2013-11-29",
+      "lunar_python": "癸巳",
+      "sxtwl": "癸巳",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-118",
+      "pillar": "month",
+      "reference_date": "2013-11-29",
+      "lunar_python": "癸亥",
+      "sxtwl": "癸亥",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-119",
+      "pillar": "day",
+      "reference_date": "2013-11-30",
+      "lunar_python": "庚子",
+      "sxtwl": "庚子",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-119",
+      "pillar": "year",
+      "reference_date": "2013-11-30",
+      "lunar_python": "癸巳",
+      "sxtwl": "癸巳",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-119",
+      "pillar": "month",
+      "reference_date": "2013-11-30",
+      "lunar_python": "癸亥",
+      "sxtwl": "癸亥",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-120",
+      "pillar": "day",
+      "reference_date": "2013-11-30",
+      "lunar_python": "庚子",
+      "sxtwl": "庚子",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-120",
+      "pillar": "year",
+      "reference_date": "2013-11-30",
+      "lunar_python": "癸巳",
+      "sxtwl": "癸巳",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-120",
+      "pillar": "month",
+      "reference_date": "2013-11-30",
+      "lunar_python": "癸亥",
+      "sxtwl": "癸亥",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-121",
+      "pillar": "day",
+      "reference_date": "2035-05-24",
+      "lunar_python": "乙酉",
+      "sxtwl": "乙酉",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-121",
+      "pillar": "year",
+      "reference_date": "2035-05-24",
+      "lunar_python": "乙卯",
+      "sxtwl": "乙卯",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-121",
+      "pillar": "month",
+      "reference_date": "2035-05-24",
+      "lunar_python": "辛巳",
+      "sxtwl": "辛巳",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-122",
+      "pillar": "day",
+      "reference_date": "2035-05-24",
+      "lunar_python": "乙酉",
+      "sxtwl": "乙酉",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-122",
+      "pillar": "year",
+      "reference_date": "2035-05-24",
+      "lunar_python": "乙卯",
+      "sxtwl": "乙卯",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-122",
+      "pillar": "month",
+      "reference_date": "2035-05-24",
+      "lunar_python": "辛巳",
+      "sxtwl": "辛巳",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-123",
+      "pillar": "day",
+      "reference_date": "2035-05-25",
+      "lunar_python": "丙戌",
+      "sxtwl": "丙戌",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-123",
+      "pillar": "year",
+      "reference_date": "2035-05-24",
+      "lunar_python": "乙卯",
+      "sxtwl": "乙卯",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-123",
+      "pillar": "month",
+      "reference_date": "2035-05-24",
+      "lunar_python": "辛巳",
+      "sxtwl": "辛巳",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-124",
+      "pillar": "day",
+      "reference_date": "2035-05-25",
+      "lunar_python": "丙戌",
+      "sxtwl": "丙戌",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-124",
+      "pillar": "year",
+      "reference_date": "2035-05-24",
+      "lunar_python": "乙卯",
+      "sxtwl": "乙卯",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-124",
+      "pillar": "month",
+      "reference_date": "2035-05-24",
+      "lunar_python": "辛巳",
+      "sxtwl": "辛巳",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-125",
+      "pillar": "day",
+      "reference_date": "2035-05-25",
+      "lunar_python": "丙戌",
+      "sxtwl": "丙戌",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-125",
+      "pillar": "year",
+      "reference_date": "2035-05-25",
+      "lunar_python": "乙卯",
+      "sxtwl": "乙卯",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-125",
+      "pillar": "month",
+      "reference_date": "2035-05-25",
+      "lunar_python": "辛巳",
+      "sxtwl": "辛巳",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-126",
+      "pillar": "day",
+      "reference_date": "2035-05-25",
+      "lunar_python": "丙戌",
+      "sxtwl": "丙戌",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-126",
+      "pillar": "year",
+      "reference_date": "2035-05-25",
+      "lunar_python": "乙卯",
+      "sxtwl": "乙卯",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-126",
+      "pillar": "month",
+      "reference_date": "2035-05-25",
+      "lunar_python": "辛巳",
+      "sxtwl": "辛巳",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-127",
+      "pillar": "day",
+      "reference_date": "2035-05-24",
+      "lunar_python": "乙酉",
+      "sxtwl": "乙酉",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-127",
+      "pillar": "year",
+      "reference_date": "2035-05-24",
+      "lunar_python": "乙卯",
+      "sxtwl": "乙卯",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-127",
+      "pillar": "month",
+      "reference_date": "2035-05-24",
+      "lunar_python": "辛巳",
+      "sxtwl": "辛巳",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-128",
+      "pillar": "day",
+      "reference_date": "2035-05-24",
+      "lunar_python": "乙酉",
+      "sxtwl": "乙酉",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-128",
+      "pillar": "year",
+      "reference_date": "2035-05-24",
+      "lunar_python": "乙卯",
+      "sxtwl": "乙卯",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-128",
+      "pillar": "month",
+      "reference_date": "2035-05-24",
+      "lunar_python": "辛巳",
+      "sxtwl": "辛巳",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-129",
+      "pillar": "day",
+      "reference_date": "2035-05-24",
+      "lunar_python": "乙酉",
+      "sxtwl": "乙酉",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-129",
+      "pillar": "year",
+      "reference_date": "2035-05-24",
+      "lunar_python": "乙卯",
+      "sxtwl": "乙卯",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-129",
+      "pillar": "month",
+      "reference_date": "2035-05-24",
+      "lunar_python": "辛巳",
+      "sxtwl": "辛巳",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-130",
+      "pillar": "day",
+      "reference_date": "2035-05-24",
+      "lunar_python": "乙酉",
+      "sxtwl": "乙酉",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-130",
+      "pillar": "year",
+      "reference_date": "2035-05-24",
+      "lunar_python": "乙卯",
+      "sxtwl": "乙卯",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-130",
+      "pillar": "month",
+      "reference_date": "2035-05-24",
+      "lunar_python": "辛巳",
+      "sxtwl": "辛巳",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-131",
+      "pillar": "day",
+      "reference_date": "2035-05-25",
+      "lunar_python": "丙戌",
+      "sxtwl": "丙戌",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-131",
+      "pillar": "year",
+      "reference_date": "2035-05-25",
+      "lunar_python": "乙卯",
+      "sxtwl": "乙卯",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-131",
+      "pillar": "month",
+      "reference_date": "2035-05-25",
+      "lunar_python": "辛巳",
+      "sxtwl": "辛巳",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-132",
+      "pillar": "day",
+      "reference_date": "2035-05-25",
+      "lunar_python": "丙戌",
+      "sxtwl": "丙戌",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-132",
+      "pillar": "year",
+      "reference_date": "2035-05-25",
+      "lunar_python": "乙卯",
+      "sxtwl": "乙卯",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-132",
+      "pillar": "month",
+      "reference_date": "2035-05-25",
+      "lunar_python": "辛巳",
+      "sxtwl": "辛巳",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-133",
+      "pillar": "day",
+      "reference_date": "1994-05-27",
+      "lunar_python": "癸丑",
+      "sxtwl": "癸丑",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-133",
+      "pillar": "year",
+      "reference_date": "1994-05-27",
+      "lunar_python": "甲戌",
+      "sxtwl": "甲戌",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-133",
+      "pillar": "month",
+      "reference_date": "1994-05-27",
+      "lunar_python": "己巳",
+      "sxtwl": "己巳",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-134",
+      "pillar": "day",
+      "reference_date": "1994-05-27",
+      "lunar_python": "癸丑",
+      "sxtwl": "癸丑",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-134",
+      "pillar": "year",
+      "reference_date": "1994-05-27",
+      "lunar_python": "甲戌",
+      "sxtwl": "甲戌",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-134",
+      "pillar": "month",
+      "reference_date": "1994-05-27",
+      "lunar_python": "己巳",
+      "sxtwl": "己巳",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-135",
+      "pillar": "day",
+      "reference_date": "2003-09-02",
+      "lunar_python": "戊寅",
+      "sxtwl": "戊寅",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-135",
+      "pillar": "year",
+      "reference_date": "2003-09-02",
+      "lunar_python": "癸未",
+      "sxtwl": "癸未",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-135",
+      "pillar": "month",
+      "reference_date": "2003-09-02",
+      "lunar_python": "庚申",
+      "sxtwl": "庚申",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-136",
+      "pillar": "day",
+      "reference_date": "2003-09-02",
+      "lunar_python": "戊寅",
+      "sxtwl": "戊寅",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-136",
+      "pillar": "year",
+      "reference_date": "2003-09-02",
+      "lunar_python": "癸未",
+      "sxtwl": "癸未",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-136",
+      "pillar": "month",
+      "reference_date": "2003-09-02",
+      "lunar_python": "庚申",
+      "sxtwl": "庚申",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-137",
+      "pillar": "day",
+      "reference_date": "2010-01-19",
+      "lunar_python": "己巳",
+      "sxtwl": "己巳",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-137",
+      "pillar": "year",
+      "reference_date": "2010-01-19",
+      "lunar_python": "己丑",
+      "sxtwl": "己丑",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-137",
+      "pillar": "month",
+      "reference_date": "2010-01-19",
+      "lunar_python": "丁丑",
+      "sxtwl": "丁丑",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-138",
+      "pillar": "day",
+      "reference_date": "2010-01-19",
+      "lunar_python": "己巳",
+      "sxtwl": "己巳",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-138",
+      "pillar": "year",
+      "reference_date": "2010-01-19",
+      "lunar_python": "己丑",
+      "sxtwl": "己丑",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-138",
+      "pillar": "month",
+      "reference_date": "2010-01-19",
+      "lunar_python": "丁丑",
+      "sxtwl": "丁丑",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-139",
+      "pillar": "day",
+      "reference_date": "2016-03-29",
+      "lunar_python": "庚戌",
+      "sxtwl": "庚戌",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-139",
+      "pillar": "year",
+      "reference_date": "2016-03-29",
+      "lunar_python": "丙申",
+      "sxtwl": "丙申",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-139",
+      "pillar": "month",
+      "reference_date": "2016-03-29",
+      "lunar_python": "辛卯",
+      "sxtwl": "辛卯",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-140",
+      "pillar": "day",
+      "reference_date": "2016-03-29",
+      "lunar_python": "庚戌",
+      "sxtwl": "庚戌",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-140",
+      "pillar": "year",
+      "reference_date": "2016-03-29",
+      "lunar_python": "丙申",
+      "sxtwl": "丙申",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-140",
+      "pillar": "month",
+      "reference_date": "2016-03-29",
+      "lunar_python": "辛卯",
+      "sxtwl": "辛卯",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-141",
+      "pillar": "day",
+      "reference_date": "2021-12-02",
+      "lunar_python": "甲申",
+      "sxtwl": "甲申",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-141",
+      "pillar": "year",
+      "reference_date": "2021-12-02",
+      "lunar_python": "辛丑",
+      "sxtwl": "辛丑",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-141",
+      "pillar": "month",
+      "reference_date": "2021-12-02",
+      "lunar_python": "己亥",
+      "sxtwl": "己亥",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-142",
+      "pillar": "day",
+      "reference_date": "2021-12-02",
+      "lunar_python": "甲申",
+      "sxtwl": "甲申",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-142",
+      "pillar": "year",
+      "reference_date": "2021-12-02",
+      "lunar_python": "辛丑",
+      "sxtwl": "辛丑",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-142",
+      "pillar": "month",
+      "reference_date": "2021-12-02",
+      "lunar_python": "己亥",
+      "sxtwl": "己亥",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-143",
+      "pillar": "day",
+      "reference_date": "2038-08-11",
+      "lunar_python": "庚申",
+      "sxtwl": "庚申",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-143",
+      "pillar": "year",
+      "reference_date": "2038-08-11",
+      "lunar_python": "戊午",
+      "sxtwl": "戊午",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-143",
+      "pillar": "month",
+      "reference_date": "2038-08-11",
+      "lunar_python": "庚申",
+      "sxtwl": "庚申",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-144",
+      "pillar": "day",
+      "reference_date": "2038-08-11",
+      "lunar_python": "庚申",
+      "sxtwl": "庚申",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-144",
+      "pillar": "year",
+      "reference_date": "2038-08-11",
+      "lunar_python": "戊午",
+      "sxtwl": "戊午",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-144",
+      "pillar": "month",
+      "reference_date": "2038-08-11",
+      "lunar_python": "庚申",
+      "sxtwl": "庚申",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-146",
+      "pillar": "day",
+      "reference_date": "2023-11-05",
+      "lunar_python": "丁卯",
+      "sxtwl": "丁卯",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-146",
+      "pillar": "year",
+      "reference_date": "2023-11-05",
+      "lunar_python": "癸卯",
+      "sxtwl": "癸卯",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-146",
+      "pillar": "month",
+      "reference_date": "2023-11-05",
+      "lunar_python": "壬戌",
+      "sxtwl": "壬戌",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-147",
+      "pillar": "day",
+      "reference_date": "2023-11-05",
+      "lunar_python": "丁卯",
+      "sxtwl": "丁卯",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-147",
+      "pillar": "year",
+      "reference_date": "2023-11-05",
+      "lunar_python": "癸卯",
+      "sxtwl": "癸卯",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-147",
+      "pillar": "month",
+      "reference_date": "2023-11-05",
+      "lunar_python": "壬戌",
+      "sxtwl": "壬戌",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-148",
+      "pillar": "day",
+      "reference_date": "2023-10-29",
+      "lunar_python": "庚申",
+      "sxtwl": "庚申",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-148",
+      "pillar": "year",
+      "reference_date": "2023-10-29",
+      "lunar_python": "癸卯",
+      "sxtwl": "癸卯",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-148",
+      "pillar": "month",
+      "reference_date": "2023-10-29",
+      "lunar_python": "壬戌",
+      "sxtwl": "壬戌",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-150",
+      "pillar": "day",
+      "reference_date": "2022-10-30",
+      "lunar_python": "丙辰",
+      "sxtwl": "丙辰",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-150",
+      "pillar": "year",
+      "reference_date": "2022-10-30",
+      "lunar_python": "壬寅",
+      "sxtwl": "壬寅",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-150",
+      "pillar": "month",
+      "reference_date": "2022-10-30",
+      "lunar_python": "庚戌",
+      "sxtwl": "庚戌",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-151",
+      "pillar": "day",
+      "reference_date": "2022-10-30",
+      "lunar_python": "丙辰",
+      "sxtwl": "丙辰",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-151",
+      "pillar": "year",
+      "reference_date": "2022-10-30",
+      "lunar_python": "壬寅",
+      "sxtwl": "壬寅",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-151",
+      "pillar": "month",
+      "reference_date": "2022-10-30",
+      "lunar_python": "庚戌",
+      "sxtwl": "庚戌",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-152",
+      "pillar": "day",
+      "reference_date": "2022-10-23",
+      "lunar_python": "己酉",
+      "sxtwl": "己酉",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-154",
+      "pillar": "day",
+      "reference_date": "2021-11-07",
+      "lunar_python": "己未",
+      "sxtwl": "己未",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-155",
+      "pillar": "day",
+      "reference_date": "2021-11-07",
+      "lunar_python": "己未",
+      "sxtwl": "己未",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-156",
+      "pillar": "day",
+      "reference_date": "2021-10-31",
+      "lunar_python": "壬子",
+      "sxtwl": "壬子",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-156",
+      "pillar": "year",
+      "reference_date": "2021-10-31",
+      "lunar_python": "辛丑",
+      "sxtwl": "辛丑",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-156",
+      "pillar": "month",
+      "reference_date": "2021-10-31",
+      "lunar_python": "戊戌",
+      "sxtwl": "戊戌",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-157",
+      "pillar": "day",
+      "reference_date": "2019-11-03",
+      "lunar_python": "甲辰",
+      "sxtwl": "甲辰",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-157",
+      "pillar": "year",
+      "reference_date": "2019-11-03",
+      "lunar_python": "己亥",
+      "sxtwl": "己亥",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-157",
+      "pillar": "month",
+      "reference_date": "2019-11-03",
+      "lunar_python": "甲戌",
+      "sxtwl": "甲戌",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-158",
+      "pillar": "day",
+      "reference_date": "2019-11-03",
+      "lunar_python": "甲辰",
+      "sxtwl": "甲辰",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-158",
+      "pillar": "year",
+      "reference_date": "2019-11-03",
+      "lunar_python": "己亥",
+      "sxtwl": "己亥",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-158",
+      "pillar": "month",
+      "reference_date": "2019-11-03",
+      "lunar_python": "甲戌",
+      "sxtwl": "甲戌",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-159",
+      "pillar": "day",
+      "reference_date": "2019-11-03",
+      "lunar_python": "甲辰",
+      "sxtwl": "甲辰",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-159",
+      "pillar": "year",
+      "reference_date": "2019-11-03",
+      "lunar_python": "己亥",
+      "sxtwl": "己亥",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-159",
+      "pillar": "month",
+      "reference_date": "2019-11-03",
+      "lunar_python": "甲戌",
+      "sxtwl": "甲戌",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-160",
+      "pillar": "day",
+      "reference_date": "2019-10-27",
+      "lunar_python": "丁酉",
+      "sxtwl": "丁酉",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-160",
+      "pillar": "year",
+      "reference_date": "2019-10-27",
+      "lunar_python": "己亥",
+      "sxtwl": "己亥",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-160",
+      "pillar": "month",
+      "reference_date": "2019-10-27",
+      "lunar_python": "甲戌",
+      "sxtwl": "甲戌",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-161",
+      "pillar": "day",
+      "reference_date": "2018-11-04",
+      "lunar_python": "庚子",
+      "sxtwl": "庚子",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-161",
+      "pillar": "year",
+      "reference_date": "2018-11-04",
+      "lunar_python": "戊戌",
+      "sxtwl": "戊戌",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-161",
+      "pillar": "month",
+      "reference_date": "2018-11-04",
+      "lunar_python": "壬戌",
+      "sxtwl": "壬戌",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-162",
+      "pillar": "day",
+      "reference_date": "2018-11-04",
+      "lunar_python": "庚子",
+      "sxtwl": "庚子",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-162",
+      "pillar": "year",
+      "reference_date": "2018-11-04",
+      "lunar_python": "戊戌",
+      "sxtwl": "戊戌",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-162",
+      "pillar": "month",
+      "reference_date": "2018-11-04",
+      "lunar_python": "壬戌",
+      "sxtwl": "壬戌",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-163",
+      "pillar": "day",
+      "reference_date": "2018-11-04",
+      "lunar_python": "庚子",
+      "sxtwl": "庚子",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-163",
+      "pillar": "year",
+      "reference_date": "2018-11-04",
+      "lunar_python": "戊戌",
+      "sxtwl": "戊戌",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-163",
+      "pillar": "month",
+      "reference_date": "2018-11-04",
+      "lunar_python": "壬戌",
+      "sxtwl": "壬戌",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-164",
+      "pillar": "day",
+      "reference_date": "2018-10-28",
+      "lunar_python": "癸巳",
+      "sxtwl": "癸巳",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-164",
+      "pillar": "year",
+      "reference_date": "2018-10-28",
+      "lunar_python": "戊戌",
+      "sxtwl": "戊戌",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-164",
+      "pillar": "month",
+      "reference_date": "2018-10-28",
+      "lunar_python": "壬戌",
+      "sxtwl": "壬戌",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-166",
+      "pillar": "day",
+      "reference_date": "2023-03-19",
+      "lunar_python": "丙子",
+      "sxtwl": "丙子",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-166",
+      "pillar": "year",
+      "reference_date": "2023-03-19",
+      "lunar_python": "癸卯",
+      "sxtwl": "癸卯",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-166",
+      "pillar": "month",
+      "reference_date": "2023-03-19",
+      "lunar_python": "乙卯",
+      "sxtwl": "乙卯",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-168",
+      "pillar": "day",
+      "reference_date": "2022-04-03",
+      "lunar_python": "丙戌",
+      "sxtwl": "丙戌",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-168",
+      "pillar": "year",
+      "reference_date": "2022-04-03",
+      "lunar_python": "壬寅",
+      "sxtwl": "壬寅",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-168",
+      "pillar": "month",
+      "reference_date": "2022-04-03",
+      "lunar_python": "癸卯",
+      "sxtwl": "癸卯",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-170",
+      "pillar": "day",
+      "reference_date": "1984-04-13",
+      "lunar_python": "丁丑",
+      "sxtwl": "丁丑",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-170",
+      "pillar": "year",
+      "reference_date": "1984-04-12",
+      "lunar_python": "甲子",
+      "sxtwl": "甲子",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-170",
+      "pillar": "month",
+      "reference_date": "1984-04-12",
+      "lunar_python": "戊辰",
+      "sxtwl": "戊辰",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-171",
+      "pillar": "day",
+      "reference_date": "1984-04-12",
+      "lunar_python": "丙子",
+      "sxtwl": "丙子",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-171",
+      "pillar": "year",
+      "reference_date": "1984-04-12",
+      "lunar_python": "甲子",
+      "sxtwl": "甲子",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-171",
+      "pillar": "month",
+      "reference_date": "1984-04-12",
+      "lunar_python": "戊辰",
+      "sxtwl": "戊辰",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-172",
+      "pillar": "day",
+      "reference_date": "1984-04-12",
+      "lunar_python": "丙子",
+      "sxtwl": "丙子",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-172",
+      "pillar": "year",
+      "reference_date": "1984-04-12",
+      "lunar_python": "甲子",
+      "sxtwl": "甲子",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-172",
+      "pillar": "month",
+      "reference_date": "1984-04-12",
+      "lunar_python": "戊辰",
+      "sxtwl": "戊辰",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-173",
+      "pillar": "day",
+      "reference_date": "1984-04-13",
+      "lunar_python": "丁丑",
+      "sxtwl": "丁丑",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-173",
+      "pillar": "year",
+      "reference_date": "1984-04-13",
+      "lunar_python": "甲子",
+      "sxtwl": "甲子",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-173",
+      "pillar": "month",
+      "reference_date": "1984-04-13",
+      "lunar_python": "戊辰",
+      "sxtwl": "戊辰",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-175",
+      "pillar": "day",
+      "reference_date": "1993-02-24",
+      "lunar_python": "丙子",
+      "sxtwl": "丙子",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-175",
+      "pillar": "year",
+      "reference_date": "1993-02-23",
+      "lunar_python": "癸酉",
+      "sxtwl": "癸酉",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-175",
+      "pillar": "month",
+      "reference_date": "1993-02-23",
+      "lunar_python": "甲寅",
+      "sxtwl": "甲寅",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-176",
+      "pillar": "day",
+      "reference_date": "1993-02-23",
+      "lunar_python": "乙亥",
+      "sxtwl": "乙亥",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-176",
+      "pillar": "year",
+      "reference_date": "1993-02-23",
+      "lunar_python": "癸酉",
+      "sxtwl": "癸酉",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-176",
+      "pillar": "month",
+      "reference_date": "1993-02-23",
+      "lunar_python": "甲寅",
+      "sxtwl": "甲寅",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-177",
+      "pillar": "day",
+      "reference_date": "1993-02-23",
+      "lunar_python": "乙亥",
+      "sxtwl": "乙亥",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-177",
+      "pillar": "year",
+      "reference_date": "1993-02-23",
+      "lunar_python": "癸酉",
+      "sxtwl": "癸酉",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-177",
+      "pillar": "month",
+      "reference_date": "1993-02-23",
+      "lunar_python": "甲寅",
+      "sxtwl": "甲寅",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-178",
+      "pillar": "day",
+      "reference_date": "1993-02-24",
+      "lunar_python": "丙子",
+      "sxtwl": "丙子",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-178",
+      "pillar": "year",
+      "reference_date": "1993-02-24",
+      "lunar_python": "癸酉",
+      "sxtwl": "癸酉",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-178",
+      "pillar": "month",
+      "reference_date": "1993-02-24",
+      "lunar_python": "甲寅",
+      "sxtwl": "甲寅",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-180",
+      "pillar": "day",
+      "reference_date": "2002-06-28",
+      "lunar_python": "丁卯",
+      "sxtwl": "丁卯",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-180",
+      "pillar": "year",
+      "reference_date": "2002-06-27",
+      "lunar_python": "壬午",
+      "sxtwl": "壬午",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-180",
+      "pillar": "month",
+      "reference_date": "2002-06-27",
+      "lunar_python": "丙午",
+      "sxtwl": "丙午",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-181",
+      "pillar": "day",
+      "reference_date": "2002-06-27",
+      "lunar_python": "丙寅",
+      "sxtwl": "丙寅",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-181",
+      "pillar": "year",
+      "reference_date": "2002-06-27",
+      "lunar_python": "壬午",
+      "sxtwl": "壬午",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-181",
+      "pillar": "month",
+      "reference_date": "2002-06-27",
+      "lunar_python": "丙午",
+      "sxtwl": "丙午",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-182",
+      "pillar": "day",
+      "reference_date": "2002-06-27",
+      "lunar_python": "丙寅",
+      "sxtwl": "丙寅",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-182",
+      "pillar": "year",
+      "reference_date": "2002-06-27",
+      "lunar_python": "壬午",
+      "sxtwl": "壬午",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-182",
+      "pillar": "month",
+      "reference_date": "2002-06-27",
+      "lunar_python": "丙午",
+      "sxtwl": "丙午",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-183",
+      "pillar": "day",
+      "reference_date": "2002-06-28",
+      "lunar_python": "丁卯",
+      "sxtwl": "丁卯",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-183",
+      "pillar": "year",
+      "reference_date": "2002-06-28",
+      "lunar_python": "壬午",
+      "sxtwl": "壬午",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-183",
+      "pillar": "month",
+      "reference_date": "2002-06-28",
+      "lunar_python": "丙午",
+      "sxtwl": "丙午",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-185",
+      "pillar": "day",
+      "reference_date": "2014-09-20",
+      "lunar_python": "甲午",
+      "sxtwl": "甲午",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-185",
+      "pillar": "year",
+      "reference_date": "2014-09-19",
+      "lunar_python": "甲午",
+      "sxtwl": "甲午",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-185",
+      "pillar": "month",
+      "reference_date": "2014-09-19",
+      "lunar_python": "癸酉",
+      "sxtwl": "癸酉",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-186",
+      "pillar": "day",
+      "reference_date": "2014-09-19",
+      "lunar_python": "癸巳",
+      "sxtwl": "癸巳",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-186",
+      "pillar": "year",
+      "reference_date": "2014-09-19",
+      "lunar_python": "甲午",
+      "sxtwl": "甲午",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-186",
+      "pillar": "month",
+      "reference_date": "2014-09-19",
+      "lunar_python": "癸酉",
+      "sxtwl": "癸酉",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-187",
+      "pillar": "day",
+      "reference_date": "2014-09-19",
+      "lunar_python": "癸巳",
+      "sxtwl": "癸巳",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-187",
+      "pillar": "year",
+      "reference_date": "2014-09-19",
+      "lunar_python": "甲午",
+      "sxtwl": "甲午",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-187",
+      "pillar": "month",
+      "reference_date": "2014-09-19",
+      "lunar_python": "癸酉",
+      "sxtwl": "癸酉",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-188",
+      "pillar": "day",
+      "reference_date": "2014-09-20",
+      "lunar_python": "甲午",
+      "sxtwl": "甲午",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-188",
+      "pillar": "year",
+      "reference_date": "2014-09-20",
+      "lunar_python": "甲午",
+      "sxtwl": "甲午",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-188",
+      "pillar": "month",
+      "reference_date": "2014-09-20",
+      "lunar_python": "癸酉",
+      "sxtwl": "癸酉",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-190",
+      "pillar": "day",
+      "reference_date": "2028-04-14",
+      "lunar_python": "己巳",
+      "sxtwl": "己巳",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-190",
+      "pillar": "year",
+      "reference_date": "2028-04-13",
+      "lunar_python": "戊申",
+      "sxtwl": "戊申",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-190",
+      "pillar": "month",
+      "reference_date": "2028-04-13",
+      "lunar_python": "丙辰",
+      "sxtwl": "丙辰",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-191",
+      "pillar": "day",
+      "reference_date": "2028-04-13",
+      "lunar_python": "戊辰",
+      "sxtwl": "戊辰",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-191",
+      "pillar": "year",
+      "reference_date": "2028-04-13",
+      "lunar_python": "戊申",
+      "sxtwl": "戊申",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-191",
+      "pillar": "month",
+      "reference_date": "2028-04-13",
+      "lunar_python": "丙辰",
+      "sxtwl": "丙辰",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-192",
+      "pillar": "day",
+      "reference_date": "2028-04-13",
+      "lunar_python": "戊辰",
+      "sxtwl": "戊辰",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-192",
+      "pillar": "year",
+      "reference_date": "2028-04-13",
+      "lunar_python": "戊申",
+      "sxtwl": "戊申",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-192",
+      "pillar": "month",
+      "reference_date": "2028-04-13",
+      "lunar_python": "丙辰",
+      "sxtwl": "丙辰",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-193",
+      "pillar": "day",
+      "reference_date": "2028-04-14",
+      "lunar_python": "己巳",
+      "sxtwl": "己巳",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-193",
+      "pillar": "year",
+      "reference_date": "2028-04-14",
+      "lunar_python": "戊申",
+      "sxtwl": "戊申",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-193",
+      "pillar": "month",
+      "reference_date": "2028-04-14",
+      "lunar_python": "丙辰",
+      "sxtwl": "丙辰",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-195",
+      "pillar": "day",
+      "reference_date": "2043-11-24",
+      "lunar_python": "辛未",
+      "sxtwl": "辛未",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-195",
+      "pillar": "year",
+      "reference_date": "2043-11-23",
+      "lunar_python": "癸亥",
+      "sxtwl": "癸亥",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-195",
+      "pillar": "month",
+      "reference_date": "2043-11-23",
+      "lunar_python": "癸亥",
+      "sxtwl": "癸亥",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-196",
+      "pillar": "day",
+      "reference_date": "2043-11-23",
+      "lunar_python": "庚午",
+      "sxtwl": "庚午",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-196",
+      "pillar": "year",
+      "reference_date": "2043-11-23",
+      "lunar_python": "癸亥",
+      "sxtwl": "癸亥",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-196",
+      "pillar": "month",
+      "reference_date": "2043-11-23",
+      "lunar_python": "癸亥",
+      "sxtwl": "癸亥",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-197",
+      "pillar": "day",
+      "reference_date": "2043-11-23",
+      "lunar_python": "庚午",
+      "sxtwl": "庚午",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-197",
+      "pillar": "year",
+      "reference_date": "2043-11-23",
+      "lunar_python": "癸亥",
+      "sxtwl": "癸亥",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-197",
+      "pillar": "month",
+      "reference_date": "2043-11-23",
+      "lunar_python": "癸亥",
+      "sxtwl": "癸亥",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-198",
+      "pillar": "day",
+      "reference_date": "2043-11-24",
+      "lunar_python": "辛未",
+      "sxtwl": "辛未",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-198",
+      "pillar": "year",
+      "reference_date": "2043-11-24",
+      "lunar_python": "癸亥",
+      "sxtwl": "癸亥",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-198",
+      "pillar": "month",
+      "reference_date": "2043-11-24",
+      "lunar_python": "癸亥",
+      "sxtwl": "癸亥",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-199",
+      "pillar": "day",
+      "reference_date": "1980-05-05",
+      "lunar_python": "戊寅",
+      "sxtwl": "戊寅",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-201",
+      "pillar": "day",
+      "reference_date": "1980-05-05",
+      "lunar_python": "戊寅",
+      "sxtwl": "戊寅",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-202",
+      "pillar": "day",
+      "reference_date": "2000-09-07",
+      "lunar_python": "戊辰",
+      "sxtwl": "戊辰",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-204",
+      "pillar": "day",
+      "reference_date": "2000-09-07",
+      "lunar_python": "戊辰",
+      "sxtwl": "戊辰",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-205",
+      "pillar": "day",
+      "reference_date": "2017-12-07",
+      "lunar_python": "戊辰",
+      "sxtwl": "戊辰",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-207",
+      "pillar": "day",
+      "reference_date": "2017-12-07",
+      "lunar_python": "戊辰",
+      "sxtwl": "戊辰",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-208",
+      "pillar": "day",
+      "reference_date": "2043-04-05",
+      "lunar_python": "戊寅",
+      "sxtwl": "戊寅",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-210",
+      "pillar": "day",
+      "reference_date": "2043-04-05",
+      "lunar_python": "戊寅",
+      "sxtwl": "戊寅",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-211",
+      "pillar": "day",
+      "reference_date": "2006-01-23",
+      "lunar_python": "壬子",
+      "sxtwl": "壬子",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-211",
+      "pillar": "year",
+      "reference_date": "2006-01-23",
+      "lunar_python": "乙酉",
+      "sxtwl": "乙酉",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-211",
+      "pillar": "month",
+      "reference_date": "2006-01-23",
+      "lunar_python": "己丑",
+      "sxtwl": "己丑",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-212",
+      "pillar": "day",
+      "reference_date": "2006-01-24",
+      "lunar_python": "癸丑",
+      "sxtwl": "癸丑",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-212",
+      "pillar": "year",
+      "reference_date": "2006-01-23",
+      "lunar_python": "乙酉",
+      "sxtwl": "乙酉",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-212",
+      "pillar": "month",
+      "reference_date": "2006-01-23",
+      "lunar_python": "己丑",
+      "sxtwl": "己丑",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-214",
+      "pillar": "day",
+      "reference_date": "1979-07-19",
+      "lunar_python": "丁亥",
+      "sxtwl": "丁亥",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-214",
+      "pillar": "year",
+      "reference_date": "1979-07-19",
+      "lunar_python": "己未",
+      "sxtwl": "己未",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-214",
+      "pillar": "month",
+      "reference_date": "1979-07-19",
+      "lunar_python": "辛未",
+      "sxtwl": "辛未",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-216",
+      "pillar": "day",
+      "reference_date": "2007-05-30",
+      "lunar_python": "甲子",
+      "sxtwl": "甲子",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-216",
+      "pillar": "year",
+      "reference_date": "2007-05-30",
+      "lunar_python": "丁亥",
+      "sxtwl": "丁亥",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-216",
+      "pillar": "month",
+      "reference_date": "2007-05-30",
+      "lunar_python": "乙巳",
+      "sxtwl": "乙巳",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-218",
+      "pillar": "day",
+      "reference_date": "2031-10-02",
+      "lunar_python": "乙亥",
+      "sxtwl": "乙亥",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-218",
+      "pillar": "year",
+      "reference_date": "2031-10-02",
+      "lunar_python": "辛亥",
+      "sxtwl": "辛亥",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-218",
+      "pillar": "month",
+      "reference_date": "2031-10-02",
+      "lunar_python": "丁酉",
+      "sxtwl": "丁酉",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-220",
+      "pillar": "day",
+      "reference_date": "1985-12-11",
+      "lunar_python": "甲申",
+      "sxtwl": "甲申",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-220",
+      "pillar": "year",
+      "reference_date": "1985-12-11",
+      "lunar_python": "乙丑",
+      "sxtwl": "乙丑",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-220",
+      "pillar": "month",
+      "reference_date": "1985-12-11",
+      "lunar_python": "戊子",
+      "sxtwl": "戊子",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-222",
+      "pillar": "day",
+      "reference_date": "2010-08-03",
+      "lunar_python": "乙酉",
+      "sxtwl": "乙酉",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-222",
+      "pillar": "year",
+      "reference_date": "2010-08-03",
+      "lunar_python": "庚寅",
+      "sxtwl": "庚寅",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-222",
+      "pillar": "month",
+      "reference_date": "2010-08-03",
+      "lunar_python": "癸未",
+      "sxtwl": "癸未",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-224",
+      "pillar": "day",
+      "reference_date": "2027-03-15",
+      "lunar_python": "癸巳",
+      "sxtwl": "癸巳",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-224",
+      "pillar": "year",
+      "reference_date": "2027-03-15",
+      "lunar_python": "丁未",
+      "sxtwl": "丁未",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-224",
+      "pillar": "month",
+      "reference_date": "2027-03-15",
+      "lunar_python": "癸卯",
+      "sxtwl": "癸卯",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-226",
+      "pillar": "day",
+      "reference_date": "2001-11-14",
+      "lunar_python": "辛巳",
+      "sxtwl": "辛巳",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-226",
+      "pillar": "year",
+      "reference_date": "2001-11-14",
+      "lunar_python": "辛巳",
+      "sxtwl": "辛巳",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-226",
+      "pillar": "month",
+      "reference_date": "2001-11-14",
+      "lunar_python": "己亥",
+      "sxtwl": "己亥",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-228",
+      "pillar": "day",
+      "reference_date": "2019-04-22",
+      "lunar_python": "己丑",
+      "sxtwl": "己丑",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-228",
+      "pillar": "year",
+      "reference_date": "2019-04-22",
+      "lunar_python": "己亥",
+      "sxtwl": "己亥",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-228",
+      "pillar": "month",
+      "reference_date": "2019-04-22",
+      "lunar_python": "戊辰",
+      "sxtwl": "戊辰",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-230",
+      "pillar": "day",
+      "reference_date": "2024-02-29",
+      "lunar_python": "癸亥",
+      "sxtwl": "癸亥",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-230",
+      "pillar": "year",
+      "reference_date": "2024-02-29",
+      "lunar_python": "甲辰",
+      "sxtwl": "甲辰",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-230",
+      "pillar": "month",
+      "reference_date": "2024-02-29",
+      "lunar_python": "丙寅",
+      "sxtwl": "丙寅",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-232",
+      "pillar": "day",
+      "reference_date": "2022-04-30",
+      "lunar_python": "癸丑",
+      "sxtwl": "癸丑",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-232",
+      "pillar": "year",
+      "reference_date": "2022-04-30",
+      "lunar_python": "壬寅",
+      "sxtwl": "壬寅",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-232",
+      "pillar": "month",
+      "reference_date": "2022-04-30",
+      "lunar_python": "甲辰",
+      "sxtwl": "甲辰",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-234",
+      "pillar": "day",
+      "reference_date": "2026-08-20",
+      "lunar_python": "丙寅",
+      "sxtwl": "丙寅",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-234",
+      "pillar": "year",
+      "reference_date": "2026-08-20",
+      "lunar_python": "丙午",
+      "sxtwl": "丙午",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-234",
+      "pillar": "month",
+      "reference_date": "2026-08-20",
+      "lunar_python": "丙申",
+      "sxtwl": "丙申",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-235",
+      "pillar": "day",
+      "reference_date": "2005-03-18",
+      "lunar_python": "辛丑",
+      "sxtwl": "辛丑",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-235",
+      "pillar": "year",
+      "reference_date": "2005-03-18",
+      "lunar_python": "乙酉",
+      "sxtwl": "乙酉",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-235",
+      "pillar": "month",
+      "reference_date": "2005-03-18",
+      "lunar_python": "己卯",
+      "sxtwl": "己卯",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-239",
+      "pillar": "day",
+      "reference_date": "2005-07-21",
+      "lunar_python": "丙午",
+      "sxtwl": "丙午",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-239",
+      "pillar": "year",
+      "reference_date": "2005-07-21",
+      "lunar_python": "乙酉",
+      "sxtwl": "乙酉",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-239",
+      "pillar": "month",
+      "reference_date": "2005-07-21",
+      "lunar_python": "癸未",
+      "sxtwl": "癸未",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-245",
+      "pillar": "day",
+      "reference_date": "1901-07-07",
+      "lunar_python": "丙戌",
+      "sxtwl": "丙戌",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-245",
+      "pillar": "year",
+      "reference_date": "1901-07-07",
+      "lunar_python": "辛丑",
+      "sxtwl": "辛丑",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-245",
+      "pillar": "month",
+      "reference_date": "1901-07-07",
+      "lunar_python": "甲午",
+      "sxtwl": "甲午",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-247",
+      "pillar": "day",
+      "reference_date": "2099-03-03",
+      "lunar_python": "己亥",
+      "sxtwl": "己亥",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-247",
+      "pillar": "year",
+      "reference_date": "2099-03-03",
+      "lunar_python": "己未",
+      "sxtwl": "己未",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-247",
+      "pillar": "month",
+      "reference_date": "2099-03-03",
+      "lunar_python": "丙寅",
+      "sxtwl": "丙寅",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-249",
+      "pillar": "day",
+      "reference_date": "1901-01-01",
+      "lunar_python": "己卯",
+      "sxtwl": "己卯",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-249",
+      "pillar": "year",
+      "reference_date": "1901-01-01",
+      "lunar_python": "庚子",
+      "sxtwl": "庚子",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-249",
+      "pillar": "month",
+      "reference_date": "1901-01-01",
+      "lunar_python": "戊子",
+      "sxtwl": "戊子",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-250",
+      "pillar": "day",
+      "reference_date": "2007-12-02",
+      "lunar_python": "庚午",
+      "sxtwl": "庚午",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-250",
+      "pillar": "year",
+      "reference_date": "2007-12-02",
+      "lunar_python": "丁亥",
+      "sxtwl": "丁亥",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-250",
+      "pillar": "month",
+      "reference_date": "2007-12-02",
+      "lunar_python": "辛亥",
+      "sxtwl": "辛亥",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-251",
+      "pillar": "day",
+      "reference_date": "1964-08-04",
+      "lunar_python": "乙酉",
+      "sxtwl": "乙酉",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-251",
+      "pillar": "year",
+      "reference_date": "1964-08-04",
+      "lunar_python": "甲辰",
+      "sxtwl": "甲辰",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-251",
+      "pillar": "month",
+      "reference_date": "1964-08-04",
+      "lunar_python": "辛未",
+      "sxtwl": "辛未",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-252",
+      "pillar": "day",
+      "reference_date": "1982-12-28",
+      "lunar_python": "乙酉",
+      "sxtwl": "乙酉",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-252",
+      "pillar": "year",
+      "reference_date": "1982-12-28",
+      "lunar_python": "壬戌",
+      "sxtwl": "壬戌",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-252",
+      "pillar": "month",
+      "reference_date": "1982-12-28",
+      "lunar_python": "壬子",
+      "sxtwl": "壬子",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-253",
+      "pillar": "day",
+      "reference_date": "1997-02-11",
+      "lunar_python": "甲申",
+      "sxtwl": "甲申",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-253",
+      "pillar": "year",
+      "reference_date": "1997-02-11",
+      "lunar_python": "丁丑",
+      "sxtwl": "丁丑",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-253",
+      "pillar": "month",
+      "reference_date": "1997-02-11",
+      "lunar_python": "壬寅",
+      "sxtwl": "壬寅",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-254",
+      "pillar": "day",
+      "reference_date": "2018-07-02",
+      "lunar_python": "乙未",
+      "sxtwl": "乙未",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-254",
+      "pillar": "year",
+      "reference_date": "2018-07-02",
+      "lunar_python": "戊戌",
+      "sxtwl": "戊戌",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-254",
+      "pillar": "month",
+      "reference_date": "2018-07-02",
+      "lunar_python": "戊午",
+      "sxtwl": "戊午",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-255",
+      "pillar": "day",
+      "reference_date": "2041-05-01",
+      "lunar_python": "甲午",
+      "sxtwl": "甲午",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-255",
+      "pillar": "year",
+      "reference_date": "2041-05-01",
+      "lunar_python": "辛酉",
+      "sxtwl": "辛酉",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-255",
+      "pillar": "month",
+      "reference_date": "2041-05-01",
+      "lunar_python": "壬辰",
+      "sxtwl": "壬辰",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-256",
+      "pillar": "day",
+      "reference_date": "2030-12-28",
+      "lunar_python": "丁酉",
+      "sxtwl": "丁酉",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-256",
+      "pillar": "year",
+      "reference_date": "2030-12-28",
+      "lunar_python": "庚戌",
+      "sxtwl": "庚戌",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-256",
+      "pillar": "month",
+      "reference_date": "2030-12-28",
+      "lunar_python": "戊子",
+      "sxtwl": "戊子",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-257",
+      "pillar": "day",
+      "reference_date": "2028-01-17",
+      "lunar_python": "辛丑",
+      "sxtwl": "辛丑",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-257",
+      "pillar": "year",
+      "reference_date": "2028-01-17",
+      "lunar_python": "丁未",
+      "sxtwl": "丁未",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-257",
+      "pillar": "month",
+      "reference_date": "2028-01-17",
+      "lunar_python": "癸丑",
+      "sxtwl": "癸丑",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-258",
+      "pillar": "day",
+      "reference_date": "2047-04-18",
+      "lunar_python": "壬子",
+      "sxtwl": "壬子",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-258",
+      "pillar": "year",
+      "reference_date": "2047-04-18",
+      "lunar_python": "丁卯",
+      "sxtwl": "丁卯",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-258",
+      "pillar": "month",
+      "reference_date": "2047-04-18",
+      "lunar_python": "甲辰",
+      "sxtwl": "甲辰",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-259",
+      "pillar": "day",
+      "reference_date": "2021-04-20",
+      "lunar_python": "戊戌",
+      "sxtwl": "戊戌",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-260",
+      "pillar": "day",
+      "reference_date": "1979-11-18",
+      "lunar_python": "己丑",
+      "sxtwl": "己丑",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-260",
+      "pillar": "year",
+      "reference_date": "1979-11-18",
+      "lunar_python": "己未",
+      "sxtwl": "己未",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-260",
+      "pillar": "month",
+      "reference_date": "1979-11-18",
+      "lunar_python": "乙亥",
+      "sxtwl": "乙亥",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-261",
+      "pillar": "day",
+      "reference_date": "2009-08-17",
+      "lunar_python": "甲午",
+      "sxtwl": "甲午",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-261",
+      "pillar": "year",
+      "reference_date": "2009-08-17",
+      "lunar_python": "己丑",
+      "sxtwl": "己丑",
+      "agrees": true
+    },
+    {
+      "case_id": "B3-261",
+      "pillar": "month",
+      "reference_date": "2009-08-17",
+      "lunar_python": "壬申",
+      "sxtwl": "壬申",
+      "agrees": true
+    }
+  ],
+  "supplementary_hour_comparison": {
+    "kind": "convention_matched_cross_implementation_not_independent_truth",
+    "api": "sxtwl.Day.getHourGZ(reference_hour, True)",
+    "semantics": "Installed sxtwl 2.0.7 with True advances the hour stem at 23:00; the civil reference date is passed unchanged for both lunar-python sects.",
+    "checks": 225,
+    "agreements": 225,
+    "rows": [
+      {
+        "case_id": "B3-001",
+        "reference_date": "1978-01-30",
+        "reference_hour": 12,
+        "lunar_python": "丙午",
+        "sxtwl": "丙午",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-002",
+        "reference_date": "1978-02-04",
+        "reference_hour": 11,
+        "lunar_python": "丙午",
+        "sxtwl": "丙午",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-003",
+        "reference_date": "1978-02-04",
+        "reference_hour": 12,
+        "lunar_python": "丙午",
+        "sxtwl": "丙午",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-004",
+        "reference_date": "1978-02-04",
+        "reference_hour": 12,
+        "lunar_python": "丙午",
+        "sxtwl": "丙午",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-005",
+        "reference_date": "1978-02-04",
+        "reference_hour": 13,
+        "lunar_python": "丁未",
+        "sxtwl": "丁未",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-006",
+        "reference_date": "1978-02-09",
+        "reference_hour": 12,
+        "lunar_python": "丙午",
+        "sxtwl": "丙午",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-007",
+        "reference_date": "1982-03-01",
+        "reference_hour": 5,
+        "lunar_python": "乙卯",
+        "sxtwl": "乙卯",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-008",
+        "reference_date": "1982-03-06",
+        "reference_hour": 4,
+        "lunar_python": "甲寅",
+        "sxtwl": "甲寅",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-009",
+        "reference_date": "1982-03-06",
+        "reference_hour": 5,
+        "lunar_python": "乙卯",
+        "sxtwl": "乙卯",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-010",
+        "reference_date": "1982-03-06",
+        "reference_hour": 5,
+        "lunar_python": "乙卯",
+        "sxtwl": "乙卯",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-011",
+        "reference_date": "1982-03-06",
+        "reference_hour": 6,
+        "lunar_python": "乙卯",
+        "sxtwl": "乙卯",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-012",
+        "reference_date": "1982-03-11",
+        "reference_hour": 5,
+        "lunar_python": "乙卯",
+        "sxtwl": "乙卯",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-013",
+        "reference_date": "1994-03-31",
+        "reference_hour": 8,
+        "lunar_python": "壬辰",
+        "sxtwl": "壬辰",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-014",
+        "reference_date": "1994-04-05",
+        "reference_hour": 7,
+        "lunar_python": "壬辰",
+        "sxtwl": "壬辰",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-015",
+        "reference_date": "1994-04-05",
+        "reference_hour": 8,
+        "lunar_python": "壬辰",
+        "sxtwl": "壬辰",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-016",
+        "reference_date": "1994-04-05",
+        "reference_hour": 8,
+        "lunar_python": "壬辰",
+        "sxtwl": "壬辰",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-017",
+        "reference_date": "1994-04-05",
+        "reference_hour": 9,
+        "lunar_python": "癸巳",
+        "sxtwl": "癸巳",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-018",
+        "reference_date": "1994-04-10",
+        "reference_hour": 8,
+        "lunar_python": "壬辰",
+        "sxtwl": "壬辰",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-019",
+        "reference_date": "1997-04-30",
+        "reference_hour": 19,
+        "lunar_python": "庚戌",
+        "sxtwl": "庚戌",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-020",
+        "reference_date": "1997-05-05",
+        "reference_hour": 18,
+        "lunar_python": "己酉",
+        "sxtwl": "己酉",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-021",
+        "reference_date": "1997-05-05",
+        "reference_hour": 19,
+        "lunar_python": "庚戌",
+        "sxtwl": "庚戌",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-022",
+        "reference_date": "1997-05-05",
+        "reference_hour": 19,
+        "lunar_python": "庚戌",
+        "sxtwl": "庚戌",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-023",
+        "reference_date": "1997-05-05",
+        "reference_hour": 20,
+        "lunar_python": "庚戌",
+        "sxtwl": "庚戌",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-024",
+        "reference_date": "1997-05-10",
+        "reference_hour": 19,
+        "lunar_python": "庚戌",
+        "sxtwl": "庚戌",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-025",
+        "reference_date": "2003-06-01",
+        "reference_hour": 10,
+        "lunar_python": "辛巳",
+        "sxtwl": "辛巳",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-026",
+        "reference_date": "2003-06-06",
+        "reference_hour": 9,
+        "lunar_python": "辛巳",
+        "sxtwl": "辛巳",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-027",
+        "reference_date": "2003-06-06",
+        "reference_hour": 10,
+        "lunar_python": "辛巳",
+        "sxtwl": "辛巳",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-028",
+        "reference_date": "2003-06-06",
+        "reference_hour": 10,
+        "lunar_python": "辛巳",
+        "sxtwl": "辛巳",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-029",
+        "reference_date": "2003-06-06",
+        "reference_hour": 11,
+        "lunar_python": "壬午",
+        "sxtwl": "壬午",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-030",
+        "reference_date": "2003-06-11",
+        "reference_hour": 10,
+        "lunar_python": "辛巳",
+        "sxtwl": "辛巳",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-031",
+        "reference_date": "2009-07-02",
+        "reference_hour": 7,
+        "lunar_python": "丙辰",
+        "sxtwl": "丙辰",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-032",
+        "reference_date": "2009-07-07",
+        "reference_hour": 6,
+        "lunar_python": "乙卯",
+        "sxtwl": "乙卯",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-033",
+        "reference_date": "2009-07-07",
+        "reference_hour": 7,
+        "lunar_python": "丙辰",
+        "sxtwl": "丙辰",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-034",
+        "reference_date": "2009-07-07",
+        "reference_hour": 7,
+        "lunar_python": "丙辰",
+        "sxtwl": "丙辰",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-035",
+        "reference_date": "2009-07-07",
+        "reference_hour": 8,
+        "lunar_python": "丙辰",
+        "sxtwl": "丙辰",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-036",
+        "reference_date": "2009-07-12",
+        "reference_hour": 7,
+        "lunar_python": "丙辰",
+        "sxtwl": "丙辰",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-037",
+        "reference_date": "2012-08-02",
+        "reference_hour": 10,
+        "lunar_python": "辛巳",
+        "sxtwl": "辛巳",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-038",
+        "reference_date": "2012-08-07",
+        "reference_hour": 9,
+        "lunar_python": "辛巳",
+        "sxtwl": "辛巳",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-039",
+        "reference_date": "2012-08-07",
+        "reference_hour": 10,
+        "lunar_python": "辛巳",
+        "sxtwl": "辛巳",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-040",
+        "reference_date": "2012-08-07",
+        "reference_hour": 10,
+        "lunar_python": "辛巳",
+        "sxtwl": "辛巳",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-041",
+        "reference_date": "2012-08-07",
+        "reference_hour": 11,
+        "lunar_python": "壬午",
+        "sxtwl": "壬午",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-042",
+        "reference_date": "2012-08-12",
+        "reference_hour": 10,
+        "lunar_python": "辛巳",
+        "sxtwl": "辛巳",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-043",
+        "reference_date": "2016-09-02",
+        "reference_hour": 12,
+        "lunar_python": "丙午",
+        "sxtwl": "丙午",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-044",
+        "reference_date": "2016-09-07",
+        "reference_hour": 11,
+        "lunar_python": "丙午",
+        "sxtwl": "丙午",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-045",
+        "reference_date": "2016-09-07",
+        "reference_hour": 12,
+        "lunar_python": "丙午",
+        "sxtwl": "丙午",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-046",
+        "reference_date": "2016-09-07",
+        "reference_hour": 12,
+        "lunar_python": "丙午",
+        "sxtwl": "丙午",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-047",
+        "reference_date": "2016-09-07",
+        "reference_hour": 13,
+        "lunar_python": "丁未",
+        "sxtwl": "丁未",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-048",
+        "reference_date": "2016-09-12",
+        "reference_hour": 12,
+        "lunar_python": "丙午",
+        "sxtwl": "丙午",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-049",
+        "reference_date": "2021-10-03",
+        "reference_hour": 9,
+        "lunar_python": "己巳",
+        "sxtwl": "己巳",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-050",
+        "reference_date": "2021-10-08",
+        "reference_hour": 8,
+        "lunar_python": "戊辰",
+        "sxtwl": "戊辰",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-051",
+        "reference_date": "2021-10-08",
+        "reference_hour": 9,
+        "lunar_python": "己巳",
+        "sxtwl": "己巳",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-052",
+        "reference_date": "2021-10-08",
+        "reference_hour": 9,
+        "lunar_python": "己巳",
+        "sxtwl": "己巳",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-053",
+        "reference_date": "2021-10-08",
+        "reference_hour": 10,
+        "lunar_python": "己巳",
+        "sxtwl": "己巳",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-054",
+        "reference_date": "2021-10-13",
+        "reference_hour": 9,
+        "lunar_python": "己巳",
+        "sxtwl": "己巳",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-055",
+        "reference_date": "2029-11-02",
+        "reference_hour": 11,
+        "lunar_python": "甲午",
+        "sxtwl": "甲午",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-056",
+        "reference_date": "2029-11-07",
+        "reference_hour": 10,
+        "lunar_python": "癸巳",
+        "sxtwl": "癸巳",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-057",
+        "reference_date": "2029-11-07",
+        "reference_hour": 11,
+        "lunar_python": "甲午",
+        "sxtwl": "甲午",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-058",
+        "reference_date": "2029-11-07",
+        "reference_hour": 11,
+        "lunar_python": "甲午",
+        "sxtwl": "甲午",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-059",
+        "reference_date": "2029-11-07",
+        "reference_hour": 12,
+        "lunar_python": "甲午",
+        "sxtwl": "甲午",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-060",
+        "reference_date": "2029-11-12",
+        "reference_hour": 11,
+        "lunar_python": "甲午",
+        "sxtwl": "甲午",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-061",
+        "reference_date": "2034-12-02",
+        "reference_hour": 9,
+        "lunar_python": "乙巳",
+        "sxtwl": "乙巳",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-062",
+        "reference_date": "2034-12-07",
+        "reference_hour": 8,
+        "lunar_python": "甲辰",
+        "sxtwl": "甲辰",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-063",
+        "reference_date": "2034-12-07",
+        "reference_hour": 9,
+        "lunar_python": "乙巳",
+        "sxtwl": "乙巳",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-064",
+        "reference_date": "2034-12-07",
+        "reference_hour": 9,
+        "lunar_python": "乙巳",
+        "sxtwl": "乙巳",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-065",
+        "reference_date": "2034-12-07",
+        "reference_hour": 10,
+        "lunar_python": "乙巳",
+        "sxtwl": "乙巳",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-066",
+        "reference_date": "2034-12-12",
+        "reference_hour": 9,
+        "lunar_python": "乙巳",
+        "sxtwl": "乙巳",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-067",
+        "reference_date": "2036-12-31",
+        "reference_hour": 8,
+        "lunar_python": "甲辰",
+        "sxtwl": "甲辰",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-068",
+        "reference_date": "2037-01-05",
+        "reference_hour": 7,
+        "lunar_python": "甲辰",
+        "sxtwl": "甲辰",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-069",
+        "reference_date": "2037-01-05",
+        "reference_hour": 8,
+        "lunar_python": "甲辰",
+        "sxtwl": "甲辰",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-070",
+        "reference_date": "2037-01-05",
+        "reference_hour": 8,
+        "lunar_python": "甲辰",
+        "sxtwl": "甲辰",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-071",
+        "reference_date": "2037-01-05",
+        "reference_hour": 9,
+        "lunar_python": "乙巳",
+        "sxtwl": "乙巳",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-072",
+        "reference_date": "2037-01-10",
+        "reference_hour": 8,
+        "lunar_python": "甲辰",
+        "sxtwl": "甲辰",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-073",
+        "reference_date": "2041-01-29",
+        "reference_hour": 19,
+        "lunar_python": "庚戌",
+        "sxtwl": "庚戌",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-074",
+        "reference_date": "2041-02-03",
+        "reference_hour": 18,
+        "lunar_python": "己酉",
+        "sxtwl": "己酉",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-075",
+        "reference_date": "2041-02-03",
+        "reference_hour": 19,
+        "lunar_python": "庚戌",
+        "sxtwl": "庚戌",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-076",
+        "reference_date": "2041-02-03",
+        "reference_hour": 19,
+        "lunar_python": "庚戌",
+        "sxtwl": "庚戌",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-077",
+        "reference_date": "2041-02-03",
+        "reference_hour": 20,
+        "lunar_python": "庚戌",
+        "sxtwl": "庚戌",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-078",
+        "reference_date": "2041-02-08",
+        "reference_hour": 19,
+        "lunar_python": "庚戌",
+        "sxtwl": "庚戌",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-079",
+        "reference_date": "2047-01-30",
+        "reference_hour": 6,
+        "lunar_python": "丁卯",
+        "sxtwl": "丁卯",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-080",
+        "reference_date": "2047-02-04",
+        "reference_hour": 5,
+        "lunar_python": "丁卯",
+        "sxtwl": "丁卯",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-081",
+        "reference_date": "2047-02-04",
+        "reference_hour": 6,
+        "lunar_python": "丁卯",
+        "sxtwl": "丁卯",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-082",
+        "reference_date": "2047-02-04",
+        "reference_hour": 6,
+        "lunar_python": "丁卯",
+        "sxtwl": "丁卯",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-083",
+        "reference_date": "2047-02-04",
+        "reference_hour": 7,
+        "lunar_python": "戊辰",
+        "sxtwl": "戊辰",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-084",
+        "reference_date": "2047-02-09",
+        "reference_hour": 6,
+        "lunar_python": "丁卯",
+        "sxtwl": "丁卯",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-085",
+        "reference_date": "1981-03-17",
+        "reference_hour": 21,
+        "lunar_python": "乙亥",
+        "sxtwl": "乙亥",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-086",
+        "reference_date": "1981-03-17",
+        "reference_hour": 22,
+        "lunar_python": "乙亥",
+        "sxtwl": "乙亥",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-087",
+        "reference_date": "1981-03-17",
+        "reference_hour": 23,
+        "lunar_python": "丙子",
+        "sxtwl": "丙子",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-088",
+        "reference_date": "1981-03-17",
+        "reference_hour": 23,
+        "lunar_python": "丙子",
+        "sxtwl": "丙子",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-089",
+        "reference_date": "1981-03-18",
+        "reference_hour": 0,
+        "lunar_python": "丙子",
+        "sxtwl": "丙子",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-090",
+        "reference_date": "1981-03-18",
+        "reference_hour": 1,
+        "lunar_python": "丁丑",
+        "sxtwl": "丁丑",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-091",
+        "reference_date": "1981-03-17",
+        "reference_hour": 21,
+        "lunar_python": "乙亥",
+        "sxtwl": "乙亥",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-092",
+        "reference_date": "1981-03-17",
+        "reference_hour": 22,
+        "lunar_python": "乙亥",
+        "sxtwl": "乙亥",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-093",
+        "reference_date": "1981-03-17",
+        "reference_hour": 23,
+        "lunar_python": "丙子",
+        "sxtwl": "丙子",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-094",
+        "reference_date": "1981-03-17",
+        "reference_hour": 23,
+        "lunar_python": "丙子",
+        "sxtwl": "丙子",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-095",
+        "reference_date": "1981-03-18",
+        "reference_hour": 0,
+        "lunar_python": "丙子",
+        "sxtwl": "丙子",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-096",
+        "reference_date": "1981-03-18",
+        "reference_hour": 1,
+        "lunar_python": "丁丑",
+        "sxtwl": "丁丑",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-097",
+        "reference_date": "1997-08-26",
+        "reference_hour": 21,
+        "lunar_python": "丁亥",
+        "sxtwl": "丁亥",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-098",
+        "reference_date": "1997-08-26",
+        "reference_hour": 22,
+        "lunar_python": "丁亥",
+        "sxtwl": "丁亥",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-099",
+        "reference_date": "1997-08-26",
+        "reference_hour": 23,
+        "lunar_python": "戊子",
+        "sxtwl": "戊子",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-100",
+        "reference_date": "1997-08-26",
+        "reference_hour": 23,
+        "lunar_python": "戊子",
+        "sxtwl": "戊子",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-101",
+        "reference_date": "1997-08-27",
+        "reference_hour": 0,
+        "lunar_python": "戊子",
+        "sxtwl": "戊子",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-102",
+        "reference_date": "1997-08-27",
+        "reference_hour": 1,
+        "lunar_python": "己丑",
+        "sxtwl": "己丑",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-103",
+        "reference_date": "1997-08-26",
+        "reference_hour": 21,
+        "lunar_python": "丁亥",
+        "sxtwl": "丁亥",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-104",
+        "reference_date": "1997-08-26",
+        "reference_hour": 22,
+        "lunar_python": "丁亥",
+        "sxtwl": "丁亥",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-105",
+        "reference_date": "1997-08-26",
+        "reference_hour": 23,
+        "lunar_python": "戊子",
+        "sxtwl": "戊子",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-106",
+        "reference_date": "1997-08-26",
+        "reference_hour": 23,
+        "lunar_python": "戊子",
+        "sxtwl": "戊子",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-107",
+        "reference_date": "1997-08-27",
+        "reference_hour": 0,
+        "lunar_python": "戊子",
+        "sxtwl": "戊子",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-108",
+        "reference_date": "1997-08-27",
+        "reference_hour": 1,
+        "lunar_python": "己丑",
+        "sxtwl": "己丑",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-109",
+        "reference_date": "2013-11-29",
+        "reference_hour": 21,
+        "lunar_python": "乙亥",
+        "sxtwl": "乙亥",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-110",
+        "reference_date": "2013-11-29",
+        "reference_hour": 22,
+        "lunar_python": "乙亥",
+        "sxtwl": "乙亥",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-111",
+        "reference_date": "2013-11-29",
+        "reference_hour": 23,
+        "lunar_python": "丙子",
+        "sxtwl": "丙子",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-112",
+        "reference_date": "2013-11-29",
+        "reference_hour": 23,
+        "lunar_python": "丙子",
+        "sxtwl": "丙子",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-113",
+        "reference_date": "2013-11-30",
+        "reference_hour": 0,
+        "lunar_python": "丙子",
+        "sxtwl": "丙子",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-114",
+        "reference_date": "2013-11-30",
+        "reference_hour": 1,
+        "lunar_python": "丁丑",
+        "sxtwl": "丁丑",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-115",
+        "reference_date": "2013-11-29",
+        "reference_hour": 21,
+        "lunar_python": "乙亥",
+        "sxtwl": "乙亥",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-116",
+        "reference_date": "2013-11-29",
+        "reference_hour": 22,
+        "lunar_python": "乙亥",
+        "sxtwl": "乙亥",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-117",
+        "reference_date": "2013-11-29",
+        "reference_hour": 23,
+        "lunar_python": "丙子",
+        "sxtwl": "丙子",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-118",
+        "reference_date": "2013-11-29",
+        "reference_hour": 23,
+        "lunar_python": "丙子",
+        "sxtwl": "丙子",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-119",
+        "reference_date": "2013-11-30",
+        "reference_hour": 0,
+        "lunar_python": "丙子",
+        "sxtwl": "丙子",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-120",
+        "reference_date": "2013-11-30",
+        "reference_hour": 1,
+        "lunar_python": "丁丑",
+        "sxtwl": "丁丑",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-121",
+        "reference_date": "2035-05-24",
+        "reference_hour": 21,
+        "lunar_python": "丁亥",
+        "sxtwl": "丁亥",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-122",
+        "reference_date": "2035-05-24",
+        "reference_hour": 22,
+        "lunar_python": "丁亥",
+        "sxtwl": "丁亥",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-123",
+        "reference_date": "2035-05-24",
+        "reference_hour": 23,
+        "lunar_python": "戊子",
+        "sxtwl": "戊子",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-124",
+        "reference_date": "2035-05-24",
+        "reference_hour": 23,
+        "lunar_python": "戊子",
+        "sxtwl": "戊子",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-125",
+        "reference_date": "2035-05-25",
+        "reference_hour": 0,
+        "lunar_python": "戊子",
+        "sxtwl": "戊子",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-126",
+        "reference_date": "2035-05-25",
+        "reference_hour": 1,
+        "lunar_python": "己丑",
+        "sxtwl": "己丑",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-127",
+        "reference_date": "2035-05-24",
+        "reference_hour": 21,
+        "lunar_python": "丁亥",
+        "sxtwl": "丁亥",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-128",
+        "reference_date": "2035-05-24",
+        "reference_hour": 22,
+        "lunar_python": "丁亥",
+        "sxtwl": "丁亥",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-129",
+        "reference_date": "2035-05-24",
+        "reference_hour": 23,
+        "lunar_python": "戊子",
+        "sxtwl": "戊子",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-130",
+        "reference_date": "2035-05-24",
+        "reference_hour": 23,
+        "lunar_python": "戊子",
+        "sxtwl": "戊子",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-131",
+        "reference_date": "2035-05-25",
+        "reference_hour": 0,
+        "lunar_python": "戊子",
+        "sxtwl": "戊子",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-132",
+        "reference_date": "2035-05-25",
+        "reference_hour": 1,
+        "lunar_python": "己丑",
+        "sxtwl": "己丑",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-133",
+        "reference_date": "1994-05-27",
+        "reference_hour": 10,
+        "lunar_python": "丁巳",
+        "sxtwl": "丁巳",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-134",
+        "reference_date": "1994-05-27",
+        "reference_hour": 10,
+        "lunar_python": "丁巳",
+        "sxtwl": "丁巳",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-135",
+        "reference_date": "2003-09-02",
+        "reference_hour": 9,
+        "lunar_python": "丁巳",
+        "sxtwl": "丁巳",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-136",
+        "reference_date": "2003-09-02",
+        "reference_hour": 9,
+        "lunar_python": "丁巳",
+        "sxtwl": "丁巳",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-137",
+        "reference_date": "2010-01-19",
+        "reference_hour": 15,
+        "lunar_python": "壬申",
+        "sxtwl": "壬申",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-138",
+        "reference_date": "2010-01-19",
+        "reference_hour": 15,
+        "lunar_python": "壬申",
+        "sxtwl": "壬申",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-139",
+        "reference_date": "2016-03-29",
+        "reference_hour": 17,
+        "lunar_python": "乙酉",
+        "sxtwl": "乙酉",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-140",
+        "reference_date": "2016-03-29",
+        "reference_hour": 17,
+        "lunar_python": "乙酉",
+        "sxtwl": "乙酉",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-141",
+        "reference_date": "2021-12-02",
+        "reference_hour": 7,
+        "lunar_python": "戊辰",
+        "sxtwl": "戊辰",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-142",
+        "reference_date": "2021-12-02",
+        "reference_hour": 7,
+        "lunar_python": "戊辰",
+        "sxtwl": "戊辰",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-143",
+        "reference_date": "2038-08-11",
+        "reference_hour": 5,
+        "lunar_python": "己卯",
+        "sxtwl": "己卯",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-144",
+        "reference_date": "2038-08-11",
+        "reference_hour": 5,
+        "lunar_python": "己卯",
+        "sxtwl": "己卯",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-146",
+        "reference_date": "2023-11-05",
+        "reference_hour": 16,
+        "lunar_python": "戊申",
+        "sxtwl": "戊申",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-147",
+        "reference_date": "2023-11-05",
+        "reference_hour": 17,
+        "lunar_python": "己酉",
+        "sxtwl": "己酉",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-148",
+        "reference_date": "2023-10-29",
+        "reference_hour": 16,
+        "lunar_python": "甲申",
+        "sxtwl": "甲申",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-150",
+        "reference_date": "2022-10-30",
+        "reference_hour": 8,
+        "lunar_python": "壬辰",
+        "sxtwl": "壬辰",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-151",
+        "reference_date": "2022-10-30",
+        "reference_hour": 9,
+        "lunar_python": "癸巳",
+        "sxtwl": "癸巳",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-152",
+        "reference_date": "2022-10-23",
+        "reference_hour": 8,
+        "lunar_python": "戊辰",
+        "sxtwl": "戊辰",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-154",
+        "reference_date": "2021-11-07",
+        "reference_hour": 14,
+        "lunar_python": "辛未",
+        "sxtwl": "辛未",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-155",
+        "reference_date": "2021-11-07",
+        "reference_hour": 15,
+        "lunar_python": "壬申",
+        "sxtwl": "壬申",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-156",
+        "reference_date": "2021-10-31",
+        "reference_hour": 14,
+        "lunar_python": "丁未",
+        "sxtwl": "丁未",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-157",
+        "reference_date": "2019-11-03",
+        "reference_hour": 13,
+        "lunar_python": "辛未",
+        "sxtwl": "辛未",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-158",
+        "reference_date": "2019-11-03",
+        "reference_hour": 13,
+        "lunar_python": "辛未",
+        "sxtwl": "辛未",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-159",
+        "reference_date": "2019-11-03",
+        "reference_hour": 14,
+        "lunar_python": "辛未",
+        "sxtwl": "辛未",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-160",
+        "reference_date": "2019-10-27",
+        "reference_hour": 13,
+        "lunar_python": "丁未",
+        "sxtwl": "丁未",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-161",
+        "reference_date": "2018-11-04",
+        "reference_hour": 15,
+        "lunar_python": "甲申",
+        "sxtwl": "甲申",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-162",
+        "reference_date": "2018-11-04",
+        "reference_hour": 15,
+        "lunar_python": "甲申",
+        "sxtwl": "甲申",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-163",
+        "reference_date": "2018-11-04",
+        "reference_hour": 16,
+        "lunar_python": "甲申",
+        "sxtwl": "甲申",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-164",
+        "reference_date": "2018-10-28",
+        "reference_hour": 15,
+        "lunar_python": "庚申",
+        "sxtwl": "庚申",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-166",
+        "reference_date": "2023-03-19",
+        "reference_hour": 17,
+        "lunar_python": "丁酉",
+        "sxtwl": "丁酉",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-168",
+        "reference_date": "2022-04-03",
+        "reference_hour": 8,
+        "lunar_python": "壬辰",
+        "sxtwl": "壬辰",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-170",
+        "reference_date": "1984-04-12",
+        "reference_hour": 23,
+        "lunar_python": "庚子",
+        "sxtwl": "庚子",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-171",
+        "reference_date": "1984-04-12",
+        "reference_hour": 23,
+        "lunar_python": "庚子",
+        "sxtwl": "庚子",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-172",
+        "reference_date": "1984-04-12",
+        "reference_hour": 22,
+        "lunar_python": "己亥",
+        "sxtwl": "己亥",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-173",
+        "reference_date": "1984-04-13",
+        "reference_hour": 0,
+        "lunar_python": "庚子",
+        "sxtwl": "庚子",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-175",
+        "reference_date": "1993-02-23",
+        "reference_hour": 23,
+        "lunar_python": "戊子",
+        "sxtwl": "戊子",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-176",
+        "reference_date": "1993-02-23",
+        "reference_hour": 23,
+        "lunar_python": "戊子",
+        "sxtwl": "戊子",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-177",
+        "reference_date": "1993-02-23",
+        "reference_hour": 22,
+        "lunar_python": "丁亥",
+        "sxtwl": "丁亥",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-178",
+        "reference_date": "1993-02-24",
+        "reference_hour": 0,
+        "lunar_python": "戊子",
+        "sxtwl": "戊子",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-180",
+        "reference_date": "2002-06-27",
+        "reference_hour": 23,
+        "lunar_python": "庚子",
+        "sxtwl": "庚子",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-181",
+        "reference_date": "2002-06-27",
+        "reference_hour": 23,
+        "lunar_python": "庚子",
+        "sxtwl": "庚子",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-182",
+        "reference_date": "2002-06-27",
+        "reference_hour": 22,
+        "lunar_python": "己亥",
+        "sxtwl": "己亥",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-183",
+        "reference_date": "2002-06-28",
+        "reference_hour": 0,
+        "lunar_python": "庚子",
+        "sxtwl": "庚子",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-185",
+        "reference_date": "2014-09-19",
+        "reference_hour": 23,
+        "lunar_python": "甲子",
+        "sxtwl": "甲子",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-186",
+        "reference_date": "2014-09-19",
+        "reference_hour": 23,
+        "lunar_python": "甲子",
+        "sxtwl": "甲子",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-187",
+        "reference_date": "2014-09-19",
+        "reference_hour": 22,
+        "lunar_python": "癸亥",
+        "sxtwl": "癸亥",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-188",
+        "reference_date": "2014-09-20",
+        "reference_hour": 0,
+        "lunar_python": "甲子",
+        "sxtwl": "甲子",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-190",
+        "reference_date": "2028-04-13",
+        "reference_hour": 23,
+        "lunar_python": "甲子",
+        "sxtwl": "甲子",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-191",
+        "reference_date": "2028-04-13",
+        "reference_hour": 23,
+        "lunar_python": "甲子",
+        "sxtwl": "甲子",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-192",
+        "reference_date": "2028-04-13",
+        "reference_hour": 22,
+        "lunar_python": "癸亥",
+        "sxtwl": "癸亥",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-193",
+        "reference_date": "2028-04-14",
+        "reference_hour": 0,
+        "lunar_python": "甲子",
+        "sxtwl": "甲子",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-195",
+        "reference_date": "2043-11-23",
+        "reference_hour": 23,
+        "lunar_python": "戊子",
+        "sxtwl": "戊子",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-196",
+        "reference_date": "2043-11-23",
+        "reference_hour": 23,
+        "lunar_python": "戊子",
+        "sxtwl": "戊子",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-197",
+        "reference_date": "2043-11-23",
+        "reference_hour": 22,
+        "lunar_python": "丁亥",
+        "sxtwl": "丁亥",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-198",
+        "reference_date": "2043-11-24",
+        "reference_hour": 0,
+        "lunar_python": "戊子",
+        "sxtwl": "戊子",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-199",
+        "reference_date": "1980-05-05",
+        "reference_hour": 16,
+        "lunar_python": "庚申",
+        "sxtwl": "庚申",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-201",
+        "reference_date": "1980-05-05",
+        "reference_hour": 16,
+        "lunar_python": "庚申",
+        "sxtwl": "庚申",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-202",
+        "reference_date": "2000-09-07",
+        "reference_hour": 15,
+        "lunar_python": "庚申",
+        "sxtwl": "庚申",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-204",
+        "reference_date": "2000-09-07",
+        "reference_hour": 16,
+        "lunar_python": "庚申",
+        "sxtwl": "庚申",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-205",
+        "reference_date": "2017-12-07",
+        "reference_hour": 6,
+        "lunar_python": "乙卯",
+        "sxtwl": "乙卯",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-207",
+        "reference_date": "2017-12-07",
+        "reference_hour": 6,
+        "lunar_python": "乙卯",
+        "sxtwl": "乙卯",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-208",
+        "reference_date": "2043-04-05",
+        "reference_hour": 5,
+        "lunar_python": "乙卯",
+        "sxtwl": "乙卯",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-210",
+        "reference_date": "2043-04-05",
+        "reference_hour": 5,
+        "lunar_python": "乙卯",
+        "sxtwl": "乙卯",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-211",
+        "reference_date": "2006-01-23",
+        "reference_hour": 22,
+        "lunar_python": "辛亥",
+        "sxtwl": "辛亥",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-212",
+        "reference_date": "2006-01-23",
+        "reference_hour": 23,
+        "lunar_python": "壬子",
+        "sxtwl": "壬子",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-214",
+        "reference_date": "1979-07-19",
+        "reference_hour": 14,
+        "lunar_python": "丁未",
+        "sxtwl": "丁未",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-216",
+        "reference_date": "2007-05-30",
+        "reference_hour": 14,
+        "lunar_python": "辛未",
+        "sxtwl": "辛未",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-218",
+        "reference_date": "2031-10-02",
+        "reference_hour": 14,
+        "lunar_python": "癸未",
+        "sxtwl": "癸未",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-220",
+        "reference_date": "1985-12-11",
+        "reference_hour": 9,
+        "lunar_python": "己巳",
+        "sxtwl": "己巳",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-222",
+        "reference_date": "2010-08-03",
+        "reference_hour": 9,
+        "lunar_python": "辛巳",
+        "sxtwl": "辛巳",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-224",
+        "reference_date": "2027-03-15",
+        "reference_hour": 9,
+        "lunar_python": "丁巳",
+        "sxtwl": "丁巳",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-226",
+        "reference_date": "2001-11-14",
+        "reference_hour": 18,
+        "lunar_python": "丁酉",
+        "sxtwl": "丁酉",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-228",
+        "reference_date": "2019-04-22",
+        "reference_hour": 1,
+        "lunar_python": "乙丑",
+        "sxtwl": "乙丑",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-230",
+        "reference_date": "2024-02-29",
+        "reference_hour": 10,
+        "lunar_python": "丁巳",
+        "sxtwl": "丁巳",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-232",
+        "reference_date": "2022-04-30",
+        "reference_hour": 15,
+        "lunar_python": "庚申",
+        "sxtwl": "庚申",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-234",
+        "reference_date": "2026-08-20",
+        "reference_hour": 0,
+        "lunar_python": "戊子",
+        "sxtwl": "戊子",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-235",
+        "reference_date": "2005-03-18",
+        "reference_hour": 11,
+        "lunar_python": "甲午",
+        "sxtwl": "甲午",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-239",
+        "reference_date": "2005-07-21",
+        "reference_hour": 16,
+        "lunar_python": "丙申",
+        "sxtwl": "丙申",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-245",
+        "reference_date": "1901-07-07",
+        "reference_hour": 12,
+        "lunar_python": "甲午",
+        "sxtwl": "甲午",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-247",
+        "reference_date": "2099-03-03",
+        "reference_hour": 8,
+        "lunar_python": "戊辰",
+        "sxtwl": "戊辰",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-249",
+        "reference_date": "1901-01-01",
+        "reference_hour": 0,
+        "lunar_python": "甲子",
+        "sxtwl": "甲子",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-250",
+        "reference_date": "2007-12-02",
+        "reference_hour": 5,
+        "lunar_python": "己卯",
+        "sxtwl": "己卯",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-251",
+        "reference_date": "1964-08-04",
+        "reference_hour": 13,
+        "lunar_python": "癸未",
+        "sxtwl": "癸未",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-252",
+        "reference_date": "1982-12-28",
+        "reference_hour": 20,
+        "lunar_python": "丙戌",
+        "sxtwl": "丙戌",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-253",
+        "reference_date": "1997-02-11",
+        "reference_hour": 6,
+        "lunar_python": "丁卯",
+        "sxtwl": "丁卯",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-254",
+        "reference_date": "2018-07-02",
+        "reference_hour": 17,
+        "lunar_python": "乙酉",
+        "sxtwl": "乙酉",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-255",
+        "reference_date": "2041-05-01",
+        "reference_hour": 20,
+        "lunar_python": "甲戌",
+        "sxtwl": "甲戌",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-256",
+        "reference_date": "2030-12-28",
+        "reference_hour": 12,
+        "lunar_python": "丙午",
+        "sxtwl": "丙午",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-257",
+        "reference_date": "2028-01-17",
+        "reference_hour": 11,
+        "lunar_python": "甲午",
+        "sxtwl": "甲午",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-258",
+        "reference_date": "2047-04-18",
+        "reference_hour": 19,
+        "lunar_python": "庚戌",
+        "sxtwl": "庚戌",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-259",
+        "reference_date": "2021-04-20",
+        "reference_hour": 18,
+        "lunar_python": "辛酉",
+        "sxtwl": "辛酉",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-260",
+        "reference_date": "1979-11-18",
+        "reference_hour": 15,
+        "lunar_python": "壬申",
+        "sxtwl": "壬申",
+        "agrees": true
+      },
+      {
+        "case_id": "B3-261",
+        "reference_date": "2009-08-17",
+        "reference_hour": 17,
+        "lunar_python": "癸酉",
+        "sxtwl": "癸酉",
+        "agrees": true
+      }
+    ],
+    "unique_reference_date_and_hour_checks": 166,
+    "limitation": "Separate from the historical day/year/month comparison count. This checks a matched implementation rule; it does not adjudicate Zi traditions or validate the astronomical clock or the four-pillar chart independently."
+  },
+  "non_ok_cases_skipped": 36,
+  "coverage": {
+    "ok_cases": 225,
+    "unique_normalized_instant_and_sect_inputs": 217,
+    "per_pillar_checks": {
+      "year": 157,
+      "month": 157,
+      "day": 225,
+      "hour": 0
+    },
+    "unique_reference_date_and_pillar_checks": 298,
+    "unique_reference_dates_per_pillar": {
+      "year": 92,
+      "month": 92,
+      "day": 114,
+      "hour": 0
+    },
+    "excluded_checks": [
+      {
+        "case_id": "B3-002",
+        "pillars": [
+          "year",
+          "month"
+        ],
+        "reason": "date_only_sxtwl_api_on_solar_term_date"
+      },
+      {
+        "case_id": "B3-003",
+        "pillars": [
+          "year",
+          "month"
+        ],
+        "reason": "date_only_sxtwl_api_on_solar_term_date"
+      },
+      {
+        "case_id": "B3-004",
+        "pillars": [
+          "year",
+          "month"
+        ],
+        "reason": "date_only_sxtwl_api_on_solar_term_date"
+      },
+      {
+        "case_id": "B3-005",
+        "pillars": [
+          "year",
+          "month"
+        ],
+        "reason": "date_only_sxtwl_api_on_solar_term_date"
+      },
+      {
+        "case_id": "B3-008",
+        "pillars": [
+          "year",
+          "month"
+        ],
+        "reason": "date_only_sxtwl_api_on_solar_term_date"
+      },
+      {
+        "case_id": "B3-009",
+        "pillars": [
+          "year",
+          "month"
+        ],
+        "reason": "date_only_sxtwl_api_on_solar_term_date"
+      },
+      {
+        "case_id": "B3-010",
+        "pillars": [
+          "year",
+          "month"
+        ],
+        "reason": "date_only_sxtwl_api_on_solar_term_date"
+      },
+      {
+        "case_id": "B3-011",
+        "pillars": [
+          "year",
+          "month"
+        ],
+        "reason": "date_only_sxtwl_api_on_solar_term_date"
+      },
+      {
+        "case_id": "B3-014",
+        "pillars": [
+          "year",
+          "month"
+        ],
+        "reason": "date_only_sxtwl_api_on_solar_term_date"
+      },
+      {
+        "case_id": "B3-015",
+        "pillars": [
+          "year",
+          "month"
+        ],
+        "reason": "date_only_sxtwl_api_on_solar_term_date"
+      },
+      {
+        "case_id": "B3-016",
+        "pillars": [
+          "year",
+          "month"
+        ],
+        "reason": "date_only_sxtwl_api_on_solar_term_date"
+      },
+      {
+        "case_id": "B3-017",
+        "pillars": [
+          "year",
+          "month"
+        ],
+        "reason": "date_only_sxtwl_api_on_solar_term_date"
+      },
+      {
+        "case_id": "B3-020",
+        "pillars": [
+          "year",
+          "month"
+        ],
+        "reason": "date_only_sxtwl_api_on_solar_term_date"
+      },
+      {
+        "case_id": "B3-021",
+        "pillars": [
+          "year",
+          "month"
+        ],
+        "reason": "date_only_sxtwl_api_on_solar_term_date"
+      },
+      {
+        "case_id": "B3-022",
+        "pillars": [
+          "year",
+          "month"
+        ],
+        "reason": "date_only_sxtwl_api_on_solar_term_date"
+      },
+      {
+        "case_id": "B3-023",
+        "pillars": [
+          "year",
+          "month"
+        ],
+        "reason": "date_only_sxtwl_api_on_solar_term_date"
+      },
+      {
+        "case_id": "B3-026",
+        "pillars": [
+          "year",
+          "month"
+        ],
+        "reason": "date_only_sxtwl_api_on_solar_term_date"
+      },
+      {
+        "case_id": "B3-027",
+        "pillars": [
+          "year",
+          "month"
+        ],
+        "reason": "date_only_sxtwl_api_on_solar_term_date"
+      },
+      {
+        "case_id": "B3-028",
+        "pillars": [
+          "year",
+          "month"
+        ],
+        "reason": "date_only_sxtwl_api_on_solar_term_date"
+      },
+      {
+        "case_id": "B3-029",
+        "pillars": [
+          "year",
+          "month"
+        ],
+        "reason": "date_only_sxtwl_api_on_solar_term_date"
+      },
+      {
+        "case_id": "B3-032",
+        "pillars": [
+          "year",
+          "month"
+        ],
+        "reason": "date_only_sxtwl_api_on_solar_term_date"
+      },
+      {
+        "case_id": "B3-033",
+        "pillars": [
+          "year",
+          "month"
+        ],
+        "reason": "date_only_sxtwl_api_on_solar_term_date"
+      },
+      {
+        "case_id": "B3-034",
+        "pillars": [
+          "year",
+          "month"
+        ],
+        "reason": "date_only_sxtwl_api_on_solar_term_date"
+      },
+      {
+        "case_id": "B3-035",
+        "pillars": [
+          "year",
+          "month"
+        ],
+        "reason": "date_only_sxtwl_api_on_solar_term_date"
+      },
+      {
+        "case_id": "B3-038",
+        "pillars": [
+          "year",
+          "month"
+        ],
+        "reason": "date_only_sxtwl_api_on_solar_term_date"
+      },
+      {
+        "case_id": "B3-039",
+        "pillars": [
+          "year",
+          "month"
+        ],
+        "reason": "date_only_sxtwl_api_on_solar_term_date"
+      },
+      {
+        "case_id": "B3-040",
+        "pillars": [
+          "year",
+          "month"
+        ],
+        "reason": "date_only_sxtwl_api_on_solar_term_date"
+      },
+      {
+        "case_id": "B3-041",
+        "pillars": [
+          "year",
+          "month"
+        ],
+        "reason": "date_only_sxtwl_api_on_solar_term_date"
+      },
+      {
+        "case_id": "B3-044",
+        "pillars": [
+          "year",
+          "month"
+        ],
+        "reason": "date_only_sxtwl_api_on_solar_term_date"
+      },
+      {
+        "case_id": "B3-045",
+        "pillars": [
+          "year",
+          "month"
+        ],
+        "reason": "date_only_sxtwl_api_on_solar_term_date"
+      },
+      {
+        "case_id": "B3-046",
+        "pillars": [
+          "year",
+          "month"
+        ],
+        "reason": "date_only_sxtwl_api_on_solar_term_date"
+      },
+      {
+        "case_id": "B3-047",
+        "pillars": [
+          "year",
+          "month"
+        ],
+        "reason": "date_only_sxtwl_api_on_solar_term_date"
+      },
+      {
+        "case_id": "B3-050",
+        "pillars": [
+          "year",
+          "month"
+        ],
+        "reason": "date_only_sxtwl_api_on_solar_term_date"
+      },
+      {
+        "case_id": "B3-051",
+        "pillars": [
+          "year",
+          "month"
+        ],
+        "reason": "date_only_sxtwl_api_on_solar_term_date"
+      },
+      {
+        "case_id": "B3-052",
+        "pillars": [
+          "year",
+          "month"
+        ],
+        "reason": "date_only_sxtwl_api_on_solar_term_date"
+      },
+      {
+        "case_id": "B3-053",
+        "pillars": [
+          "year",
+          "month"
+        ],
+        "reason": "date_only_sxtwl_api_on_solar_term_date"
+      },
+      {
+        "case_id": "B3-056",
+        "pillars": [
+          "year",
+          "month"
+        ],
+        "reason": "date_only_sxtwl_api_on_solar_term_date"
+      },
+      {
+        "case_id": "B3-057",
+        "pillars": [
+          "year",
+          "month"
+        ],
+        "reason": "date_only_sxtwl_api_on_solar_term_date"
+      },
+      {
+        "case_id": "B3-058",
+        "pillars": [
+          "year",
+          "month"
+        ],
+        "reason": "date_only_sxtwl_api_on_solar_term_date"
+      },
+      {
+        "case_id": "B3-059",
+        "pillars": [
+          "year",
+          "month"
+        ],
+        "reason": "date_only_sxtwl_api_on_solar_term_date"
+      },
+      {
+        "case_id": "B3-062",
+        "pillars": [
+          "year",
+          "month"
+        ],
+        "reason": "date_only_sxtwl_api_on_solar_term_date"
+      },
+      {
+        "case_id": "B3-063",
+        "pillars": [
+          "year",
+          "month"
+        ],
+        "reason": "date_only_sxtwl_api_on_solar_term_date"
+      },
+      {
+        "case_id": "B3-064",
+        "pillars": [
+          "year",
+          "month"
+        ],
+        "reason": "date_only_sxtwl_api_on_solar_term_date"
+      },
+      {
+        "case_id": "B3-065",
+        "pillars": [
+          "year",
+          "month"
+        ],
+        "reason": "date_only_sxtwl_api_on_solar_term_date"
+      },
+      {
+        "case_id": "B3-068",
+        "pillars": [
+          "year",
+          "month"
+        ],
+        "reason": "date_only_sxtwl_api_on_solar_term_date"
+      },
+      {
+        "case_id": "B3-069",
+        "pillars": [
+          "year",
+          "month"
+        ],
+        "reason": "date_only_sxtwl_api_on_solar_term_date"
+      },
+      {
+        "case_id": "B3-070",
+        "pillars": [
+          "year",
+          "month"
+        ],
+        "reason": "date_only_sxtwl_api_on_solar_term_date"
+      },
+      {
+        "case_id": "B3-071",
+        "pillars": [
+          "year",
+          "month"
+        ],
+        "reason": "date_only_sxtwl_api_on_solar_term_date"
+      },
+      {
+        "case_id": "B3-074",
+        "pillars": [
+          "year",
+          "month"
+        ],
+        "reason": "date_only_sxtwl_api_on_solar_term_date"
+      },
+      {
+        "case_id": "B3-075",
+        "pillars": [
+          "year",
+          "month"
+        ],
+        "reason": "date_only_sxtwl_api_on_solar_term_date"
+      },
+      {
+        "case_id": "B3-076",
+        "pillars": [
+          "year",
+          "month"
+        ],
+        "reason": "date_only_sxtwl_api_on_solar_term_date"
+      },
+      {
+        "case_id": "B3-077",
+        "pillars": [
+          "year",
+          "month"
+        ],
+        "reason": "date_only_sxtwl_api_on_solar_term_date"
+      },
+      {
+        "case_id": "B3-080",
+        "pillars": [
+          "year",
+          "month"
+        ],
+        "reason": "date_only_sxtwl_api_on_solar_term_date"
+      },
+      {
+        "case_id": "B3-081",
+        "pillars": [
+          "year",
+          "month"
+        ],
+        "reason": "date_only_sxtwl_api_on_solar_term_date"
+      },
+      {
+        "case_id": "B3-082",
+        "pillars": [
+          "year",
+          "month"
+        ],
+        "reason": "date_only_sxtwl_api_on_solar_term_date"
+      },
+      {
+        "case_id": "B3-083",
+        "pillars": [
+          "year",
+          "month"
+        ],
+        "reason": "date_only_sxtwl_api_on_solar_term_date"
+      },
+      {
+        "case_id": "B3-152",
+        "pillars": [
+          "year",
+          "month"
+        ],
+        "reason": "date_only_sxtwl_api_on_solar_term_date"
+      },
+      {
+        "case_id": "B3-154",
+        "pillars": [
+          "year",
+          "month"
+        ],
+        "reason": "date_only_sxtwl_api_on_solar_term_date"
+      },
+      {
+        "case_id": "B3-155",
+        "pillars": [
+          "year",
+          "month"
+        ],
+        "reason": "date_only_sxtwl_api_on_solar_term_date"
+      },
+      {
+        "case_id": "B3-199",
+        "pillars": [
+          "year",
+          "month"
+        ],
+        "reason": "date_only_sxtwl_api_on_solar_term_date"
+      },
+      {
+        "case_id": "B3-201",
+        "pillars": [
+          "year",
+          "month"
+        ],
+        "reason": "date_only_sxtwl_api_on_solar_term_date"
+      },
+      {
+        "case_id": "B3-202",
+        "pillars": [
+          "year",
+          "month"
+        ],
+        "reason": "date_only_sxtwl_api_on_solar_term_date"
+      },
+      {
+        "case_id": "B3-204",
+        "pillars": [
+          "year",
+          "month"
+        ],
+        "reason": "date_only_sxtwl_api_on_solar_term_date"
+      },
+      {
+        "case_id": "B3-205",
+        "pillars": [
+          "year",
+          "month"
+        ],
+        "reason": "date_only_sxtwl_api_on_solar_term_date"
+      },
+      {
+        "case_id": "B3-207",
+        "pillars": [
+          "year",
+          "month"
+        ],
+        "reason": "date_only_sxtwl_api_on_solar_term_date"
+      },
+      {
+        "case_id": "B3-208",
+        "pillars": [
+          "year",
+          "month"
+        ],
+        "reason": "date_only_sxtwl_api_on_solar_term_date"
+      },
+      {
+        "case_id": "B3-210",
+        "pillars": [
+          "year",
+          "month"
+        ],
+        "reason": "date_only_sxtwl_api_on_solar_term_date"
+      },
+      {
+        "case_id": "B3-259",
+        "pillars": [
+          "year",
+          "month"
+        ],
+        "reason": "date_only_sxtwl_api_on_solar_term_date"
+      }
+    ],
+    "interpretation": "Main counts are correlated case-field comparisons, not independent observations or full-chart validations. Date-level duplicate comparisons share the same sxtwl reference query. All solar-term-date year/month fields are excluded; hours are reported separately under supplementary_hour_comparison."
+  },
+  "solar_term_differences": [
+    {
+      "term": "立春",
+      "year": 1978,
+      "lunar_python": "1978-02-04T12:26:57",
+      "sxtwl": "1978-02-04T12:26:57.372894",
+      "lunar_minus_sxtwl_seconds": -0.372894
+    },
+    {
+      "term": "惊蛰",
+      "year": 1982,
+      "lunar_python": "1982-03-06T05:54:34",
+      "sxtwl": "1982-03-06T05:54:34.428864",
+      "lunar_minus_sxtwl_seconds": -0.428864
+    },
+    {
+      "term": "清明",
+      "year": 1994,
+      "lunar_python": "1994-04-05T08:31:48",
+      "sxtwl": "1994-04-05T08:31:47.604218",
+      "lunar_minus_sxtwl_seconds": 0.395782
+    },
+    {
+      "term": "立夏",
+      "year": 1997,
+      "lunar_python": "1997-05-05T19:19:26",
+      "sxtwl": "1997-05-05T19:19:26.404724",
+      "lunar_minus_sxtwl_seconds": -0.404724
+    },
+    {
+      "term": "芒种",
+      "year": 2003,
+      "lunar_python": "2003-06-06T10:19:43",
+      "sxtwl": "2003-06-06T10:19:43.200073",
+      "lunar_minus_sxtwl_seconds": -0.200073
+    },
+    {
+      "term": "小暑",
+      "year": 2009,
+      "lunar_python": "2009-07-07T07:13:29",
+      "sxtwl": "2009-07-07T07:13:28.713913",
+      "lunar_minus_sxtwl_seconds": 0.286087
+    },
+    {
+      "term": "立秋",
+      "year": 2012,
+      "lunar_python": "2012-08-07T10:30:33",
+      "sxtwl": "2012-08-07T10:30:32.032013",
+      "lunar_minus_sxtwl_seconds": 0.967987
+    },
+    {
+      "term": "白露",
+      "year": 2016,
+      "lunar_python": "2016-09-07T12:51:05",
+      "sxtwl": "2016-09-07T12:51:02.095642",
+      "lunar_minus_sxtwl_seconds": 2.904358
+    },
+    {
+      "term": "寒露",
+      "year": 2021,
+      "lunar_python": "2021-10-08T09:39:03",
+      "sxtwl": "2021-10-08T09:38:52.637787",
+      "lunar_minus_sxtwl_seconds": 10.362213
+    },
+    {
+      "term": "立冬",
+      "year": 2029,
+      "lunar_python": "2029-11-07T11:16:46",
+      "sxtwl": "2029-11-07T11:16:23.060074",
+      "lunar_minus_sxtwl_seconds": 22.939926
+    },
+    {
+      "term": "大雪",
+      "year": 2034,
+      "lunar_python": "2034-12-07T09:36:49",
+      "sxtwl": "2034-12-07T09:36:18.623199",
+      "lunar_minus_sxtwl_seconds": 30.376801
+    },
+    {
+      "term": "小寒",
+      "year": 2037,
+      "lunar_python": "2037-01-05T08:34:05",
+      "sxtwl": "2037-01-05T08:33:30.642242",
+      "lunar_minus_sxtwl_seconds": 34.357758
+    },
+    {
+      "term": "立春",
+      "year": 2041,
+      "lunar_python": "2041-02-03T19:25:11",
+      "sxtwl": "2041-02-03T19:24:30.286560",
+      "lunar_minus_sxtwl_seconds": 40.71344
+    },
+    {
+      "term": "立春",
+      "year": 2047,
+      "lunar_python": "2047-02-04T06:18:05",
+      "sxtwl": "2047-02-04T06:17:16.642456",
+      "lunar_minus_sxtwl_seconds": 48.357544
+    }
+  ],
+  "solar_term_comparison_coverage": {
+    "requested_term_year_pairs": 14,
+    "compared_pairs": 14,
+    "unmatched_pairs": []
+  },
+  "limitation": "Shared ShouXing astronomy; not independent astronomical validation. Main count checks only day and non-solar-term-date year/month. A separately counted hour comparison uses explicitly matched 23:00-advanced stem semantics. Intra-day Jie year/month labels are not cross-validated.",
+  "hypotheses": {
+    "H1": "NOT RUN",
+    "H2": "NOT RUN",
+    "H3": "NOT RUN"
+  }
+}

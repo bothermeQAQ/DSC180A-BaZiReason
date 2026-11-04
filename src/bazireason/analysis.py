@@ -34,9 +34,13 @@ def diagnostics(cases):
         if result["status"] != "ok":
             skipped += 1
             continue
-        dt = datetime.fromisoformat(result["normalized_datetime"])
-        unique_inputs.add((dt.isoformat(), case["convention"]["sect"]))
-        date = dt + timedelta(days=int(dt.hour == 23 and case["convention"]["sect"] == 1))
+        # An answerable request can have several admissible instants with one chart.
+        dt = datetime.fromisoformat(
+            result["normalized_datetime"] or result["normalized_candidates"][0]
+        )
+        sect = case["convention"].get("sect")
+        unique_inputs.add((dt.isoformat(), sect))
+        date = dt + timedelta(days=int(dt.hour == 23 and sect == 1))
         ref_day = sxtwl.fromSolar(date.year, date.month, date.day)
         checks.append(
             {
@@ -90,6 +94,9 @@ def diagnostics(cases):
             term_pairs.add(
                 (datetime.fromisoformat(meta["engine_boundary_utc8"]).year, meta["term"])
             )
+        h1 = (case.get("design") or {}).get("h1") or {}
+        if h1.get("boundary") == "jie":
+            term_pairs.add((datetime.fromisoformat(h1["event_utc8"]).year, h1["term"]))
     for year in sorted({year for year, _ in term_pairs}):
         table = Solar.fromYmdHms(year, 6, 15, 12, 0, 0).getLunar().getJieQiTable()
         for term in sorted(term for y, term in term_pairs if y == year):

@@ -35,6 +35,8 @@ def main():
     parser.add_argument("--output", default="results/audit/independent_solar_terms.json")
     args = parser.parse_args()
     kernel = Path(args.kernel)
+    if Path(args.output).exists():
+        parser.error("Output exists (historical evidence is not overwritten); choose a new path")
     if not kernel.is_file():
         parser.error(
             "Download the documented JPL DE421 kernel first; this script does not fetch it"

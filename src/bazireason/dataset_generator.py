@@ -1,4 +1,10 @@
-"""Synthetic diagnostic suite. Labels are explicitly lunar-python references."""
+"""Historical v1/v2 synthetic suites. Labels are explicitly lunar-python references.
+
+These generators reproduce the committed checkpoint_v1 and audit_v2 files byte
+for byte and are kept frozen. Their `evaluation_class` field is a known legacy
+error (audit defect E6): it marks every zi_hour case convention_dependent. Use
+`bazireason.dataset_v3.convention_dependence` (as benchmark_v3 does) instead.
+"""
 
 import json
 import random
@@ -133,12 +139,18 @@ def generate_dataset(seed=SEED):
     return cases
 
 
-def write_jsonl(path, records):
+def dataset_bytes(records):
+    """Canonical JSONL bytes: sorted keys, UTF-8, one record per line."""
+    lines = (json.dumps(r, ensure_ascii=False, sort_keys=True) + "\n" for r in records)
+    return "".join(lines).encode("utf-8")
+
+
+def write_jsonl(path, records, overwrite=False):
+    """Write canonical JSONL; refuse to replace an existing file unless asked (defect E9)."""
     path = Path(path)
     path.parent.mkdir(parents=True, exist_ok=True)
-    with path.open("w", encoding="utf-8") as f:
-        for record in records:
-            f.write(json.dumps(record, ensure_ascii=False, sort_keys=True) + "\n")
+    with path.open("wb" if overwrite else "xb") as f:
+        f.write(dataset_bytes(records))
 
 
 def read_jsonl(path):

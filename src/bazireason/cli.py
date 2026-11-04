@@ -5,13 +5,28 @@ import hashlib
 import json
 import math
 import os
+import sys
 from pathlib import Path
 
 from bazireason.baselines import run_case
-from bazireason.dataset_generator import generate_dataset, read_jsonl, write_jsonl
+from bazireason.dataset_generator import (
+    dataset_bytes,
+    generate_audit_dataset,
+    generate_dataset,
+    read_jsonl,
+)
+from bazireason.dataset_v3 import generate_benchmark_v3
 from bazireason.evaluator import evaluate
 from bazireason.llm_clients import OpenAICompatibleClient, SyntheticMockClient
 from bazireason.prompts import METHODS, PROMPT_VERSION, condition
+
+CURRENT_DATA = "data/synthetic/benchmark_v3.jsonl"
+DATASETS = {
+    "checkpoint_v1": (generate_dataset, "data/synthetic/checkpoint.jsonl"),
+    "audit_v2": (generate_audit_dataset, "data/synthetic/audit_v2.jsonl"),
+    "benchmark_v3": (generate_benchmark_v3, CURRENT_DATA),
+}
+LEGACY_PROMPT_VERSIONS = {"v2-policy-controls": "v2"}
 
 
 def select_cases(cases, limit, case_ids, parser):
@@ -26,6 +41,63 @@ def select_cases(cases, limit, case_ids, parser):
     if limit is not None and limit < 1:
         parser.error("--limit must be positive")
     return cases[:limit]
+
+
+def _ids_from_file(path, parser):
+    ids = json.loads(Path(path).read_text())
+    if not isinstance(ids, list) or not ids or any(not isinstance(x, str) for x in ids):
+        parser.error("ID file must be a nonempty JSON array of strings")
+    return ",".join(ids)
+
+
+def read_predictions(path):
+    """Read JSONL predictions, tolerating only an interrupted final write.
+
+    A final line without its newline that does not parse is the trace of an
+    interruption: it is dropped, reported, and its observation stays missing.
+    Any other malformed line is an error.
+    """
+    text = Path(path).read_text(encoding="utf-8")
+    lines = text.split("\n")
+    records, truncated = [], False
+    for number, line in enumerate(lines, 1):
+        if not line.strip():
+            continue
+        try:
+            records.append(json.loads(line))
+        except json.JSONDecodeError as error:
+            if number == len(lines) and not text.endswith("\n"):
+                truncated = True
+                continue
+            raise ValueError(f"Malformed prediction line {number}") from error
+    return records, truncated
+
+
+def check_records(records, manifest, parser):
+    """Every model record must match the manifest's declared run settings."""
+    for record in records:
+        method = record.get("method")
+        if method not in METHODS or condition(method)[1] is None:
+            continue
+        declared = (
+            manifest.get("prompt_version"),
+            manifest.get("model"),
+            manifest.get("temperature"),
+            manifest.get("max_tokens"),
+            bool(manifest.get("synthetic")),
+        )
+        actual = (
+            record.get("prompt_version"),
+            record.get("requested_model"),
+            record.get("temperature"),
+            record.get("max_tokens"),
+            bool(record.get("synthetic")),
+        )
+        if actual != declared:
+            parser.error(
+                f"Record {record.get('case_id')}/{method} differs from the manifest "
+                "(prompt version, model, decoding settings or synthetic flag)"
+            )
 
 
 def evaluation_design(args, cases, parser):
@@ -65,35 +137,64 @@ def evaluation_design(args, cases, parser):
     return selected, methods, trials, manifest
 
 
+def _refuse_existing(path, force, parser):
+    if Path(path).exists() and not force:
+        parser.error(f"{path} exists; choose a new path or pass --force")
+
+
+def _generate(args, parser):
+    generator, default_path = DATASETS[args.dataset_version]
+    payload = dataset_bytes(generator(args.seed))
+    if args.check:
+        same = Path(args.check).read_bytes() == payload
+        digest = hashlib.sha256(payload).hexdigest()
+        print(f"{'PASS' if same else 'FAIL'}: regenerated {args.dataset_version} sha256 {digest}")
+        if not same:
+            sys.exit(1)
+        return
+    output = args.output or default_path
+    historical = {Path(DATASETS[v][1]).resolve() for v in ("checkpoint_v1", "audit_v2")}
+    if Path(output).resolve() in historical:
+        parser.error("Historical datasets are write-protected; use --check to verify them")
+    _refuse_existing(output, args.force, parser)
+    Path(output).parent.mkdir(parents=True, exist_ok=True)
+    Path(output).write_bytes(payload)
+    count = payload.count(b"\n")
+    print(f"Wrote {count} cases to {output}")
+
+
 def main():
     parser = argparse.ArgumentParser()
     sub = parser.add_subparsers(dest="command", required=True)
     gen = sub.add_parser("generate")
     gen.add_argument("--seed", type=int, default=1802026)
     gen.add_argument("--output")
-    gen.add_argument(
-        "--dataset-version", choices=["checkpoint_v1", "audit_v2"], default="checkpoint_v1"
-    )
+    gen.add_argument("--dataset-version", choices=list(DATASETS), default="benchmark_v3")
+    gen.add_argument("--check", metavar="PATH", help="Regenerate and compare bytes; write nothing")
+    gen.add_argument("--force", action="store_true", help="Allow replacing an existing output")
     diag = sub.add_parser("diagnostics")
-    diag.add_argument("--data", default="data/synthetic/checkpoint.jsonl")
-    diag.add_argument("--output", default="results/calendar_diagnostics.json")
+    diag.add_argument("--data", default=CURRENT_DATA)
+    diag.add_argument("--output", required=True)
+    diag.add_argument("--force", action="store_true")
     run = sub.add_parser("run")
-    run.add_argument("--data", default="data/synthetic/checkpoint.jsonl")
+    run.add_argument("--data", default=CURRENT_DATA)
     run.add_argument("--output", required=True)
     run.add_argument("--backend", choices=["mock", "api"], default="mock")
     run.add_argument("--model", default=os.environ.get("BAZIREASON_MODEL"))
     run.add_argument("--base-url", default=os.environ.get("BAZIREASON_BASE_URL"))
-    run.add_argument("--limit", type=int, default=4)
+    run.add_argument("--limit", type=int, default=None)
     run.add_argument("--case-ids", help="Comma-separated exact IDs; overrides --limit")
+    run.add_argument("--case-ids-file", help="JSON array of exact IDs, e.g. the pilot file")
     run.add_argument("--methods", nargs="+", choices=METHODS, default=["direct", "tool_context"])
     run.add_argument("--trials", type=int, default=1)
     run.add_argument("--max-calls", type=int, default=8)
     run.add_argument("--temperature", type=float, default=0)
     run.add_argument("--max-tokens", type=int, default=512)
     score = sub.add_parser("evaluate")
-    score.add_argument("--data", default="data/synthetic/checkpoint.jsonl")
+    score.add_argument("--data", default=CURRENT_DATA)
     score.add_argument("--predictions", required=True)
     score.add_argument("--output", required=True)
+    score.add_argument("--force", action="store_true")
     score.add_argument("--limit", type=int, default=None)
     score.add_argument("--case-ids", help="Same declared IDs as inference; overrides --limit")
     score.add_argument("--methods", nargs="+", choices=METHODS)
@@ -102,41 +203,49 @@ def main():
     score.add_argument("--bootstrap-seed", type=int, default=1802026)
     args = parser.parse_args()
     if args.command == "generate":
-        if args.dataset_version == "audit_v2":
-            from bazireason.dataset_generator import generate_audit_dataset
-
-            cases = generate_audit_dataset(args.seed)
-        else:
-            cases = generate_dataset(args.seed)
-        args.output = args.output or (
-            "data/synthetic/audit_v2.jsonl"
-            if args.dataset_version == "audit_v2"
-            else "data/synthetic/checkpoint.jsonl"
-        )
-        write_jsonl(args.output, cases)
-        print(f"Wrote {len(cases)} cases to {args.output}")
+        _generate(args, parser)
         return
     cases = read_jsonl(args.data)
     if args.command == "diagnostics":
         from bazireason.analysis import diagnostics
 
+        _refuse_existing(args.output, args.force, parser)
         output = diagnostics(cases)
     elif args.command == "evaluate":
+        _refuse_existing(args.output, args.force, parser)
         cases, methods, trials, manifest = evaluation_design(args, cases, parser)
+        try:
+            records, truncated = read_predictions(args.predictions)
+        except ValueError as error:
+            parser.error(str(error))
+        versions = {r.get("prompt_version") for r in records if r.get("prompt_version")}
+        if manifest:
+            check_records(records, manifest, parser)
+            versions = {manifest.get("prompt_version")}
+        scheme = LEGACY_PROMPT_VERSIONS.get(next(iter(versions))) if len(versions) == 1 else None
         output = evaluate(
             cases,
-            read_jsonl(args.predictions),
+            records,
             methods=methods,
             trials=trials,
             bootstrap_samples=args.bootstrap_samples,
             bootstrap_seed=args.bootstrap_seed,
+            corruption_scheme=scheme or "v3",
         )
         output["evaluation_design_source"] = (
             "planned_manifest" if manifest else "explicit_or_legacy"
         )
         output["declared_synthetic"] = manifest.get("synthetic") if manifest else None
+        output["manifest_status"] = manifest.get("status") if manifest else None
+        output["truncated_final_line_dropped"] = truncated
     else:
-        if min(args.limit, args.trials, args.max_tokens) < 1 or args.max_calls < 0:
+        if args.case_ids_file is not None:
+            if args.case_ids is not None:
+                parser.error("Use either --case-ids or --case-ids-file")
+            args.case_ids = _ids_from_file(args.case_ids_file, parser)
+        if args.limit is not None and args.limit < 1:
+            parser.error("Run bounds must be positive")
+        if min(args.trials, args.max_tokens) < 1 or args.max_calls < 0:
             parser.error("Run bounds must be positive")
         if not math.isfinite(args.temperature) or args.temperature < 0:
             parser.error("--temperature must be finite and nonnegative")
@@ -145,7 +254,7 @@ def main():
         cases = select_cases(cases, args.limit, args.case_ids, parser)
         if not cases:
             parser.error("Dataset selection must be nonempty")
-        model_methods = [m for m in args.methods if condition(m)[0] != "copy_context"]
+        model_methods = [m for m in args.methods if condition(m)[1] is not None]
         calls = len(model_methods) * len(cases) * args.trials
         observations = len(args.methods) * len(cases) * args.trials
         if calls > args.max_calls:
