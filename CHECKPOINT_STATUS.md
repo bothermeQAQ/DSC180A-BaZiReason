@@ -2,14 +2,14 @@
 
 Snapshot: **2026-11-03, America/Los_Angeles**. This is a prepared submission package, not a completed course submission. Student review, mentor-specific checks and Gradescope submission remain.
 
-Public repository: **https://github.com/bothermeQAQ/DSC180A-BaZiReason**. Publication verification is recorded below after upload.
+Public repository: **https://github.com/bothermeQAQ/DSC180A-BaZiReason**. Publication verification is recorded below.
 
 ## Official compliance matrix
 
 | Requirement | Status | Evidence / remaining action |
 |---|---|---|
 | Title, abstract, introduction PDF | PASS | Six-page report, literature/data included; generated, opened, text-checked and visually inspected |
-| Public code repository URL | PASS when upload verified below | Code, synthetic data, results, tests and README |
+| Public code repository URL | PASS | Code, synthetic data, results, tests and README |
 | Data/dependency/reproduction README | PASS | Offline commands and bounded live-run instructions |
 | Course LaTeX template | PARTIAL | Attributed typography subset, portable font/plainnat changes; exact-style acceptance unverified |
 | Mentor-specific expectations/topic scope | NOT VERIFIED | User reports mentor openness; confirm final scope with Professor Shang |
@@ -90,4 +90,10 @@ A live model experiment is BLOCKED by absent configured inference access, while 
 
 ## Publication and final integrity verification
 
-See the publication verification record appended after the remote has been checked. If publication ever needs to be repeated from a clone with no remote, the commands are `gh auth login`, `gh repo create DSC180A-BaZiReason --public --source=. --remote=origin --push`. Do not run repository creation against an existing unrelated repository.
+Publication was verified as recorded below. If publication ever needs to be repeated from a clone with no remote, the commands are `gh auth login`, `gh repo create DSC180A-BaZiReason --public --source=. --remote=origin --push`. Do not run repository creation against an existing unrelated repository.
+
+Publication **PASS**: created the new public repository and pushed `main`. An unauthenticated GitHub API request confirms `private=false`; downloading the public report returns the exact local PDF bytes. Evidence: `results/publication_verification.json`. The committed report SHA-256 is `b7247df972a4a5da0c97f83fc7094d35b3081627378a660e9d90a346941a65a0`.
+
+Additional access inspection confirms no configured standard/provider or BaZiReason API variables and no reachable Ollama (11434) or LM Studio-compatible (1234) model endpoint. See `results/model_access_inspection.json`; no credential values were printed or stored.
+
+Git commands executed: `git init -b main`, local author identity configured with GitHub noreply email, `git add .`, meaningful commits, `gh repo create DSC180A-BaZiReason --public --source=. --remote=origin --push`, and `git push`. Temporary source downloads, venvs and caches are excluded by `.gitignore`. The final remote/local commit comparison and clean working-tree check were performed after the documentation commit.

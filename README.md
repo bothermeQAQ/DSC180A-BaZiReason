@@ -1,6 +1,7 @@
 # BaZiReason
 
-**Evaluating Tool-Augmented LLM Reliability in Traditional Chinese Calendar Reasoning**  
+**Evaluating Tool-Augmented LLM Reliability in Traditional Chinese Calendar Reasoning**
+
 Yonghao Wang · DSC 180A, Fall 2026 · Domain D25 · Advisor: Jingbo Shang
 
 [Checkpoint PDF](reports/checkpoint_report.pdf) · [Research design](docs/research_design.md) · [Submission status](CHECKPOINT_STATUS.md) · [Independent review handoff](CLAUDE_REVIEW.md)

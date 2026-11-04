@@ -1,0 +1,11 @@
+{
+  "configured_variable_names": [],
+  "local_endpoints": {
+    "http://localhost:11434/api/tags": {
+      "reachable": false
+    },
+    "http://localhost:1234/v1/models": {
+      "reachable": false
+    }
+  }
+}
