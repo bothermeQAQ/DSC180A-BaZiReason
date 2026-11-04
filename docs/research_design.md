@@ -2,7 +2,7 @@
 
 Revision: 2026-11-03. This document describes the current design. The historical v1/v2 designs are in Git history and in `docs/audit_experiments.md`. No language-model hypothesis has been tested yet. Calendar diagnostics, deterministic controls and mocks are separate kinds of evidence.
 
-Checkpoint source: [`claude-checkpoint-fixes`](https://github.com/bothermeQAQ/DSC180A-BaZiReason/tree/claude-checkpoint-fixes). Record the submitted commit with `git rev-parse HEAD`; default `main` is an earlier snapshot.
+Frozen checkpoint source: [`checkpoint-2026-11-06`](https://github.com/bothermeQAQ/DSC180A-BaZiReason/tree/checkpoint-2026-11-06). Record the submitted commit with `git rev-parse HEAD` after checking out that tag; `main` also contains the published checkpoint.
 
 ## Question and hypotheses
 

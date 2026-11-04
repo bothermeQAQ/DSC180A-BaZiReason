@@ -5,7 +5,7 @@ Yonghao Wang · DSC 180A, Fall 2026 · Domain D25 (LLM Applications) · Mentor: 
 
 [Checkpoint report (PDF)](reports/checkpoint_report.pdf) · [Research design](docs/research_design.md) · [Results notes](results/README.md)
 
-**Checkpoint version:** use the [`claude-checkpoint-fixes` branch](https://github.com/bothermeQAQ/DSC180A-BaZiReason/tree/claude-checkpoint-fixes), which contains this report and implementation. Record its submitted commit with `git rev-parse HEAD`; the default `main` branch is an earlier snapshot.
+**Checkpoint version:** the frozen [`checkpoint-2026-11-06` tag](https://github.com/bothermeQAQ/DSC180A-BaZiReason/tree/checkpoint-2026-11-06) identifies the report and implementation for submission. Record its commit with `git rev-parse HEAD` after cloning that tag; `main` also contains the published checkpoint.
 
 BaZiReason measures whether language models answer convention-specified Chinese Four Pillars (BaZi) calendar questions reliably. It asks whether they compute the four sexagenary pillars correctly, and whether they ask for clarification when a request does not determine a unique chart. It studies calendar computation only, not destiny prediction.
 
@@ -33,7 +33,7 @@ Each model condition has a `_minimal` policy variant. The zero-call controls are
 Declared target: Python 3.11+. Verified on CPython 3.14.2 and 3.12.14, macOS arm64; other platforms are untested. sxtwl may need a C++ compiler if no wheel is available.
 
 ```bash
-git clone --branch claude-checkpoint-fixes https://github.com/bothermeQAQ/DSC180A-BaZiReason.git
+git clone --branch checkpoint-2026-11-06 https://github.com/bothermeQAQ/DSC180A-BaZiReason.git
 cd DSC180A-BaZiReason
 python3 -m venv .venv
 source .venv/bin/activate
