@@ -42,3 +42,24 @@ BaZiReason can contribute an executable, small diagnostic suite with explicit pe
 ## Independent numerical reference added in review
 
 [Skyfield's documented solar-term routine](https://rhodesmill.org/skyfield/almanac.html#solar-terms), version1.53, with public JPL DE421 provides a distinct apparent-geocentric astronomical path. Executed24Jie comparisons 2024-2025 differ from lunar-python by -1.168 to +2.261 seconds and from sxtwl by -15.783 to -13.019 seconds. Definitions, kernel hash and raw values are in `results/audit/independent_solar_terms.json`. This supports selected timestamps, not complete charts or all years; no generic root cause is asserted.
+
+
+## Additional sources for the checkpoint revision (verified 2026-11-03)
+
+Bibliographic data were checked against arXiv metadata (titles, complete author lists, dates and venue comments) or the publisher page. Entries whose venue arXiv did not confirm are cited as arXiv preprints.
+
+| Source | Verified identity | Use in this project |
+|---|---|---|
+| ReAct (Yao et al.) | arXiv 2210.03629; ICLR 2023 camera-ready per arXiv comment | Tool use interleaved with reasoning; contrast with fixed injected context |
+| TempReason (Tan, Ng, Bing) | arXiv 2306.08952; ACL 2023 | Temporal reasoning categories |
+| Test of Time (Fatemi et al.) | arXiv 2406.09170 (preprint) | Synthetic temporal data to limit memorization |
+| Faith and Fate (Dziri et al.) | arXiv 2305.18654 (preprint citation) | Multi-step compositional computation failures |
+| Longpre et al. | arXiv 2109.05052; EMNLP 2021 | Knowledge conflicts between context and memory |
+| Adaptive Chameleon or Stubborn Sloth (Xie et al.) | arXiv 2305.13300; ICLR 2024 | Models accept coherent but wrong context, which motivates the corrupted-answer condition |
+| ClashEval (Wu, Wu, Zou) | arXiv 2404.10198 (preprint) | How often wrong retrieved content is adopted |
+| AmbigQA (Min et al.) | arXiv 2004.10645; EMNLP 2020 | Ambiguous questions with several plausible answers |
+| SelfAware (Yin et al.) | arXiv 2305.18153; Findings of ACL 2023 | Recognizing unanswerable questions |
+| Know Your Limits (Wen et al.) | arXiv 2407.18418 (preprint; TACL per author comment) | Evaluating abstention together with over-abstention |
+| Meeus, *Astronomical Algorithms* (2nd ed., 1998) | Standard reference | Low-precision solar longitude in the independent oracle |
+| Toolformer (Schick et al.) | NeurIPS 2023 proceedings page: nine authors including Eric Hambro (arXiv v1 lists eight) | Learned API calls |
+| sxtwl | PyPI sxtwl 2.0.7, uploaded 2024-09-05, home page github.com/yuangu/sxtwl_cpp, author yuangu, BSD | Citation corrected from the skydancep fork to the installed distribution's source |

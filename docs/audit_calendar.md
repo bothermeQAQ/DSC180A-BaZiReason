@@ -1,3 +1,5 @@
+> **Historical (audit_v2).** Current label verification for benchmark_v3 (independent oracle, JPL boundary check) is summarized in [research_design.md](research_design.md#data-benchmark_v3).
+
 # Calendar audit — 2026-11-03
 
 ## Assessment

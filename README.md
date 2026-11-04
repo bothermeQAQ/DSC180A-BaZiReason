@@ -1,27 +1,34 @@
 # BaZiReason
 
 **Evaluating Tool-Augmented LLM Reliability in Traditional Chinese Calendar Reasoning**
-Yonghao Wang · DSC 180A, Fall 2026 · Domain D25 · Advisor: Jingbo Shang
+Yonghao Wang · DSC 180A, Fall 2026 · Domain D25 (LLM Applications) · Mentor: Jingbo Shang
 
-[Report](reports/checkpoint_report.pdf) · [Independent audit](AUDIT_FINDINGS.md) · [Review assessment](ULTRA_REVIEW_REPORT.md) · [Submission status](CHECKPOINT_STATUS.md)
+[Checkpoint report (PDF)](reports/checkpoint_report.pdf) · [Research design](docs/research_design.md) · [Results notes](results/README.md)
 
-This project measures calendar-answer reliability under explicit implementation profiles. It does not study destiny prediction. It is currently **evaluation infrastructure with computational evidence**, not a completed empirical LLM study. No live model performance or training result exists; H1-H3 remain untested.
+BaZiReason measures whether language models answer convention-specified Chinese Four Pillars (BaZi) calendar questions reliably. It asks whether they compute the four sexagenary pillars correctly, and whether they ask for clarification when a request does not determine a unique chart. It studies calendar computation only, not destiny prediction.
 
-An independent audit reproduced the original 42 tests, found real validation/design weaknesses, and implemented repairs and controls. The original 96-case checkpoint and source remain preserved at Git tag **`audit/pre-review-a50f967`**. The revised suite has **152 unique input/profile cases**:126 scorable,16 ambiguous,6 unsupported,4 invalid.
-
-Calendar evidence includes270 agreeing day/year/month cells (169 distinct reference queries),126 separately counted hour comparisons, and an independent JPL/Skyfield check of24 solar-term timestamps. These are partial, correlated checks, not independent proof of complete charts. [Calendar audit](docs/audit_calendar.md) explains exclusions and actual discrepancies.
+**Status (checkpoint, November 2026):** the benchmark, calendar wrapper, independent label checks and evaluation harness are implemented and tested. Zero-call baselines have been run. **No language-model experiment has been run yet**, so H1–H3 are untested.
 
 ## Research design
 
-- **H1:** descriptive direct-model error comparison between ordinary and boundary cases; stronger causal claims require matched strata.
-- **H2:** same-model full-context accuracy, with deterministic-copy, timestamp-only and corrupted-hour controls. Full context supplies the answer: accuracy alone cannot establish improved internal reasoning.
-- **H3:** explicit vs minimal nonanswer policy, holding inputs, computation rules and schema fixed. Report ambiguity-only definitive-answer rate together with policy correctness and scorable coverage.
+| Hypothesis | Primary comparison | Data |
+|---|---|---|
+| H1 boundaries | Direct condition: accuracy of boundary-relevant pillars at near vs far rungs within each distance ladder | 14 Jie ladders (±2 min, ±1 h, ±5 d) and 4 Zi ladders (21:30–01:30, both sects) |
+| H2 tools | Intermediate facts minus direct, exact four-pillar accuracy on scorable cases | all 225 scorable cases; 26 need time-zone normalization |
+| H3 uncertainty | Explicit minus minimal policy, family-level "all decisions correct" on knowledge-dependent families | 16 knowledge-dependent and 15 surface matched families |
 
-[Design and estimands](docs/research_design.md) · [Experimental implementation audit](docs/audit_experiments.md) · [Literature](docs/literature_review.md)
+Model conditions form an information ladder:
+- `direct`;
+- `tool_facts` (admissible instants in UTC+08:00);
+- `tool_intermediate` (the same instants plus the surrounding Jie instants and a day count, but no pillars);
+- `tool_context` (the computed answer);
+- `tool_corrupted` (the computed answer with one deterministic, plausible error).
+
+Each model condition has a `_minimal` policy variant. The zero-call controls are `copy_context` (the answer-copy ceiling), `heuristic_surface`, `always_abstain` and `always_answer`. All conditions share one rule card, schema and decoding settings. Pre-specified contrasts are listed in `bazireason.evaluator.PRIMARY_CONTRASTS`. Details: [docs/research_design.md](docs/research_design.md).
 
 ## Installation
 
-Python 3.11+ is the declared target; actual audit verification uses **CPython 3.14.2 and 3.12.14 on macOS arm64**. Other platforms are untested. sxtwl may require a C++ compiler if a suitable wheel is unavailable. No global Python/system settings are changed by setup.
+Declared target: Python 3.11+. Verified on CPython 3.14.2 and 3.12.14, macOS arm64; other platforms are untested. sxtwl may need a C++ compiler if no wheel is available.
 
 ```bash
 git clone https://github.com/bothermeQAQ/DSC180A-BaZiReason.git
@@ -31,114 +38,127 @@ source .venv/bin/activate
 python -m pip install -r requirements.txt
 ```
 
-Direct dependencies are pinned in `pyproject.toml`; `requirements-lock.txt` records the original tested transitive environment. For that lock, install `pip install -r requirements-lock.txt`, then `pip install --no-deps -e .` (normal build isolation installs declared build tools). Optional astronomy dependencies are separate and are not needed for the standard suite.
+Direct dependencies are pinned in `pyproject.toml`, and `requirements-lock.txt` records a tested transitive environment. The optional astronomy check needs `pip install -e '.[dev,astronomy]'` and a separately downloaded JPL kernel (below).
 
-## Reproduce the audited dataset and diagnostics
+## Data
 
-Run from the repository root:
+All data is synthetic, generated by seeded code (seed 1802026), and contains no personal birth records.
+
+| File | Meaning |
+|---|---|
+| `data/synthetic/benchmark_v3.jsonl` | **Current suite:** 261 cases in 70 families: 225 ok, 21 ambiguous, 8 invalid, 7 unsupported |
+| `data/synthetic/benchmark_v3_pilot_ids.json` | 44-case pilot: the first complete family of every category |
+| `data/synthetic/audit_v2.jsonl`, `audit_pilot_ids.json` | Historical 152-case suite (frozen) |
+| `data/synthetic/checkpoint.jsonl` | Historical 96-case suite (frozen) |
+
+Each record holds `input`, `convention`, `expected` (status, pillars, reason codes, conventions), `group_id` (family), `evaluation_class`, provenance, and `design` metadata (H1 rung, H3 type). Models never see the metadata. In v1/v2 the `evaluation_class` field is a known legacy error: it marks every zi_hour case convention-dependent. Use `bazireason.dataset_v3.convention_dependence` instead.
 
 ```bash
-bazireason generate --dataset-version audit_v2
-bazireason diagnostics --data data/synthetic/audit_v2.jsonl --output results/audit/calendar_diagnostics_v2.json
-python scripts/check_external_anchors.py
-pytest -q
-ruff check src scripts tests
-ruff format --check src scripts tests
+bazireason generate --dataset-version benchmark_v3 --check data/synthetic/benchmark_v3.jsonl
+bazireason generate --dataset-version audit_v2 --check data/synthetic/audit_v2.jsonl
+bazireason generate --dataset-version checkpoint_v1 --check data/synthetic/checkpoint.jsonl
 ```
 
-Seed 1802026 is the default. `generate --dataset-version checkpoint_v1` regenerates the original 96-case file. Both generators are byte-deterministic under the pinned dependencies. `data/synthetic/audit_pilot_ids.json` fixes a representative22-case pilot across all categories/statuses; it is not a powered sample. Original v1 diagnostics and mocks remain historical artifacts. New audit evidence stays under `results/audit/`.
+`--check` regenerates in memory and compares bytes; it writes nothing. `generate` refuses to overwrite an existing file unless you pass `--force`, and never writes to the historical v1/v2 paths.
 
-## Calendar input contract
+## Calendar contract
 
 ```python
 from bazireason.calendar_engine import compute_chart
 from bazireason.conventions import Convention
 
-result = compute_chart(
-    {"datetime": "2025-02-03T22:12:28", "timezone": "Asia/Shanghai"},
-    Convention(sect=2).to_dict(),
-)
+compute_chart({"datetime": "2025-02-03T22:12:28", "timezone": "Asia/Shanghai"}, Convention(sect=2).to_dict())
 ```
 
-Inputs use naive ISO local wall time with seconds, an IANA zone and optional fold. Explicit tzdata TZif loading avoids host path/cache state. A repeated DST time needs fold 0/1; a nonexistent time is invalid. Legal civil instants are converted to **fixed UTC+08:00 for all pillars**. International records therefore test this reference-clock task, not local birthplace charting.
+- **Input.** `datetime` is a naive wall time `YYYY-MM-DDTHH:MM:SS`. Lower-precision `YYYY-MM-DDTHH:MM` and `YYYY-MM-DD` are accepted. Anything else is `invalid`, including offsets, fractions, spaces, week dates, `24:00:00` and non-ASCII digits, identically on every Python version. `timezone` must be an exact key from the pinned tzdata zone list, checked case-sensitively on every filesystem. `fold` (0/1) selects one instant of a repeated wall time.
+- **Profile.** Every pillar uses the instant converted to fixed UTC+08:00. Year and month change at lunar-python 1.4.8's Lichun/Jie instants. Sect 1 advances the day at 23:00 and sect 2 at 00:00; both use the 23:00-advanced hour stem. Reference years are 1901–2099.
+- **Status.** A request is `ok` when every admissible completion (an unspecified sect, a missing fold, unknown seconds) gives the same chart. Otherwise it is `ambiguous`, with reason codes such as `missing_convention`, `dst_fold_required`, `seconds_required` or `full_wall_time_required`. Unsupported profiles and normalized years outside 1901–2099 are `unsupported`; this range check runs over every completion first. Nonexistent wall times and malformed values are `invalid`.
+- **Not represented.** True solar time and local-clock charts are unsupported. tzdata's historical rules (for example Xinjiang time for `Asia/Urumqi` or wartime Shanghai) are used as published.
 
-Year/month use lunar-python 1.4.8 Lichun/Jie instants. Sect 1 advances the day at 23:00; sect 2 at midnight. Both retain its 23:00-advanced hour stem, including sect 2. Missing profiles request clarification. True solar time, local civil-clock charts, lunar-year/month profiles and normalized years outside 1901-2099 are unsupported. The admitted range is a study restriction, not an upstream guarantee. Outputs include `ok/ambiguous/unsupported/invalid`, optional pillars, reason codes, conventions and provenance. Invalid profiles have no fictitious selected convention.
-
-## Offline controls and synthetic smoke
+## Verification
 
 ```bash
-bazireason run --data data/synthetic/audit_v2.jsonl --limit 152 \
-  --methods copy_context --max-calls 0 --output results/my_copy.jsonl
-bazireason evaluate --data data/synthetic/audit_v2.jsonl \
-  --predictions results/my_copy.jsonl --output results/my_copy_scores.json
-python scripts/run_pilot.py --backend mock --design combined --max-calls 132 \
-  --output results/my_mock_pilot.jsonl
+pytest -q                       # 170 tests: engine contract, defects E1-E9, v3 design, oracle, CLI
+ruff check src scripts tests
+ruff format --check src scripts tests
+python scripts/check_external_anchors.py
+bazireason diagnostics --output results/my_diagnostics.json
 ```
 
-`copy_context` makes **zero model calls** and copies a fresh engine result. Its perfect reference agreement is tautological. Mock predictions use `SYNTHETIC-MOCK-NOT-AN-LLM`; their scores verify software only. Neither is LLM evidence. Prediction/manifest files are protected from overwrite; use new filenames for reruns.
-
-A planned manifest is written before inference. Evaluation automatically uses its declared cases, methods and trials, verifies the dataset hash, and rejects conflicting overrides. Interrupted/missing observations remain in denominators. Pre-audit artifacts without manifests retain legacy explicit-design evaluation support.
-
-## Real pilot commands (NOT RUN)
-
-Configure an already authorized OpenAI-compatible chat endpoint supporting JSON mode and the requested parameters. The program reads exported variables, not `.env` files. Never commit credentials.
-
-```bash
-export BAZIREASON_API_KEY='your-private-key'
-export BAZIREASON_BASE_URL='https://your-provider.example/v1'
-export BAZIREASON_MODEL='your-exact-model-version'
-python scripts/run_pilot.py --backend api --design h3 --max-calls 88 \
-  --output results/live_h3_pilot.jsonl
-python scripts/run_pilot.py --backend api --design h2 --max-calls 88 \
-  --output results/live_h2_controls.jsonl
-```
-
-Replace the illustrative provider values. The H3 pilot crosses direct/full context with minimal/explicit policy (88 calls). H2 uses direct, full context, timestamp-only and corrupted context (88 calls) plus22 zero-call copy records. A combined design uses132 completion calls plus22 controls. To minimize provider drift, prefer one combined run when affordable. These are invocation and output-token caps, **not dollar caps**; check current pricing before running. No paid API call was made in this audit.
-
-`run_pilot.py` reads the22 IDs directly, runs the design, and scores the manifest into `OUTPUT.scores.json`. For repeated trials, set `--trials 3` and multiply the cap by 3. For full-suite experiments, use `bazireason run --data ... --limit 152 --methods ... --trials ... --max-calls ...`; the CLI refuses excess calls. Native Anthropic/Ollama protocols are not separately implemented. Local OpenAI-compatible servers may use a dummy key if required by their interface.
-
-Available model conditions: `direct`, `tool_context`, `tool_facts`, `tool_corrupted`, and their `_minimal` variants. Same computation rules/schema are used across policy versions. Rotation balances order; records retain requested/served model, versioned prompt hash, attempts, latency, usage and provider finish reason. No hidden repair/retry is performed. Missing/invalid outputs fail appropriate correctness/coverage metrics. API cost is null unless measured; errors omit sensitive bodies/headers.
-
-## Independent solar-term reproduction (optional)
+`tests/test_independent_oracle.py` checks every label against `bazireason.oracle`, a first-principles implementation that shares no code with lunar-python. It uses Julian Day Numbers for days, the five-rats rule for hours, and Meeus's low-precision solar longitude for year and month. Year and month are deferred within about 40 minutes of a Jie, where this script checks them against JPL DE421:
 
 ```bash
 python -m pip install -e '.[dev,astronomy]'
 mkdir -p tmp/astronomy
 curl -fL https://ssd.jpl.nasa.gov/ftp/eph/planets/bsp/de421.bsp -o tmp/astronomy/de421.bsp
-python scripts/check_solar_terms.py
+python scripts/check_v3_boundaries.py --output results/my_boundaries.json
 ```
 
-This downloads a public astronomical kernel, not model weights. The script performs no implicit download and logs kernel SHA-256, versions, reference frame/time scale, search precision and all 24 Jie 2024-2025 comparisons. Optional exact package versions are in `results/audit/astronomy_environment.txt`. Skyfield 1.53 apparent geocentric ecliptic-of-date results differ from lunar-python by −1.168 to +2.261 seconds; sxtwl is 13.019-15.783 seconds earlier. This is a separate numerical path supporting those selected timestamps, not proof of all chart fields or all years. No labels are silently corrected.
+Recorded result (`results/benchmark_v3/independent_boundaries.json`): 18 Jie events and 40 cases. lunar-python differs from JPL by −3.12 to +1.32 s, with no side disagreements.
 
-## Metrics and evidence
+## Running experiments
 
-Exact and per-pillar accuracy use126 scorable observations per full v2 trial. Joint exact additionally requires matching convention metadata. Nonanswer policy correctness uses26 cases; ambiguity-only definitive frequency uses16. Coverage prevents blanket refusal from appearing successful. Missing output is not credited as a correct policy response. Reasons are format-checked, not semantically adjudicated. Descriptive paired group-bootstrap intervals preserve `group_id` dependence; they do not establish population generalization.
+Offline (zero model calls):
+
+```bash
+bazireason run --methods copy_context heuristic_surface always_abstain always_answer \
+  --max-calls 0 --output results/my_baselines.jsonl
+bazireason evaluate --predictions results/my_baselines.jsonl --output results/my_baselines_scores.json
+python scripts/run_pilot.py --backend mock --design combined --max-calls 352 \
+  --output results/my_mock_pilot.jsonl
+```
+
+Live pilot (**NOT RUN**). This needs an already authorized OpenAI-compatible endpoint with JSON mode. Credentials are read from exported variables and never from `.env` files:
+
+```bash
+export BAZIREASON_API_KEY='your-private-key'
+export BAZIREASON_BASE_URL='https://your-provider.example/v1'
+export BAZIREASON_MODEL='your-exact-model-version'
+python scripts/run_pilot.py --backend api --design combined --max-calls 352 \
+  --output results/live_pilot.jsonl
+```
+
+The designs are `h2`, `h3`, `combined` and `baselines`; see `scripts/run_pilot.py`. `--max-calls` is a call cap, not a dollar cap, so check provider pricing first.
+
+Each run writes a manifest declaring its cases, methods, trials, prompt version, model and decoding settings before any call. Evaluation enforces it:
+- the dataset hash must match, and conflicting overrides fail;
+- records whose prompt version, model, temperature, token cap or synthetic flag differ from the manifest are rejected;
+- an interrupted final line is dropped and reported, and its observation stays missing;
+- prediction, manifest and score files are never overwritten.
+
+## Metrics
+
+All metrics are per declared observation, and missing or schema-invalid outputs count as failures.
+- **Accuracy:** exact four-pillar accuracy and per-pillar accuracy (225 scorable per trial); joint exact accuracy, which also requires the convention echo.
+- **Answer/abstain decisions:** coverage, false-refusal rate, decision accuracy, policy accuracy on nonanswers and ambiguous cases (no exact conventions echo required), and the definitive-answer rate on nonanswers.
+- **Corrupted context:** the following rate overall and by type. Its denominator comes from the design, not from the records.
+- **Format:** failure counts and a separately reported lenient parse that strips code fences.
+
+The evaluator also reports the H1 ladder analysis (`h1_boundary`), H3 matched families (`h3_matched`), and paired contrasts with family-cluster bootstrap intervals and exact McNemar counts. All are descriptive for this 70-family benchmark.
+
+## Results so far
 
 | Artifact | Meaning |
 |---|---|
-| `data/synthetic/checkpoint.jsonl` | Immutable historical 96-case dataset |
-| `data/synthetic/audit_v2.jsonl` | Revised152-case suite with all 12 Jie and matched H3 groups |
-| `results/audit/original_*` | Independent original test reproduction and bug/coverage evidence |
-| `results/audit/calendar_diagnostics_v2.json` | Main270 cells, unique coverage/exclusions, separate126 hour checks |
-| `results/audit/independent_solar_terms.json` | Distinct JPL/Skyfield comparison and kernel/version provenance |
-| `results/audit/deterministic_copy*` | Zero-call tautological copy control |
-| `results/audit/mock_controls*` | Synthetic operational smoke; no LLM results |
-| `results/audit/revised_*`, `clean_py312_*` | Executed test/lint/install evidence |
-| `AUDIT_FINDINGS.md`, `ULTRA_REVIEW_REPORT.md` | Prioritized defects, fixes and academic assessment |
+| `results/benchmark_v3/deterministic_baselines*` | Zero-call baselines on all 261 cases (manifest-bound) |
+| `results/benchmark_v3/mock_combined_pilot*` | Synthetic mock smoke of the combined pilot (software check only) |
+| `results/benchmark_v3/independent_boundaries.json` | JPL/Skyfield side check of every near-boundary case |
+| `results/benchmark_v3/calendar_diagnostics.json` | Same-lineage sxtwl comparison (539/539 cells, 225/225 hours) |
+| `results/audit/*`, `results/*.json` | Historical v1/v2 evidence, unchanged |
 
-## Report and submission
+Baselines are not language-model evidence. The surface heuristic solves all 15 surface families but none of the 16 knowledge-dependent families. Always-answer reaches 0.86 decision accuracy with 0/21 ambiguous cases handled. Always-abstain refuses 225/225 answerable cases. Copy is a 100% ceiling by construction.
+
+## Report
 
 ```bash
-tectonic --keep-logs --outdir reports/latex reports/latex/checkpoint_report.tex
+cd reports/latex && tectonic --keep-logs --outdir . checkpoint_report.tex && cd ../..
 cp reports/latex/checkpoint_report.pdf reports/checkpoint_report.pdf
-mkdir -p tmp/report
-pdftoppm -r 100 -png reports/checkpoint_report.pdf tmp/report/page
 ```
 
-Tectonic/Poppler are needed only for authoring/rendering, not experiments. [Template audit](docs/template_audit.md) records the exact source and any remaining font/bibliography deviations. See [course requirements](docs/course_requirements.md) and [checkpoint status](CHECKPOINT_STATUS.md) for current readiness. Gradescope/Piazza instructions and mentor-specific expectations still require student verification; no course submission has been attempted.
+The report uses the official DSC Capstone style file, which is byte-identical to the template apart from a marked font-loading block. Its bibliography style is the template's econ.bst settings applied to the bundled econ.bst 3.1.1; see [docs/template_audit.md](docs/template_audit.md).
 
-## Scope, attribution and remaining work
+## Provenance, scope and attribution
 
-The study needs actual same-model observations before scientific conclusions. The small grouped sample, reference lineage, limited conventions, public-fact contamination, provider drift and answer-transmission effects remain limits. No fine-tuning or model weights were downloaded. [Training plan](docs/finetuning_plan.md) remains optional and deferred.
+Earlier independent reviews of this repository are kept as historical records: [AUDIT_FINDINGS.md](AUDIT_FINDINGS.md), [ULTRA_REVIEW_REPORT.md](ULTRA_REVIEW_REPORT.md), [CLAUDE_REVIEW.md](CLAUDE_REVIEW.md) and [CHECKPOINT_STATUS.md](CHECKPOINT_STATUS.md). The pre-review snapshot is tag `audit/pre-review-a50f967`. Course requirements and sources are in [docs/course_requirements.md](docs/course_requirements.md) and [docs/source_audit.md](docs/source_audit.md).
 
-Project code/synthetic cases: MIT. lunar-python:6tail/MIT; sxtwl and Xu Jianwei's original ShouXing astronomy are acknowledged. Consult distribution notices and [source audit](docs/source_audit.md) for provenance/license distinctions. HKO calendar facts and course style are attributed; complete third-party datasets and personal birth records are not redistributed. AI assistance was used extensively; Yonghao Wang must review and understand the submitted work and follow applicable disclosure requirements.
+Project code and synthetic cases are under the MIT license. lunar-python (6tail, MIT) produces the labels. sxtwl 2.0.7 (yuangu/sxtwl_cpp, BSD) implements Xu Jianwei's ShouXing algorithms and is used only for diagnostics. Skyfield (MIT) and JPL DE421 are optional. HKO calendar facts and the course template are attributed. No fine-tuning has been done, and no model weights were downloaded ([deferred plan](docs/finetuning_plan.md)). AI assistance was used extensively; Yonghao Wang must review and understand the submitted work and follow applicable disclosure requirements.

@@ -1,3 +1,5 @@
+> **Historical (audit_v2, prompt v2-policy-controls).** The current conditions, metrics and data are described in [research_design.md](research_design.md).
+
 # Independent audit of inference and evaluation
 
 Audit date: 2026-11-03. Modules read: `schema.py`, `metrics.py`, `evaluator.py`,

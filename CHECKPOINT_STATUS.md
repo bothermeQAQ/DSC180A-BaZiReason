@@ -1,3 +1,5 @@
+> **Historical status for commit cf3e829 (audit_v2).** The current suite, report and verification are described in [README.md](README.md); the report hash below refers to the earlier PDF.
+
 # Audited checkpoint status
 
 Updated **November 3, 2026**, America/Los_Angeles. Original snapshot: **a50f967**, preserved at **`audit/pre-review-a50f967`**. This is a prepared/reviewed package, not a Gradescope submission or a completed live-model study.

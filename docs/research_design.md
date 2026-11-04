@@ -1,73 +1,120 @@
-# Audited research design
+# Research design (benchmark_v3, prompt version v3-information-ladder)
 
-Revision:2026-11-03. Original proposal/source: `audit/pre-review-a50f967`. The study measures profile-specified calendar-answer reliability. No live LLM hypothesis has been tested. Calendar diagnostics, deterministic controls and mocks are separate evidence types.
+Revision: 2026-11-03. This document describes the current design. The historical v1/v2 designs are in Git history and in `docs/audit_experiments.md`. No language-model hypothesis has been tested yet. Calendar diagnostics, deterministic controls and mocks are separate kinds of evidence.
 
-## Hypotheses and estimands
+## Question and hypotheses
 
-| Hypothesis | Defined comparison | Interpretation and status |
+Can deterministic tools make language-model answers to convention-specified BaZi calendar questions more reliable, and what does any gain reflect?
+
+| Hypothesis | Primary contrast (pre-specified) | Secondary outputs |
 |---|---|---|
-| H1 | Direct-model error on ordinary versus boundary categories | NOT RUN; current purposive strata unmatched, so descriptive only |
-| H2 | Full-context minus direct exact accuracy, within same case/model/trial | NOT RUN; assisted-answer reliability, not identified internal reasoning improvement |
-| H3 | Direct explicit-policy minus direct minimal-policy definitive-answer frequency on ambiguous references | NOT RUN; negative difference favorable only with correct policy handling and maintained scorable coverage |
+| H1 boundaries | `direct`: accuracy of the boundary-relevant pillars at near minus far rungs, paired within each ladder family (`h1_boundary.near_minus_far_relevant_accuracy`) | By-distance accuracy (near/mid/far); exact accuracy; Zi ladders |
+| H2 tools | `tool_intermediate` minus `direct` exact accuracy on scorable cases (`comparisons.tool_intermediate_minus_direct.exact`) | `tool_facts`−`direct`; `tool_context`−`tool_intermediate`; `tool_corrupted`−`tool_context`; corruption-following by type |
+| H3 uncertainty | `direct` minus `direct_minimal`: family-level all-decisions-correct on the 16 knowledge-dependent families (`comparisons.direct_minus_direct_minimal.h3_family_all_decisions_correct`) | Ambiguous policy accuracy, false-refusal rate, coverage, surface families, held-out minute-precision type |
 
-The original full-context condition receives the entire target response. A zero-call copier obtains perfect reference agreement by construction. Thus H2 alone is a transmission task; the controls below make reliance and preprocessing experimentally separable. No behavioral contrast proves internal reasoning mechanisms.
+`bazireason.evaluator.PRIMARY_CONTRASTS` records the same pre-specification. A negative H1 difference, a positive H2 difference and a positive H3 difference support the hypotheses. None of them identifies an internal mechanism.
 
-## Named computation profiles
+## Profile and answerability
 
-Input: naive ISO wall datetime with seconds, IANA zone, optional fold, selected convention. Load TZif bytes directly from pinned tzdata 2026.6; never mutate host TZPATH or reuse its constructor cache. Round-trip through UTC distinguishes gaps and repeated times; the latter requires explicit fold. Range rejection applies after normalization, and extreme date conversion overflow is controlled.
+- **Reference clock and years.** Every pillar uses the civil instant converted to fixed UTC+08:00, with no longitude or true-solar-time correction. Reference years are 1901–2099.
+- **Boundaries.** Year and month boundaries are lunar-python 1.4.8's Lichun and Jie instants.
+- **Sects.** Sect 1 advances the day pillar at 23:00 and sect 2 at 00:00. Both use the 23:00-advanced hour stem.
+- **Time zones.** Zones are exact keys from the pinned tzdata 2026.6 package, loaded from its own files and checked case-sensitively.
 
-All four pillars use the civil instant converted to **fixed UTC+08:00**. This is a reference-clock task, not local birthplace chart casting. Sect 1 day advances at 23:00; sect 2 at midnight. Both preserve lunar-python 1.4.8's23:00-advanced hour stem. Year/month use its exact Lichun/Jie instants. True solar time, local civil-clock charts, lunar-year/month rules and normalized years outside 1901-2099 are unsupported. This admitted range is not an upstream accuracy guarantee. Malformed conventions return invalid with no valid selected convention; missing conventions request clarification.
+**Answerability rule.** A request is `ok` when every admissible completion gives the same chart. The completions are an unspecified sect (1 or 2), a missing fold for a repeated wall time, and the seconds of a minute-precision time.
+- If completions disagree, the request is `ambiguous`, and the reason codes name the varying factor: `missing_convention`, `dst_fold_required` or `seconds_required`.
+- A date without a time of day is always ambiguous (`full_wall_time_required`). So is a missing datetime or zone (`missing_datetime_or_timezone`).
+- Malformed values and nonexistent wall times are `invalid`.
+- Other profiles, and requests whose completions all fall outside the year range, are `unsupported`.
 
-## Versioned data and grouping
+This rule is what makes the H3 decision depend on calendar knowledge. For example, an unspecified sect matters at 23:30 but not at 22:30. A repeated 01:30 matters in Los Angeles (申 versus 酉) but not in New York, where both instants fall in 未. The v1/v2 labels are unchanged under this rule: their regenerated bytes are identical.
 
-- **V1:**96 records,80 scorable,6 ambiguous,6 unsupported,4 invalid; preserved unchanged. Its four repeated Shanghai inputs and same-date-midnight weakness are explicitly audited.
-- **V2:**152 unique input/profile records,126 scorable,16 ambiguous,6 unsupported,4 invalid. All12Jie in 2024/2025 have ±120-second pairs; Zi groups include adjacent 23:59:59/00:00:00 across dates. Timezone pairs have distinct group instants. Added 24 missing/complete cases form 10 groups:three sect,three time,three zone,one repeated-DST-fold group. Their 14 scorable counterparts guard against blanket refusal.
+## Data (benchmark_v3)
 
-Seed 1802026. Group IDs keep related transition sides, profiles, equivalent instants and missing-field counterparts together. No equivalent instant/profile crosses v2 groups. All splits and uncertainty resampling must retain groups. The 22-case pilot is a fixed operational sample spanning category/status/profile conditions, not a random or powered benchmark. The original four-case prefix remains an explicitly ordinary-only smoke path.
+261 cases in 70 families (`group_id`). No two families share a civil date, and all input/profile pairs are unique.
 
-Expected pillars still come from one engine. Every record states single-engine reference. Stored-label replay only checks integrity. V1's184 cells reduce to117 distinct reference-date/pillar queries. V2's270 cells reduce to169; 126 separately counted hour checks use explicitly matched sxtwl semantics. Date-level sxtwl comparisons exclude year/month on any solar-term date. Both libraries share ShouXing lineage.
+| Family type | Cases | Families | Notes |
+|---|---:|---:|---|
+| Jie ladders | 84 | 14 | Each month-start Jie once, plus Lichun 2041 and 2047. Years 1978–2047, never 2024–25. Rungs −5 d, −1 h, −2 min, +2 min, +1 h, +5 d. Event clock 04:00–20:00, and the ±2 min rungs never cross an hour branch |
+| Zi ladders | 48 | 4 | 21:30, 22:59:59, 23:00, 23:59:59, 00:00, 01:30 × sect 1/2; ≥2.5 days from any Jie |
+| Timezone pairs | 12 | 6 | The same instant in Shanghai and UTC/LA/London/Kolkata/Adelaide/São Paulo |
+| DST folds | 20 | 5 | Repeated 01:30 without fold, fold 0, fold 1, and the same wall time a week earlier. The fold matters in LA/London/Chicago, not in New York/Denver |
+| DST gaps | 4 | 2 | Nonexistent wall time and the same wall time a week later |
+| Sect families | 30 | 6 | 23:30 without sect (ambiguous), 23:30 sect 1/2, and 22:30 and 00:30 without sect (answerable) |
+| Minute precision | 14 | 5 | The minute containing a Jie (ambiguous) and the minutes before and after; two Zi-edge minutes |
+| Missing fields | 16 | 8 | Date-only, missing zone, missing datetime, each with a complete counterpart |
+| Invalid inputs | 10 | 4 | 2023-02-29, 2022-04-31, 24:00:00; Asia/Beijing, CST, asia/shanghai |
+| Unsupported inputs | 11 | 4 | Four profiles; 1900/1901 and 2100/2099; the LMT fold 1900-12-31T23:59:59 |
+| Ordinary | 12 | 12 | Random 1950–2049 instants ≥3 days from a Jie and ≥10 minutes from an hour branch |
 
-Independent published HKO evidence checks two day labels and minute-level Lichun. A separate Skyfield 1.53/JPL DE421 calculation checks all 24Jie 2024/2025 with apparent geocentric longitude of date and bundled time-scale conversion. Lunar-python differs by -1.168 to +2.261 seconds; sxtwl by -15.783 to -13.019 seconds. This favors lunar-python's selected timestamps more closely but is not universal truth or full-chart adjudication. The cause of the library offset is unestablished. Kernel hash, model definition, versions, search tolerance and raw comparisons are recorded. No silent label changes or guessed corrections occur.
+Status totals are 225 ok, 21 ambiguous, 8 invalid and 7 unsupported. The `design` field (H1 rung, H3 type, knowledge dependence, whether the explicit policy names the type, surface form) is for analysis only. `evaluation_class` compares the two sects directly. The pilot (`benchmark_v3_pilot_ids.json`, 44 cases) is the first complete family of every category; it is operational, not a random sample.
 
-## Context and policy factors
+Label verification:
+- `tests/test_independent_oracle.py` checks the day and hour of every completion of all 225 ok cases (249 completions) with an implementation that shares no code with lunar-python. It checks year and month for 205 completions outside about 40 minutes of a Jie. It also confirms the disagreement between completions for the 9 sect/fold ambiguous cases.
+- `scripts/check_v3_boundaries.py` checks the 40 remaining near-boundary cases against JPL DE421 (−3.12 to +1.32 s, no side disagreement), including the 4 ambiguous minute cases.
+- HKO provides two day labels and one Lichun minute.
+- sxtwl agrees on 539/539 cells and 225/225 hours, but shares ShouXing lineage.
 
-| Condition | Added context | Purpose |
-|---|---|---|
-| `direct` | None | Same-model raw input/profile task |
-| `tool_context` | Full engine response, including pillars/status/reasons | Assisted answer transmission |
-| `tool_facts` | Normalized timestamp and provenance; no pillars/status/reasons | Preprocessing help; null timestamp can still reveal failure |
-| `tool_corrupted` | Same as full context, but shift scorable hour stem by cycle index12, preserving branch | Detect following this specific plausible tool error |
-| `copy_context` | No model invoked; copy fresh engine response | Tautological reference/control ceiling |
+## Conditions
 
-Every model condition has an `_minimal` counterpart. The explicit/minimal pair keeps user input, profile, computation rules, range rules and schema identical. Only explicit missing/unsupported/invalid handling instructions are omitted in minimal prompts. Both retain the schema's null-pillars requirement for a non-ok status. This manipulates when to choose non-ok, not calendar knowledge or formatting.
+| Method | Context added to the identical user request |
+|---|---|
+| `direct` | none |
+| `tool_facts` | admissible UTC+08:00 instants (interval endpoints for minute/date precision; both folds if repeated) |
+| `tool_intermediate` | `tool_facts` plus civil date, days since 2000-01-01, and the previous and next Jie names and instants; no pillars, status or reasons |
+| `tool_context` | the engine's response (status, pillars, reasons, conventions) |
+| `tool_corrupted` | the same with one deterministic error. `jie_side`: within a day of a Jie, the month (and year at 立春) from the other side. `day_rollover`: 21:00–01:59, the day ±1 across the 23:00/00:00 boundary. `hour_stem`: otherwise, the stem +2, which breaks the five-rats rule. `default_guess`: an ambiguous request answered by defaulting sect 2, fold 0, :00 seconds, 12:00:00 or Asia/Shanghai. Invalid and unsupported requests are not corrupted |
+| `copy_context` | no model; the answer-copy ceiling |
+| `heuristic_surface`, `always_abstain`, `always_answer` | no model; zero-knowledge floors |
 
-H3 primary contrast uses direct policy pairs on all 16 ambiguous cases, additionally inspecting new matched groups/category breakdowns. Full-context policy pairs are secondary: supplied nonanswer status makes them easier. Invalid/unsupported rows are secondary policy diagnostics rather than a substitute for ambiguity evidence. Reasons are checked for nonblank structure; semantic helpfulness requires a future blinded annotation rubric.
+Every model method has a `_minimal` variant.
+- **Shared prompt parts.** The response spec, the rule card (`CALENDAR_SPEC`: the year, month, day and hour rules, including the five-tigers and five-rats stems and the 2000-01-01 = 戊午 anchor), the user request and the decoding settings are identical across conditions.
+- **What the policy factor changes.** Only `EXPLICIT_POLICY` is added in the explicit variant. It states the answer-or-ask principle with the sect and fold examples and names the invalid/unsupported rules.
+- **Held-out type.** Minute precision is deliberately not named in either policy.
+- **Isolation.** Fact contexts are computed from the input alone. Tests check that they never contain a sexagenary pair and do not change when labels, metadata or the profile change.
+- **Answerability leaks.** Tool conditions can reveal answerability (for example a failed normalization), so their nonanswer contrasts are labeled secondary.
 
 ## Inference controls and logging
 
-Same model/version, data, schema, temperature, maximum output tokens, attempts and applicable computation rules across paired arms. No few-shot demonstrations. Direct prompts read only input/convention; tests mutate expected labels and annotations without changing messages. Correct and corrupted full contexts use identical labels/instructions. Rotate method order by case/trial. One attempt, no hidden answer repair/retry. Retain truncation/finish metadata and failures.
+- **Held constant:** model, decoding settings, schema, a single attempt and the rule card. There are no few-shot examples, and method order rotates by case and trial.
+- **Manifest.** A planned manifest is written before the first call. Evaluation binds to its dataset hash, IDs, methods and trials. It rejects records whose prompt version, model, temperature, token cap or synthetic flag differ.
+- **Interruptions.** A truncated final line is dropped and reported, and the observation stays missing. Output files are never overwritten.
+- **Recorded per call:** requested/served model, prompt hash, usage, latency, finish reason and errors. Credentials, headers and provider error bodies are never stored.
 
-A planned manifest precedes calls. It records data hash, selected IDs, methods, trials, prompt version, model/settings and call caps. Evaluation checks the hash and binds these declarations; conflicting overrides fail. Interrupted runs retain missing observations in denominators. Predictions flush per observation; no automatic resume exists. Choose new result paths for reruns. Legacy artifacts without manifests require explicit declarations. Record requested/served model, provider fingerprint when returned, prompt hashes, UTC times, returned usage and latency. Never persist credentials, request headers or provider error bodies. Monetary cost is null unless measured.
+## Metrics and analysis
 
-Four-condition H3 or H2-control pilot:88 completion invocations on22cases; H2 also has22 zero-call control records. Combined design:132 completion invocations plus22 controls. Mock invocations are synthetic and never live inference. No paid API use was made. Call/output-token caps do not guarantee a dollar cost; provider pricing/authorization must be checked before a live run. Exact commands and a Python pilot wrapper are in README.
+All metrics are computed per declared observation, and missing or schema-invalid outputs count as failures.
+- **Accuracy:** exact four-pillar and per-pillar accuracy over the 225 scorable cases per trial; joint exact also requires the conventions echo.
+- **Answer/abstain:**
+  - coverage: valid ok answers on scorable cases;
+  - false-refusal rate: clear nonanswers on scorable cases;
+  - decision accuracy: answered when answerable, correct nonanswer otherwise;
+  - nonanswer and ambiguous policy accuracy: correct status, null pillars, nonblank reasons; the conventions echo is not required.
+- **Definitive answers on nonanswers,** detected even in schema-invalid outputs.
+- **Corrupted context:** the following rate overall and by type. The denominator comes from the design, and missing records count as not followed.
+- **Format:** counts of missing, invalid-JSON, invalid-schema and call errors. A lenient parse that strips code fences or takes the outer braces is reported separately and never enters primary scores.
+- **Paired contrasts:** cluster bootstrap over families (default 1,000 seeded resamples) and exact McNemar counts and p-values. The H3 family-level contrast is reported per stratum. All are descriptive estimates for this 70-family benchmark.
 
-## Metrics, denominators and safeguards
+Overall decision accuracy is dominated by answerable cases: always-answer scores 0.86. H3 is therefore judged on ambiguous cases and matched families.
 
-- Exact four-pillar accuracy: all four valid pairs match /126 scorable observations per full trial.
-- Per-pillar accuracy: matching pair /same 126; schema-invalid/missing outputs fail.
-- Joint exact accuracy: exact pillars plus exact convention metadata /same 126. Pillar-only accuracy remains separately defined.
-- Valid-output and status/convention accuracy: all 152 requested observations per full trial.
-- Nonanswer policy correctness: correct non-ok status, null pillars, nonblank reasons and profile /26 nonanswers; ambiguity-only subset separately reported.
-- Definitive-answer frequency: an ok claim or nonempty pillar dict even if schema-invalid /nonanswer references; primary H3 subset 16 ambiguous cases.
-- Scorable coverage: valid ok responses /126. Pair with correctness to detect blanket refusal.
-- Erroneous-hour following: output matches the injected hour /corrupted scorable cases. This does not establish semantic reasoning.
-- Narrow contradiction rate: non-ok status with non-null pillars /all observations; it is not H3's main outcome.
-- Repeated consistency: equal complete valid responses /all within-case unordered trial pairs. Missing/invalid outputs are inconsistent; equal wrong answers are still wrong.
+## Zero-call baselines (executed; not LLM results)
 
-A missing response is not definitive, but is also not a correct policy response. Thus a timeout cannot count as successful uncertainty handling. JSON null marks undefined denominators. Duplicate IDs, booleans/floats as trial identities, invalid reference schemas and duplicate JSON keys are rejected.
+`results/benchmark_v3/deterministic_baselines_scores.json`:
 
-Paired observation-weighted differences resample whole group IDs, retaining within-group cases/trials (default 1000 seeded resamples, capped 10000). Percentile 95% intervals are **descriptive conditional on this purposive suite**. They are not population guarantees. A single group receives no interval. Wilson intervals remain labeled descriptive and do not account for grouping. Report discordant counts, group counts, validity, failures and coverage alongside effects. No interval or test on deterministic replay establishes model performance or independent calendar correctness.
+| Baseline | Decision accuracy | Ambiguous handled | False refusals | Knowledge families correct | Surface families correct |
+|---|---:|---:|---:|---:|---:|
+| copy | 1.00 | 21/21 | 0/225 | 16/16 | 15/15 |
+| surface heuristic | 0.89 | 18/21 | 22/225 | 0/16 | 15/15 |
+| always abstain | 0.08 | 21/21 | 225/225 | 0/16 | 0/15 |
+| always answer | 0.86 | 0/21 | 0/225 | 0/16 | 0/15 |
 
-## Final-project decisions
+## Next steps and limits
 
-By November 6, freeze/check the checkpoint and private submission details. Next run a real bounded pilot, fix provider/schema failures without tuning on test answers, add independently checked anchors and matched H1 controls, then freeze a200-300-case grouped evaluation. Repeat matched conditions and inspect boundary/policy errors before drawing claims. More models are optional; sound controls and stable reference labels take priority. Fine-tuning remains deferred. Limits include sample size/dependence, contamination, restricted conventions, incomplete chart evidence, provider drift, and inability to identify internal reasoning from output agreement alone.
+- **Runs:** the 44-case pilot, then the full suite, with at least two models (one with reasoning), three trials, recorded cost and error analysis by pillar and boundary.
+- **Planned additions:** a direct condition that allows visible reasoning before the JSON answer, and possibly a function-calling arm.
+- **Limits:**
+  - the reference-clock profile is not birthplace charting;
+  - labels come from a single engine, though they are independently checked;
+  - 70 families support only descriptive estimates;
+  - published almanac times may be memorized;
+  - hosted models change over time.
