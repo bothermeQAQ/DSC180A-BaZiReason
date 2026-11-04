@@ -1,0 +1,14 @@
+{
+  "verified_date": "2026-11-03",
+  "repository_url": "https://github.com/bothermeQAQ/DSC180A-BaZiReason",
+  "public": true,
+  "unauthenticated_metadata": "PASS",
+  "verified_artifact_commit": "724bd918b5517bb86437a8dfea7f9d323db70e7d",
+  "original_tag": "audit/pre-review-a50f967",
+  "original_tag_commit": "a50f96748b8e2c59f152ead119eb14c01eea7d69",
+  "remote_main_matches_local_at_verification": true,
+  "remote_original_tag_matches": true,
+  "public_report_matches_local": true,
+  "report_sha256": "848ae9a5bf2c55a13ef54aef01fe2182a6c8b895b947afff7337250840cb78c1",
+  "report_path": "reports/checkpoint_report.pdf"
+}

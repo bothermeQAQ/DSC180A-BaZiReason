@@ -54,5 +54,5 @@
   "paid_model_calls": 0,
   "training": "NOT RUN",
   "model_access_evidence": "results/audit/model_access.json",
-  "publication": "Pending independent remote verification for revised artifacts; prior publication log is historical"
+  "publication": "PASS: unauthenticated public metadata and committed report bytes verified; original tag published"
 }

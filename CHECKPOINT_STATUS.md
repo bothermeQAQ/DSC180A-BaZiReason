@@ -81,3 +81,5 @@ The astronomy command requires optional dependencies and an explicitly downloade
 ## Publication verification
 
 The initial publication log in `results/publication_verification.json` describes a50f967 and the old report hash. It must not be used to certify the revised report. Revised remote/public visibility, report hash and preserved tag are checked after upload and recorded in `results/audit/publication_verification.json` when successful. Local/remote equality and a clean working tree are checked at the end of this review.
+
+Revised publication **PASS**: public unauthenticated metadata, remote main equality, original tag and exact report bytes verified. The current PDF SHA-256 is `848ae9a5bf2c55a13ef54aef01fe2182a6c8b895b947afff7337250840cb78c1`. See `results/audit/publication_verification.json` for the checked artifact commit.
