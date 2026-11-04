@@ -1,0 +1,10 @@
+{
+  "accessed": "2026-11-03",
+  "source": "Hong Kong Observatory Almanac 2025, February calendar",
+  "url": "https://www.hko.gov.hk/en/gts/astron2025/files/2025cal02.pdf",
+  "page": 1,
+  "verification": "Downloaded the standalone PDF, rendered at 1800px, visually read the February 3/4 cells and solar-term sidebar.",
+  "day_anchors": [{"date":"2025-02-03","day":"癸卯"},{"date":"2025-02-04","day":"甲辰"}],
+  "term_anchor": {"term":"立春","datetime_utc8_minute":"2025-02-03T22:10:00","comparison_tolerance_seconds":60},
+  "limits": "Only two civil-day labels and a minute-resolution term anchor. Not a four-pillar chart validation. Publication precision does not resolve second-level library disagreement."
+}

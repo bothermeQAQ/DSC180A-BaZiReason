@@ -1,0 +1,138 @@
+[
+  {
+    "name": "course_q1",
+    "url": "https://dsc-capstone.org/2026-27/assignments/projects/q1/",
+    "status": 200,
+    "sha256": "f4bc2383c9ee2dd292e2baafe4822ea585ae4da57315e081cd48246147dae91d",
+    "bytes": 13594,
+    "accessed": "2026-11-03"
+  },
+  {
+    "name": "course_syllabus",
+    "url": "https://dsc-capstone.org/2026-27/syllabus/",
+    "status": 200,
+    "sha256": "ab1a63a857374f3ac93296bf0ddba2e058b16bd134cc1a90293fcd16777b5370",
+    "bytes": 37266,
+    "accessed": "2026-11-03"
+  },
+  {
+    "name": "course_home",
+    "url": "https://dsc-capstone.org/2026-27/",
+    "status": 200,
+    "sha256": "568128e1752a8f47b05eb5c43466dfe86dcd9526b8c60485767d24af1131b2b3",
+    "bytes": 9466,
+    "accessed": "2026-11-03"
+  },
+  {
+    "name": "course_checkin",
+    "url": "https://dsc-capstone.org/2026-27/assignments/projects/q1-week5-checkin/",
+    "status": 200,
+    "sha256": "90e3a1dcd14feef443c304d0b21651adcc114fce52880c0986003a7c7db8d1de",
+    "bytes": 9542,
+    "accessed": "2026-11-03"
+  },
+  {
+    "name": "course_writing",
+    "url": "https://dsc-capstone.org/2026-27/lessons/04/",
+    "status": 200,
+    "sha256": "1dbaa631c10a62786bf25aa47d4a0631cb587d9b3e0e4372764876661885f661",
+    "bytes": 31007,
+    "accessed": "2026-11-03"
+  },
+  {
+    "name": "course_methodology",
+    "url": "https://dsc-capstone.org/2026-27/assignments/methodology/05/",
+    "status": 200,
+    "sha256": "47dc51ab48a12d36cd8c766f9aa41c6665b40253c5787be32f53d739c3cab5c8",
+    "bytes": 41790,
+    "accessed": "2026-11-03"
+  },
+  {
+    "name": "bazi_paper",
+    "url": "https://arxiv.org/html/2602.12889v1",
+    "status": 200,
+    "sha256": "fcf9166183e572326cd10c9024eb4af2c322c4df273fd1bf2431fc6851e223fa",
+    "bytes": 115132,
+    "accessed": "2026-11-03"
+  },
+  {
+    "name": "pal",
+    "url": "https://proceedings.mlr.press/v202/gao23f.html",
+    "status": 200,
+    "sha256": "bb2fbc19080a08b18030e199eaadb73afc0b531db7e3381e060dfdf15bc021a7",
+    "bytes": 16932,
+    "accessed": "2026-11-03"
+  },
+  {
+    "name": "pal_pdf",
+    "url": "https://proceedings.mlr.press/v202/gao23f/gao23f.pdf",
+    "status": 200,
+    "sha256": "9f4e97fd779659f8d244b2ab1e108f496368a3ed91776b8519670428a63f7be4",
+    "bytes": 1094094,
+    "accessed": "2026-11-03"
+  },
+  {
+    "name": "bazi_pdf",
+    "url": "https://arxiv.org/pdf/2602.12889",
+    "status": 200,
+    "sha256": "a290c97c76c62801a9599df901a219489676a98d7812a57fc56ce930ea1116fd",
+    "bytes": 555825,
+    "accessed": "2026-11-03"
+  },
+  {
+    "name": "lora",
+    "url": "https://arxiv.org/abs/2106.09685",
+    "status": 200,
+    "sha256": "70bb70b4fd6d41b8a0f53fc5148017bf6ef5b73acba822027397f861aee135c6",
+    "bytes": 44248,
+    "accessed": "2026-11-03"
+  },
+  {
+    "name": "qlora",
+    "url": "https://arxiv.org/abs/2305.14314",
+    "status": 200,
+    "sha256": "a8471d458d43767325628cf5b1e7b8d88f057a0d51f537f59bea77dd4d7a9b4b",
+    "bytes": 43600,
+    "accessed": "2026-11-03"
+  },
+  {
+    "name": "qwen",
+    "url": "https://huggingface.co/Qwen/Qwen3-1.7B/raw/main/README.md",
+    "status": 200,
+    "sha256": "257e52c419dac2258852643f18af6c974f21f8c6c1b6f371b6cca6201cf29091",
+    "bytes": 13963,
+    "accessed": "2026-11-03"
+  },
+  {
+    "name": "qwen_license",
+    "url": "https://huggingface.co/Qwen/Qwen3-1.7B/raw/main/LICENSE",
+    "status": 200,
+    "sha256": "832dd9e00a68dd83b3c3fb9f5588dad7dcf337a0db50f7d9483f310cd292e92e",
+    "bytes": 11343,
+    "accessed": "2026-11-03"
+  },
+  {
+    "name": "python_zoneinfo",
+    "url": "https://docs.python.org/3/library/zoneinfo.html",
+    "status": 200,
+    "sha256": "35435efcbe68cec0581158f95a7c7ab99284f761ec433b1aac6838af966c1f92",
+    "bytes": 64293,
+    "accessed": "2026-11-03"
+  },
+  {
+    "name": "hko_feb2025",
+    "url": "https://www.hko.gov.hk/en/gts/astron2025/files/2025cal02.pdf",
+    "status": 200,
+    "sha256": "b1a13e82eb4013fbae7f780ad1f3fddf93fb5e4b5862d6a59d8334a60a35d093",
+    "bytes": 900450,
+    "accessed": "2026-11-03"
+  },
+  {
+    "name": "timebench_bib",
+    "url": "https://aclanthology.org/2024.acl-long.66.bib",
+    "status": 200,
+    "sha256": "23737e075e1c6bd73754a954fe95b16f8f8e5a9b9daad4a8a785c07bd127ebea",
+    "bytes": 802,
+    "accessed": "2026-11-03"
+  }
+]

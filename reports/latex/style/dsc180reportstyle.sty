@@ -1,0 +1,53 @@
+% Adapted from the public DSC Capstone LaTeX Template, accessed 2026-11-03.
+% https://www.overleaf.com/read/swwcqhtsdwbg
+% Typography subset transcribed from the source editor; unused demonstration,
+% algorithm, appendix and contents helpers omitted. Title, abstract, margins,
+% paragraphs and natbib styling retained. Portable TeX Gyre fonts replace the
+% original XCharter/Arial/Fira Code combination. See docs/template_audit.md.
+\ProvidesPackage{style/dsc180reportstyle}
+\setlength{\footnotesep}{6.65\p@}
+\setlength{\skip\footins}{9\p@ \@plus 4\p@ \@minus 2\p@}
+\renewcommand{\footnoterule}{\kern-3\p@ \hrule width 12pc \kern 2.6\p@}
+\setcounter{footnote}{0}
+\setlength{\parindent}{\z@}
+\setlength{\parskip}{5.5\p@}
+\setlength{\topsep}{4\p@ \@plus 1\p@ \@minus 2\p@}
+\setlength{\partopsep}{1\p@ \@plus 0.5\p@ \@minus 0.5\p@}
+\setlength{\itemsep}{2\p@ \@plus 1\p@ \@minus 0.5\p@}
+\setlength{\parsep}{2\p@ \@plus 1\p@ \@minus 0.5\p@}
+\providecommand{\maketitle}{}
+\renewcommand{\maketitle}{%
+  \par\begingroup
+  \renewcommand{\thefootnote}{\fnsymbol{footnote}}
+  \thispagestyle{empty}\@maketitle\@thanks
+  \endgroup\let\maketitle\relax\let\thanks\relax}
+\renewcommand{\@maketitle}{%
+  \vbox{\hsize\textwidth\linewidth\hsize\vskip 0.1in\centering
+    {\Large\bf \@title\par}
+    \begin{tabular}[t]{c}\bf\rule{\z@}{24\p@}\@author\end{tabular}
+    \vskip 0.3in \@minus 0.1in}}
+\renewenvironment{abstract}{%
+  \vskip 0.075in\centerline{\bf Abstract}\vspace{0.5ex}\begin{quote}}
+  {\par\end{quote}\vskip 1ex}
+\usepackage{setspace}
+\usepackage[letterpaper,margin=1in]{geometry}
+\usepackage{graphicx,amsmath,mathtools,color}
+\definecolor{MyBrown}{rgb}{0.3,0,0}
+\definecolor{MyBlue}{rgb}{.2,.2,.8}
+\definecolor{MyRed}{rgb}{0.4,0,0.1}
+\definecolor{MyGreen}{rgb}{0,0.4,0}
+\usepackage[hyphens]{url}
+\usepackage{hyperref}
+\hypersetup{breaklinks=true,bookmarksnumbered=true,bookmarksopen=true,
+ bookmarksopenlevel=2,pdfpagemode=UseOutlines,colorlinks=true,
+ linkcolor=MyRed,citecolor=MyBlue,filecolor=MyBrown,urlcolor=MyGreen}
+\usepackage{array,booktabs,longtable}
+\usepackage{natbib}
+\setcitestyle{aysep={}}
+\setlength{\bibsep}{-.1pt}
+\usepackage[no-math]{fontspec}
+\defaultfontfeatures{Ligatures=TeX}
+\setmainfont{texgyrepagella-regular.otf}[BoldFont=texgyrepagella-bold.otf,
+ ItalicFont=texgyrepagella-italic.otf,BoldItalicFont=texgyrepagella-bolditalic.otf]
+\setsansfont{texgyreheros-regular.otf}
+\setmonofont{texgyrecursor-regular.otf}[Scale=0.9]

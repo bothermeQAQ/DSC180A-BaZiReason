@@ -1,0 +1,81 @@
+% !TEX TS-program = xelatex
+\documentclass[12pt,letterpaper]{article}
+\usepackage{style/dsc180reportstyle}
+\title{BaZiReason: Evaluating Tool-Augmented LLM Reliability in Traditional Chinese Calendar Reasoning}
+\author{Yonghao Wang\\DSC 180A, Fall 2026\\Domain D25 --- Advisor: Jingbo Shang}
+\date{}
+\setlength{\emergencystretch}{2em}
+\begin{document}
+\maketitle
+\begin{abstract}
+Chinese Four Pillars (BaZi) chart construction combines sexagenary cycles, solar-term transitions, and time conventions. These interactions provide a constrained setting for studying language-model reliability without evaluating claims about destiny. BaZiReason asks whether deterministic calendar context improves pillar accuracy and whether explicit conventions help systems handle underspecified inputs. The checkpoint implements a seeded 96-case synthetic diagnostic suite, a convention-aware calendar wrapper, strict scoring, and matched direct and tool-context inference interfaces. Eighty cases have reference pillar labels; sixteen require clarification, rejection, or an unsupported-input response. Preliminary software diagnostics find agreement on 184 selected day, year, and month checks between two implementations, but solar-term timestamps differ by approximately 14--17 seconds. Their shared astronomical lineage limits independence. No live language-model experiment has been run, so the proposed hypotheses remain untested. The planned study separates computation, faithful use of supplied tool results, and uncertainty handling, while retaining provenance and reporting boundary-specific failures.
+\end{abstract}
+\noindent\textbf{Code:} \url{https://github.com/bothermeQAQ/DSC180A-BaZiReason}\\
+\textbf{Checkpoint snapshot:} November 3, 2026. Computational diagnostics only.
+
+\section{Introduction}
+\subsection{Research problem and scope}
+A calendar answer can be fluent and internally plausible while still selecting the wrong date, reference clock, or transition rule. BaZi chart construction makes these choices visible: a chart contains four ordered pairs, one each for the year, month, day, and two-hour period. Each pair combines one of ten Heavenly Stems and one of twelve Earthly Branches in a sixty-position cycle. Under the implementation profiles studied here, the year changes at the Lichun solar-term instant and months change at twelve alternating solar terms, called Jie. These boundaries follow the Sun's annual motion rather than Gregorian month starts or Lunar New Year \citep{hko2025,lunar}.
+
+Small differences in input interpretation can therefore produce discrete changes in output. A time near 23:00 raises a day-boundary convention question; a repeated daylight-saving wall time can describe two different instants. Python's timezone interface explicitly represents such repeated times using the fold attribute \citep{zoneinfo}. A request without a time or a convention need not have a single defensible four-pillar answer. Reliability requires recognizing these limitations as well as calculating the pillars correctly.
+
+The central question is: \emph{Can deterministic computation improve the accuracy, consistency, and uncertainty handling of language models on convention-specified Chinese calendar tasks?} The study concerns reproducible symbolic and temporal computation. It does not test whether a chart predicts personality, health, or future events. Correctness here means agreement with a named computational profile and, where available, separately documented calendar evidence. It is not evidence for metaphysical validity.
+
+Three hypotheses guide the eventual model experiment. H1 predicts more direct-model errors on boundary cases than on ordinary dates. H2 predicts that supplying deterministic calendar results improves exact pillar agreement relative to a direct baseline using the same model. H3 predicts that explicitly representing ambiguous conventions reduces unsupported definitive answers. These hypotheses are prospective. The present checkpoint provides computational diagnostics and inference infrastructure, not measurements of language-model performance.
+
+\subsection{Related literature and prior work}
+Program-aided reasoning offers a methodological precedent. PAL delegates program execution to an interpreter after a language model constructs an intermediate program \citep{pal}. Toolformer instead trains models to select and incorporate API calls \citep{toolformer}. BaZiReason's implemented treatment is narrower: application code computes the calendar result and supplies it as context. It is neither learned API selection nor a function-calling agent. Any observed treatment benefit would initially show the value of supplied deterministic answers and faithful formatting, rather than independent model reasoning.
+
+Temporal reasoning is already an established evaluation topic. TimeBench evaluates a hierarchy of temporal phenomena and documents variation across task categories \citep{timebench}. Its scope motivates stratified evaluation rather than a single aggregate score, but its results do not establish that BaZi boundary cases are harder for any particular model. H1 must be tested directly on this project's inputs.
+
+BaZi-specific prior work also substantially overlaps with the proposed setting. BaziQA-Benchmark evaluates contest questions conditioned on precomputed chart contexts, deliberately separating downstream symbolic inference from chart derivation \citep{baziqa}. The paper describes 200 questions from the 2021--2025 competitions; the current repository has expanded and revised data. Those versions should not be conflated. This project uses neither contest questions nor real birth profiles. Further, the Deterministic Bazi Calendar Rules Benchmark explicitly targets chart calculations and boundary errors \citep{detbenchmark}. Inspection of its pinned source finds a solar-term solver and a model runner that raise \texttt{NotImplementedError}; its reported estimates are not adopted as verified experimental evidence here.
+
+Consequently, the feasible contribution is a small, auditable boundary suite with explicit clock and Zi-hour profiles, paired inference conditions, and separate treatment of unsupported and ambiguous requests. It is not the first BaZi benchmark. The contribution will be useful only if the completed experiments distinguish model failures, convention disagreement, and reference-engine limitations.
+
+\subsection{Data, computation, and proposed evaluation}
+\paragraph{Synthetic data.}
+The dataset is generated locally with seed 1802026 and contains no personal birth records. Table~\ref{tab:data} summarizes the 96 diagnostic cases. Each JSONL record includes an input wall time and IANA zone, convention, category, group identifier, expected status and optional pillars, implementation version, validation status, and boundary metadata. The case labels have four conceptual classes: fully specified computations, convention-dependent computations with a selected profile, ambiguous requests, and unsupported requests. Invalid civil inputs form an additional rejection class. Of the 96 cases, 80 have pillar labels and 16 do not: six are ambiguous, six unsupported, and four invalid. The selected-profile Zi-hour cases remain scorable; omitted-profile cases do not receive a universal chart answer.
+
+\begin{table}[ht]
+\centering
+\caption{Checkpoint diagnostic coverage. Counts are cases, not independent samples from a population.}
+\label{tab:data}
+\begin{tabular}{lr@{\hspace{1.5em}}lr}
+\toprule
+Category & Count & Category & Count\\
+\midrule
+Ordinary noon dates & 20 & Solar-term pairs & 24\\
+New-year contrasts & 8 & Zi-hour profiles & 12\\
+Leap days & 4 & Equivalent time zones & 8\\
+DST gaps and folds & 8 & Underspecified inputs & 4\\
+Unsupported profiles/range & 6 & Invalid dates/zones & 2\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The ordinary cases use randomly selected noon dates in 1990--2030, restricted to the twelfth through twentieth days of Gregorian months. The solar-term cases bracket six Jie in each of 2024 and 2025 by two minutes. New-year cases contrast Lunar New Year with dates following Lichun. The Zi-hour cases compare 00:00, 22:59:59, and 23:00 under both profiles on two dates. These are targeted diagnostic constructions; their frequencies do not estimate real-world request frequencies. Shared transition or convention groups must stay together in any train/test split and uncertainty analysis.
+
+\paragraph{Explicit computation contract.}
+The wrapper uses lunar-python 1.4.8 \citep{lunar}. It validates the input civil time using pinned timezone data and converts the resulting instant to a fixed UTC+08:00 reference clock for \emph{all} pillars. This is an experimental reference-clock convention: it does not claim to implement every location's customary chart. The admitted reference-year range is 1901--2099, a study restriction rather than a verified guarantee of the dependency's entire range. Longitude-dependent true solar time, local-civil-clock charts, lunar-month boundaries, and Lunar New Year year-boundary profiles are rejected as unsupported.
+
+The two supported profiles retain the library's actual behavior. Sect 1 advances the day pillar at 23:00; sect 2 retains that civil day's pillar until midnight. For both, the hour stem is derived using the 23:00-advanced day. Recomputing the sect-2 hour from its displayed day stem would silently change the library's rule. Requests that omit a profile receive a clarification status. Nonexistent DST times are invalid, while repeated times require an explicit fold. This separates civil-time normalization from the calendrical convention instead of silently mixing them.
+
+\paragraph{Label provenance and preliminary verification.}
+All generated pillar labels originate from the wrapper. Recomputing them with that same code checks pipeline consistency, not independent correctness. A second implementation, sxtwl 2.0.7, agrees on 184 selected day and non-solar-term-date year/month checks \citep{sxtwl}. These are partial checks: hours and intra-day year/month transitions are excluded because the audited date-level comparison methods do not establish those boundaries. Both implementations draw on ShouXing astronomy; agreement cannot exclude shared errors.
+
+The twelve solar-term timestamp comparisons reveal a systematic discrepancy: lunar-python is 13.73--17.13 seconds later than sxtwl in this selection. The cause has not been established. The two-minute offsets keep the generated transition pairs outside those observed discrepancy windows; exact-second regression tests assert only the lunar-python contract. Independently published Hong Kong Observatory calendar data provide a limited day and minute-level spot check \citep{hko2025}. Such evidence does not validate complete charts or second-level astronomical precision. Raw comparison records and exclusions are retained in the repository.
+
+\paragraph{Matched model experiment.}
+The direct condition receives the structured input, the profile rules, and the output schema without pillar answers. The tool-context condition uses the same instructions and model but adds a freshly computed structured result. Both conditions return a status, four pillars or null, reason codes, and convention metadata. Direct prompts are constructed from an allowlist of input fields; reference labels, validation annotations, and boundary timestamps are excluded. Method order alternates across cases and trials. Model identifiers, decoding parameters, prompt hashes, attempts, returned usage, and wall-clock latency are logged. Monetary cost is left unknown unless actually measured.
+
+Exact accuracy is the proportion of the 80 labeled cases for which all four pillars match. Per-pillar accuracy uses the same labeled denominator. Invalid, missing, and failed responses count as failures. Valid-output rate uses all requested observations. Status and convention accuracy are reported separately; for non-answer cases, uncertainty-handling accuracy requires the correct status, null pillars, a nonempty reason list, and matching convention metadata. This is a coarse policy metric, not a semantic assessment of explanation quality. A detectable contradiction is a non-answer status accompanied by definitive pillars. Repeated trials support pairwise equality of valid structured responses. The scorer retains missing calls in denominators and rejects duplicate identities.
+
+For H2, the primary analysis will compare paired exact-match differences within cases, with intervals resampled by case group. For H1, the present unmatched diagnostic strata permit a descriptive comparison; a stronger causal interpretation requires additional controls for year, prompt length, and task composition. H3 requires a further explicit-policy ablation: the current paired runner alone does not isolate convention representation. No such ablation has been executed. Descriptive Wilson intervals in the software are not substitutes for clustered inference. The sample is small, boundary-enriched, and unsuitable for broad claims about all calendars or models.
+
+\paragraph{Checkpoint status and next steps.}
+The current software passes unit, boundary, schema, prompt-isolation, metric, adapter-fixture, and command-line smoke tests. Mock predictions are explicitly synthetic and are excluded from scientific claims. Environment inspection found no configured standard API credentials and no running Ollama service; consequently, H1, H2, and H3 remain untested. The next priorities are a small, budgeted same-model pilot, expansion of external calendar anchors, and an H3 ablation. Fine-tuning is deferred until these measurements are reliable. For the final report, the major threats to validity remain shared reference lineage, provider drift, convention coverage, public-data contamination, small correlated strata, and the fact that answer-providing context can improve copying without improving underlying reasoning.
+
+\clearpage
+\bibliographystyle{plainnat}
+\bibliography{references}
+\end{document}

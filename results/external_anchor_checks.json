@@ -1,0 +1,26 @@
+{
+  "kind": "partial_independent_published_anchors_not_full_chart_validation",
+  "source": "https://www.hko.gov.hk/en/gts/astron2025/files/2025cal02.pdf",
+  "anchor_manifest_sha256": "0575b8f431a7192332fc8e2d5fa0cb15a647f55f020ddd825eb88c3502bccdeb",
+  "day_checks": [
+    {
+      "date": "2025-02-03",
+      "day": "癸卯",
+      "computed": "癸卯",
+      "agrees": true
+    },
+    {
+      "date": "2025-02-04",
+      "day": "甲辰",
+      "computed": "甲辰",
+      "agrees": true
+    }
+  ],
+  "term_check": {
+    "published_minute": "2025-02-03T22:10:00",
+    "computed": "2025-02-03T22:10:28",
+    "absolute_difference_seconds": 28.0,
+    "within_60_second_publication_resolution": true
+  },
+  "limits": "Only two civil-day labels and a minute-resolution term anchor. Not a four-pillar chart validation. Publication precision does not resolve second-level library disagreement."
+}

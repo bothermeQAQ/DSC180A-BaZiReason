@@ -1,0 +1,19 @@
+{
+  "dataset_sha256": "55e437f019e7d59c29ab182299cb0f81dd926b2e433c5a602e19e09401ae52f3",
+  "case_ids": [
+    "BR-001",
+    "BR-002",
+    "BR-003",
+    "BR-004"
+  ],
+  "trials": 1,
+  "n_calls": 8,
+  "synthetic": true,
+  "backend": "mock",
+  "model": "SYNTHETIC-MOCK-NOT-AN-LLM",
+  "temperature": 0,
+  "max_tokens": 512,
+  "attempts_per_call": 1,
+  "method_order": "alternating_by_case_and_trial",
+  "cost": "not measured; call and output-token caps are not dollar caps"
+}

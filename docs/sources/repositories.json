@@ -1,0 +1,48 @@
+[
+  {
+    "repository": "6tail/lunar-python",
+    "commit": "009870fbab8784901662e8d36571056d0a271f78",
+    "url": "https://github.com/6tail/lunar-python",
+    "license_api": {
+      "key": "mit",
+      "name": "MIT License",
+      "spdx_id": "MIT",
+      "url": "https://api.github.com/licenses/mit",
+      "node_id": "MDc6TGljZW5zZTEz"
+    },
+    "accessed": "2026-11-03"
+  },
+  {
+    "repository": "skydancep/sxtwl",
+    "commit": "398d95c4cc905584ab41c7487ca67f08c1a66b39",
+    "url": "https://github.com/skydancep/sxtwl",
+    "license_api": null,
+    "accessed": "2026-11-03"
+  },
+  {
+    "repository": "ChenJiangxi/BaziQA",
+    "commit": "3bad3deaa5aa3a191c9c68b4d8b17f46decff45e",
+    "url": "https://github.com/ChenJiangxi/BaziQA",
+    "license_api": {
+      "key": "other",
+      "name": "Other",
+      "spdx_id": "NOASSERTION",
+      "url": null,
+      "node_id": "MDc6TGljZW5zZTA="
+    },
+    "accessed": "2026-11-03"
+  },
+  {
+    "repository": "imly-sudo/bazi-llm-benchmark",
+    "commit": "c200f78ed53c96868cf21550fc84f663940b9f26",
+    "url": "https://github.com/imly-sudo/bazi-llm-benchmark",
+    "license_api": {
+      "key": "mit",
+      "name": "MIT License",
+      "spdx_id": "MIT",
+      "url": "https://api.github.com/licenses/mit",
+      "node_id": "MDc6TGljZW5zZTEz"
+    },
+    "accessed": "2026-11-03"
+  }
+]
