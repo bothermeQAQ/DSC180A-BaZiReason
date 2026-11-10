@@ -1,0 +1,57 @@
+{
+  "label": "qwen3-4b-instruct-2507-4bit",
+  "model_path": "~/.cache/huggingface/hub/models--mlx-community--Qwen3-4B-Instruct-2507-4bit/snapshots/50d427756c6b1b2fe0c0a10f67fbda1fc8e82c1b",
+  "seed": 20261110,
+  "load_seconds": 0.73,
+  "rule_mcq": {
+    "n": 30,
+    "accuracy": 0.3333333333333333,
+    "unparsed": 0,
+    "seconds": 5.35
+  },
+  "strict_json_tool_context": {
+    "n": 12,
+    "strict_valid_rate": 1.0,
+    "lenient_valid_rate": 1.0,
+    "exact_rate": 1.0,
+    "sample": "{\n  \"status\": \"ok\",\n  \"pillars\": {\n    \"year\": \"戊辰\",\n    \"month\": \"壬戌\",\n    \"day\": \"乙丑\",\n    \"hour\": \"丙戌\"\n  },\n  \"reason_codes\": [],\n  \"conventions\": {\n    \"clock_basis\": \"fixed_utc8\",\n    \"month_boundary\": \"jie_instant\",\n    \"sect\": 2,\n    \"solar_time\": \"none\",\n    \"year_boundary\": \"lichun_instant\""
+  },
+  "batch_generation": {
+    "prompt_tokens": 11040,
+    "completion_tokens": 1332,
+    "seconds": 41.04,
+    "peak_memory_gb": 5.46
+  },
+  "reasoned_tool_intermediate": {
+    "n": 12,
+    "final_json_found": 12,
+    "exact_rate": 0.0,
+    "per_pillar_accuracy": {
+      "year": 0.3333333333333333,
+      "month": 0.0,
+      "day": 0.0,
+      "hour": 0.08333333333333333
+    },
+    "completion_tokens": 1320,
+    "batch_generation_tps": 28.9,
+    "seconds": 45.76,
+    "sample_tail": "{\n  \"status\": \"ok\",\n  \"pillars\": {\n    \"year\": \"辛巳\",\n    \"month\": \"辰\",\n    \"day\": \"癸卯\",\n    \"hour\": \"戊戌\"\n  },\n  \"reason_codes\": [],\n  \"conventions\": {\n    \"clock_basis\": \"fixed_utc8\",\n    \"month_boundary\": \"jie_instant\",\n    \"sect\": 2,\n    \"solar_time\": \"none\",\n    \"year_boundary\": \"lichun_instant\"\n  }\n}"
+  },
+  "single_stream": {
+    "prompt_tokens": 1089,
+    "prompt_tps": 540.5,
+    "generation_tps": 17.7,
+    "peak_memory_gb": 5.46
+  },
+  "lora_probe": {
+    "batch_size": 4,
+    "lora_layers": 16,
+    "iterations_per_second": 0.12249987323450434,
+    "sequence_tokens_per_second": 0.48999949293801737,
+    "loss_tokens_per_second": 44.589953857359575,
+    "train_peak_memory_gb": 20.747188136,
+    "first_loss": 0.5609888434410095,
+    "last_loss": 0.12400907278060913,
+    "mean_tokens_per_example": 1.0
+  }
+}

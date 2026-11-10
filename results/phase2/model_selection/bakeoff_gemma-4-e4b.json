@@ -1,0 +1,49 @@
+{
+  "label": "gemma-4-e4b-it-4bit",
+  "model_path": "~/.cache/huggingface/hub/models--mlx-community--gemma-4-e4b-it-4bit/snapshots/475b9088d29754a3379866cf5aeb6b41acd313c2",
+  "seed": 20261110,
+  "load_seconds": 2.15,
+  "rule_mcq": {
+    "n": 30,
+    "accuracy": 0.4,
+    "unparsed": 0,
+    "seconds": 4.67
+  },
+  "strict_json_tool_context": {
+    "n": 12,
+    "strict_valid_rate": 0.0,
+    "lenient_valid_rate": 1.0,
+    "exact_rate": 0.0,
+    "sample": "```json\n{\n  \"status\": \"ok\",\n  \"pillars\": {\n    \"year\": \"戊辰\",\n    \"month\": \"壬戌\",\n    \"day\": \"乙丑\",\n    \"hour\": \"丙戌\"\n  },\n  \"reason_codes\": [],\n  \"conventions\": {\n    \"clock_basis\": \"fixed_utc8\",\n    \"month_boundary\": \"jie_instant\",\n    \"sect\": 2,\n    \"solar_time\": \"none\",\n    \"year_boundary\": \"lichun_"
+  },
+  "batch_generation": {
+    "prompt_tokens": 10764,
+    "completion_tokens": 1632,
+    "seconds": 27.39,
+    "peak_memory_gb": 5.65
+  },
+  "reasoned_tool_intermediate": {
+    "n": 12,
+    "final_json_found": 0,
+    "exact_rate": 0.0,
+    "per_pillar_accuracy": {
+      "year": 0.0,
+      "month": 0.0,
+      "day": 0.0,
+      "hour": 0.0
+    },
+    "completion_tokens": 8400,
+    "batch_generation_tps": 52.7,
+    "seconds": 159.33,
+    "sample_tail": ":18.\n\nSince the temporal tool has successfully mapped the civil instant to a specific point in time within the defined reference clock, and the profile constraints are met (fixed UTC+08:00, Jie boundaries), the calculation should yield a unique set of pillars.\n\n*Self-Correction/Verification:* The prompt requires returning the pillars if a single chart is determined. The intermediate values confirm"
+  },
+  "single_stream": {
+    "prompt_tokens": 1071,
+    "prompt_tps": 833.1,
+    "generation_tps": 20.1,
+    "peak_memory_gb": 5.82
+  },
+  "lora_probe": {
+    "error": "RuntimeError: [METAL] Command buffer execution failed: Insufficient Memory (00000008:kIOGPUCommandBufferCallbackErrorOutOfMemory)."
+  }
+}

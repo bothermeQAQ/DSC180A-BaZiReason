@@ -1,0 +1,345 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BaZiReason 本地演示</title>
+<style>
+  :root {
+    --bg: #f6f4ef; --panel: #ffffff; --ink: #1f2328; --muted: #646b73; --line: #dcd8cf;
+    --accent: #8a3b2a; --accent-ink: #ffffff; --soft: #f1ece2; --ok: #2f6b4f; --warn: #9a6400;
+    --chip: #efe7d8; --user: #e9eef5; --bot: #ffffff;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #17181a; --panel: #212326; --ink: #e8e6e1; --muted: #a2a6ab; --line: #383b40;
+      --accent: #d88b73; --accent-ink: #1a1a1a; --soft: #2a2c30; --ok: #7fc8a0; --warn: #e0b060;
+      --chip: #32353a; --user: #2a3340; --bot: #26282b;
+    }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink);
+    font: 15px/1.6 -apple-system, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; }
+  header { padding: 14px 20px; border-bottom: 1px solid var(--line); display: flex; gap: 12px;
+    align-items: baseline; flex-wrap: wrap; }
+  header h1 { font-size: 18px; margin: 0; }
+  header span { color: var(--muted); font-size: 13px; }
+  main { display: grid; grid-template-columns: minmax(320px, 440px) 1fr; gap: 16px; padding: 16px 20px;
+    max-width: 1400px; margin: 0 auto; }
+  @media (max-width: 900px) { main { grid-template-columns: 1fr; padding: 12px 16px; } }
+  section { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px;
+    margin-bottom: 14px; }
+  h2 { font-size: 15px; margin: 0 0 10px; }
+  label { display: block; font-size: 13px; color: var(--muted); margin: 8px 0 3px; }
+  input, select, textarea, button { font: inherit; color: var(--ink); }
+  input, select, textarea { width: 100%; padding: 7px 9px; border: 1px solid var(--line); border-radius: 7px;
+    background: var(--bg); }
+  .row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  button { cursor: pointer; border: 1px solid var(--line); background: var(--soft); border-radius: 7px;
+    padding: 7px 14px; }
+  button.primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+  button:disabled { opacity: .5; cursor: default; }
+  .actions { display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap; }
+  .pillars { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin: 8px 0; }
+  .pillar { text-align: center; border: 1px solid var(--line); border-radius: 8px; padding: 8px 4px;
+    background: var(--soft); }
+  .pillar .name { font-size: 12px; color: var(--muted); }
+  .pillar .gz { font-size: 26px; letter-spacing: 2px; margin: 2px 0; }
+  .pillar .sub { font-size: 12px; color: var(--muted); }
+  .pillar.changed { outline: 2px solid var(--warn); }
+  .status { display: inline-block; padding: 1px 9px; border-radius: 99px; font-size: 12px; background: var(--chip); }
+  .status.ok { color: var(--ok); } .status.bad { color: var(--warn); }
+  ul.notes { margin: 6px 0 0; padding-left: 18px; font-size: 13px; color: var(--muted); }
+  ul.notes li { margin-bottom: 4px; }
+  ul.notes li.lead { color: var(--warn); }
+  pre.tool { white-space: pre-wrap; font: 12px/1.5 ui-monospace, Menlo, monospace; background: var(--soft);
+    border-radius: 8px; padding: 10px; margin: 8px 0 0; max-height: 260px; overflow: auto; }
+  details summary { cursor: pointer; font-size: 13px; color: var(--muted); margin-top: 8px; }
+  #log { min-height: 260px; max-height: 58vh; overflow-y: auto; display: flex; flex-direction: column; gap: 10px;
+    padding: 4px 2px; }
+  .msg { border: 1px solid var(--line); border-radius: 10px; padding: 9px 12px; white-space: pre-wrap;
+    max-width: 94%; overflow-wrap: anywhere; }
+  .msg.user { background: var(--user); align-self: flex-end; }
+  .msg.bot { background: var(--bot); align-self: flex-start; }
+  .msg .meta { font-size: 11px; color: var(--muted); margin-top: 6px; }
+  .msg .json { font: 12px/1.5 ui-monospace, Menlo, monospace; background: var(--soft); border-radius: 6px;
+    padding: 6px 8px; margin-top: 8px; }
+  .flag { font-size: 12px; color: var(--warn); margin-top: 6px; }
+  .rule { border-left: 3px solid var(--accent); padding: 4px 10px; margin: 8px 0; font-size: 13px; }
+  .rule b { font-size: 13px; } .rule .kind { color: var(--muted); font-size: 11px; margin-left: 6px; }
+  .rule .check { color: var(--muted); font-size: 11px; }
+  .composer { display: grid; grid-template-columns: 1fr auto; gap: 8px; margin-top: 10px; }
+  .composer textarea { resize: vertical; min-height: 44px; }
+  .quick { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
+  .quick button { font-size: 12px; padding: 3px 10px; }
+  .inline { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--muted); }
+  .inline input { width: auto; }
+  .hint { font-size: 12px; color: var(--muted); }
+  #gate { position: fixed; inset: 0; background: var(--bg); display: none; align-items: center;
+    justify-content: center; }
+  #gate div { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 20px; width: 320px; }
+</style>
+</head>
+<body>
+<header>
+  <h1>BaZiReason</h1>
+  <span>可核验的八字历法与规则推理 · 本地模型 · 出生信息不离开本机</span>
+</header>
+<div id="gate"><div>
+  <h2>请输入访问码</h2>
+  <p class="hint">演示主人会在终端里看到一串访问码。</p>
+  <input id="code" autocomplete="off">
+  <div class="actions"><button class="primary" id="enter">进入</button></div>
+</div></div>
+<main>
+  <div>
+    <section>
+      <h2>出生信息</h2>
+      <div class="row">
+        <div><label for="date">出生日期（公历）</label><input id="date" type="date" value="1990-05-17"></div>
+        <div><label for="time">出生时刻（可留空）</label><input id="time" type="time" step="1" value="14:30:00"></div>
+      </div>
+      <label for="zone">时区（IANA 时区键）</label>
+      <select id="zone"></select>
+      <div class="row">
+        <div><label for="sect">日柱流派</label>
+          <select id="sect">
+            <option value="2">sect=2：00:00 换日</option>
+            <option value="1">sect=1：23:00 换日</option>
+            <option value="">未指定</option>
+          </select></div>
+        <div><label for="gender">性别（用于大运）</label>
+          <select id="gender"><option value="">不填</option><option value="male">男</option><option value="female">女</option></select></div>
+      </div>
+      <label for="place">出生地（仅显示，不参与计算）</label>
+      <input id="place" placeholder="可不填">
+      <label for="fold">夏令时结束时重复的钟点</label>
+      <select id="fold"><option value="">不适用 / 未说明</option><option value="0">第一次（fold=0）</option><option value="1">第二次（fold=1）</option></select>
+      <div class="actions">
+        <button class="primary" id="cast">计算四柱</button>
+        <button id="toggleB">对比另一个出生时间</button>
+      </div>
+      <p class="hint" id="profile"></p>
+    </section>
+    <section id="boxB" style="display:none">
+      <h2>情形 B（用于对比）</h2>
+      <div class="row">
+        <div><label for="dateB">出生日期</label><input id="dateB" type="date"></div>
+        <div><label for="timeB">出生时刻</label><input id="timeB" type="time" step="1"></div>
+      </div>
+      <label for="zoneB">时区</label><select id="zoneB"></select>
+      <label for="sectB">日柱流派</label>
+      <select id="sectB"><option value="2">sect=2</option><option value="1">sect=1</option><option value="">未指定</option></select>
+      <div class="actions"><button class="primary" id="compare">对比两种情形</button></div>
+    </section>
+    <section>
+      <h2>排盘结果 <span id="status" class="status">尚未计算</span></h2>
+      <div id="chart"></div>
+      <div id="chartB"></div>
+      <ul class="notes" id="notes"></ul>
+      <details><summary>查看传给模型的工具原文</summary><pre class="tool" id="tool"></pre></details>
+    </section>
+  </div>
+  <div>
+    <section>
+      <h2>对话</h2>
+      <div class="row">
+        <div><label for="model">模型</label><select id="model"></select></div>
+        <div><label for="temp">回答方式</label>
+          <select id="temp"><option value="0">确定性（每次相同）</option><option value="0.7">采样（更口语）</option></select></div>
+      </div>
+      <div id="log"></div>
+      <div class="quick" id="quick"></div>
+      <div class="composer">
+        <textarea id="input" placeholder="用中文提问，例如：月干是日主的什么十神？为什么日柱是这样算的？"></textarea>
+        <button class="primary" id="send">发送</button>
+      </div>
+      <div class="actions"><button id="clear">清空对话</button><span class="hint" id="busy"></span></div>
+    </section>
+    <section>
+      <h2>相关规则与出处</h2>
+      <div id="rules"><p class="hint">提问后，这里会列出回答涉及的规则卡片。规则分三类：确定性表格、声明的约定、传统的象征对应。</p></div>
+    </section>
+    <section>
+      <h2>反馈（可选）</h2>
+      <p class="hint">默认不保存任何内容。只有勾选同意后，反馈才会写入演示主人电脑上的本地文件。</p>
+      <div class="row">
+        <div><label for="rating">这次回答是否可靠</label>
+          <select id="rating"><option value="">请选择</option><option>可靠</option><option>部分有问题</option><option>明显有错</option></select></div>
+        <div><label for="comment">说明</label><input id="comment" placeholder="哪里对、哪里错"></div>
+      </div>
+      <label class="inline"><input type="checkbox" id="consent"> 我同意保存这条评分和说明，用于课程研究</label>
+      <label class="inline"><input type="checkbox" id="consent2"> 我另外同意连同本次对话和出生信息一起保存</label>
+      <div class="actions"><button id="feedback">提交反馈</button><span class="hint" id="saved"></span></div>
+    </section>
+  </div>
+</main>
+<script>
+const $ = id => document.getElementById(id);
+const POS = {year: "年柱", month: "月柱", day: "日柱", hour: "时柱"};
+let history = [], lastBirth = null, comparePair = null, accessCode = sessionStorage.getItem("code") || "";
+const KINDS = {deterministic_table: "确定性表格", declared_convention: "声明的约定", traditional_association: "传统的象征对应"};
+
+async function api(path, body) {
+  const headers = {"Content-Type": "application/json", "X-Access-Code": accessCode};
+  const response = await fetch(path, body ? {method: "POST", headers, body: JSON.stringify(body)} : {headers});
+  if (response.status === 401) { $("gate").style.display = "flex"; throw new Error("code"); }
+  return response;
+}
+function birth(suffix = "") {
+  const sect = $("sect" + suffix).value;
+  const out = {date: $("date" + suffix).value, time: $("time" + suffix).value, timezone: $("zone" + suffix).value,
+    sect: sect ? Number(sect) : null};
+  if (!suffix) {
+    out.gender = $("gender").value || null;
+    const fold = $("fold").value; if (fold !== "") out.fold = Number(fold);
+  } else { out.gender = $("gender").value || null; }
+  return out;
+}
+function esc(text) { const d = document.createElement("div"); d.textContent = text; return d.innerHTML; }
+function renderChart(target, payload, title, changed = []) {
+  const chart = payload.chart;
+  if (chart.status !== "ok") {
+    target.innerHTML = `<p><b>${esc(title)}</b>　未给出四柱（${esc(chart.status)}：${esc(chart.reason_codes.join("、"))}）</p>`;
+    return;
+  }
+  const facts = chart.facts;
+  const cells = Object.keys(POS).map(key => {
+    const god = key === "day" ? "日主" : facts.stem_ten_gods[key];
+    const hidden = facts.hidden_stems[key].map((s, i) => s + facts.hidden_ten_gods[key][i]).join(" ");
+    return `<div class="pillar ${changed.includes(key) ? "changed" : ""}"><div class="name">${POS[key]}</div>
+      <div class="gz">${chart.pillars[key]}</div><div class="sub">${god}</div><div class="sub">${hidden}</div></div>`;
+  }).join("");
+  let extra = `<p class="hint">参考时刻 ${esc(chart.reference_utc8[0].slice(0, 19).replace("T", " "))}（UTC+08:00）
+    · 日主 ${facts.day_master}（${facts.day_master_element}）· 月令“${facts.seasonal_state}”
+    · 格局标签 ${facts.month_pattern} · 旬空 ${facts.day_xun_kong}</p>`;
+  if (chart.luck) {
+    extra += `<p class="hint">大运（${chart.luck.direction === "forward" ? "顺行" : "逆行"}）：` +
+      chart.luck.cycles.slice(0, 6).map(c => `${c.pillar} ${c.start_year}–${c.end_year}`).join("；") + "</p>";
+  }
+  target.innerHTML = `<p><b>${esc(title)}</b></p><div class="pillars">${cells}</div>${extra}`;
+}
+function renderNotes(list) {
+  $("notes").innerHTML = list.map((n, i) => `<li class="${i === 0 && n.startsWith("未给出") ? "lead" : ""}">${esc(n)}</li>`).join("");
+}
+async function cast() {
+  const b = birth();
+  const payload = await (await api("/api/chart", {birth: b})).json();
+  lastBirth = b; comparePair = null;
+  $("chartB").innerHTML = "";
+  renderChart($("chart"), payload, "当前排盘");
+  const ok = payload.chart.status === "ok";
+  $("status").textContent = ok ? "引擎已核验" : payload.chart.status;
+  $("status").className = "status " + (ok ? "ok" : "bad");
+  renderNotes(payload.uncertainties);
+  $("tool").textContent = payload.tool_text;
+}
+async function compare() {
+  const a = birth(), b = birth("B");
+  const result = await (await api("/api/compare", {a, b})).json();
+  lastBirth = null; comparePair = {a, b};
+  renderChart($("chart"), result.a, "情形 A");
+  renderChart($("chartB"), result.b, "情形 B", result.changed || []);
+  const notes = [];
+  if (result.changed) {
+    notes.push(result.changed.length ? "发生变化的柱：" + result.changed.map(k => POS[k]).join("、") : "两种情形的四柱相同。");
+    notes.push(result.day_master_changed ? "日主改变：所有十神都要按新的日主重排。" : "日主不变。");
+  } else { notes.push("至少一种情形未能给出四柱，无法逐柱对比。"); }
+  renderNotes(notes.concat(result.a.uncertainties.slice(-2)));
+  $("status").textContent = "对比模式"; $("status").className = "status";
+  $("tool").textContent = "情形A：\n" + result.a.tool_text + "\n\n情形B：\n" + result.b.tool_text;
+}
+function addMessage(role, text) {
+  const div = document.createElement("div");
+  div.className = "msg " + (role === "user" ? "user" : "bot");
+  div.textContent = text;
+  $("log").appendChild(div); $("log").scrollTop = $("log").scrollHeight;
+  return div;
+}
+function showRules(list) {
+  if (!list.length) { $("rules").innerHTML = '<p class="hint">这个问题没有直接对应的规则卡片。</p>'; return; }
+  $("rules").innerHTML = list.map(r => `<div class="rule"><b>${esc(r.id)} ${esc(r.title)}</b>
+    <span class="kind">${KINDS[r.kind] || r.kind}</span><div>${esc(r.statement)}</div>
+    <div class="check">核对：${esc(r.cross_check)}</div></div>`).join("");
+}
+async function send(text) {
+  const message = (text || $("input").value).trim();
+  if (!message) return;
+  $("input").value = ""; $("send").disabled = true; $("busy").textContent = "模型正在本机生成…";
+  addMessage("user", message);
+  const bubble = addMessage("bot", "");
+  let answer = "", speculative = false;
+  try {
+    // The server re-attaches the verified chart to the first turn on every request,
+    // so the browser only keeps the plain dialogue.
+    const response = await api("/api/chat", {model: $("model").value, message, history,
+      birth: comparePair ? null : lastBirth, compare: comparePair,
+      temperature: Number($("temp").value)});
+    if (!response.ok) { bubble.textContent = (await response.json()).error || "出错了"; return; }
+    const reader = response.body.getReader(), decoder = new TextDecoder();
+    let buffer = "", stats = null;
+    for (;;) {
+      const {value, done} = await reader.read();
+      if (done) break;
+      buffer += decoder.decode(value, {stream: true});
+      const parts = buffer.split("\n\n"); buffer = parts.pop();
+      for (const part of parts) {
+        if (!part.startsWith("data: ")) continue;
+        const event = JSON.parse(part.slice(6));
+        if (event.rules) { showRules(event.rules); speculative = event.speculative; }
+        if (event.token !== undefined) { answer += event.token; bubble.textContent = answer; $("log").scrollTop = $("log").scrollHeight; }
+        if (event.done) stats = event.stats;
+      }
+    }
+    const mark = answer.lastIndexOf("结论JSON:");
+    if (mark >= 0) {
+      bubble.textContent = answer.slice(0, mark).trim();
+      const box = document.createElement("div"); box.className = "json";
+      box.textContent = "结构化结论 " + answer.slice(mark + 7).trim(); bubble.appendChild(box);
+    }
+    if (speculative) {
+      const flag = document.createElement("div"); flag.className = "flag";
+      flag.textContent = "提示：这类问题涉及个人的现实际遇，八字规则无法验证；请把回答当作传统说法，而不是预测。";
+      bubble.appendChild(flag);
+    }
+    if (stats) {
+      const meta = document.createElement("div"); meta.className = "meta";
+      meta.textContent = `${stats.adapter ? "微调适配器" : "基础模型"} · ${stats.completion_tokens} 词元 · ${stats.tokens_per_second} 词元/秒 · ${stats.seconds} 秒`;
+      bubble.appendChild(meta);
+    }
+    history.push({role: "user", content: message}, {role: "assistant", content: answer});
+  } catch (error) {
+    if (error.message !== "code") bubble.textContent = "请求失败：" + error.message;
+  } finally { $("send").disabled = false; $("busy").textContent = ""; }
+}
+async function init() {
+  let meta;
+  try { meta = await (await api("/api/meta")).json(); } catch (error) { return; }
+  $("gate").style.display = "none";
+  for (const id of ["zone", "zoneB"]) $(id).innerHTML = meta.zones.map(z => `<option>${z}</option>`).join("");
+  $("model").innerHTML = meta.models.map(m => `<option value="${m.id}" ${m.available ? "" : "disabled"}>${m.name}${m.available ? "" : "（未找到）"}</option>`).join("");
+  $("profile").textContent = meta.profile_note;
+  const quick = ["月干是日主的什么十神？", "为什么日柱是这样算出来的？", "原局有哪些合冲刑害破？", "日主在月令的旺衰是什么？", "大运顺行还是逆行，前三步是什么？", "我什么时候会结婚？"];
+  $("quick").innerHTML = quick.map(q => `<button>${q}</button>`).join("");
+  $("quick").querySelectorAll("button").forEach(b => b.onclick = () => send(b.textContent));
+  $("dateB").value = $("date").value; $("timeB").value = "23:30:00";
+  await cast();
+}
+$("cast").onclick = () => { history = []; $("log").innerHTML = ""; cast(); };
+$("compare").onclick = () => { history = []; $("log").innerHTML = ""; compare(); };
+$("toggleB").onclick = () => { $("boxB").style.display = $("boxB").style.display === "none" ? "block" : "none"; };
+$("send").onclick = () => send();
+$("input").addEventListener("keydown", e => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); send(); } });
+$("clear").onclick = () => { history = []; $("log").innerHTML = ""; };
+$("enter").onclick = () => { accessCode = $("code").value.trim(); sessionStorage.setItem("code", accessCode); init(); };
+$("feedback").onclick = async () => {
+  const body = {consent: $("consent").checked, consent_conversation: $("consent2").checked, rating: $("rating").value,
+    comment: $("comment").value, model: $("model").value};
+  if (body.consent_conversation) { body.conversation = history; body.birth = lastBirth || comparePair; }
+  const result = await (await api("/api/feedback", body)).json();
+  $("saved").textContent = result.saved ? (result.stored_conversation ? "已保存评分、说明和本次对话。" : "已保存评分和说明（未保存对话与出生信息）。") : result.reason;
+};
+init();
+</script>
+</body>
+</html>

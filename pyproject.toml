@@ -13,12 +13,17 @@ dependencies = ["lunar-python==1.4.8", "httpx==0.28.1", "tzdata==2026.6"]
 [project.optional-dependencies]
 astronomy = ["skyfield==1.53"]
 dev = ["pytest==9.2.0", "ruff==0.17.3", "sxtwl==2.0.7", "pypdf==6.21.4"]
+# Phase 2 local fine-tuning and inference on Apple Silicon (Python 3.11-3.13).
+mlx = ["mlx==0.32.4", "mlx-lm==0.32.2", "pyyaml>=6", "matplotlib>=3.9"]
 
 [project.scripts]
 bazireason = "bazireason.cli:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]
+
+[tool.setuptools.package-data]
+bazireason = ["demo_static/*.html"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
@@ -28,3 +33,15 @@ line-length = 100
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "B"]
+
+[tool.ruff.lint.per-file-ignores]
+# Phase 2 modules hold Chinese answer templates and prompts as single sentences; wide
+# characters count double, and splitting a sentence mid-clause would hurt review.
+"src/bazireason/worked.py" = ["E501"]
+"src/bazireason/train_tasks.py" = ["E501"]
+"src/bazireason/train_data.py" = ["E501"]
+"src/bazireason/rules.py" = ["E501"]
+"src/bazireason/demo_app.py" = ["E501"]
+"src/bazireason/baziqa.py" = ["E501"]
+"src/bazireason/p2_prompts.py" = ["E501"]
+"scripts/phase2/*.py" = ["E501"]

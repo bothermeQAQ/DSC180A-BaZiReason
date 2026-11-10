@@ -17,3 +17,14 @@ tmp/
 *.toc
 *.synctex.gz
 reports/latex/*.pdf
+
+# Phase 2 local training artifacts (weights and caches are never committed)
+.venv-mlx/
+models/
+artifacts/adapters/**/*.safetensors
+artifacts/models/
+artifacts/logs/
+
+# External benchmarks are fetched at a pinned commit, never vendored
+external/
+demo_feedback/

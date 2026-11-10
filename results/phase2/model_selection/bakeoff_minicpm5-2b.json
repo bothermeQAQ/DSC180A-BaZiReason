@@ -1,0 +1,57 @@
+{
+  "label": "minicpm5-2b-4bit",
+  "model_path": "models/minicpm5-2b-mlx-4bit",
+  "seed": 20261110,
+  "load_seconds": 0.51,
+  "rule_mcq": {
+    "n": 30,
+    "accuracy": 0.3,
+    "unparsed": 0,
+    "seconds": 1.59
+  },
+  "strict_json_tool_context": {
+    "n": 12,
+    "strict_valid_rate": 0.75,
+    "lenient_valid_rate": 0.75,
+    "exact_rate": 0.75,
+    "sample": "{\"status\":\"ok\",\"pillars\":{\"year\":\"戊辰\",\"month\":\"壬戌\",\"day\":\"乙丑\",\"hour\":\"丙戌\"},\"reason_codes\":[],\"conventions\":{\"clock_basis\":\"fixed_utc8\",\"month_boundary\":\"jie_instant\",\"sect\":2,\"solar_time\":\"none\",\"year_boundary\":\"lichun_instant\"}}"
+  },
+  "batch_generation": {
+    "prompt_tokens": 10488,
+    "completion_tokens": 859,
+    "seconds": 7.54,
+    "peak_memory_gb": 2.54
+  },
+  "reasoned_tool_intermediate": {
+    "n": 12,
+    "final_json_found": 0,
+    "exact_rate": 0.0,
+    "per_pillar_accuracy": {
+      "year": 0.0,
+      "month": 0.0,
+      "day": 0.0,
+      "hour": 0.0
+    },
+    "completion_tokens": 8400,
+    "batch_generation_tps": 123.3,
+    "seconds": 68.11,
+    "sample_tail": "tant is the start of the year. So we need to find the Lichun instant for the year 1961. The year 1961: the year cycle index is (1961 - 4) mod 60 = 1957 mod 60 = 1957 - 60*32 = 1957 - 1920 = 37. So the year pillar index is 37. But we need to know the year pillar stem and branch. The year pillar is a sexagenary pair: a stem and a branch. The stem and branch are determined by the year index. The year"
+  },
+  "single_stream": {
+    "prompt_tokens": 995,
+    "prompt_tps": 854.4,
+    "generation_tps": 33.2,
+    "peak_memory_gb": 2.78
+  },
+  "lora_probe": {
+    "batch_size": 4,
+    "lora_layers": 16,
+    "iterations_per_second": 0.2562929444533671,
+    "sequence_tokens_per_second": 1.0251717778134684,
+    "loss_tokens_per_second": 97.39131889227949,
+    "train_peak_memory_gb": 12.37959646,
+    "first_loss": 0.5264855623245239,
+    "last_loss": 0.1321689784526825,
+    "mean_tokens_per_example": 1.0
+  }
+}
