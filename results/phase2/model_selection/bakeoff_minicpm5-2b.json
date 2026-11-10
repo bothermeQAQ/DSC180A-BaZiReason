@@ -47,11 +47,13 @@
     "batch_size": 4,
     "lora_layers": 16,
     "iterations_per_second": 0.2562929444533671,
-    "sequence_tokens_per_second": 1.0251717778134684,
     "loss_tokens_per_second": 97.39131889227949,
     "train_peak_memory_gb": 12.37959646,
     "first_loss": 0.5264855623245239,
     "last_loss": 0.1321689784526825,
-    "mean_tokens_per_example": 1.0
-  }
+    "approx_tokens_per_sequence": 1090,
+    "sequence_tokens_per_second_estimate": 1117,
+    "note": "iterations_per_second and peak memory are measured; tokens per sequence is the measured prompt length plus about 95 answer tokens."
+  },
+  "note_speed": "single_stream and batch speeds in this file were measured while other CPU work was running; see clean_speed.json for the uncontended re-measurement of the two trainable finalists."
 }

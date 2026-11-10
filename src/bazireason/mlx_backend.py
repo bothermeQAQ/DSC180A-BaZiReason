@@ -136,36 +136,61 @@ class MLXChatModel:
         batch=16,
         top_p=0.0,
         top_k=0,
+        share_prefix=False,
     ):
         """Completions for many conversations, in order. Returns (texts, stats).
 
         Prompts are grouped by length so each batch pads little. With
-        temperature 0 the result does not depend on the seed.
+        temperature 0 the result does not depend on the seed. With
+        ``share_prefix`` the tokens common to every conversation that has the
+        same system message are processed once and reused; this changes speed,
+        not the prompt.
         """
         if seed is not None:
             mx.random.seed(seed)
         prompts = [self.prompt_ids(messages) for messages in conversations]
-        order = sorted(range(len(prompts)), key=lambda i: len(prompts[i]))
         texts = [None] * len(prompts)
         totals = {"prompt_tokens": 0, "completion_tokens": 0, "seconds": 0.0, "peak_memory_gb": 0.0}
-        for start in range(0, len(order), batch):
-            chunk = order[start : start + batch]
-            tic = time.perf_counter()
-            response = batch_generate(
-                self.net,
-                self.tokenizer,
-                [prompts[i] for i in chunk],
-                max_tokens=max_tokens,
-                sampler=make_sampler(temp=temperature, top_p=top_p, top_k=top_k),
-                completion_batch_size=batch,
-                prefill_batch_size=min(batch, 8),
-            )
-            totals["seconds"] += time.perf_counter() - tic
-            totals["prompt_tokens"] += response.stats.prompt_tokens
-            totals["completion_tokens"] += response.stats.generation_tokens
-            totals["peak_memory_gb"] = max(totals["peak_memory_gb"], response.stats.peak_memory)
-            for index, text in zip(chunk, response.texts, strict=True):
-                texts[index] = text
+        groups = {}
+        for index, messages in enumerate(conversations):
+            key = messages[0]["content"] if share_prefix else ""
+            groups.setdefault(key, []).append(index)
+        for members in groups.values():
+            cache, length = None, 0
+            if share_prefix and len(members) > 1:
+                first = prompts[members[0]]
+                length = min(len(prompts[i]) for i in members) - 1
+                for i in members:
+                    other, k = prompts[i], 0
+                    while k < length and other[k] == first[k]:
+                        k += 1
+                    length = k
+                if length >= 32:
+                    cache = make_prompt_cache(self.net)
+                    self.net(mx.array(first[:length])[None], cache=cache)
+                    mx.eval([c.state for c in cache])
+                else:
+                    length = 0
+            order = sorted(members, key=lambda i: len(prompts[i]))
+            for start in range(0, len(order), batch):
+                chunk = order[start : start + batch]
+                tic = time.perf_counter()
+                response = batch_generate(
+                    self.net,
+                    self.tokenizer,
+                    [prompts[i][length:] for i in chunk],
+                    prompt_caches=[cache] * len(chunk) if cache is not None else None,
+                    max_tokens=max_tokens,
+                    sampler=make_sampler(temp=temperature, top_p=top_p, top_k=top_k),
+                    completion_batch_size=batch,
+                    prefill_batch_size=min(batch, 8),
+                )
+                totals["seconds"] += time.perf_counter() - tic
+                totals["prompt_tokens"] += response.stats.prompt_tokens + length
+                totals["completion_tokens"] += response.stats.generation_tokens
+                totals["peak_memory_gb"] = max(totals["peak_memory_gb"], response.stats.peak_memory)
+                for index, text in zip(chunk, response.texts, strict=True):
+                    texts[index] = text
         return texts, totals
 
     def complete(self, messages, temperature=0, max_tokens=512):
@@ -209,7 +234,12 @@ class ReplayClient:
             return {"prompt_tokens": 0, "completion_tokens": 0, "seconds": 0.0}
         start = time.perf_counter()
         texts, totals = chat_model.generate_batch(
-            [self.pending[k] for k in keys], max_tokens, temperature, seed, batch
+            [self.pending[k] for k in keys],
+            max_tokens,
+            temperature,
+            seed,
+            batch,
+            share_prefix=True,
         )
         latency = (time.perf_counter() - start) / len(keys)
         limit = max_tokens

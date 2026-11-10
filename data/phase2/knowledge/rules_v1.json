@@ -1,0 +1,487 @@
+{
+ "version": "rules_v1",
+ "note": "Exported from bazireason.rules. Statements are this project's paraphrases; classical works are public domain and cited at the level of the work. Kinds: deterministic_table, declared_convention, traditional_association.",
+ "rule_cards": [
+  {
+   "id": "R-WX-01",
+   "kind": "deterministic_table",
+   "title": "天干地支的五行与阴阳",
+   "statement": "甲乙属木、丙丁属火、戊己属土、庚辛属金、壬癸属水；寅卯属木、巳午属火、申酉属金、亥子属水、辰戌丑未属土。天干、地支按序奇数位为阳、偶数位为阴（甲丙戊庚壬、子寅辰午申戌为阳）。",
+   "classical_sources": [
+    {
+     "work": "《五行大义》",
+     "attribution": "隋·萧吉",
+     "rights": "public domain"
+    },
+    {
+     "work": "《渊海子平》",
+     "attribution": "宋·徐大升 编",
+     "rights": "public domain"
+    }
+   ],
+   "cross_check": "lunar-python 1.4.8 (MIT) LunarUtil.WU_XING_GAN / WU_XING_ZHI: all 22 entries agree.",
+   "review_status": "Statement is this project's paraphrase. Cited at the level of the work; chapter-level citation and expert review are pending."
+  },
+  {
+   "id": "R-WX-02",
+   "kind": "deterministic_table",
+   "title": "五行生克",
+   "statement": "相生：木生火、火生土、土生金、金生水、水生木。相克：木克土、土克水、水克火、火克金、金克木。",
+   "classical_sources": [
+    {
+     "work": "《五行大义》",
+     "attribution": "隋·萧吉",
+     "rights": "public domain"
+    }
+   ],
+   "cross_check": "Used by R-SS-01, whose 100 outputs agree with lunar-python's Ten Gods table.",
+   "review_status": "Statement is this project's paraphrase. Cited at the level of the work; chapter-level citation and expert review are pending."
+  },
+  {
+   "id": "R-GZ-01",
+   "kind": "deterministic_table",
+   "title": "六十甲子与干支配对",
+   "statement": "天干与地支按序循环相配成六十甲子，只有阴阳相同的干支才能相配（如甲子、乙丑），甲丑、乙子之类的组合不存在。",
+   "classical_sources": [
+    {
+     "work": "《三命通会》",
+     "attribution": "明·万民英",
+     "rights": "public domain"
+    }
+   ],
+   "cross_check": "lunar-python 1.4.8 (MIT) LunarUtil.JIA_ZI: 60/60 pairs agree with conventions.CYCLE.",
+   "review_status": "Statement is this project's paraphrase. Cited at the level of the work; chapter-level citation and expert review are pending."
+  },
+  {
+   "id": "R-SS-01",
+   "kind": "deterministic_table",
+   "title": "十神",
+   "statement": "以日干为“我”：同我者为比肩（阴阳同）、劫财（阴阳异）；我生者为食神（同）、伤官（异）；我克者为偏财（同）、正财（异）；克我者为七杀（同）、正官（异）；生我者为偏印（同）、正印（异）。",
+   "classical_sources": [
+    {
+     "work": "《渊海子平》",
+     "attribution": "宋·徐大升 编",
+     "rights": "public domain"
+    },
+    {
+     "work": "《子平真诠》",
+     "attribution": "清·沈孝瞻",
+     "rights": "public domain"
+    }
+   ],
+   "cross_check": "lunar-python 1.4.8 (MIT) LunarUtil.SHI_SHEN: 100/100 day-stem and other-stem pairs agree.",
+   "review_status": "Statement is this project's paraphrase. Cited at the level of the work; chapter-level citation and expert review are pending."
+  },
+  {
+   "id": "R-CG-01",
+   "kind": "deterministic_table",
+   "title": "地支藏干",
+   "statement": "子藏癸；丑藏己癸辛；寅藏甲丙戊；卯藏乙；辰藏戊乙癸；巳藏丙庚戊；午藏丁己；未藏己丁乙；申藏庚壬戊；酉藏辛；戌藏戊辛丁；亥藏壬甲。首位为本气。地支的十神按藏干分别论。",
+   "classical_sources": [
+    {
+     "work": "《渊海子平》",
+     "attribution": "宋·徐大升 编",
+     "rights": "public domain"
+    },
+    {
+     "work": "《三命通会》",
+     "attribution": "明·万民英",
+     "rights": "public domain"
+    }
+   ],
+   "cross_check": "lunar-python 1.4.8 (MIT) LunarUtil.ZHI_HIDE_GAN: 12/12 branches agree, including order.",
+   "review_status": "Statement is this project's paraphrase. Cited at the level of the work; chapter-level citation and expert review are pending."
+  },
+  {
+   "id": "R-HE-01",
+   "kind": "deterministic_table",
+   "title": "天干五合与相冲",
+   "statement": "五合：甲己合（土）、乙庚合（金）、丙辛合（水）、丁壬合（木）、戊癸合（火）。相冲：甲庚、乙辛、丙壬、丁癸。",
+   "classical_sources": [
+    {
+     "work": "《三命通会》",
+     "attribution": "明·万民英",
+     "rights": "public domain"
+    },
+    {
+     "work": "《渊海子平》",
+     "attribution": "宋·徐大升 编",
+     "rights": "public domain"
+    }
+   ],
+   "cross_check": "lunar-python 1.4.8 (MIT) LunarUtil.HE_GAN_5 and CHONG_GAN_4: all pairs agree.",
+   "review_status": "Statement is this project's paraphrase. Cited at the level of the work; chapter-level citation and expert review are pending."
+  },
+  {
+   "id": "R-ZH-01",
+   "kind": "deterministic_table",
+   "title": "地支六合与六冲",
+   "statement": "六合：子丑、寅亥、卯戌、辰酉、巳申、午未。六冲：子午、丑未、寅申、卯酉、辰戌、巳亥。",
+   "classical_sources": [
+    {
+     "work": "《三命通会》",
+     "attribution": "明·万民英",
+     "rights": "public domain"
+    },
+    {
+     "work": "《渊海子平》",
+     "attribution": "宋·徐大升 编",
+     "rights": "public domain"
+    }
+   ],
+   "cross_check": "lunar-python 1.4.8 (MIT) LunarUtil.HE_ZHI_6 and CHONG: all pairs agree.",
+   "review_status": "Statement is this project's paraphrase. Cited at the level of the work; chapter-level citation and expert review are pending."
+  },
+  {
+   "id": "R-ZH-02",
+   "kind": "deterministic_table",
+   "title": "三合、半合与三会",
+   "statement": "三合局：申子辰合水、亥卯未合木、寅午戌合火、巳酉丑合金。三合局中含中间一支（子、卯、午、酉）的两支为半合。三会方：寅卯辰会木、巳午未会火、申酉戌会金、亥子丑会水。",
+   "classical_sources": [
+    {
+     "work": "《三命通会》",
+     "attribution": "明·万民英",
+     "rights": "public domain"
+    }
+   ],
+   "cross_check": "Standard table; no library table exists, so it is checked by unit tests of its own symmetry and coverage only.",
+   "review_status": "Statement is this project's paraphrase. Cited at the level of the work; chapter-level citation and expert review are pending."
+  },
+  {
+   "id": "R-ZH-03",
+   "kind": "deterministic_table",
+   "title": "刑、害、破",
+   "statement": "相刑：寅巳申三刑、丑戌未三刑、子卯相刑，辰午酉亥自刑。相害：子未、丑午、寅巳、卯辰、申亥、酉戌。相破：子酉、丑辰、寅亥、卯午、巳申、未戌。",
+   "classical_sources": [
+    {
+     "work": "《三命通会》",
+     "attribution": "明·万民英",
+     "rights": "public domain"
+    }
+   ],
+   "cross_check": "Standard table; checked by unit tests of its own symmetry and coverage only.",
+   "review_status": "Statement is this project's paraphrase. Cited at the level of the work; chapter-level citation and expert review are pending."
+  },
+  {
+   "id": "R-KW-01",
+   "kind": "deterministic_table",
+   "title": "旬空",
+   "statement": "六十甲子每十个为一旬，每旬有两个地支轮空：甲子旬空戌亥、甲戌旬空申酉、甲申旬空午未、甲午旬空辰巳、甲辰旬空寅卯、甲寅旬空子丑。",
+   "classical_sources": [
+    {
+     "work": "《三命通会》",
+     "attribution": "明·万民英",
+     "rights": "public domain"
+    }
+   ],
+   "cross_check": "lunar-python 1.4.8 (MIT) LunarUtil.getXunKong: 60/60 pairs agree.",
+   "review_status": "Statement is this project's paraphrase. Cited at the level of the work; chapter-level citation and expert review are pending."
+  },
+  {
+   "id": "R-WS-01",
+   "kind": "declared_convention",
+   "title": "旺相休囚死",
+   "statement": "以月支本气五行为当令：与月令同者旺，月令所生者相，生月令者休，克月令者囚，被月令所克者死。本项目把辰戌丑未月一律按土当令处理；也有流派按季节分配，结论可能不同。",
+   "classical_sources": [
+    {
+     "work": "《五行大义》",
+     "attribution": "隋·萧吉",
+     "rights": "public domain"
+    },
+    {
+     "work": "《三命通会》",
+     "attribution": "明·万民英",
+     "rights": "public domain"
+    }
+   ],
+   "cross_check": "Declared convention; unit tests check that each month gives exactly one state per element.",
+   "review_status": "Statement is this project's paraphrase. Cited at the level of the work; chapter-level citation and expert review are pending."
+  },
+  {
+   "id": "R-CS-01",
+   "kind": "declared_convention",
+   "title": "十二长生",
+   "statement": "阳干顺行、阴干逆行：甲长生在亥、丙戊在寅、庚在巳、壬在申；乙长生在午、丁己在酉、辛在子、癸在卯。另有“阴阳同生同死”一说，本项目不采用。",
+   "classical_sources": [
+    {
+     "work": "《三命通会》",
+     "attribution": "明·万民英",
+     "rights": "public domain"
+    },
+    {
+     "work": "《渊海子平》",
+     "attribution": "宋·徐大升 编",
+     "rights": "public domain"
+    }
+   ],
+   "cross_check": "lunar-python 1.4.8 (MIT) EightChar.get*DiShi: agrees on every pillar of 2,000 sampled charts.",
+   "review_status": "Statement is this project's paraphrase. Cited at the level of the work; chapter-level citation and expert review are pending."
+  },
+  {
+   "id": "R-GJ-01",
+   "kind": "declared_convention",
+   "title": "月令取格（简化）",
+   "statement": "以月支本气相对日主的十神命名格局；本气为比肩称建禄格，为劫财时阳干称阳刃格、阴干称月劫格。古法还要看透干与会合，本项目只取本气，因此只是分类标签，不代表吉凶判断。",
+   "classical_sources": [
+    {
+     "work": "《子平真诠》",
+     "attribution": "清·沈孝瞻",
+     "rights": "public domain"
+    }
+   ],
+   "cross_check": "Declared simplified convention; deterministic given R-CG-01 and R-SS-01.",
+   "review_status": "Statement is this project's paraphrase. Cited at the level of the work; chapter-level citation and expert review are pending."
+  },
+  {
+   "id": "R-QR-01",
+   "kind": "declared_convention",
+   "title": "日主强弱的三项计数",
+   "statement": "得令：日主五行在月令为旺或相。得地：四支藏干中有与日主同五行者。得势：年、月、时三干中至少两个为比劫或印。三项中占两项记为偏强，否则偏弱。各派权重不同，这只是计数约定，不是定论。",
+   "classical_sources": [
+    {
+     "work": "《滴天髓》",
+     "attribution": "旧题 京图 撰",
+     "rights": "public domain"
+    },
+    {
+     "work": "《子平真诠》",
+     "attribution": "清·沈孝瞻",
+     "rights": "public domain"
+    }
+   ],
+   "cross_check": "Declared counting convention; deterministic given the tables above.",
+   "review_status": "Statement is this project's paraphrase. Cited at the level of the work; chapter-level citation and expert review are pending."
+  },
+  {
+   "id": "R-DY-01",
+   "kind": "deterministic_table",
+   "title": "大运顺逆与排列",
+   "statement": "阳年生男、阴年生女，大运顺行；阴年生男、阳年生女，大运逆行。大运从月柱起，顺行取月柱之后的干支，逆行取之前的干支，每步十年。",
+   "classical_sources": [
+    {
+     "work": "《渊海子平》",
+     "attribution": "宋·徐大升 编",
+     "rights": "public domain"
+    },
+    {
+     "work": "《三命通会》",
+     "attribution": "明·万民英",
+     "rights": "public domain"
+    }
+   ],
+   "cross_check": "lunar-python 1.4.8 (MIT) Yun.isForward and DaYun.getGanZhi: agree on 2,000 sampled charts for both genders.",
+   "review_status": "Statement is this project's paraphrase. Cited at the level of the work; chapter-level citation and expert review are pending."
+  },
+  {
+   "id": "R-DY-02",
+   "kind": "declared_convention",
+   "title": "起运岁数",
+   "statement": "顺行数到下一个节，逆行数到上一个节，三天折一年、一天折四个月、一个时辰折十天。起运时刻直接取 lunar-python 的结果（流派 1），不同软件的折算细则略有差别。",
+   "classical_sources": [
+    {
+     "work": "《渊海子平》",
+     "attribution": "宋·徐大升 编",
+     "rights": "public domain"
+    }
+   ],
+   "cross_check": "Single source: lunar-python 1.4.8 (MIT) EightChar.getYun(gender, sect=1). Not independently verified.",
+   "review_status": "Statement is this project's paraphrase. Cited at the level of the work; chapter-level citation and expert review are pending."
+  },
+  {
+   "id": "R-LN-01",
+   "kind": "deterministic_table",
+   "title": "流年干支",
+   "statement": "以立春为界，公历 Y 年立春后的年柱序数为 (Y − 4) mod 60（甲子为 0），例如 1984 年为甲子年。",
+   "classical_sources": [
+    {
+     "work": "《三命通会》",
+     "attribution": "明·万民英",
+     "rights": "public domain"
+    }
+   ],
+   "cross_check": "Same rule as the verified calendar engine's year pillar.",
+   "review_status": "Statement is this project's paraphrase. Cited at the level of the work; chapter-level citation and expert review are pending."
+  },
+  {
+   "id": "R-LQ-01",
+   "kind": "traditional_association",
+   "title": "十神与六亲的传统对应",
+   "statement": "传统上以正印偏印为母亲与长辈，比肩劫财为兄弟姐妹，食神伤官为子女（女命）及才艺表达，正财偏财为财与父亲、男命以财为妻，正官七杀为事业约束、女命以官杀为夫、男命以官杀为子女。这是象征性的对应，不能据此断定任何人的实际经历。",
+   "classical_sources": [
+    {
+     "work": "《渊海子平》",
+     "attribution": "宋·徐大升 编",
+     "rights": "public domain"
+    },
+    {
+     "work": "《子平真诠》",
+     "attribution": "清·沈孝瞻",
+     "rights": "public domain"
+    }
+   ],
+   "cross_check": "Traditional association only; not a verifiable fact about a person.",
+   "review_status": "Statement is this project's paraphrase. Cited at the level of the work; chapter-level citation and expert review are pending."
+  }
+ ],
+ "tables": {
+  "stem_element": {
+   "甲": "木",
+   "乙": "木",
+   "丙": "火",
+   "丁": "火",
+   "戊": "土",
+   "己": "土",
+   "庚": "金",
+   "辛": "金",
+   "壬": "水",
+   "癸": "水"
+  },
+  "branch_element": {
+   "子": "水",
+   "丑": "土",
+   "寅": "木",
+   "卯": "木",
+   "辰": "土",
+   "巳": "火",
+   "午": "火",
+   "未": "土",
+   "申": "金",
+   "酉": "金",
+   "戌": "土",
+   "亥": "水"
+  },
+  "hidden_stems": {
+   "子": [
+    "癸"
+   ],
+   "丑": [
+    "己",
+    "癸",
+    "辛"
+   ],
+   "寅": [
+    "甲",
+    "丙",
+    "戊"
+   ],
+   "卯": [
+    "乙"
+   ],
+   "辰": [
+    "戊",
+    "乙",
+    "癸"
+   ],
+   "巳": [
+    "丙",
+    "庚",
+    "戊"
+   ],
+   "午": [
+    "丁",
+    "己"
+   ],
+   "未": [
+    "己",
+    "丁",
+    "乙"
+   ],
+   "申": [
+    "庚",
+    "壬",
+    "戊"
+   ],
+   "酉": [
+    "辛"
+   ],
+   "戌": [
+    "戊",
+    "辛",
+    "丁"
+   ],
+   "亥": [
+    "壬",
+    "甲"
+   ]
+  },
+  "stem_combines": {
+   "甲己": "土",
+   "乙庚": "金",
+   "丙辛": "水",
+   "丁壬": "木",
+   "戊癸": "火"
+  },
+  "stem_clashes": [
+   "甲庚",
+   "乙辛",
+   "丙壬",
+   "丁癸"
+  ],
+  "branch_six_combines": {
+   "子丑": "土",
+   "寅亥": "木",
+   "卯戌": "火",
+   "辰酉": "金",
+   "巳申": "水",
+   "午未": "土"
+  },
+  "branch_clashes": [
+   "子午",
+   "丑未",
+   "寅申",
+   "卯酉",
+   "辰戌",
+   "巳亥"
+  ],
+  "triple_harmonies": {
+   "申子辰": "水",
+   "亥卯未": "木",
+   "寅午戌": "火",
+   "巳酉丑": "金"
+  },
+  "directional_triples": {
+   "寅卯辰": "木",
+   "巳午未": "火",
+   "申酉戌": "金",
+   "亥子丑": "水"
+  },
+  "punishment_pairs": [
+   "寅巳",
+   "巳申",
+   "寅申",
+   "丑戌",
+   "未戌",
+   "丑未",
+   "子卯"
+  ],
+  "self_punishing": "辰午酉亥",
+  "branch_harms": [
+   "子未",
+   "丑午",
+   "寅巳",
+   "卯辰",
+   "申亥",
+   "酉戌"
+  ],
+  "branch_breaks": [
+   "子酉",
+   "丑辰",
+   "寅亥",
+   "卯午",
+   "巳申",
+   "未戌"
+  ],
+  "six_relatives": {
+   "比肩": "兄弟姐妹、同辈",
+   "劫财": "兄弟姐妹、同辈",
+   "食神": "子女（女命）、才艺与表达",
+   "伤官": "子女（女命）、才艺与表达",
+   "偏财": "父亲、财（男命亦象妻）",
+   "正财": "财、男命之妻",
+   "七杀": "事业与约束、女命之夫、男命之子女",
+   "正官": "事业与约束、女命之夫、男命之子女",
+   "偏印": "母亲与长辈、学识",
+   "正印": "母亲与长辈、学识"
+  }
+ }
+}

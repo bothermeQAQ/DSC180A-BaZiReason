@@ -1,0 +1,18 @@
+{
+  "script": "scripts/phase2/speed_probe.py",
+  "setup": "16 Chinese prompts with the Phase 2 system prompt, 300 new tokens each, greedy, nothing else running",
+  "minicpm5-2b-4bit": {
+    "single_generation_tps": 79.5,
+    "single_prompt_tps": 1784.9,
+    "batch8_generation_tps": 252.2,
+    "batch16_generation_tps": 244.4,
+    "batch16_peak_memory_gb": 2.38
+  },
+  "qwen3-4b-instruct-2507-4bit": {
+    "single_generation_tps": 46.3,
+    "single_prompt_tps": 1151.8,
+    "batch8_generation_tps": 131.4,
+    "batch16_generation_tps": 170.5,
+    "batch16_peak_memory_gb": 5.2
+  }
+}

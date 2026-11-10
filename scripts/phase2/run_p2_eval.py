@@ -100,7 +100,7 @@ def main():
     Path(args.output + ".manifest.json").write_text(json.dumps(manifest, indent=2) + "\n")
     started = time.perf_counter()
     texts, totals = chat.generate_batch(
-        [row["messages"][:-1] for row in rows], args.max_tokens, batch=args.batch
+        [row["messages"][:-1] for row in rows], args.max_tokens, batch=args.batch, share_prefix=True
     )
     scores = []
     with output.open("x", encoding="utf-8") as stream:

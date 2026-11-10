@@ -169,7 +169,9 @@ def main():
             for case in cases
             for method in args.methods
         ]
-        texts, totals = chat.generate_batch([p[2] for p in plan], max_tokens, batch=args.batch)
+        texts, totals = chat.generate_batch(
+            [p[2] for p in plan], max_tokens, batch=args.batch, share_prefix=True
+        )
         latency = totals["seconds"] / max(1, len(plan))
         for (case, method, messages, context), text in zip(plan, texts, strict=True):
             tokens = len(chat.tokenizer.encode(text, add_special_tokens=False))

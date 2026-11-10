@@ -45,5 +45,6 @@
   },
   "lora_probe": {
     "error": "RuntimeError: [METAL] Command buffer execution failed: Insufficient Memory (00000008:kIOGPUCommandBufferCallbackErrorOutOfMemory)."
-  }
+  },
+  "note_speed": "single_stream and batch speeds in this file were measured while other CPU work was running; see clean_speed.json for the uncontended re-measurement of the two trainable finalists."
 }
