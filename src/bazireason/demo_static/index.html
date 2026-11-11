@@ -177,7 +177,7 @@
 <script>
 const $ = id => document.getElementById(id);
 const POS = {year: "年柱", month: "月柱", day: "日柱", hour: "时柱"};
-let history = [], lastBirth = null, comparePair = null, accessCode = sessionStorage.getItem("code") || "";
+let history = [], lastBirth = null, comparePair = null, accessCode = sessionStorage.getItem("code") || "", formats = {};
 const KINDS = {deterministic_table: "确定性表格", declared_convention: "声明的约定", traditional_association: "传统的象征对应"};
 
 async function api(path, body) {
@@ -216,6 +216,10 @@ function renderChart(target, payload, title, changed = []) {
   if (chart.luck) {
     extra += `<p class="hint">大运（${chart.luck.direction === "forward" ? "顺行" : "逆行"}）：` +
       chart.luck.cycles.slice(0, 6).map(c => `${c.pillar} ${c.start_year}–${c.end_year}`).join("；") + "</p>";
+  }
+  if (payload.deep && payload.deep.length) {
+    extra += `<details><summary>规则算出的深入结构（强弱、格局、用神分流派、神煞）</summary><ul class="notes">` +
+      payload.deep.map(line => `<li>${esc(line)}</li>`).join("") + "</ul></details>";
   }
   target.innerHTML = `<p><b>${esc(title)}</b></p><div class="pillars">${cells}</div>${extra}`;
 }
@@ -268,7 +272,7 @@ async function send(text) {
   $("input").value = ""; $("send").disabled = true; $("busy").textContent = "模型正在本机生成…";
   addMessage("user", message);
   const bubble = addMessage("bot", "");
-  let answer = "", speculative = false, format = "";
+  let answer = "", speculative = false, format = "", asked = "";
   try {
     // The server re-attaches the verified chart to the first turn on every request,
     // so the browser only keeps the plain dialogue.
@@ -286,7 +290,7 @@ async function send(text) {
       for (const part of parts) {
         if (!part.startsWith("data: ")) continue;
         const event = JSON.parse(part.slice(6));
-        if (event.rules) { showRules(event.rules); speculative = event.speculative; format = event.format; }
+        if (event.rules) { showRules(event.rules); speculative = event.speculative; format = event.format; asked = event.asked || ""; }
         if (event.error) { answer += event.error; bubble.textContent = answer; }
         if (event.token !== undefined) { answer += event.token; bubble.textContent = answer; $("log").scrollTop = $("log").scrollHeight; }
         if (event.done) { stats = event.stats; audit = event.audit; }
@@ -311,6 +315,12 @@ async function send(text) {
         const extra = document.createElement("div"); extra.className = "json";
         extra.textContent = "规则引擎：" + audit.engine.label + " = " + audit.engine.engine;
         bubble.appendChild(extra);
+        if (audit.engine.detail) {
+          const more = document.createElement("details");
+          more.innerHTML = "<summary>查看规则引擎的完整推导</summary><pre class=\"tool\"></pre>";
+          more.querySelector("pre").textContent = audit.engine.detail;
+          bubble.appendChild(more);
+        }
       }
     } else if (audit && audit.checked) {
       const box = document.createElement("div"); box.className = "meta";
@@ -319,9 +329,16 @@ async function send(text) {
     }
     if (stats) {
       const meta = document.createElement("div"); meta.className = "meta";
-      const names = {chart: "历法推导", rule: "规则问答", policy: "预测类提问", counterfactual: "情形对比", followup: "复核"};
-      meta.textContent = `${stats.adapter ? "微调适配器" : "基础模型"} · 提问格式：${names[format] || format} · ${stats.completion_tokens} 词元 · ${stats.tokens_per_second} 词元/秒 · ${stats.seconds} 秒`;
+      const names = Object.assign({chart: "历法推导", rule: "规则问答", policy: "预测类提问", counterfactual: "情形对比", followup: "复核"}, formats);
+      const who = $("model").selectedOptions[0] ? $("model").selectedOptions[0].textContent : "";
+      meta.textContent = `${who} · 提问格式：${names[format] || format} · ${stats.completion_tokens} 词元 · ${stats.tokens_per_second} 词元/秒 · ${stats.seconds} 秒`;
       bubble.appendChild(meta);
+      if (asked) {
+        const sent = document.createElement("details");
+        sent.innerHTML = "<summary>查看实际发给模型的提问</summary><pre class=\"tool\"></pre>";
+        sent.querySelector("pre").textContent = asked;
+        bubble.appendChild(sent);
+      }
     }
     history.push({role: "user", content: message}, {role: "assistant", content: answer});
   } catch (error) {
@@ -334,8 +351,8 @@ async function init() {
   $("gate").style.display = "none";
   for (const id of ["zone", "zoneB"]) $(id).innerHTML = meta.zones.map(z => `<option>${z}</option>`).join("");
   $("model").innerHTML = meta.models.map(m => `<option value="${m.id}" ${m.available ? "" : "disabled"}>${m.name}${m.available ? "" : "（未找到）"}</option>`).join("");
-  $("profile").textContent = meta.profile_note;
-  const quick = ["月干是日主的什么十神？", "为什么日柱是这样算出来的？", "原局有哪些合冲刑害破？", "日主在月令的旺衰是什么？", "大运顺行还是逆行，前三步是什么？", "我什么时候会结婚？"];
+  $("profile").textContent = meta.profile_note; formats = meta.formats || {};
+  const quick = ["请整体解读一下这个盘", "日主强弱怎么数？", "按透干取格是什么格局？", "这个八字的用神是什么？", "按扶抑一派喜什么？", "原局有哪些合冲刑害？", "明年的流年和原局是什么关系？", "传统上怎么看婚姻方面？", "这个八字的桃花在哪一支？", "这个八字好不好？", "我什么时候会结婚？", "为什么日柱是这样算出来的？"];
   $("quick").innerHTML = quick.map(q => `<button>${q}</button>`).join("");
   $("quick").querySelectorAll("button").forEach(b => b.onclick = () => send(b.textContent));
   $("dateB").value = $("date").value; $("timeB").value = "23:30:00";

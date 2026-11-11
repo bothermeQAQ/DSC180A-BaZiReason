@@ -9,8 +9,11 @@ What it does
   the language model. A request the engine cannot answer shows its status and
   what is missing instead of a guessed chart.
 * Questions are answered by a real local MLX model. The interface switches
-  between the untuned base model and the fine-tuned BaZiReason adapter; both
-  receive the same prompt.
+  between the untuned base model, the Phase 2 adapter and the Phase 3 adapter;
+  all three receive the same prompt.
+* A question is phrased in the closest format the adapters were trained on
+  (``bazireason.demo_deep.plan`` for the Phase 3 reasoning formats), and the
+  reply's structured conclusion is compared with the rule code.
 * Each answer is shown next to the rule cards it touches and the known
   uncertainties of the chart.
 
@@ -34,7 +37,7 @@ from datetime import datetime, timezone
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 
-from bazireason import rules
+from bazireason import deep_rules, demo_deep, rules
 from bazireason import worked as W
 from bazireason.calendar_engine import temporal_facts, tzdata_keys
 from bazireason.charttools import chart_tool_text, pillars_text, verified_chart
@@ -44,7 +47,9 @@ from bazireason.train_tasks import chart_line, compare_charts
 
 STATIC = Path(__file__).parent / "demo_static"
 DEFAULT_MODEL = "models/qwen3-4b-instruct-2507-mlx-4bit"
-DEFAULT_ADAPTER = "artifacts/adapters/bazireason-qwen3-4b-lora-v2"
+DEFAULT_ADAPTER = "artifacts/adapters/bazireason-qwen3-4b-lora-p3-r1"
+DEFAULT_ADAPTER_P2 = "artifacts/adapters/bazireason-qwen3-4b-lora-v2"
+MODEL_IDS = ("p3", "p2", "base")
 COMMON_ZONES = (
     "Asia/Shanghai",
     "Asia/Hong_Kong",
@@ -171,12 +176,13 @@ def relevant_rules(text: str, limit=5):
         if score:
             hits.append((score, rule_id))
     hits.sort(reverse=True)
-    return [
+    deep = demo_deep.relevant_cards(text, 3)
+    return deep + [
         {
             k: rules.RULES_BY_ID[rule_id][k]
             for k in ("id", "kind", "title", "statement", "cross_check")
         }
-        for _, rule_id in hits[:limit]
+        for _, rule_id in hits[: max(2, limit - len(deep))]
     ]
 
 
@@ -245,7 +251,7 @@ def check_structured(message: str, text: str, chart: dict):
     return {"label": label, "engine": shown, "agrees": value is not None and _same(truth, value)}
 
 
-def audit_reply(text: str, birth, message: str = "") -> dict:
+def audit_reply(text: str, birth, message: str = "", first_turn: bool = True) -> dict:
     """Deterministic check of a model reply against the verified chart.
 
     The model is not trusted on facts the engine and rule tables can decide. Only
@@ -276,7 +282,11 @@ def audit_reply(text: str, birth, message: str = "") -> dict:
     claim = UNVERIFIABLE.search(text)
     if claim and "不能" not in text[max(0, claim.start() - 12) : claim.start()]:
         problems.append(f"回答里出现了无法核验的断语“{claim.group(1)}”，这类说法没有可验证的依据。")
-    structured = check_structured(message, text, chart) if message else None
+    planned = demo_deep.plan(message, chart, first_turn=first_turn) if message else None
+    if planned is not None:
+        structured = demo_deep.check(planned, text)
+    else:
+        structured = check_structured(message, text, chart) if message else None
     if structured:
         checked += 1
         if not structured["agrees"]:
@@ -298,6 +308,8 @@ def chart_payload(birth: dict, until_year=None):
         "tool_text": chart_tool_text(chart),
         "facts": facts,
         "uncertainties": uncertainties(inputs, convention, chart, facts),
+        # Phase 3 structure, computed by the rule code (never by the model).
+        "deep": demo_deep.deep_lines(chart["pillars"]) if chart["status"] == "ok" else [],
     }
 
 
@@ -406,47 +418,66 @@ def chat_messages(birth, history, message, compare=None):
     turns.append({"role": "user", "content": message})
     first = turns[0]["content"]
     kind = route(first, True)
+    chart = chart_payload(birth)["chart"] if birth and not compare else None
+    planned = demo_deep.plan(first, chart) if chart else None
     if compare:
         turns[0]["content"], kind = compare_turn_text(*compare, first), "counterfactual"
+    elif planned:
+        turns[0]["content"], kind = demo_deep.turn_text(planned, chart, True), planned["kind"]
     elif birth:
         turns[0]["content"], kind = first_turn_text(birth, first, kind)
     for index in range(2, len(turns), 2):
         later = route(turns[index]["content"], False)
-        turns[index]["content"] += (
-            "\n" + OUTPUT_HINTS["followup" if later == "followup" else "rule"]
+        planned = (
+            demo_deep.plan(turns[index]["content"], chart, first_turn=False)
+            if chart and later != "followup"
+            else None
         )
+        if planned:
+            turns[index]["content"] = demo_deep.turn_text(planned, chart, False)
+        else:
+            turns[index]["content"] += (
+                "\n" + OUTPUT_HINTS["followup" if later == "followup" else "rule"]
+            )
         if index == len(turns) - 1:
-            kind = "followup" if later == "followup" else "rule"
+            kind = planned["kind"] if planned else "followup" if later == "followup" else "rule"
     return [{"role": "system", "content": P2_SYSTEM}, *turns], kind
 
 
 class Models:
-    """The base and the fine-tuned model, served from one dedicated worker thread.
+    """The base model and the two adapters, served from one dedicated worker thread.
 
     MLX keeps per-thread state, and the HTTP server answers every request on a new
     thread, so loading and generation all happen on a single worker. Requests are
     queued, which also means one generation at a time.
     """
 
-    def __init__(self, model_path, adapter_path):
-        self.model_path, self.adapter_path = model_path, adapter_path
+    def __init__(self, model_path, adapter_path, adapter_p2=DEFAULT_ADAPTER_P2):
+        self.model_path = model_path
+        self.adapters = {"p3": adapter_path, "p2": adapter_p2, "base": None}
         self.loaded = {}
         self.jobs = queue.Queue()
         threading.Thread(target=self._work, daemon=True).start()
 
+    def has(self, which):
+        path = self.adapters.get(which)
+        return which == "base" or bool(path and Path(path, "adapters.safetensors").exists())
+
     def available(self):
-        tuned = Path(self.adapter_path, "adapters.safetensors").exists()
         return [
-            {"id": "tuned", "name": "BaZiReason（微调适配器）", "available": tuned},
+            {"id": "p3", "name": "BaZiReason 第三阶段（规则推理）", "available": self.has("p3")},
+            {"id": "p2", "name": "BaZiReason 第二阶段（历法）", "available": self.has("p2")},
             {"id": "base", "name": "未微调的基础模型", "available": True},
         ]
+
+    def default(self):
+        return next(m["id"] for m in self.available() if m["available"])
 
     def _get(self, which):
         if which not in self.loaded:
             from bazireason.mlx_backend import MLXChatModel
 
-            adapter = self.adapter_path if which == "tuned" else None
-            self.loaded[which] = MLXChatModel(self.model_path, adapter, label=which)
+            self.loaded[which] = MLXChatModel(self.model_path, self.adapters[which], label=which)
         return self.loaded[which]
 
     def _work(self):
@@ -554,7 +585,9 @@ def make_handler(models, access_code, feedback_path):
                                 for k in ("id", "kind", "title", "statement", "cross_check")
                             }
                             for card in rules.RULE_CARDS
-                        ],
+                        ]
+                        + [demo_deep.card_view(card) for card in deep_rules.RULE_CARDS],
+                        "formats": demo_deep.FORMAT_NAMES,
                         "needs_code": access_code is not None,
                     }
                 )
@@ -596,11 +629,11 @@ def make_handler(models, access_code, feedback_path):
 
         def _chat(self, data):
             message = str(data.get("message") or "").strip()
-            which = data.get("model") if data.get("model") in ("base", "tuned") else "tuned"
+            which = data.get("model") if data.get("model") in MODEL_IDS else models.default()
             if not message:
                 return self._json({"error": "empty message"}, 400)
-            if which == "tuned" and not models.available()[0]["available"]:
-                return self._json({"error": "未找到微调适配器，请先训练或改用基础模型。"}, 409)
+            if not models.has(which):
+                return self._json({"error": "未找到这个适配器，请先训练或改用其他模型。"}, 409)
             compare = data.get("compare")
             compare = (compare["a"], compare["b"]) if isinstance(compare, dict) else None
             messages, kind = chat_messages(
@@ -622,6 +655,8 @@ def make_handler(models, access_code, feedback_path):
                         "rules": relevant_rules(message),
                         "speculative": any(word in message for word in SPECULATIVE),
                         "format": kind,
+                        # What the model was actually asked, so the rewording is visible.
+                        "asked": messages[-1]["content"],
                     }
                 )
                 temperature = float(data.get("temperature") or 0)
@@ -642,7 +677,12 @@ def make_handler(models, access_code, feedback_path):
                             message,
                         )
                         asked = message if kind != "followup" else first_question
-                        event["audit"] = audit_reply("".join(reply), data.get("birth"), asked)
+                        event["audit"] = audit_reply(
+                            "".join(reply),
+                            data.get("birth"),
+                            asked,
+                            first_turn=not (data.get("history") or []) or kind == "followup",
+                        )
                     send(event)
             except (BrokenPipeError, ConnectionResetError):
                 return
@@ -663,7 +703,8 @@ def main():
         description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter
     )
     parser.add_argument("--model", default=DEFAULT_MODEL)
-    parser.add_argument("--adapter", default=DEFAULT_ADAPTER)
+    parser.add_argument("--adapter", default=DEFAULT_ADAPTER, help="Phase 3 adapter folder")
+    parser.add_argument("--adapter-p2", default=DEFAULT_ADAPTER_P2, help="Phase 2 adapter folder")
     parser.add_argument("--port", type=int, default=8765)
     parser.add_argument(
         "--share-lan",
@@ -671,14 +712,16 @@ def main():
         help="Listen on every interface so people on the same network can connect with a code",
     )
     parser.add_argument("--feedback-file", default="demo_feedback/feedback.jsonl")
-    parser.add_argument("--preload", choices=("none", "tuned", "base", "both"), default="none")
+    parser.add_argument("--preload", choices=("none", *MODEL_IDS, "all"), default="none")
     args = parser.parse_args()
     code = secrets.token_urlsafe(6) if args.share_lan else None
-    models = Models(args.model, args.adapter)
-    for which in {"tuned": ["tuned"], "base": ["base"], "both": ["tuned", "base"], "none": []}[
-        args.preload
-    ]:
-        models.preload(which)
+    models = Models(args.model, args.adapter, args.adapter_p2)
+    wanted = (
+        MODEL_IDS if args.preload == "all" else () if args.preload == "none" else (args.preload,)
+    )
+    for which in wanted:
+        if models.has(which):
+            models.preload(which)
     host = "0.0.0.0" if args.share_lan else "127.0.0.1"
     server = ThreadingHTTPServer(
         (host, args.port), make_handler(models, code, Path(args.feedback_file))
