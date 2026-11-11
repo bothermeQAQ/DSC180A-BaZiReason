@@ -126,12 +126,12 @@ Output files are never overwritten: every runner refuses an existing path, and t
 Letting friends try it:
 
 - **Same Wi-Fi, your Mac does the work:** `.venv-mlx/bin/python -m bazireason.demo_app --share-lan` prints an access code. Friends open `http://<your-Mac's-address>:8765` and enter the code. Their questions are processed on your Mac. Use this only on a network you trust; the connection is not encrypted.
-- **Their own Apple Silicon Mac:** they clone the repository, follow sections 1 and 2, and copy your `artifacts/adapters/bazireason-qwen3-4b-lora-v1/` folder (`adapters.safetensors` and `adapter_config.json`, about 59 MB) into the same place. The adapter is not in Git; share it directly or publish it yourself when you decide to.
+- **Their own Apple Silicon Mac:** they clone the repository, follow sections 1 and 2, and copy your `artifacts/adapters/bazireason-qwen3-4b-lora-v2/` folder (the adapter the demo loads by default) (`adapters.safetensors` and `adapter_config.json`, about 59 MB) into the same place. The adapter is not in Git; share it directly or publish it yourself when you decide to.
 
 ## 7. Tests
 
 ```bash
-.venv/bin/python -m pytest -q          # 202 tests: 176 from Phase 1 plus 26 for Phase 2
+.venv/bin/python -m pytest -q          # 204 tests: 176 from Phase 1 plus 28 for Phase 2
 .venv-mlx/bin/ruff check src scripts tests
 ```
 
