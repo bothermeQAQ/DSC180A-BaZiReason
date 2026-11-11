@@ -1,6 +1,10 @@
-import sys, time, json
+import json
+import sys
+import time
+
 from bazireason.mlx_backend import MLXChatModel
 from bazireason.p2_prompts import P2_SYSTEM
+
 path, label = sys.argv[1], sys.argv[2]
 chat = MLXChatModel(path, label=label)
 qs = [f"请用中文分步骤说明：公历 {1950 + 3 * i} 年（立春后）的年柱干支怎么算？已知 (年份−4) 除以 60 的余数对应六十甲子的序数，甲子为 0。" for i in range(16)]

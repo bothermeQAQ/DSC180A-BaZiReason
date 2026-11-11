@@ -134,7 +134,7 @@ def main():
     total = sum(v.size for _, v in tree_flatten(model.parameters()))
 
     start_iteration = 0
-    numbered = sorted(adapter_dir.glob("*_adapters.safetensors"))
+    numbered = sorted(adapter_dir.glob("[0-9]*_adapters.safetensors"))
     if args.resume and numbered:
         start_iteration = int(numbered[-1].name.split("_")[0])
         model.load_weights(str(numbered[-1]), strict=False)
@@ -203,6 +203,10 @@ def main():
 
     started = time.perf_counter()
     recorder = Recorder(log_dir / "metrics.jsonl", start_iteration, started)
+    # On resume the trainer numbers its checkpoints from 1 again, so it writes into a
+    # scratch folder and the files are moved to their global iteration numbers afterwards.
+    work_dir = adapter_dir / "resume_work" if start_iteration else adapter_dir
+    work_dir.mkdir(parents=True, exist_ok=True)
     training_args = TrainingArgs(
         batch_size=batch,
         iters=total_iters - start_iteration,
@@ -211,22 +215,19 @@ def main():
         steps_per_eval=10 if args.smoke else config["steps_per_eval"],
         steps_per_save=10 if args.smoke else config["steps_per_save"],
         max_seq_length=config["max_seq_length"],
-        adapter_file=str(adapter_dir / "last_adapters.safetensors"),
+        adapter_file=str(work_dir / "last_adapters.safetensors"),
         grad_accumulation_steps=accumulate,
     )
     mx.reset_peak_memory()
     train(model, optimizer, train_set, valid_set, training_args, training_callback=recorder)
     duration = time.perf_counter() - started
 
-    # The trainer names numbered checkpoints relative to this call; restore global numbering.
     if start_iteration:
-        for path in sorted(adapter_dir.glob("*_adapters.safetensors"), reverse=True):
+        for path in sorted(work_dir.glob("[0-9]*_adapters.safetensors")):
             local = int(path.name.split("_")[0])
-            if path.name.startswith("last"):
-                continue
-            target = adapter_dir / f"{local + start_iteration:07d}_adapters.safetensors"
-            if local <= total_iters - start_iteration and not target.exists():
-                path.rename(target)
+            path.rename(adapter_dir / f"{local + start_iteration:07d}_adapters.safetensors")
+        (work_dir / "last_adapters.safetensors").rename(adapter_dir / "last_adapters.safetensors")
+        work_dir.rmdir()
     final = adapter_dir / f"{total_iters:07d}_adapters.safetensors"
     if not final.exists():
         shutil.copyfile(adapter_dir / "last_adapters.safetensors", final)
@@ -256,7 +257,11 @@ def main():
         "sequence_tokens_processed": round(
             sequence_tokens * (total_iters - start_iteration) * batch / len(train_rows)
         ),
-        "checkpoints": sorted(p.name for p in adapter_dir.glob("*_adapters.safetensors")),
+        "checkpoints": sorted(p.name for p in adapter_dir.glob("[0-9]*_adapters.safetensors")),
+        "resumed_from_iteration": start_iteration or None,
+        "resume_note": "optimizer moments restart at a resume; the learning-rate schedule continues"
+        if start_iteration
+        else None,
     }
     (log_dir / "training_summary.json").write_text(json.dumps(summary, indent=2) + "\n")
     print(

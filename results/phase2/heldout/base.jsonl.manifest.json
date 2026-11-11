@@ -1,0 +1,22 @@
+{
+  "status": "complete",
+  "prompt_version": "p2-chat-v1",
+  "dataset": "data/phase2/train_v1/test.jsonl",
+  "dataset_sha256": "f98e116e5a6a76febc941ee38c4aa7321d94ef33667dac6b9ddbadc93450baf4",
+  "n_rows": 633,
+  "model": "qwen3-4b-instruct-2507-4bit",
+  "model_path": "models/qwen3-4b-instruct-2507-mlx-4bit",
+  "model_weights_sha256": "2a73c6c248601ab904e035548abd8e6abb65ea27dcb5f342fb0a8910eb44173f",
+  "adapter_path": null,
+  "adapter_sha256": null,
+  "temperature": 0,
+  "max_tokens": 700,
+  "enable_thinking": false,
+  "wall_seconds": 2980.5,
+  "generation_totals": {
+    "prompt_tokens": 130510,
+    "completion_tokens": 402961,
+    "seconds": 2412.23,
+    "peak_memory_gb": 8.6
+  }
+}

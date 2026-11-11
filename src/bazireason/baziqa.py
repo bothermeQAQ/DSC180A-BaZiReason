@@ -255,7 +255,7 @@ def accuracy_table(persons, predictions, ids):
     index = _index(persons)
     chosen = [qid for qid in index if qid in ids]
     runs = sorted(predictions)
-    per_run, unanswered = [], 0
+    per_run, unanswered, answered_hits = [], 0, []
     by_year = defaultdict(lambda: defaultdict(list))
     for run in runs:
         hits = []
@@ -265,6 +265,8 @@ def accuracy_table(persons, predictions, ids):
             unanswered += answer is None
             hit = answer in question["accepted"]
             hits.append(hit)
+            if answer is not None:
+                answered_hits.append(hit)
             by_year[person["year"]][run].append(hit)
         per_run.append(sum(hits) / len(hits))
     votes = 0.0
@@ -294,6 +296,9 @@ def accuracy_table(persons, predictions, ids):
         "by_year": year_means,
         "majority_vote": votes / len(chosen),
         "unanswered_rate": unanswered / (len(chosen) * len(runs)),
+        # Descriptive only: the answered questions are a self-selected subset.
+        "accuracy_among_answered": ratio(sum(answered_hits), len(answered_hits)),
+        "n_answered": len(answered_hits),
         "chance": chance_level(persons, set(chosen)),
     }
 
@@ -389,6 +394,9 @@ _YEAR_CLAIM = re.compile(
 _GOD_CLAIM = re.compile(
     r"(年|月|时)干\s*([甲乙丙丁戊己庚辛壬癸])?\s*(?:为|是|乃)\s*(?:日主的)?\s*(比肩|劫财|食神|伤官|偏财|正财|七杀|正官|偏印|正印)"
 )
+_GOD_PAREN = re.compile(
+    r"(年|月|时)干\s*([甲乙丙丁戊己庚辛壬癸])\s*[（(]\s*(比肩|劫财|食神|伤官|偏财|正财|七杀|正官|偏印|正印)\s*[)）]"
+)
 _POSITION = {"年": "year", "月": "month", "日": "day", "时": "hour"}
 
 
@@ -409,10 +417,33 @@ def audit_explanation(text, pillars):
         claims.append(("day_master", stem == pillars["day"][0]))
     for year, pair in _YEAR_CLAIM.findall(text):
         claims.append(("flow_year", pair == rules.year_pillar(int(year))))
-    for position, _stem, god in _GOD_CLAIM.findall(text):
+    for position, _stem, god in _GOD_CLAIM.findall(text) + _GOD_PAREN.findall(text):
         stem = pillars[_POSITION[position]][0]
         claims.append(("ten_god", god == rules.ten_god(pillars["day"][0], stem)))
     return claims
+
+
+def audit_details(text, pillars):
+    """Readable list of the checkable statements in a reply that contradict the chart."""
+    problems = []
+    if not isinstance(text, str) or not pillars:
+        return problems
+    for position, pair in _PILLAR_CLAIM.findall(text):
+        truth = pillars[_POSITION[position]]
+        if pair != truth:
+            problems.append(f"{position}柱写作{pair}，已核验的是{truth}")
+    for stem in _MASTER_CLAIM.findall(text):
+        if stem != pillars["day"][0]:
+            problems.append(f"日主写作{stem}，已核验的是{pillars['day'][0]}")
+    for year, pair in _YEAR_CLAIM.findall(text):
+        if pair != rules.year_pillar(int(year)):
+            problems.append(f"{year} 年写作{pair}，按规则应为{rules.year_pillar(int(year))}")
+    for position, _stem, god in _GOD_CLAIM.findall(text) + _GOD_PAREN.findall(text):
+        stem = pillars[_POSITION[position]][0]
+        truth = rules.ten_god(pillars["day"][0], stem)
+        if god != truth:
+            problems.append(f"{position}干{stem}写作{god}，按规则应为{truth}")
+    return sorted(set(problems))
 
 
 def audit_summary(records, charts):

@@ -25,6 +25,7 @@ a second, separate consent.
 
 import argparse
 import json
+import re
 import secrets
 import threading
 import time
@@ -176,6 +177,37 @@ def relevant_rules(text: str, limit=5):
         }
         for _, rule_id in hits[:limit]
     ]
+
+
+def audit_reply(text: str, birth) -> dict:
+    """Deterministic check of a model reply against the verified chart.
+
+    The model is not trusted on facts the engine and rule tables can decide. Only
+    fixed-form statements are checked (a named pillar, the day master, the pillar
+    of a year, the Ten God of a named stem, the direction of the luck cycles).
+    """
+    if not birth:
+        return {"checked": 0, "problems": []}
+    from bazireason.baziqa import audit_details, audit_explanation
+
+    chart = chart_payload(birth)["chart"]
+    if chart["status"] != "ok":
+        claimed = bool(re.search(r"[年月日时]柱\s*(?:为|是|：|:)?\s*[甲-癸][子-亥]", text))
+        problems = (
+            ["引擎没有给出四柱，但回答里写出了具体的柱；请以“未给出四柱”为准。"] if claimed else []
+        )
+        return {"checked": int(claimed), "problems": problems}
+    problems = audit_details(text, chart["pillars"])
+    checked = len(audit_explanation(text, chart["pillars"]))
+    direction = re.search(r"大运\s*(顺|逆)行", text)
+    if direction:
+        checked += 1
+        if "luck" not in chart:
+            problems.append("回答判断了大运顺逆，但没有填写性别，大运方向无法确定。")
+        elif (direction.group(1) == "顺") != (chart["luck"]["direction"] == "forward"):
+            truth = "顺行" if chart["luck"]["direction"] == "forward" else "逆行"
+            problems.append(f"回答说大运{direction.group(1)}行，按规则应为{truth}。")
+    return {"checked": checked, "problems": problems}
 
 
 def chart_payload(birth: dict, until_year=None):
@@ -398,11 +430,15 @@ def make_handler(models, access_code, feedback_path):
                     }
                 )
                 temperature = float(data.get("temperature") or 0)
+                reply = []
                 for event in models.stream(
                     which, messages, int(data.get("max_tokens") or 900), temperature
                 ):
+                    if "token" in event:
+                        reply.append(event["token"])
                     if event.get("done"):
                         event["stats"]["seconds"] = round(time.perf_counter() - started, 1)
+                        event["audit"] = audit_reply("".join(reply), data.get("birth"))
                     send(event)
             except (BrokenPipeError, ConnectionResetError):
                 return
@@ -443,7 +479,7 @@ def main():
     server = ThreadingHTTPServer(
         (host, args.port), make_handler(models, code, Path(args.feedback_file))
     )
-    print(f"BaZiReason demo: http://127.0.0.1:{args.port}")
+    print(f"BaZiReason demo: http://127.0.0.1:{args.port}", flush=True)
     if code:
         print(
             f"Shared on the local network. Give testers your address and this access code: {code}"
