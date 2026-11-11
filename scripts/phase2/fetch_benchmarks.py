@@ -30,7 +30,8 @@ def main():
         target = root / name
         if not target.exists():
             subprocess.run(
-                ["git", "-c", "credential.helper=", "clone", "--quiet", url, str(target)], check=True
+                ["git", "-c", "credential.helper=", "clone", "--quiet", url, str(target)],
+                check=True,
             )
         subprocess.run(["git", "-C", str(target), "checkout", "--quiet", commit], check=True)
         head = subprocess.run(

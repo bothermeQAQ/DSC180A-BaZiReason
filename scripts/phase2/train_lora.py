@@ -133,6 +133,9 @@ def main():
     trainable = sum(v.size for _, v in tree_flatten(model.trainable_parameters()))
     total = sum(v.size for _, v in tree_flatten(model.parameters()))
 
+    if config.get("init_adapter"):
+        # Warm start: continue from an earlier adapter with a fresh schedule and new data.
+        model.load_weights(config["init_adapter"], strict=False)
     start_iteration = 0
     numbered = sorted(adapter_dir.glob("[0-9]*_adapters.safetensors"))
     if args.resume and numbered:
@@ -181,6 +184,10 @@ def main():
         "run_name": config["run_name"] + suffix,
         "config_file": args.config,
         "config_sha256": sha256(args.config),
+        "init_adapter": config.get("init_adapter"),
+        "init_adapter_sha256": sha256(config["init_adapter"])
+        if config.get("init_adapter")
+        else None,
         "train_file_sha256": sha256(config["data"]["train"]),
         "valid_file_sha256": sha256(config["data"]["valid"]),
         "train_rows": len(train_rows),
@@ -247,7 +254,10 @@ def main():
         "duration_seconds": round(duration, 1),
         "final_train_loss": train_points[-1]["train_loss"] if train_points else None,
         "validation_loss_by_iteration": dict(sorted(val.items())),
-        "base_validation_loss": val.get(0),
+        "initial_validation_loss": val.get(0),
+        "initial_weights": "warm start from init_adapter"
+        if config.get("init_adapter")
+        else "base model",
         "selected_checkpoint_iteration": best,
         "selected_validation_loss": candidates.get(best),
         "selected_adapter": str(adapter_dir / "adapters.safetensors"),

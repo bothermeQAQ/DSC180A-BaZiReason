@@ -21,7 +21,7 @@ Two information settings are supported:
 from datetime import date, datetime, timedelta
 from functools import lru_cache
 
-from bazireason import rules
+from bazireason import rules, textstyle
 from bazireason.calendar_engine import (
     FIRST_YEAR,
     LAST_YEAR,
@@ -248,12 +248,22 @@ def _day_step(reference, sect, days_since_2000):
     else:
         f = day_number_formula(civil)
         text, index = mod60_text(f["total"])
+        if textstyle.version() >= 2:
+            # One operation per step: the first training round showed that a model
+            # cannot be relied on to add four numbers at once.
+            product = 5 * f["a"]
+            first, second = 9 + product, 9 + product + f["leaps"]
+            total = (
+                f"5×{f['a']} = {product}，9 + {product} = {first}，{first} + {f['leaps']} = "
+                f"{second}，{second} + {f['day_of_year']} = {f['total']}"
+            )
+        else:
+            total = f"9 + 5×{f['a']} + {f['leaps']} + {f['day_of_year']} = {f['total']}"
         lead = (
             f"日柱：a = {civil.year} − 1900 = {f['a']}；此前闰日 ⌊({f['a']} − 1)/4⌋ = {f['leaps']}；"
             f"年内日序 = {f['before_month']} + {civil.day}"
             + (" + 1（闰年且已过 2 月）" if f["leap_adjust"] else "")
-            + f" = {f['day_of_year']}；9 + 5×{f['a']} + {f['leaps']} + "
-            f"{f['day_of_year']} = {f['total']}，{text}"
+            + f" = {f['day_of_year']}；{total}，{text}"
         )
     civil_index = index
     lead += f"；{index_text(index)}，当日为{CYCLE[index]}"

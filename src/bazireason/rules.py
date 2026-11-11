@@ -20,6 +20,7 @@ domain; they are cited at the level of the work, because chapter-level
 citations have not been verified by a domain expert.
 """
 
+from bazireason import textstyle
 from bazireason.conventions import BRANCHES, CYCLE, PILLARS, STEMS
 
 ELEMENTS = "木火土金水"
@@ -129,6 +130,12 @@ def ten_god_reason(day_stem: str, other_stem: str) -> str:
     else:
         relation = f"{other_stem}{theirs}生日主{day_stem}{mine}（生我）"
     polarity = "阴阳相同" if is_yang(day_stem) == is_yang(other_stem) else "阴阳相异"
+    if textstyle.version() >= 2:
+        word = {True: "阳", False: "阴"}
+        polarity = (
+            f"{other_stem}为{word[is_yang(other_stem)]}干、{day_stem}为{word[is_yang(day_stem)]}干，"
+            + polarity
+        )
     return f"{relation}，{polarity}，故为{ten_god(day_stem, other_stem)}"
 
 

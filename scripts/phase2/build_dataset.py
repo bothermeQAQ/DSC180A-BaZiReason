@@ -43,16 +43,18 @@ def file_sha(path):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--output-dir", default="data/phase2/train_v1")
+    parser.add_argument("--dataset", type=int, choices=sorted(D.VERSIONS), default=1)
+    parser.add_argument("--output-dir", help="Default: data/phase2/train_v<dataset>")
     parser.add_argument("--seed", type=int, default=D.SEED)
     parser.add_argument("--check", action="store_true")
     parser.add_argument("--force", action="store_true")
     args = parser.parse_args()
-    out = Path(args.output_dir)
+    out = Path(args.output_dir or f"data/phase2/train_v{args.dataset}")
     blocked = D.benchmark_exclusions() | D.contest_exclusions()
     years = D.split_years()
     manifest = {
-        "dataset_version": D.DATASET_VERSION,
+        "dataset_version": D.VERSIONS[args.dataset][0],
+        "wording_version": args.dataset,
         "seed": args.seed,
         "generator": "bazireason.train_data",
         "engine": {
@@ -76,7 +78,7 @@ def main():
     }
     failed = False
     for split in D.SPLITS:
-        rows = D.generate_split(split, args.seed, blocked)
+        rows = D.generate_split(split, args.seed, blocked, version=args.dataset)
         payload = D.dataset_bytes(rows)
         digest = D.sha256_bytes(payload)
         path = out / f"{split}.jsonl"

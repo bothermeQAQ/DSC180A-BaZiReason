@@ -421,3 +421,54 @@ def test_policy_answers_never_assert_an_outcome():
             )
             assert response == {"kind": "speculative_declined"}
             assert "不能给出确定的预测" in text and not E.CERTAIN_CLAIM.search(text)
+
+
+# ---- Second-round dataset (p2_train_v2) -------------------------------------------------
+
+
+def test_second_round_dataset_is_reproducible_and_isolated():
+    folder = ROOT / "data/phase2/train_v2"
+    manifest = json.loads((folder / "manifest.json").read_text())
+    assert (
+        manifest["dataset_version"] == "p2_train_v2" and manifest["contest_questions_used"] is False
+    )
+    blocked = D.benchmark_exclusions(ROOT / "data/synthetic") | D.contest_exclusions(
+        ROOT / "data/phase2/exclusions/contest_birth_dates.json"
+    )
+    years = D.split_years()
+    prompts = {}
+    for split in D.SPLITS:
+        payload = (folder / f"{split}.jsonl").read_bytes()
+        assert D.sha256_bytes(payload) == manifest["files"][split]["sha256"]
+        rows = [json.loads(line) for line in payload.decode().splitlines()]
+        prompts[split] = {json.dumps(r["messages"][:-1], ensure_ascii=False) for r in rows}
+        for row in rows:
+            for day in _dates(row):
+                assert day not in blocked, row["id"]
+                assert not 1901 <= day.year <= 2099 or day.year in years[split], row["id"]
+            if not row["family"].startswith("v"):
+                assert E.score_row(row, row["messages"][-1]["content"])["correct"], row["id"]
+    regenerated = D.generate_split("valid", manifest["seed"], blocked, version=2)
+    assert D.dataset_bytes(regenerated) == (folder / "valid.jsonl").read_bytes()
+    first_test = {json.dumps(r["messages"][:-1], ensure_ascii=False) for r in _rows("test")}
+    assert not prompts["train"] & prompts["test"] and not prompts["valid"] & prompts["test"]
+    assert not prompts["train"] & first_test and not prompts["valid"] & first_test
+
+
+def test_second_round_wording_spells_out_each_addition():
+    from bazireason import textstyle
+
+    request = (
+        {"datetime": "2018-08-10T17:54:22", "timezone": "Asia/Hong_Kong"},
+        Convention(2).to_dict(),
+    )
+    old = W.explain_request(*request, "none")["steps"][3]
+    textstyle.set_version(2)
+    try:
+        new = W.explain_request(*request, "none")["steps"][3]
+        reason = rules.ten_god_reason("辛", "戊")
+    finally:
+        textstyle.set_version(1)
+    assert "9 + 5×118 + 29 + 222 = 850" in old
+    assert "5×118 = 590，9 + 590 = 599，599 + 29 = 628，628 + 222 = 850" in new
+    assert "戊为阳干、辛为阴干" in reason and reason.endswith("故为正印")

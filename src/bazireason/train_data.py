@@ -24,7 +24,7 @@ import random
 from datetime import date, datetime, timedelta
 from pathlib import Path
 
-from bazireason import rules
+from bazireason import rules, textstyle
 from bazireason import train_tasks as T
 from bazireason import worked as W
 from bazireason.calendar_engine import (
@@ -152,6 +152,35 @@ SIZES = {
 }
 
 
+# Second round (p2_train_v2): fresh samples from the same year blocks, weighted towards the
+# skills the first round left weak (no-tool arithmetic, solar-term windows, abstention, rules).
+SIZES_V2 = {
+    "chart_plain": (300, 14, 30),
+    "chart_facts": (80, 8, 24),
+    "jie_boundary": (50, 4, 10),
+    "jie_window": (160, 10, 24),
+    "zi_transition": (60, 4, 8),
+    "tz_known": (140, 8, 16),
+    "tz_needs_tool": (40, 4, 8),
+    "tz_facts": (40, 4, 12),
+    "dst_fold": (30, 2, 5),
+    "dst_gap": (12, 2, 4),
+    "shanghai_dst": (16, 2, 4),
+    "missing": (80, 8, 20),
+    "invalid": (200, 10, 24),
+    "verify": (300, 20, 56),
+    "internal": (150, 10, 24),
+    "rule": (720, 36, 72),
+    "counterfactual": (60, 6, 24),
+    "policy": (50, 4, 12),
+    "mcq": (120, 8, 24),
+    "multi_turn": (120, 8, 24),
+    "v3_strict": (150, 10, 0),
+    "v4_reasoned": (120, 8, 0),
+}
+VERSIONS = {1: ("p2_train_v1", SIZES), 2: ("p2_train_v2", SIZES_V2)}
+
+
 def split_years() -> dict:
     """Disjoint year blocks: five test years and three validation years in every twenty."""
     test = {y for start in range(1915, 2100, 20) for y in range(start, start + 5)}
@@ -228,9 +257,10 @@ def birth_clause(inputs: dict, conv: dict, rng, style=None) -> str:
 class Pool:
     """Seeded sampler restricted to one split's years and to unreserved, unblocked dates."""
 
-    def __init__(self, split, seed, blocked):
+    def __init__(self, split, seed, blocked, version=1):
         self.split = split
-        self.rng = random.Random(f"{DATASET_VERSION}:{seed}:{split}")
+        self.version = version
+        self.rng = random.Random(f"{VERSIONS[version][0]}:{seed}:{split}")
         self.years = split_years()[split]
         self.year_list = sorted(self.years)
         self.blocked = blocked
@@ -400,6 +430,42 @@ def jie_boundary(pool, groups):
         for row in built:
             row["meta"]["jie"] = {"name": name, "utc8": event.isoformat()}
         rows.extend(built)
+    return rows
+
+
+def jie_window(pool, count):
+    """B without tools: a date inside a solar-term window needs a tool; one just outside does not."""
+    rows = []
+    while len(rows) < count:
+        inside = len(rows) % 2 == 0
+        term = pool.rng.choice(W.JIE_IN_YEAR)
+        (month, low), (_month, high) = W.jie_windows()[term]
+        year = pool.rng.choice(pool.year_list)
+        offset = (
+            pool.rng.randint(low, high)
+            if inside
+            else pool.rng.choice((low - 3, low - 2, low - 1, high + 1, high + 2, high + 3))
+        )
+        day = date(year, month, 1) + timedelta(days=offset - 1)
+        if not pool.free(day) or bool(W.jie_window_of(day)) != inside:
+            continue
+        wall = datetime(day.year, day.month, day.day) + timedelta(
+            seconds=pool.rng.randrange(3600, 22 * 3600)
+        )
+        if W.known_offset(SHANGHAI, wall) != 480:
+            continue
+        inputs = {"datetime": _iso(wall), "timezone": SHANGHAI}
+        conv = convention(pool.rng.choice((1, 2)))
+        expected = W.no_tool_expected(inputs, conv)
+        if (expected["status"] == W.NEEDS_TOOL) != inside or expected["status"] not in (
+            "ok",
+            W.NEEDS_TOOL,
+        ):
+            continue
+        pool.reserve(wall)
+        row = chart_row(pool, "jie_window", f"window-{len(rows)}", inputs, conv, "none")
+        row["meta"]["jie"] = {"name": term, "inside_window": inside}
+        rows.append(row)
     return rows
 
 
@@ -629,6 +695,8 @@ def invalid(pool, count):
         "range",
         "range",
     )
+    if pool.version >= 2:
+        kinds = kinds + ("profile", "profile", "range", "bad_zone")
     while len(rows) < count:
         wall, kind = pool.wall(), pool.rng.choice(kinds)
         inputs = {"datetime": _iso(wall), "timezone": SHANGHAI}
@@ -845,7 +913,8 @@ def verify(pool, count):
     """G: half of the supplied charts are wrong in one named way; half are correct."""
     rows = []
     while len(rows) < count:
-        mode = pool.rng.choice(("facts", "facts", "none"))
+        modes = ("facts", "facts", "none") if pool.version == 1 else ("facts", "none", "none")
+        mode = pool.rng.choice(modes)
         wall = pool.wall()
         if pool.rng.random() < 0.2:
             wall = wall.replace(hour=23)
@@ -1286,6 +1355,7 @@ STRICT_SOURCES = (
     "chart_plain",
     "chart_facts",
     "jie_boundary",
+    "jie_window",
     "zi_transition",
     "tz_known",
     "tz_facts",
@@ -1457,24 +1527,49 @@ FAMILIES = (
 )
 
 
-def generate_split(split, seed=SEED, blocked=None, scale=1.0):
+def _dates_allowed(row, pool) -> bool:
+    """Final guard: the written date of a request is neither blocked nor from another split."""
+    raw = (row["meta"].get("inputs") or {}).get("datetime")
+    if not isinstance(raw, str) or len(raw) < 10:
+        return True
+    try:
+        day = date.fromisoformat(raw[:10])
+    except ValueError:
+        return True
+    in_range = 1901 <= day.year <= 2099
+    return day not in pool.blocked and (not in_range or day.year in pool.years)
+
+
+def generate_split(split, seed=SEED, blocked=None, scale=1.0, version=1):
+    """Rows of one split. ``version`` selects the family sizes and the answer wording."""
     if blocked is None:
         blocked = benchmark_exclusions() | contest_exclusions()
-    pool = Pool(split, seed, blocked)
+    name_of_version, sizes = VERSIONS[version]
+    pool = Pool(split, seed, blocked, version)
     column = SPLITS.index(split)
+    families = list(FAMILIES)
+    if version >= 2:
+        families.insert(3, ("jie_window", jie_window))
     rows = []
-    for name, builder in FAMILIES:
-        target = round(SIZES[name][column] * scale)
-        if target:
-            rows.extend(builder(pool, target))
-    for name, builder in (("v3_strict", v3_strict), ("v4_reasoned", v4_reasoned)):
-        target = round(SIZES[name][column] * scale)
-        if target:
-            rows.extend(builder(pool, target, list(rows)))
+    textstyle.set_version(version)
+    try:
+        for name, builder in families:
+            target = round(sizes[name][column] * scale)
+            if target:
+                rows.extend(builder(pool, target))
+        if version >= 2:
+            rows = [row for row in rows if _dates_allowed(row, pool)]
+        for name, builder in (("v3_strict", v3_strict), ("v4_reasoned", v4_reasoned)):
+            target = round(sizes[name][column] * scale)
+            if target:
+                rows.extend(builder(pool, target, list(rows)))
+    finally:
+        textstyle.set_version(1)
+    prefix = "P2" if version == 1 else f"P2v{version}"
     for index, row in enumerate(rows, 1):
-        row["id"] = f"P2-{split}-{index:05d}"
+        row["id"] = f"{prefix}-{split}-{index:05d}"
         row["split"] = split
-        row["dataset_version"] = DATASET_VERSION
+        row["dataset_version"] = name_of_version
         row["seed"] = seed
     return rows
 
