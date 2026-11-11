@@ -1,5 +1,17 @@
 # Evidence interpretation
 
+## Phase 2 (`phase2/`): real local model results
+
+`phase2/RESULTS.md` is generated from the files below by `scripts/phase2/make_report.py`. These are real inference results from a local MLX model (`record_kind: llm`, `synthetic: false`); every run has a manifest with the model and adapter hashes.
+
+- `phase2/model_selection/`: measured bake-off of five candidate models.
+- `phase2/training/<run>/`: training plan, every loss report, summary and loss curve for both rounds. Weights are not in Git.
+- `phase2/heldout/`: the generated held-out splits. `base`, `tuned` (round 1) and `tuned_v2` on the first test split; `fresh_*` on the split generated after round 1; `valid2_*` on the validation split used to choose the adapter.
+- `phase2/v3/`: benchmark_v3 predictions, manifests and scores from the unchanged `bazireason evaluate`. `*_strict` uses the checkpoint's prompts; `*_reasoned` adds one sentence allowing visible reasoning (prompt version `v4-reasoned-information-ladder`).
+- `phase2/baziqa/`: the four conditions with the round-1 adapter; `phase2/baziqa_v2/`: the round-2 adapter (its `base_*` files are copies of the same base runs); `phase2/baziqa_budget1024/`: one run of the untuned model with a larger token budget. Replies quote contest questions only through question IDs; the question text stays in the fetched benchmark.
+
+Missing, truncated or unparseable replies count as failures in every table. BaziQA accuracy is agreement with published contest keys, not evidence about destiny.
+
 ## benchmark_v3 (current)
 
 - `benchmark_v3/deterministic_baselines.jsonl` and its manifest and scores hold zero-call controls on all 261 cases: `copy_context` (the answer-copy ceiling) and three zero-knowledge floors (`heuristic_surface`, `always_abstain`, `always_answer`). They are executed deterministic baselines, **not language-model results**.

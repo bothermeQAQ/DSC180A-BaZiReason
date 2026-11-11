@@ -189,29 +189,34 @@ Second adapter minus first on the fresh split: +18.5 pp [+14.4, +23.0] (104 item
 |---|---|---:|---:|---:|---:|---:|---:|
 | direct | base | 0/225 | 0.0% | 0.0% | 0.0% | 86.1% |  |
 | direct | tuned v1 | 0/225 | 98.9% | 88.9% | 23.8% | 75.0% |  |
+| direct | tuned v2 | 0/225 | 100.0% | 89.3% | 23.8% | 72.2% |  |
 | direct_minimal | base | 0/225 | 0.8% | 0.0% | 0.0% | 91.7% |  |
 | direct_minimal | tuned v1 | 0/225 | 99.2% | 89.3% | 23.8% | 75.0% |  |
+| direct_minimal | tuned v2 | 0/225 | 100.0% | 88.9% | 14.3% | 80.6% |  |
 | tool_intermediate | base | 0/225 | 1.5% | 1.5% | 0.0% | 52.8% |  |
 | tool_intermediate | tuned v1 | 0/225 | 98.9% | 91.6% | 38.1% | 52.8% |  |
+| tool_intermediate | tuned v2 | 0/225 | 99.6% | 92.3% | 52.4% | 41.7% |  |
 | tool_context | base | 224/225 | 92.3% | 94.6% | 71.4% | 36.1% |  |
 | tool_context | tuned v1 | 225/225 | 100.0% | 100.0% | 100.0% | 0.0% |  |
+| tool_context | tuned v2 | 225/225 | 100.0% | 100.0% | 100.0% | 0.0% |  |
 | tool_corrupted | base | 0/225 | 95.4% | 90.0% | 9.5% | 72.2% | 100.0% |
 | tool_corrupted | tuned v1 | 0/225 | 100.0% | 93.9% | 23.8% | 44.4% | 98.8% |
+| tool_corrupted | tuned v2 | 0/225 | 100.0% | 93.9% | 23.8% | 44.4% | 98.8% |
 
 Pre-specified contrasts (family-cluster bootstrap, as computed by `bazireason evaluate`):
 
-| Hypothesis | Contrast | base | tuned v1 |
-|---|---|---|---|
-| H1 | direct: near minus far, Jie ladders | near 0.0%, far 0.0%, difference +0.0 pp [+0.0, +0.0] | near 3.6%, far 3.6%, difference +0.0 pp [+0.0, +0.0] |
-| H1 | direct: near minus far, Zi ladders | near 0.0%, far 0.0%, difference +0.0 pp [+0.0, +0.0] | near 0.0%, far 0.0%, difference +0.0 pp [+0.0, +0.0] |
-| H2 (primary) | tool_intermediate minus direct, exact | +0.0 pp [+0.0, +0.0] | +0.0 pp [+0.0, +0.0] |
-| H2 | tool_context minus direct, exact | +99.6 pp [+98.5, +100.0] | +100.0 pp [+100.0, +100.0] |
-| H2 | tool_corrupted minus tool_context, exact | -99.6 pp [-100.0, -98.5] | -100.0 pp [-100.0, -100.0] |
-| H3 (primary) | direct minus direct_minimal, knowledge-dependent families all correct | +0.0 pp over 16 families | +0.0 pp over 16 families |
+| Hypothesis | Contrast | base | tuned v1 | tuned v2 |
+|---|---|---|---|---|
+| H1 | direct: near minus far, Jie ladders | near 0.0%, far 0.0%, difference +0.0 pp [+0.0, +0.0] | near 3.6%, far 3.6%, difference +0.0 pp [+0.0, +0.0] | near 7.1%, far 10.7%, difference -3.6 pp [-10.7, +0.0] |
+| H1 | direct: near minus far, Zi ladders | near 0.0%, far 0.0%, difference +0.0 pp [+0.0, +0.0] | near 0.0%, far 0.0%, difference +0.0 pp [+0.0, +0.0] | near 0.0%, far 0.0%, difference +0.0 pp [+0.0, +0.0] |
+| H2 (primary) | tool_intermediate minus direct, exact | +0.0 pp [+0.0, +0.0] | +0.0 pp [+0.0, +0.0] | +0.0 pp [+0.0, +0.0] |
+| H2 | tool_context minus direct, exact | +99.6 pp [+98.5, +100.0] | +100.0 pp [+100.0, +100.0] | +100.0 pp [+100.0, +100.0] |
+| H2 | tool_corrupted minus tool_context, exact | -99.6 pp [-100.0, -98.5] | -100.0 pp [-100.0, -100.0] | -100.0 pp [-100.0, -100.0] |
+| H3 (primary) | direct minus direct_minimal, knowledge-dependent families all correct | +0.0 pp over 16 families | +0.0 pp over 16 families | +0.0 pp over 16 families |
 
-Per-pillar accuracy: base direct: year 0.0%, month 0.0%, day 0.0%, hour 0.0%; base tool_intermediate: year 0.0%, month 0.0%, day 0.0%, hour 0.0%; tuned v1 direct: year 72.9%, month 9.3%, day 1.3%, hour 7.6%; tuned v1 tool_intermediate: year 70.2%, month 6.7%, day 0.0%, hour 7.1%.
+Per-pillar accuracy: base direct: year 0.0%, month 0.0%, day 0.0%, hour 0.0%; base tool_intermediate: year 0.0%, month 0.0%, day 0.0%, hour 0.0%; tuned v1 direct: year 72.9%, month 9.3%, day 1.3%, hour 7.6%; tuned v1 tool_intermediate: year 70.2%, month 6.7%, day 0.0%, hour 7.1%; tuned v2 direct: year 64.4%, month 20.9%, day 1.8%, hour 7.1%; tuned v2 tool_intermediate: year 63.6%, month 19.1%, day 0.9%, hour 5.8%.
 
-Share of corrupted tool answers followed, by corruption type: base: day_rollover 100.0%, default_guess 100.0%, hour_stem 100.0%, jie_side 100.0%; tuned v1: day_rollover 100.0%, default_guess 84.2%, hour_stem 100.0%, jie_side 100.0%.
+Share of corrupted tool answers followed, by corruption type: base: day_rollover 100.0%, default_guess 100.0%, hour_stem 100.0%, jie_side 100.0%; tuned v1: day_rollover 100.0%, default_guess 84.2%, hour_stem 100.0%, jie_side 100.0%; tuned v2: day_rollover 100.0%, default_guess 84.2%, hour_stem 100.0%, jie_side 100.0%.
 
 ### Reasoned protocol: same prompts, visible reasoning allowed before the final JSON
 
@@ -219,18 +224,20 @@ Share of corrupted tool answers followed, by corruption type: base: day_rollover
 |---|---|---:|---:|---:|---:|---:|---:|
 | direct | base | 0/225 | 0.0% | 0.0% | 0.0% | 86.1% |  |
 | direct | tuned v1 | 21/225 | 99.6% | 87.7% | 23.8% | 86.1% |  |
+| direct | tuned v2 | 156/225 | 99.6% | 87.4% | 23.8% | 69.4% |  |
 | tool_intermediate | base | 0/225 | 0.8% | 1.9% | 0.0% | 52.8% |  |
 | tool_intermediate | tuned v1 | 191/225 | 99.6% | 92.0% | 38.1% | 55.6% |  |
+| tool_intermediate | tuned v2 | 204/225 | 100.0% | 92.7% | 47.6% | 47.2% |  |
 
 Pre-specified contrasts (family-cluster bootstrap, as computed by `bazireason evaluate`):
 
-| Hypothesis | Contrast | base | tuned v1 |
-|---|---|---|---|
-| H1 | direct: near minus far, Jie ladders | near 0.0%, far 0.0%, difference +0.0 pp [+0.0, +0.0] | near 50.0%, far 71.4%, difference -21.4 pp [-35.7, -10.7] |
-| H1 | direct: near minus far, Zi ladders | near 0.0%, far 0.0%, difference +0.0 pp [+0.0, +0.0] | near 0.0%, far 0.0%, difference +0.0 pp [+0.0, +0.0] |
-| H2 (primary) | tool_intermediate minus direct, exact | +0.0 pp [+0.0, +0.0] | +75.6 pp [+69.2, +82.0] |
+| Hypothesis | Contrast | base | tuned v1 | tuned v2 |
+|---|---|---|---|---|
+| H1 | direct: near minus far, Jie ladders | near 0.0%, far 0.0%, difference +0.0 pp [+0.0, +0.0] | near 50.0%, far 71.4%, difference -21.4 pp [-35.7, -10.7] | near 50.0%, far 85.7%, difference -35.7 pp [-46.4, -25.0] |
+| H1 | direct: near minus far, Zi ladders | near 0.0%, far 0.0%, difference +0.0 pp [+0.0, +0.0] | near 0.0%, far 0.0%, difference +0.0 pp [+0.0, +0.0] | near 75.0%, far 100.0%, difference -25.0 pp [-25.0, -25.0] |
+| H2 (primary) | tool_intermediate minus direct, exact | +0.0 pp [+0.0, +0.0] | +75.6 pp [+69.2, +82.0] | +21.3 pp [+13.1, +30.1] |
 
-Per-pillar accuracy: base direct: year 0.0%, month 0.0%, day 0.0%, hour 0.0%; base tool_intermediate: year 0.0%, month 0.0%, day 0.0%, hour 0.0%; tuned v1 direct: year 95.6%, month 74.7%, day 16.4%, hour 76.9%; tuned v1 tool_intermediate: year 98.7%, month 96.9%, day 91.6%, hour 92.9%.
+Per-pillar accuracy: base direct: year 0.0%, month 0.0%, day 0.0%, hour 0.0%; base tool_intermediate: year 0.0%, month 0.0%, day 0.0%, hour 0.0%; tuned v1 direct: year 95.6%, month 74.7%, day 16.4%, hour 76.9%; tuned v1 tool_intermediate: year 98.7%, month 96.9%, day 91.6%, hour 92.9%; tuned v2 direct: year 92.4%, month 78.7%, day 90.2%, hour 94.7%; tuned v2 tool_intermediate: year 99.1%, month 99.1%, day 91.1%, hour 97.3%.
 
 ## 4. BaziQA contest benchmark (evaluation only)
 

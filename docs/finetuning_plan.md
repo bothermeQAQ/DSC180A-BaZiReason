@@ -1,5 +1,7 @@
 # Optional final-project fine-tuning plan
 
+> **Update, 11 November 2026.** This is the plan as written for the checkpoint. Fine-tuning has since been run locally with MLX on a different base model; see [phase2_model_selection.md](phase2_model_selection.md), [phase2_training.md](phase2_training.md) and [phase2_progress_report.md](phase2_progress_report.md). The text below is kept unchanged.
+
 Status: **NOT RUN**. Do not start training until reference uncertainty, held-out data and paired inference baselines are stable. Fine-tuning is optional for the December 4 final; a sound evaluation study is more valuable than rushed training.
 
 ## Candidate and licensing

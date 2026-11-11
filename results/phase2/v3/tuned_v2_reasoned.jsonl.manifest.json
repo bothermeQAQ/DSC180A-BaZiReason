@@ -1,5 +1,5 @@
 {
-  "status": "planned",
+  "status": "complete",
   "prompt_version": "v4-reasoned-information-ladder",
   "protocol": "reasoned",
   "dataset_sha256": "cccdb0c445a99e15af6c4e8e509f46722326814faeb2b414acf1a5280c6affa5",
@@ -285,5 +285,12 @@
   "enable_thinking": false,
   "attempts_per_model_call": 1,
   "decoding": "greedy; one trial because greedy decoding is deterministic",
-  "cost": "local inference; no paid calls"
+  "cost": "local inference; no paid calls",
+  "wall_seconds": 2202.8,
+  "generation_totals": {
+    "prompt_tokens": 126139,
+    "completion_tokens": 265473,
+    "seconds": 2201.39,
+    "peak_memory_gb": 10.73
+  }
 }

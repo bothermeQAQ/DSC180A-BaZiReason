@@ -56,6 +56,20 @@ No label is written by hand and no text is copied from a book, website or contes
 - The pattern label and the strength count are declared simplifications; the dataset teaches them as conventions with a stated caveat.
 - One epoch sees each row once. See `results/phase2/RESULTS.md` for which skills that was and was not enough for.
 
+## `train_v2/`: second-round dataset `p2_train_v2`
+
+`python scripts/phase2/build_dataset.py --dataset 2 --check`. 3,429 training, 221 validation and 486 test rows, new samples from the same year blocks (different random stream), so nothing in it repeats a `train_v1` row and its test split was never inspected before scoring.
+
+Changes from version 1, all motivated by the first round's error analysis:
+
+- The day-number sum is written as single additions (`5×118 = 590，9 + 590 = 599，599 + 29 = 628，628 + 222 = 850`) instead of one four-term sum. In round 1 only 9 of 66 such sums were right while every other arithmetic line was.
+- Each stem's polarity is stated before a Ten God is named.
+- A new family `jie_window`: no-tool requests just inside and just outside the possible dates of a solar term.
+- More weight on no-tool verification, unsupported profiles and rule tasks; less on families the first round had already learned.
+- A final guard drops any row whose written date is blocked or belongs to another split.
+
+`bazireason.textstyle` selects the wording; version 1 remains the default so `train_v1` still regenerates byte for byte.
+
 ## `exclusions/`
 
 `contest_birth_dates.json`: birth dates (no names, questions or answers) taken from BaziQA commit `3bad3de`, used only to keep those dates out of the generated data.

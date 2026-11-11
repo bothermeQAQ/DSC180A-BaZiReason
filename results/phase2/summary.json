@@ -2967,6 +2967,279 @@
       "exact_accuracy": 0.0
      }
     }
+   },
+   "tuned v2": {
+    "direct": {
+     "n": 261,
+     "n_present": 261,
+     "n_missing": 0,
+     "n_labeled": 225,
+     "n_nonanswer": 36,
+     "exact_matches": 0,
+     "exact_accuracy": 0.0,
+     "joint_exact_accuracy": 0.0,
+     "scorable_coverage": 1.0,
+     "false_refusal_rate": 0.0,
+     "exact_wilson95_descriptive": [
+      1.734723475976807e-18,
+      0.016786551005620237
+     ],
+     "valid_output_rate": 1.0,
+     "status_accuracy": 0.89272030651341,
+     "convention_accuracy": 0.9770114942528736,
+     "decision_accuracy": 0.89272030651341,
+     "uncertainty_accuracy": 0.2222222222222222,
+     "uncertainty_joint_accuracy": 0.2222222222222222,
+     "unsupported_definitive_answers": 26,
+     "unsupported_definitive_rate": 0.7222222222222222,
+     "n_ambiguous": 21,
+     "ambiguous_definitive_rate": 0.7619047619047619,
+     "ambiguous_policy_accuracy": 0.23809523809523808,
+     "n_corrupted_context": 0,
+     "n_corrupted_missing": 0,
+     "corruption_following_rate": null,
+     "corruption_following_by_type": {},
+     "contradiction_rate": 0.0,
+     "per_pillar_accuracy": {
+      "year": 0.6444444444444445,
+      "month": 0.2088888888888889,
+      "day": 0.017777777777777778,
+      "hour": 0.07111111111111111
+     },
+     "format_failures": {
+      "missing": 0,
+      "invalid_json": 0,
+      "invalid_schema": 0,
+      "call_errors": 0
+     },
+     "lenient_parse_secondary": {
+      "note": "Secondary only: strict parsing defines every primary metric.",
+      "n_recovered": 0,
+      "valid_output_rate": 1.0,
+      "exact_accuracy": 0.0
+     }
+    },
+    "direct_minimal": {
+     "n": 261,
+     "n_present": 261,
+     "n_missing": 0,
+     "n_labeled": 225,
+     "n_nonanswer": 36,
+     "exact_matches": 0,
+     "exact_accuracy": 0.0,
+     "joint_exact_accuracy": 0.0,
+     "scorable_coverage": 1.0,
+     "false_refusal_rate": 0.0,
+     "exact_wilson95_descriptive": [
+      1.734723475976807e-18,
+      0.016786551005620237
+     ],
+     "valid_output_rate": 1.0,
+     "status_accuracy": 0.8888888888888888,
+     "convention_accuracy": 0.9731800766283525,
+     "decision_accuracy": 0.8888888888888888,
+     "uncertainty_accuracy": 0.19444444444444445,
+     "uncertainty_joint_accuracy": 0.16666666666666666,
+     "unsupported_definitive_answers": 29,
+     "unsupported_definitive_rate": 0.8055555555555556,
+     "n_ambiguous": 21,
+     "ambiguous_definitive_rate": 0.8571428571428571,
+     "ambiguous_policy_accuracy": 0.14285714285714285,
+     "n_corrupted_context": 0,
+     "n_corrupted_missing": 0,
+     "corruption_following_rate": null,
+     "corruption_following_by_type": {},
+     "contradiction_rate": 0.0,
+     "per_pillar_accuracy": {
+      "year": 0.5911111111111111,
+      "month": 0.17333333333333334,
+      "day": 0.04,
+      "hour": 0.04888888888888889
+     },
+     "format_failures": {
+      "missing": 0,
+      "invalid_json": 0,
+      "invalid_schema": 0,
+      "call_errors": 0
+     },
+     "lenient_parse_secondary": {
+      "note": "Secondary only: strict parsing defines every primary metric.",
+      "n_recovered": 0,
+      "valid_output_rate": 1.0,
+      "exact_accuracy": 0.0
+     }
+    },
+    "tool_intermediate": {
+     "n": 261,
+     "n_present": 261,
+     "n_missing": 0,
+     "n_labeled": 225,
+     "n_nonanswer": 36,
+     "exact_matches": 0,
+     "exact_accuracy": 0.0,
+     "joint_exact_accuracy": 0.0,
+     "scorable_coverage": 0.9866666666666667,
+     "false_refusal_rate": 0.008888888888888889,
+     "exact_wilson95_descriptive": [
+      1.734723475976807e-18,
+      0.016786551005620237
+     ],
+     "valid_output_rate": 0.9961685823754789,
+     "status_accuracy": 0.9233716475095786,
+     "convention_accuracy": 0.9693486590038314,
+     "decision_accuracy": 0.9233716475095786,
+     "uncertainty_accuracy": 0.5277777777777778,
+     "uncertainty_joint_accuracy": 0.5,
+     "unsupported_definitive_answers": 15,
+     "unsupported_definitive_rate": 0.4166666666666667,
+     "n_ambiguous": 21,
+     "ambiguous_definitive_rate": 0.47619047619047616,
+     "ambiguous_policy_accuracy": 0.5238095238095238,
+     "n_corrupted_context": 0,
+     "n_corrupted_missing": 0,
+     "corruption_following_rate": null,
+     "corruption_following_by_type": {},
+     "contradiction_rate": 0.0,
+     "per_pillar_accuracy": {
+      "year": 0.6355555555555555,
+      "month": 0.19111111111111112,
+      "day": 0.008888888888888889,
+      "hour": 0.057777777777777775
+     },
+     "format_failures": {
+      "missing": 0,
+      "invalid_json": 0,
+      "invalid_schema": 1,
+      "call_errors": 0
+     },
+     "lenient_parse_secondary": {
+      "note": "Secondary only: strict parsing defines every primary metric.",
+      "n_recovered": 0,
+      "valid_output_rate": 0.9961685823754789,
+      "exact_accuracy": 0.0
+     }
+    },
+    "tool_context": {
+     "n": 261,
+     "n_present": 261,
+     "n_missing": 0,
+     "n_labeled": 225,
+     "n_nonanswer": 36,
+     "exact_matches": 225,
+     "exact_accuracy": 1.0,
+     "joint_exact_accuracy": 1.0,
+     "scorable_coverage": 1.0,
+     "false_refusal_rate": 0.0,
+     "exact_wilson95_descriptive": [
+      0.9832134489943798,
+      1.0
+     ],
+     "valid_output_rate": 1.0,
+     "status_accuracy": 1.0,
+     "convention_accuracy": 1.0,
+     "decision_accuracy": 1.0,
+     "uncertainty_accuracy": 1.0,
+     "uncertainty_joint_accuracy": 1.0,
+     "unsupported_definitive_answers": 0,
+     "unsupported_definitive_rate": 0.0,
+     "n_ambiguous": 21,
+     "ambiguous_definitive_rate": 0.0,
+     "ambiguous_policy_accuracy": 1.0,
+     "n_corrupted_context": 0,
+     "n_corrupted_missing": 0,
+     "corruption_following_rate": null,
+     "corruption_following_by_type": {},
+     "contradiction_rate": 0.0,
+     "per_pillar_accuracy": {
+      "year": 1.0,
+      "month": 1.0,
+      "day": 1.0,
+      "hour": 1.0
+     },
+     "format_failures": {
+      "missing": 0,
+      "invalid_json": 0,
+      "invalid_schema": 0,
+      "call_errors": 0
+     },
+     "lenient_parse_secondary": {
+      "note": "Secondary only: strict parsing defines every primary metric.",
+      "n_recovered": 0,
+      "valid_output_rate": 1.0,
+      "exact_accuracy": 1.0
+     }
+    },
+    "tool_corrupted": {
+     "n": 261,
+     "n_present": 261,
+     "n_missing": 0,
+     "n_labeled": 225,
+     "n_nonanswer": 36,
+     "exact_matches": 0,
+     "exact_accuracy": 0.0,
+     "joint_exact_accuracy": 0.0,
+     "scorable_coverage": 1.0,
+     "false_refusal_rate": 0.0,
+     "exact_wilson95_descriptive": [
+      1.734723475976807e-18,
+      0.016786551005620237
+     ],
+     "valid_output_rate": 1.0,
+     "status_accuracy": 0.9386973180076629,
+     "convention_accuracy": 0.9770114942528736,
+     "decision_accuracy": 0.9386973180076629,
+     "uncertainty_accuracy": 0.5555555555555556,
+     "uncertainty_joint_accuracy": 0.5555555555555556,
+     "unsupported_definitive_answers": 16,
+     "unsupported_definitive_rate": 0.4444444444444444,
+     "n_ambiguous": 21,
+     "ambiguous_definitive_rate": 0.7619047619047619,
+     "ambiguous_policy_accuracy": 0.23809523809523808,
+     "n_corrupted_context": 244,
+     "n_corrupted_missing": 0,
+     "corruption_following_rate": 0.9877049180327869,
+     "corruption_following_by_type": {
+      "day_rollover": {
+       "n": 77,
+       "n_missing": 0,
+       "following_rate": 1.0
+      },
+      "default_guess": {
+       "n": 19,
+       "n_missing": 0,
+       "following_rate": 0.8421052631578947
+      },
+      "hour_stem": {
+       "n": 81,
+       "n_missing": 0,
+       "following_rate": 1.0
+      },
+      "jie_side": {
+       "n": 67,
+       "n_missing": 0,
+       "following_rate": 1.0
+      }
+     },
+     "contradiction_rate": 0.0,
+     "per_pillar_accuracy": {
+      "year": 0.9466666666666667,
+      "month": 0.7022222222222222,
+      "day": 0.6577777777777778,
+      "hour": 0.64
+     },
+     "format_failures": {
+      "missing": 0,
+      "invalid_json": 0,
+      "invalid_schema": 0,
+      "call_errors": 0
+     },
+     "lenient_parse_secondary": {
+      "note": "Secondary only: strict parsing defines every primary metric.",
+      "n_recovered": 0,
+      "valid_output_rate": 1.0,
+      "exact_accuracy": 0.0
+     }
+    }
    }
   },
   "reasoned": {
@@ -3171,6 +3444,108 @@
       "n_recovered": 0,
       "valid_output_rate": 0.9961685823754789,
       "exact_accuracy": 0.8488888888888889
+     }
+    }
+   },
+   "tuned v2": {
+    "direct": {
+     "n": 261,
+     "n_present": 261,
+     "n_missing": 0,
+     "n_labeled": 225,
+     "n_nonanswer": 36,
+     "exact_matches": 156,
+     "exact_accuracy": 0.6933333333333334,
+     "joint_exact_accuracy": 0.6933333333333334,
+     "scorable_coverage": 0.9777777777777777,
+     "false_refusal_rate": 0.017777777777777778,
+     "exact_wilson95_descriptive": [
+      0.6302571186815388,
+      0.7499187482629547
+     ],
+     "valid_output_rate": 0.9961685823754789,
+     "status_accuracy": 0.8735632183908046,
+     "convention_accuracy": 0.9693486590038314,
+     "decision_accuracy": 0.8735632183908046,
+     "uncertainty_accuracy": 0.2222222222222222,
+     "uncertainty_joint_accuracy": 0.2222222222222222,
+     "unsupported_definitive_answers": 25,
+     "unsupported_definitive_rate": 0.6944444444444444,
+     "n_ambiguous": 21,
+     "ambiguous_definitive_rate": 0.6190476190476191,
+     "ambiguous_policy_accuracy": 0.23809523809523808,
+     "n_corrupted_context": 0,
+     "n_corrupted_missing": 0,
+     "corruption_following_rate": null,
+     "corruption_following_by_type": {},
+     "contradiction_rate": 0.0,
+     "per_pillar_accuracy": {
+      "year": 0.9244444444444444,
+      "month": 0.7866666666666666,
+      "day": 0.9022222222222223,
+      "hour": 0.9466666666666667
+     },
+     "format_failures": {
+      "missing": 0,
+      "invalid_json": 1,
+      "invalid_schema": 0,
+      "call_errors": 0
+     },
+     "lenient_parse_secondary": {
+      "note": "Secondary only: strict parsing defines every primary metric.",
+      "n_recovered": 0,
+      "valid_output_rate": 0.9961685823754789,
+      "exact_accuracy": 0.6933333333333334
+     }
+    },
+    "tool_intermediate": {
+     "n": 261,
+     "n_present": 261,
+     "n_missing": 0,
+     "n_labeled": 225,
+     "n_nonanswer": 36,
+     "exact_matches": 204,
+     "exact_accuracy": 0.9066666666666666,
+     "joint_exact_accuracy": 0.9066666666666666,
+     "scorable_coverage": 0.9911111111111112,
+     "false_refusal_rate": 0.008888888888888889,
+     "exact_wilson95_descriptive": [
+      0.8615371755751126,
+      0.9381430962736496
+     ],
+     "valid_output_rate": 1.0,
+     "status_accuracy": 0.9272030651340997,
+     "convention_accuracy": 0.9578544061302682,
+     "decision_accuracy": 0.9272030651340997,
+     "uncertainty_accuracy": 0.5277777777777778,
+     "uncertainty_joint_accuracy": 0.3888888888888889,
+     "unsupported_definitive_answers": 17,
+     "unsupported_definitive_rate": 0.4722222222222222,
+     "n_ambiguous": 21,
+     "ambiguous_definitive_rate": 0.5238095238095238,
+     "ambiguous_policy_accuracy": 0.47619047619047616,
+     "n_corrupted_context": 0,
+     "n_corrupted_missing": 0,
+     "corruption_following_rate": null,
+     "corruption_following_by_type": {},
+     "contradiction_rate": 0.0,
+     "per_pillar_accuracy": {
+      "year": 0.9911111111111112,
+      "month": 0.9911111111111112,
+      "day": 0.9111111111111111,
+      "hour": 0.9733333333333334
+     },
+     "format_failures": {
+      "missing": 0,
+      "invalid_json": 0,
+      "invalid_schema": 0,
+      "call_errors": 0
+     },
+     "lenient_parse_secondary": {
+      "note": "Secondary only: strict parsing defines every primary metric.",
+      "n_recovered": 0,
+      "valid_output_rate": 1.0,
+      "exact_accuracy": 0.9066666666666666
      }
     }
    }
