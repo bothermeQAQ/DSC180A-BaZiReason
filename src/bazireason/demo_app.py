@@ -25,6 +25,7 @@ a second, separate consent.
 
 import argparse
 import json
+import queue
 import re
 import secrets
 import threading
@@ -420,11 +421,18 @@ def chat_messages(birth, history, message, compare=None):
 
 
 class Models:
-    """Lazy holder for the base and the fine-tuned model; one generation at a time."""
+    """The base and the fine-tuned model, served from one dedicated worker thread.
+
+    MLX keeps per-thread state, and the HTTP server answers every request on a new
+    thread, so loading and generation all happen on a single worker. Requests are
+    queued, which also means one generation at a time.
+    """
 
     def __init__(self, model_path, adapter_path):
         self.model_path, self.adapter_path = model_path, adapter_path
-        self.loaded, self.lock = {}, threading.Lock()
+        self.loaded = {}
+        self.jobs = queue.Queue()
+        threading.Thread(target=self._work, daemon=True).start()
 
     def available(self):
         tuned = Path(self.adapter_path, "adapters.safetensors").exists()
@@ -433,7 +441,7 @@ class Models:
             {"id": "base", "name": "未微调的基础模型", "available": True},
         ]
 
-    def get(self, which):
+    def _get(self, which):
         if which not in self.loaded:
             from bazireason.mlx_backend import MLXChatModel
 
@@ -441,33 +449,56 @@ class Models:
             self.loaded[which] = MLXChatModel(self.model_path, adapter, label=which)
         return self.loaded[which]
 
-    def stream(self, which, messages, max_tokens, temperature):
-        from mlx_lm.generate import stream_generate
-        from mlx_lm.sample_utils import make_sampler
+    def _work(self):
+        while True:
+            which, messages, max_tokens, temperature, out = self.jobs.get()
+            try:
+                chat = self._get(which)
+                if messages is None:  # preload request
+                    out.put({"loaded": which})
+                    continue
+                from mlx_lm.generate import stream_generate
+                from mlx_lm.sample_utils import make_sampler
 
-        with self.lock:
-            chat = self.get(which)
-            last = None
-            for last in stream_generate(
-                chat.net,
-                chat.tokenizer,
-                chat.prompt_ids(messages),
-                max_tokens=max_tokens,
-                sampler=make_sampler(temp=temperature, top_p=0.8 if temperature else 0.0),
-            ):
-                yield {"token": last.text}
-            if last is not None:
-                yield {
-                    "done": True,
-                    "stats": {
-                        "prompt_tokens": last.prompt_tokens,
-                        "completion_tokens": last.generation_tokens,
-                        "tokens_per_second": round(last.generation_tps, 1),
-                        "peak_memory_gb": round(last.peak_memory, 2),
-                        "model": chat.model,
-                        "adapter": chat.adapter_path,
-                    },
-                }
+                last = None
+                for last in stream_generate(
+                    chat.net,
+                    chat.tokenizer,
+                    chat.prompt_ids(messages),
+                    max_tokens=max_tokens,
+                    sampler=make_sampler(temp=temperature, top_p=0.8 if temperature else 0.0),
+                ):
+                    out.put({"token": last.text})
+                if last is not None:
+                    out.put(
+                        {
+                            "done": True,
+                            "stats": {
+                                "prompt_tokens": last.prompt_tokens,
+                                "completion_tokens": last.generation_tokens,
+                                "tokens_per_second": round(last.generation_tps, 1),
+                                "peak_memory_gb": round(last.peak_memory, 2),
+                                "model": chat.model,
+                                "adapter": chat.adapter_path,
+                            },
+                        }
+                    )
+            except Exception as error:  # report to the page instead of killing the worker
+                out.put({"error": f"模型出错：{type(error).__name__}"})
+            finally:
+                out.put(None)
+
+    def preload(self, which):
+        out = queue.Queue()
+        self.jobs.put((which, None, 0, 0.0, out))
+        while out.get() is not None:
+            pass
+
+    def stream(self, which, messages, max_tokens, temperature):
+        out = queue.Queue()
+        self.jobs.put((which, messages, max_tokens, temperature, out))
+        while (event := out.get()) is not None:
+            yield event
 
 
 def make_handler(models, access_code, feedback_path):
@@ -647,7 +678,7 @@ def main():
     for which in {"tuned": ["tuned"], "base": ["base"], "both": ["tuned", "base"], "none": []}[
         args.preload
     ]:
-        models.get(which)
+        models.preload(which)
     host = "0.0.0.0" if args.share_lan else "127.0.0.1"
     server = ThreadingHTTPServer(
         (host, args.port), make_handler(models, code, Path(args.feedback_file))
