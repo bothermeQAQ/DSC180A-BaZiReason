@@ -1,0 +1,22 @@
+{
+  "status": "complete",
+  "prompt_version": "p2-chat-v1",
+  "dataset": "data/phase2/train_v2/valid.jsonl",
+  "dataset_sha256": "a3e2542dd6fa9c11fdb852c1994f3e00188110db4da818026a6ac844ace5e8d8",
+  "n_rows": 203,
+  "model": "bazireason-qwen3-4b-lora-v2",
+  "model_path": "models/qwen3-4b-instruct-2507-mlx-4bit",
+  "model_weights_sha256": "2a73c6c248601ab904e035548abd8e6abb65ea27dcb5f342fb0a8910eb44173f",
+  "adapter_path": "artifacts/adapters/bazireason-qwen3-4b-lora-v2",
+  "adapter_sha256": "4a61e636732b9febd263549bcdfa2d813164597ce258a1eb44273b28ded8f418",
+  "temperature": 0,
+  "max_tokens": 700,
+  "enable_thinking": false,
+  "wall_seconds": 479.8,
+  "generation_totals": {
+    "prompt_tokens": 37300,
+    "completion_tokens": 57371,
+    "seconds": 479.33,
+    "peak_memory_gb": 7.85
+  }
+}

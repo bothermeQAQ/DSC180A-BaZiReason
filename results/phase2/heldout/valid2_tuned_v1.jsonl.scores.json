@@ -1,0 +1,445 @@
+{
+  "model": "bazireason-qwen3-4b-lora-v1",
+  "n_rows": 203,
+  "summary": {
+    "overall": {
+      "n": 203,
+      "k": 103,
+      "rate": 0.5073891625615764
+    },
+    "parsed": {
+      "n": 203,
+      "k": 203,
+      "rate": 1.0
+    },
+    "by_family": {
+      "chart_facts": {
+        "n": 8,
+        "k": 8,
+        "rate": 1.0
+      },
+      "chart_plain": {
+        "n": 14,
+        "k": 0,
+        "rate": 0.0
+      },
+      "counterfactual": {
+        "n": 6,
+        "k": 6,
+        "rate": 1.0
+      },
+      "dst_fold": {
+        "n": 6,
+        "k": 6,
+        "rate": 1.0
+      },
+      "dst_gap": {
+        "n": 2,
+        "k": 2,
+        "rate": 1.0
+      },
+      "internal": {
+        "n": 10,
+        "k": 8,
+        "rate": 0.8
+      },
+      "invalid": {
+        "n": 10,
+        "k": 7,
+        "rate": 0.7
+      },
+      "jie_boundary": {
+        "n": 13,
+        "k": 9,
+        "rate": 0.6923076923076923
+      },
+      "jie_window": {
+        "n": 10,
+        "k": 0,
+        "rate": 0.0
+      },
+      "mcq": {
+        "n": 8,
+        "k": 2,
+        "rate": 0.25
+      },
+      "missing": {
+        "n": 8,
+        "k": 7,
+        "rate": 0.875
+      },
+      "multi_turn": {
+        "n": 8,
+        "k": 5,
+        "rate": 0.625
+      },
+      "policy": {
+        "n": 4,
+        "k": 4,
+        "rate": 1.0
+      },
+      "rule": {
+        "n": 36,
+        "k": 16,
+        "rate": 0.4444444444444444
+      },
+      "shanghai_dst": {
+        "n": 4,
+        "k": 2,
+        "rate": 0.5
+      },
+      "tz_facts": {
+        "n": 4,
+        "k": 3,
+        "rate": 0.75
+      },
+      "tz_known": {
+        "n": 8,
+        "k": 0,
+        "rate": 0.0
+      },
+      "tz_needs_tool": {
+        "n": 4,
+        "k": 4,
+        "rate": 1.0
+      },
+      "verify": {
+        "n": 20,
+        "k": 12,
+        "rate": 0.6
+      },
+      "zi_transition": {
+        "n": 20,
+        "k": 2,
+        "rate": 0.1
+      }
+    },
+    "by_task": {
+      "chart": {
+        "n": 111,
+        "k": 50,
+        "rate": 0.45045045045045046
+      },
+      "counterfactual": {
+        "n": 6,
+        "k": 6,
+        "rate": 1.0
+      },
+      "dialog_follow_up": {
+        "n": 3,
+        "k": 2,
+        "rate": 0.6666666666666666
+      },
+      "dialog_pushback": {
+        "n": 1,
+        "k": 1,
+        "rate": 1.0
+      },
+      "dialog_recheck_right": {
+        "n": 2,
+        "k": 2,
+        "rate": 1.0
+      },
+      "dialog_self_correct": {
+        "n": 2,
+        "k": 0,
+        "rate": 0.0
+      },
+      "internal": {
+        "n": 10,
+        "k": 8,
+        "rate": 0.8
+      },
+      "mcq_flow_clash": {
+        "n": 5,
+        "k": 1,
+        "rate": 0.2
+      },
+      "mcq_luck": {
+        "n": 1,
+        "k": 1,
+        "rate": 1.0
+      },
+      "mcq_relation": {
+        "n": 1,
+        "k": 0,
+        "rate": 0.0
+      },
+      "mcq_ten_god": {
+        "n": 1,
+        "k": 0,
+        "rate": 0.0
+      },
+      "policy": {
+        "n": 4,
+        "k": 4,
+        "rate": 1.0
+      },
+      "rule_elements": {
+        "n": 3,
+        "k": 2,
+        "rate": 0.6666666666666666
+      },
+      "rule_flow_year": {
+        "n": 3,
+        "k": 1,
+        "rate": 0.3333333333333333
+      },
+      "rule_hidden": {
+        "n": 3,
+        "k": 0,
+        "rate": 0.0
+      },
+      "rule_life_stage": {
+        "n": 3,
+        "k": 2,
+        "rate": 0.6666666666666666
+      },
+      "rule_luck": {
+        "n": 3,
+        "k": 2,
+        "rate": 0.6666666666666666
+      },
+      "rule_pattern": {
+        "n": 3,
+        "k": 1,
+        "rate": 0.3333333333333333
+      },
+      "rule_relations": {
+        "n": 3,
+        "k": 0,
+        "rate": 0.0
+      },
+      "rule_relatives": {
+        "n": 3,
+        "k": 2,
+        "rate": 0.6666666666666666
+      },
+      "rule_seasonal": {
+        "n": 3,
+        "k": 3,
+        "rate": 1.0
+      },
+      "rule_strength": {
+        "n": 3,
+        "k": 0,
+        "rate": 0.0
+      },
+      "rule_ten_god": {
+        "n": 3,
+        "k": 1,
+        "rate": 0.3333333333333333
+      },
+      "rule_xun_kong": {
+        "n": 3,
+        "k": 2,
+        "rate": 0.6666666666666666
+      },
+      "verify": {
+        "n": 20,
+        "k": 12,
+        "rate": 0.6
+      }
+    },
+    "by_mode": {
+      "chart": {
+        "n": 15,
+        "k": 11,
+        "rate": 0.7333333333333333
+      },
+      "facts": {
+        "n": 57,
+        "k": 47,
+        "rate": 0.8245614035087719
+      },
+      "none": {
+        "n": 130,
+        "k": 45,
+        "rate": 0.34615384615384615
+      },
+      "self_chart": {
+        "n": 1,
+        "k": 0,
+        "rate": 0.0
+      }
+    },
+    "wording": {
+      "seen": {
+        "n": 203,
+        "k": 103,
+        "rate": 0.5073891625615764
+      },
+      "unseen": {
+        "n": 0,
+        "k": 0,
+        "rate": null
+      }
+    },
+    "calendar": {
+      "exact_four_pillar": {
+        "n": 74,
+        "k": 30,
+        "rate": 0.40540540540540543
+      },
+      "exact_no_tools": {
+        "n": 40,
+        "k": 1,
+        "rate": 0.025
+      },
+      "exact_with_facts": {
+        "n": 34,
+        "k": 29,
+        "rate": 0.8529411764705882
+      },
+      "per_pillar": {
+        "year": {
+          "n": 74,
+          "rate": 0.8243243243243243
+        },
+        "month": {
+          "n": 74,
+          "rate": 0.7837837837837838
+        },
+        "day": {
+          "n": 74,
+          "rate": 0.4189189189189189
+        },
+        "hour": {
+          "n": 74,
+          "rate": 0.7027027027027027
+        }
+      },
+      "boundary_exact_with_facts": {
+        "n": 12,
+        "k": 8,
+        "rate": 0.6666666666666666
+      },
+      "boundary_exact_no_tools": {
+        "n": 12,
+        "k": 1,
+        "rate": 0.08333333333333333
+      },
+      "false_refusal": {
+        "n": 74,
+        "k": 13,
+        "rate": 0.17567567567567569
+      },
+      "status_decision": {
+        "n": 111,
+        "k": 81,
+        "rate": 0.7297297297297297
+      },
+      "clarification_decision": {
+        "n": 10,
+        "k": 5,
+        "rate": 0.5
+      },
+      "needs_tool_decision": {
+        "n": 15,
+        "k": 6,
+        "rate": 0.4
+      },
+      "invalid_unsupported_decision": {
+        "n": 12,
+        "k": 9,
+        "rate": 0.75
+      },
+      "definitive_on_nonanswer": {
+        "n": 37,
+        "k": 15,
+        "rate": 0.40540540540540543
+      },
+      "definitive_on_needs_tool_right_by_engine": {
+        "n": 15,
+        "k": 2,
+        "rate": 0.13333333333333333
+      },
+      "reason_codes": {
+        "n": 37,
+        "k": 19,
+        "rate": 0.5135135135135135
+      }
+    },
+    "verification": {
+      "corruption_detection": {
+        "n": 11,
+        "k": 11,
+        "rate": 1.0
+      },
+      "false_acceptance_of_corrupted": {
+        "n": 11,
+        "k": 0,
+        "rate": 0.0
+      },
+      "localization": {
+        "n": 11,
+        "k": 6,
+        "rate": 0.5454545454545454
+      },
+      "repair": {
+        "n": 11,
+        "k": 5,
+        "rate": 0.45454545454545453
+      },
+      "false_alarm_on_sound_charts": {
+        "n": 9,
+        "k": 2,
+        "rate": 0.2222222222222222
+      },
+      "verdict": {
+        "n": 20,
+        "k": 18,
+        "rate": 0.9
+      },
+      "internal_detection": {
+        "n": 4,
+        "k": 3,
+        "rate": 0.75
+      },
+      "internal_false_acceptance": {
+        "n": 4,
+        "k": 1,
+        "rate": 0.25
+      },
+      "internal_false_alarm": {
+        "n": 6,
+        "k": 0,
+        "rate": 0.0
+      }
+    },
+    "dialogue": {
+      "contradiction_after_recheck_or_pushback": {
+        "n": 3,
+        "k": 0,
+        "rate": 0.0
+      },
+      "adopted_unsupported_claim": {
+        "n": 1,
+        "k": 0,
+        "rate": 0.0
+      },
+      "corrected_injected_error": {
+        "n": 2,
+        "k": 0,
+        "rate": 0.0
+      },
+      "follow_up": {
+        "n": 3,
+        "k": 2,
+        "rate": 0.6666666666666666
+      }
+    },
+    "policy": {
+      "declined_definite_prediction": {
+        "n": 4,
+        "k": 4,
+        "rate": 1.0
+      },
+      "certain_claim_in_text": {
+        "n": 4,
+        "k": 0,
+        "rate": 0.0
+      }
+    }
+  }
+}

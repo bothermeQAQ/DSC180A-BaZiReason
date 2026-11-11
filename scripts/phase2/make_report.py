@@ -16,7 +16,7 @@ from bazireason.p2_eval import paired_difference, summarize
 ROOT = Path("results/phase2")
 RUNS = {
     "v1": "bazireason-qwen3-4b-lora-v1",
-    "e2": "bazireason-qwen3-4b-lora-v1-e2",
+    "v2": "bazireason-qwen3-4b-lora-v2",
 }
 
 
@@ -180,7 +180,7 @@ def heldout_section(lines, summary):
     files = {
         "base": ROOT / "heldout" / "base.jsonl",
         "tuned v1": ROOT / "heldout" / "tuned.jsonl",
-        "tuned e2": ROOT / "heldout" / "tuned_e2.jsonl",
+        "tuned v2": ROOT / "heldout" / "tuned_v2.jsonl",
     }
     scores = {name: scores_of(path) for name, path in files.items()}
     scores = {name: value for name, value in scores.items() if value}
@@ -235,7 +235,7 @@ def heldout_section(lines, summary):
     )
     lines.append("|---|---:|---|---:|---:|")
     for second in names[1:]:
-        for first in ("base",) + (("tuned v1",) if second == "tuned e2" else ()):
+        for first in ("base",) + (("tuned v1",) if second == "tuned v2" else ()):
             estimate = paired_difference(scores[first], scores[second])
             summary["heldout"]["paired"][f"{second} minus {first}"] = estimate
             lines.append(
@@ -255,29 +255,71 @@ def heldout_section(lines, summary):
         summary["heldout"]["paraphrase_probe"] = dict(rows)
         lines.append("")
     valid = {
-        "tuned v1": load(ROOT / "heldout" / "valid_tuned_v1.jsonl.scores.json"),
-        "tuned e2": load(ROOT / "heldout" / "valid_tuned_e2.jsonl.scores.json"),
+        "tuned v1": load(ROOT / "heldout" / "valid2_tuned_v1.jsonl.scores.json"),
+        "tuned v2": load(ROOT / "heldout" / "valid2_tuned_v2.jsonl.scores.json"),
     }
     valid = {k: v for k, v in valid.items() if v}
     if valid:
         lines.append(
-            "### Validation split by generation (261 items; used to choose between adapters)\n"
+            "### Validation split of the second-round data, by generation (used to choose the adapter)\n"
         )
-        lines.append("| Adapter | Items correct | Exact four pillars |")
-        lines.append("|---|---:|---:|")
+        lines.append("| Adapter | Items correct | Exact four pillars | Exact, no tools |")
+        lines.append("|---|---:|---:|---:|")
         for name, report in valid.items():
+            cal = report["summary"]["calendar"]
             lines.append(
-                f"| {name} | {frac(report['summary']['overall'])} | {frac(report['summary']['calendar']['exact_four_pillar'])} |"
+                f"| {name} | {frac(report['summary']['overall'])} | {frac(cal['exact_four_pillar'])} | {frac(cal['exact_no_tools'])} |"
             )
         summary["heldout"]["validation_generation"] = {
             k: v["summary"]["overall"] for k, v in valid.items()
         }
         lines.append("")
+    fresh = {
+        "tuned v1": scores_of(ROOT / "heldout" / "fresh_tuned_v1.jsonl"),
+        "tuned v2": scores_of(ROOT / "heldout" / "fresh_tuned_v2.jsonl"),
+    }
+    fresh = {k: v for k, v in fresh.items() if v}
+    if fresh:
+        tables = {name: summarize(value) for name, value in fresh.items()}
+        names = list(tables)
+        summary["heldout"]["fresh_test"] = {"summaries": tables}
+        lines.append(
+            "### Fresh test split (486 items generated after the first round; never inspected)\n"
+        )
+        lines.append(
+            "The first test split was read during the error analysis that led to the second round, "
+            "so the second adapter is also scored on a split that nothing was tuned against.\n"
+        )
+        lines.append("| Metric | " + " | ".join(names) + " |")
+        lines.append("|---|" + "---:|" * len(names))
+        for label, path in HELDOUT_ROWS:
+            label = label.replace("All 633 held-out items", "All items")
+            lines.append(
+                f"| {label} | " + " | ".join(frac(dig(tables[n], path)) for n in names) + " |"
+            )
+        lines.append("")
+        lines.append("| Family | " + " | ".join(names) + " |")
+        lines.append("|---|" + "---:|" * len(names))
+        for family in tables[names[0]]["by_family"]:
+            lines.append(
+                f"| {family} | "
+                + " | ".join(frac(tables[n]["by_family"][family]) for n in names)
+                + " |"
+            )
+        lines.append("")
+        if len(fresh) == 2:
+            estimate = paired_difference(fresh["tuned v1"], fresh["tuned v2"])
+            summary["heldout"]["fresh_test"]["v2_minus_v1"] = estimate
+            lines.append(
+                f"Second adapter minus first on the fresh split: {interval(estimate)} "
+                f"({estimate['second_only']} items only the second got right, {estimate['first_only']} only the first).\n"
+            )
 
 
 def v3_section(lines, summary):
     lines.append("## 3. benchmark_v3 (261 cases, 70 families; unchanged definitions)\n")
     summary["benchmark_v3"] = {}
+    labels = {"base": "base", "tuned": "tuned v1", "tuned_v2": "tuned v2"}
     for protocol, title in (
         ("strict", "Strict protocol: the checkpoint's prompts, JSON only"),
         (
@@ -286,14 +328,15 @@ def v3_section(lines, summary):
         ),
     ):
         found = {
-            name: load(ROOT / "v3" / f"{name}_{protocol}.jsonl.scores.json")
-            for name in ("base", "tuned")
+            name: load(ROOT / "v3" / f"{name}_{protocol}.jsonl.scores.json") for name in labels
         }
-        if not all(found.values()):
+        found = {name: report for name, report in found.items() if report}
+        if "base" not in found or "tuned" not in found:
             lines.append(f"### {title}\n\nNot run or not finished.\n")
             continue
+        names = list(found)
         summary["benchmark_v3"][protocol] = {
-            name: {m: v["overall"] for m, v in report["methods"].items()}
+            labels[name]: {m: v["overall"] for m, v in report["methods"].items()}
             for name, report in found.items()
         }
         lines.append(f"### {title}\n")
@@ -302,7 +345,7 @@ def v3_section(lines, summary):
         )
         lines.append("|---|---|---:|---:|---:|---:|---:|---:|")
         for method in found["base"]["methods"]:
-            for name in ("base", "tuned"):
+            for name in names:
                 o = found[name]["methods"][method]["overall"]
                 follow = (
                     pct(o["corruption_following_rate"])
@@ -310,15 +353,15 @@ def v3_section(lines, summary):
                     else ""
                 )
                 lines.append(
-                    f"| {method} | {name} | {o['exact_matches']}/{o['n_labeled']} | {pct(o['valid_output_rate'])} | {pct(o['decision_accuracy'])} | "
+                    f"| {method} | {labels[name]} | {o['exact_matches']}/{o['n_labeled']} | {pct(o['valid_output_rate'])} | {pct(o['decision_accuracy'])} | "
                     f"{pct(o['ambiguous_policy_accuracy'])} | {pct(o['unsupported_definitive_rate'])} | {follow} |"
                 )
         lines.append("")
         lines.append(
             "Pre-specified contrasts (family-cluster bootstrap, as computed by `bazireason evaluate`):\n"
         )
-        lines.append("| Hypothesis | Contrast | base | tuned |")
-        lines.append("|---|---|---|---|")
+        lines.append("| Hypothesis | Contrast | " + " | ".join(labels[n] for n in names) + " |")
+        lines.append("|---|---|" + "---|" * len(names))
 
         def contrast(report, key, metric="exact"):
             block = report["comparisons"].get(key)
@@ -335,10 +378,12 @@ def v3_section(lines, summary):
             if not block:
                 return "n/a"
             e = block["near_minus_far_relevant_accuracy"]
+            ci = e["group_bootstrap95_descriptive"]
             near = block["by_distance"]["near"]["relevant_pillar_accuracy"]
             far = block["by_distance"]["far"]["relevant_pillar_accuracy"]
             return (
                 f"near {pct(near)}, far {pct(far)}, difference {100 * e['mean_difference']:+.1f} pp"
+                + (f" [{100 * ci[0]:+.1f}, {100 * ci[1]:+.1f}]" if ci else "")
             )
 
         def h3(report):
@@ -348,36 +393,60 @@ def v3_section(lines, summary):
             e = block["h3_family_all_decisions_correct"]["knowledge_dependent"]
             return f"{100 * e['mean_difference']:+.1f} pp over {e['n']} families"
 
-        lines.append(
-            f"| H1 | direct: near minus far, Jie ladders | {h1(found['base'], 'jie')} | {h1(found['tuned'], 'jie')} |"
+        def row(label_h, label_c, cell, found=found, names=names):
+            lines.append(
+                f"| {label_h} | {label_c} | " + " | ".join(cell(found[n]) for n in names) + " |"
+            )
+
+        row("H1", "direct: near minus far, Jie ladders", lambda r: h1(r, "jie"))
+        row("H1", "direct: near minus far, Zi ladders", lambda r: h1(r, "zi"))
+        row(
+            "H2 (primary)",
+            "tool_intermediate minus direct, exact",
+            lambda r: contrast(r, "tool_intermediate_minus_direct"),
         )
-        lines.append(
-            f"| H1 | direct: near minus far, Zi ladders | {h1(found['base'], 'zi')} | {h1(found['tuned'], 'zi')} |"
-        )
-        lines.append(
-            f"| H2 (primary) | tool_intermediate minus direct, exact | {contrast(found['base'], 'tool_intermediate_minus_direct')} | {contrast(found['tuned'], 'tool_intermediate_minus_direct')} |"
-        )
-        lines.append(
-            f"| H2 | tool_context minus direct, exact | {contrast(found['base'], 'tool_context_minus_direct')} | {contrast(found['tuned'], 'tool_context_minus_direct')} |"
-        )
-        lines.append(
-            f"| H2 | tool_corrupted minus tool_context, exact | {contrast(found['base'], 'tool_corrupted_minus_tool_context')} | {contrast(found['tuned'], 'tool_corrupted_minus_tool_context')} |"
-        )
-        lines.append(
-            f"| H3 (primary) | direct minus direct_minimal, knowledge-dependent families all correct | {h3(found['base'])} | {h3(found['tuned'])} |"
-        )
+        if protocol == "strict":
+            row(
+                "H2",
+                "tool_context minus direct, exact",
+                lambda r: contrast(r, "tool_context_minus_direct"),
+            )
+            row(
+                "H2",
+                "tool_corrupted minus tool_context, exact",
+                lambda r: contrast(r, "tool_corrupted_minus_tool_context"),
+            )
+            row(
+                "H3 (primary)",
+                "direct minus direct_minimal, knowledge-dependent families all correct",
+                h3,
+            )
         lines.append("")
         pillars = "; ".join(
-            f"{name} {method}: "
+            f"{labels[name]} {method}: "
             + ", ".join(
                 f"{p} {pct(v)}"
                 for p, v in found[name]["methods"][method]["overall"]["per_pillar_accuracy"].items()
             )
-            for name in ("base", "tuned")
+            for name in names
             for method in ("direct", "tool_intermediate")
             if method in found[name]["methods"]
         )
         lines.append(f"Per-pillar accuracy: {pillars}.\n")
+        if protocol == "strict":
+            follow = "; ".join(
+                f"{labels[name]}: "
+                + ", ".join(
+                    f"{kind} {pct(v['following_rate'])}"
+                    for kind, v in found[name]["methods"]["tool_corrupted"]["overall"][
+                        "corruption_following_by_type"
+                    ].items()
+                )
+                for name in names
+            )
+            lines.append(
+                f"Share of corrupted tool answers followed, by corruption type: {follow}.\n"
+            )
 
 
 def baziqa_section(lines, summary):
@@ -546,6 +615,45 @@ def baziqa_section(lines, summary):
         lines.append("")
 
 
+def second_round_baziqa(lines, summary):
+    report = load(ROOT / "baziqa_v2" / "summary.json")
+    if not report or "tuned_tools" not in report["conditions"]:
+        return
+    summary["baziqa_v2"] = report
+    lines.append(
+        "### Second-round adapter on BaziQA (same protocol; base rows are the same runs as above)\n"
+    )
+    lines.append(
+        "| Condition | All 555 | 95% interval | BaZi-only 290 | Official keys 365 | Unanswered | Paper years macro |"
+    )
+    lines.append("|---|---:|---|---:|---:|---:|---:|")
+    names = {
+        "tuned_no_tools": "C2. second adapter, no tools",
+        "tuned_tools": "D2. second adapter, verified tools",
+    }
+    for key, label in names.items():
+        block = report["conditions"][key]
+        low, high = block["full"]["interval95_person_bootstrap"]
+        lines.append(
+            f"| {label} | {pct(block['full']['accuracy_mean'])} | [{pct(low)}, {pct(high)}] | {pct(block['bazi_only']['accuracy_mean'])} | "
+            f"{pct(block['official_key']['accuracy_mean'])} | {pct(block['full']['unanswered_rate'])} | {pct(block['paper_years_2021_2025']['macro_average_over_years'])} |"
+        )
+    lines.append("")
+    lines.append("| Effect (second adapter) | All 555 | BaZi-only 290 |")
+    lines.append("|---|---|---|")
+    for block in report["comparisons"].values():
+        lines.append(
+            f"| {block['effect_of']} | {interval(block['full'])} | {interval(block['bazi_only'])} |"
+        )
+    lines.append("")
+    own = report.get("self_derived_charts", {}).get("tuned_no_tools")
+    if own:
+        lines.append(
+            f"Charts the second adapter derived itself for the 117 birth records: gave a chart for {own['gave_a_chart']}, "
+            f"exact for {own['exact_four_pillars']}, status counts {own['status_counts']}.\n"
+        )
+
+
 def main():
     summary = {"training": {}}
     lines = [
@@ -558,6 +666,7 @@ def main():
     heldout_section(lines, summary)
     v3_section(lines, summary)
     baziqa_section(lines, summary)
+    second_round_baziqa(lines, summary)
     (ROOT / "RESULTS.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
     (ROOT / "summary.json").write_text(
         json.dumps(summary, indent=1, ensure_ascii=False) + "\n", encoding="utf-8"

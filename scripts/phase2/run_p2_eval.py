@@ -77,6 +77,8 @@ def main():
     rows = [json.loads(line) for line in Path(args.data).read_text(encoding="utf-8").splitlines()]
     if any(row["split"] == "train" for row in rows):
         parser.error("Refusing to evaluate on training rows")
+    # Rows in the benchmark's own prompt formats are scored by the benchmark harness instead.
+    rows = [row for row in rows if "expected" in row["meta"]]
     if args.limit:
         rows = rows[: args.limit]
     output.parent.mkdir(parents=True, exist_ok=True)

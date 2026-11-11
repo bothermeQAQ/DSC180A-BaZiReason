@@ -36,14 +36,14 @@ from pathlib import Path
 from bazireason import rules
 from bazireason import worked as W
 from bazireason.calendar_engine import temporal_facts, tzdata_keys
-from bazireason.charttools import chart_tool_text, verified_chart
+from bazireason.charttools import chart_tool_text, pillars_text, verified_chart
 from bazireason.conventions import PILLARS, Convention
-from bazireason.p2_prompts import FINAL_MARK, P2_SYSTEM, facts_block
-from bazireason.train_tasks import compare_charts
+from bazireason.p2_prompts import FINAL_MARK, OUTPUT_HINTS, P2_SYSTEM, facts_block
+from bazireason.train_tasks import chart_line, compare_charts
 
 STATIC = Path(__file__).parent / "demo_static"
 DEFAULT_MODEL = "models/qwen3-4b-instruct-2507-mlx-4bit"
-DEFAULT_ADAPTER = "artifacts/adapters/bazireason-qwen3-4b-lora-v1"
+DEFAULT_ADAPTER = "artifacts/adapters/bazireason-qwen3-4b-lora-v2"
 COMMON_ZONES = (
     "Asia/Shanghai",
     "Asia/Hong_Kong",
@@ -179,7 +179,72 @@ def relevant_rules(text: str, limit=5):
     ]
 
 
-def audit_reply(text: str, birth) -> dict:
+_POS = {"年": "year", "月": "month", "日": "day", "时": "hour"}
+
+
+def engine_answer(message: str, chart: dict):
+    """(label, value) the rule tables give for a recognised question, else None.
+
+    Only questions with a single table-determined answer are recognised. The
+    value has the same shape as the structured answer the model is trained to
+    give, so the two can be compared directly.
+    """
+    pillars = chart["pillars"]
+    day = pillars["day"][0]
+    stem = re.search(r"(年|月|时)干.{0,12}十神", message)
+    if stem:
+        position = _POS[stem.group(1)]
+        return f"{stem.group(1)}干{pillars[position][0]}的十神", rules.ten_god(
+            day, pillars[position][0]
+        )
+    hidden = re.search(r"(年|月|日|时)支.{0,8}藏", message)
+    if hidden:
+        branch = pillars[_POS[hidden.group(1)]][1]
+        value = [f"{h}:{rules.ten_god(day, h)}" for h in rules.HIDDEN_STEMS[branch]]
+        return f"{hidden.group(1)}支{branch}的藏干与十神", value
+    if re.search(r"合.{0,3}冲|冲.{0,3}合|刑.{0,2}害", message):
+        return "原局的合冲刑害破", rules.chart_relations(pillars)
+    if re.search(r"旬空|空亡", message):
+        return "日柱旬空", rules.xun_kong(pillars["day"])
+    if re.search(r"什么格|格局", message):
+        return "月令本气取格（简化约定）", rules.month_pattern(pillars)
+    if re.search(r"旺相休囚死|旺衰|月令", message):
+        return "日主在月令的状态", rules.seasonal_state(
+            rules.STEM_ELEMENT[day], pillars["month"][1]
+        )
+    if "大运" in message and re.search(r"顺|逆|前三步", message) and "luck" in chart:
+        direction = chart["luck"]["direction"]
+        first = [cycle["pillar"] for cycle in chart["luck"]["cycles"][:3]]
+        return "大运方向与前三步", {"direction": direction, "first": first}
+    return None
+
+
+def check_structured(message: str, text: str, chart: dict):
+    """Compare the reply's final JSON with the rule tables for a recognised question."""
+    known = engine_answer(message, chart)
+    if known is None:
+        return None
+    from bazireason.p2_eval import _same
+    from bazireason.p2_prompts import extract_final_json
+
+    label, truth = known
+    answer = extract_final_json(text)
+    value = None
+    if isinstance(answer, dict):
+        value = answer.get("answer") if "answer" in answer else None
+        if value is None and len(answer) == 1:
+            value = next(iter(answer.values()))
+        if value is None and isinstance(truth, dict) and set(truth) <= set(answer):
+            value = {key: answer[key] for key in truth}
+    shown = truth if isinstance(truth, str) else json.dumps(truth, ensure_ascii=False)
+    if isinstance(truth, list) and truth and ":" in truth[0] and truth[0][1] != ":":
+        shown = "；".join(rules.relation_text(key) for key in truth)
+    elif isinstance(truth, list) and not truth:
+        shown = "无"
+    return {"label": label, "engine": shown, "agrees": value is not None and _same(truth, value)}
+
+
+def audit_reply(text: str, birth, message: str = "") -> dict:
     """Deterministic check of a model reply against the verified chart.
 
     The model is not trusted on facts the engine and rule tables can decide. Only
@@ -207,7 +272,17 @@ def audit_reply(text: str, birth) -> dict:
         elif (direction.group(1) == "顺") != (chart["luck"]["direction"] == "forward"):
             truth = "顺行" if chart["luck"]["direction"] == "forward" else "逆行"
             problems.append(f"回答说大运{direction.group(1)}行，按规则应为{truth}。")
-    return {"checked": checked, "problems": problems}
+    claim = UNVERIFIABLE.search(text)
+    if claim and "不能" not in text[max(0, claim.start() - 12) : claim.start()]:
+        problems.append(f"回答里出现了无法核验的断语“{claim.group(1)}”，这类说法没有可验证的依据。")
+    structured = check_structured(message, text, chart) if message else None
+    if structured:
+        checked += 1
+        if not structured["agrees"]:
+            problems.append(
+                f"结构化结论与规则引擎不符：{structured['label']}按规则应为 {structured['engine']}。"
+            )
+    return {"checked": checked, "problems": problems, "engine": structured}
 
 
 def chart_payload(birth: dict, until_year=None):
@@ -238,24 +313,110 @@ def compare_payload(first: dict, second: dict):
     return result
 
 
+DERIVATION_WORDS = (
+    "为什么",
+    "怎么算",
+    "怎样算",
+    "如何算",
+    "怎么来",
+    "怎么得",
+    "推一遍",
+    "推导",
+    "计算过程",
+)
+CHART_WORDS = ("柱", "四柱", "八字", "排盘")
+RECHECK_WORDS = ("不对", "算错", "确定吗", "再核对", "重新检查", "再检查", "可靠吗")
+UNVERIFIABLE = re.compile(
+    r"(难以成功|注定|必定|必然会|一定会|肯定会|绝对会|克夫|克妻|克父|克母|短命|必有大|必遭|大富大贵)"
+)
+
+
+def route(message: str, first_turn: bool) -> str:
+    """Which trained request format a question is closest to (keyword rules, no model)."""
+    if not first_turn and any(word in message for word in RECHECK_WORDS):
+        return "followup"
+    if any(w in message for w in DERIVATION_WORDS) and any(w in message for w in CHART_WORDS):
+        return "chart"
+    if any(word in message for word in SPECULATIVE):
+        return "policy"
+    return "rule"
+
+
+def first_turn_text(birth, message, kind):
+    """The first user turn, phrased the way the model was trained to read it."""
+    payload = chart_payload(birth)
+    chart, inputs, convention = payload["chart"], payload["inputs"], payload["convention"]
+    if chart["status"] != "ok" or kind == "chart":
+        # A calendar request: the same wording and tool facts as the training data.
+        parts = [
+            f"出生时间：{inputs['datetime']}" if inputs["datetime"] else "出生时间：（未提供）"
+        ]
+        parts.append(f"时区：{inputs['timezone']}" if inputs["timezone"] else "时区：（未提供）")
+        if "sect" in convention:
+            parts.append(f"日柱流派：sect={convention['sect']}")
+        if "fold" in inputs:
+            parts.append(f"重复钟点取第{'一二'[inputs['fold']]}次（fold={inputs['fold']}）")
+        ask = "请计算四柱。" if kind == "chart" else message
+        text = (
+            f"{ask}{'，'.join(parts)}。\n{facts_block(payload['facts'])}\n{OUTPUT_HINTS['chart']}"
+        )
+        return text, "chart"
+    gender = {"male": "，男命", "female": "，女命"}.get(chart.get("gender"), "")
+    return f"{chart_line(chart['pillars'])}{gender}。{message}\n{OUTPUT_HINTS[kind]}", kind
+
+
+def compare_turn_text(first, second, message):
+    """The comparison request in the trained counterfactual format."""
+    both = compare_payload(first, second)
+    lines = ["同一个人的两种出生信息："]
+    for label, side in (("情形A", both["a"]), ("情形B", both["b"])):
+        inputs, convention = side["inputs"], side["convention"]
+        sect = f"，日柱流派：sect={convention['sect']}" if "sect" in convention else ""
+        lines.append(f"{label}：出生时间：{inputs['datetime']}，时区：{inputs['timezone']}{sect}")
+    lines.append("[排盘工具·已核验]")
+    for label, side in (("情形A", both["a"]), ("情形B", both["b"])):
+        chart = side["chart"]
+        if chart["status"] == "ok":
+            moment = chart["reference_utc8"][0][:19].replace("T", " ")
+            lines.append(
+                f"{label}：参考时刻 {moment}（UTC+08:00），四柱 {pillars_text(chart['pillars'])}"
+            )
+        else:
+            lines.append(
+                f"{label}：未给出四柱（{chart['status']}：{'、'.join(chart['reason_codes'])}）"
+            )
+    lines.append(message)
+    lines.append(OUTPUT_HINTS["counterfactual"])
+    return "\n".join(lines)
+
+
 def chat_messages(birth, history, message, compare=None):
-    """Prompt for the model: system rules, the verified tool output, then the dialogue."""
-    context = []
-    if birth:
-        payload = chart_payload(birth, until_year=datetime.now().year + 1)
-        context.append(payload["tool_text"])
-        if payload["facts"]["candidates"] or payload["facts"]["normalization_error"]:
-            context.append(facts_block(payload["facts"]))
-    if compare:
-        both = compare_payload(*compare)
-        for label, side in (("情形A", both["a"]), ("情形B", both["b"])):
-            context.append(f"{label}：\n{side['tool_text']}")
-    turns = [m for m in history if m.get("role") in ("user", "assistant") and m.get("content")]
+    """(messages, format name) for the model.
+
+    The verified chart is re-attached to the first user turn on every request,
+    and each turn is phrased in one of the formats used in training. The model
+    still writes every answer; the application only chooses the request wording.
+    """
+    turns = [
+        {"role": m["role"], "content": m["content"]}
+        for m in history
+        if m.get("role") in ("user", "assistant") and m.get("content")
+    ]
     turns.append({"role": "user", "content": message})
-    if context:
-        # The tool output is attached to the first user turn so that follow-ups can refer to it.
-        turns[0] = {"role": "user", "content": "\n".join(context) + "\n" + turns[0]["content"]}
-    return [{"role": "system", "content": P2_SYSTEM}, *turns]
+    first = turns[0]["content"]
+    kind = route(first, True)
+    if compare:
+        turns[0]["content"], kind = compare_turn_text(*compare, first), "counterfactual"
+    elif birth:
+        turns[0]["content"], kind = first_turn_text(birth, first, kind)
+    for index in range(2, len(turns), 2):
+        later = route(turns[index]["content"], False)
+        turns[index]["content"] += (
+            "\n" + OUTPUT_HINTS["followup" if later == "followup" else "rule"]
+        )
+        if index == len(turns) - 1:
+            kind = "followup" if later == "followup" else "rule"
+    return [{"role": "system", "content": P2_SYSTEM}, *turns], kind
 
 
 class Models:
@@ -411,7 +572,9 @@ def make_handler(models, access_code, feedback_path):
                 return self._json({"error": "未找到微调适配器，请先训练或改用基础模型。"}, 409)
             compare = data.get("compare")
             compare = (compare["a"], compare["b"]) if isinstance(compare, dict) else None
-            messages = chat_messages(data.get("birth"), data.get("history") or [], message, compare)
+            messages, kind = chat_messages(
+                data.get("birth"), data.get("history") or [], message, compare
+            )
             self.send_response(200)
             self.send_header("Content-Type", "text/event-stream; charset=utf-8")
             self.send_header("Cache-Control", "no-store")
@@ -427,6 +590,7 @@ def make_handler(models, access_code, feedback_path):
                     {
                         "rules": relevant_rules(message),
                         "speculative": any(word in message for word in SPECULATIVE),
+                        "format": kind,
                     }
                 )
                 temperature = float(data.get("temperature") or 0)
@@ -438,7 +602,16 @@ def make_handler(models, access_code, feedback_path):
                         reply.append(event["token"])
                     if event.get("done"):
                         event["stats"]["seconds"] = round(time.perf_counter() - started, 1)
-                        event["audit"] = audit_reply("".join(reply), data.get("birth"))
+                        first_question = next(
+                            (
+                                m["content"]
+                                for m in data.get("history") or []
+                                if m.get("role") == "user"
+                            ),
+                            message,
+                        )
+                        asked = message if kind != "followup" else first_question
+                        event["audit"] = audit_reply("".join(reply), data.get("birth"), asked)
                     send(event)
             except (BrokenPipeError, ConnectionResetError):
                 return

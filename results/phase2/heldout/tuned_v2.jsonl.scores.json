@@ -1,0 +1,453 @@
+{
+  "model": "bazireason-qwen3-4b-lora-v2",
+  "n_rows": 633,
+  "summary": {
+    "overall": {
+      "n": 633,
+      "k": 456,
+      "rate": 0.7203791469194313
+    },
+    "parsed": {
+      "n": 633,
+      "k": 633,
+      "rate": 1.0
+    },
+    "by_family": {
+      "chart_facts": {
+        "n": 36,
+        "k": 32,
+        "rate": 0.8888888888888888
+      },
+      "chart_plain": {
+        "n": 36,
+        "k": 28,
+        "rate": 0.7777777777777778
+      },
+      "counterfactual": {
+        "n": 36,
+        "k": 32,
+        "rate": 0.8888888888888888
+      },
+      "dst_fold": {
+        "n": 18,
+        "k": 13,
+        "rate": 0.7222222222222222
+      },
+      "dst_gap": {
+        "n": 6,
+        "k": 6,
+        "rate": 1.0
+      },
+      "internal": {
+        "n": 32,
+        "k": 14,
+        "rate": 0.4375
+      },
+      "invalid": {
+        "n": 28,
+        "k": 23,
+        "rate": 0.8214285714285714
+      },
+      "jie_boundary": {
+        "n": 47,
+        "k": 35,
+        "rate": 0.7446808510638298
+      },
+      "mcq": {
+        "n": 40,
+        "k": 22,
+        "rate": 0.55
+      },
+      "missing": {
+        "n": 28,
+        "k": 27,
+        "rate": 0.9642857142857143
+      },
+      "multi_turn": {
+        "n": 40,
+        "k": 28,
+        "rate": 0.7
+      },
+      "policy": {
+        "n": 20,
+        "k": 20,
+        "rate": 1.0
+      },
+      "rule": {
+        "n": 96,
+        "k": 47,
+        "rate": 0.4895833333333333
+      },
+      "tz_facts": {
+        "n": 16,
+        "k": 16,
+        "rate": 1.0
+      },
+      "tz_known": {
+        "n": 20,
+        "k": 15,
+        "rate": 0.75
+      },
+      "tz_needs_tool": {
+        "n": 12,
+        "k": 8,
+        "rate": 0.6666666666666666
+      },
+      "verify": {
+        "n": 72,
+        "k": 65,
+        "rate": 0.9027777777777778
+      },
+      "zi_transition": {
+        "n": 50,
+        "k": 25,
+        "rate": 0.5
+      }
+    },
+    "by_task": {
+      "chart": {
+        "n": 297,
+        "k": 228,
+        "rate": 0.7676767676767676
+      },
+      "counterfactual": {
+        "n": 36,
+        "k": 32,
+        "rate": 0.8888888888888888
+      },
+      "dialog_follow_up": {
+        "n": 9,
+        "k": 3,
+        "rate": 0.3333333333333333
+      },
+      "dialog_pushback": {
+        "n": 10,
+        "k": 9,
+        "rate": 0.9
+      },
+      "dialog_recheck_right": {
+        "n": 15,
+        "k": 15,
+        "rate": 1.0
+      },
+      "dialog_self_correct": {
+        "n": 6,
+        "k": 1,
+        "rate": 0.16666666666666666
+      },
+      "internal": {
+        "n": 32,
+        "k": 14,
+        "rate": 0.4375
+      },
+      "mcq_flow_clash": {
+        "n": 15,
+        "k": 4,
+        "rate": 0.26666666666666666
+      },
+      "mcq_luck": {
+        "n": 7,
+        "k": 6,
+        "rate": 0.8571428571428571
+      },
+      "mcq_pattern": {
+        "n": 5,
+        "k": 2,
+        "rate": 0.4
+      },
+      "mcq_relation": {
+        "n": 6,
+        "k": 6,
+        "rate": 1.0
+      },
+      "mcq_seasonal": {
+        "n": 5,
+        "k": 4,
+        "rate": 0.8
+      },
+      "mcq_ten_god": {
+        "n": 2,
+        "k": 0,
+        "rate": 0.0
+      },
+      "policy": {
+        "n": 20,
+        "k": 20,
+        "rate": 1.0
+      },
+      "rule_elements": {
+        "n": 8,
+        "k": 6,
+        "rate": 0.75
+      },
+      "rule_flow_year": {
+        "n": 8,
+        "k": 1,
+        "rate": 0.125
+      },
+      "rule_hidden": {
+        "n": 8,
+        "k": 6,
+        "rate": 0.75
+      },
+      "rule_life_stage": {
+        "n": 8,
+        "k": 8,
+        "rate": 1.0
+      },
+      "rule_luck": {
+        "n": 8,
+        "k": 6,
+        "rate": 0.75
+      },
+      "rule_pattern": {
+        "n": 8,
+        "k": 4,
+        "rate": 0.5
+      },
+      "rule_relations": {
+        "n": 8,
+        "k": 0,
+        "rate": 0.0
+      },
+      "rule_relatives": {
+        "n": 8,
+        "k": 2,
+        "rate": 0.25
+      },
+      "rule_seasonal": {
+        "n": 8,
+        "k": 4,
+        "rate": 0.5
+      },
+      "rule_strength": {
+        "n": 8,
+        "k": 4,
+        "rate": 0.5
+      },
+      "rule_ten_god": {
+        "n": 8,
+        "k": 4,
+        "rate": 0.5
+      },
+      "rule_xun_kong": {
+        "n": 8,
+        "k": 2,
+        "rate": 0.25
+      },
+      "verify": {
+        "n": 72,
+        "k": 65,
+        "rate": 0.9027777777777778
+      }
+    },
+    "by_mode": {
+      "chart": {
+        "n": 72,
+        "k": 61,
+        "rate": 0.8472222222222222
+      },
+      "facts": {
+        "n": 204,
+        "k": 179,
+        "rate": 0.8774509803921569
+      },
+      "none": {
+        "n": 341,
+        "k": 208,
+        "rate": 0.6099706744868035
+      },
+      "self_chart": {
+        "n": 16,
+        "k": 8,
+        "rate": 0.5
+      }
+    },
+    "wording": {
+      "seen": {
+        "n": 360,
+        "k": 260,
+        "rate": 0.7222222222222222
+      },
+      "unseen": {
+        "n": 273,
+        "k": 196,
+        "rate": 0.717948717948718
+      }
+    },
+    "calendar": {
+      "exact_four_pillar": {
+        "n": 190,
+        "k": 152,
+        "rate": 0.8
+      },
+      "exact_no_tools": {
+        "n": 84,
+        "k": 63,
+        "rate": 0.75
+      },
+      "exact_with_facts": {
+        "n": 106,
+        "k": 89,
+        "rate": 0.839622641509434
+      },
+      "per_pillar": {
+        "year": {
+          "n": 190,
+          "rate": 0.9263157894736842
+        },
+        "month": {
+          "n": 190,
+          "rate": 0.9052631578947369
+        },
+        "day": {
+          "n": 190,
+          "rate": 0.8263157894736842
+        },
+        "hour": {
+          "n": 190,
+          "rate": 0.9052631578947369
+        }
+      },
+      "boundary_exact_with_facts": {
+        "n": 41,
+        "k": 29,
+        "rate": 0.7073170731707317
+      },
+      "boundary_exact_no_tools": {
+        "n": 27,
+        "k": 20,
+        "rate": 0.7407407407407407
+      },
+      "false_refusal": {
+        "n": 190,
+        "k": 13,
+        "rate": 0.06842105263157895
+      },
+      "status_decision": {
+        "n": 297,
+        "k": 253,
+        "rate": 0.8518518518518519
+      },
+      "clarification_decision": {
+        "n": 47,
+        "k": 33,
+        "rate": 0.7021276595744681
+      },
+      "needs_tool_decision": {
+        "n": 26,
+        "k": 14,
+        "rate": 0.5384615384615384
+      },
+      "invalid_unsupported_decision": {
+        "n": 34,
+        "k": 29,
+        "rate": 0.8529411764705882
+      },
+      "definitive_on_nonanswer": {
+        "n": 107,
+        "k": 31,
+        "rate": 0.2897196261682243
+      },
+      "definitive_on_needs_tool_right_by_engine": {
+        "n": 26,
+        "k": 5,
+        "rate": 0.19230769230769232
+      },
+      "reason_codes": {
+        "n": 107,
+        "k": 72,
+        "rate": 0.6728971962616822
+      }
+    },
+    "verification": {
+      "corruption_detection": {
+        "n": 39,
+        "k": 38,
+        "rate": 0.9743589743589743
+      },
+      "false_acceptance_of_corrupted": {
+        "n": 39,
+        "k": 1,
+        "rate": 0.02564102564102564
+      },
+      "localization": {
+        "n": 39,
+        "k": 36,
+        "rate": 0.9230769230769231
+      },
+      "repair": {
+        "n": 39,
+        "k": 34,
+        "rate": 0.8717948717948718
+      },
+      "false_alarm_on_sound_charts": {
+        "n": 33,
+        "k": 2,
+        "rate": 0.06060606060606061
+      },
+      "verdict": {
+        "n": 72,
+        "k": 69,
+        "rate": 0.9583333333333334
+      },
+      "internal_detection": {
+        "n": 19,
+        "k": 17,
+        "rate": 0.8947368421052632
+      },
+      "internal_false_acceptance": {
+        "n": 19,
+        "k": 2,
+        "rate": 0.10526315789473684
+      },
+      "internal_false_alarm": {
+        "n": 13,
+        "k": 3,
+        "rate": 0.23076923076923078
+      }
+    },
+    "dialogue": {
+      "contradiction_after_recheck_or_pushback": {
+        "n": 25,
+        "k": 1,
+        "rate": 0.04
+      },
+      "adopted_unsupported_claim": {
+        "n": 10,
+        "k": 1,
+        "rate": 0.1
+      },
+      "corrected_injected_error": {
+        "n": 6,
+        "k": 1,
+        "rate": 0.16666666666666666
+      },
+      "follow_up": {
+        "n": 9,
+        "k": 3,
+        "rate": 0.3333333333333333
+      }
+    },
+    "policy": {
+      "declined_definite_prediction": {
+        "n": 20,
+        "k": 20,
+        "rate": 1.0
+      },
+      "certain_claim_in_text": {
+        "n": 20,
+        "k": 0,
+        "rate": 0.0
+      }
+    }
+  },
+  "paraphrase_probe": {
+    "n_questions": 84,
+    "wordings_per_question": 3,
+    "all_three_answers_identical": 46,
+    "identical_rate": 0.5476190476190477,
+    "all_three_correct": 27,
+    "all_correct_rate": 0.32142857142857145
+  }
+}

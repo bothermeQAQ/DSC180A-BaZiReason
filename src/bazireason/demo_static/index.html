@@ -268,7 +268,7 @@ async function send(text) {
   $("input").value = ""; $("send").disabled = true; $("busy").textContent = "模型正在本机生成…";
   addMessage("user", message);
   const bubble = addMessage("bot", "");
-  let answer = "", speculative = false;
+  let answer = "", speculative = false, format = "";
   try {
     // The server re-attaches the verified chart to the first turn on every request,
     // so the browser only keeps the plain dialogue.
@@ -286,7 +286,7 @@ async function send(text) {
       for (const part of parts) {
         if (!part.startsWith("data: ")) continue;
         const event = JSON.parse(part.slice(6));
-        if (event.rules) { showRules(event.rules); speculative = event.speculative; }
+        if (event.rules) { showRules(event.rules); speculative = event.speculative; format = event.format; }
         if (event.token !== undefined) { answer += event.token; bubble.textContent = answer; $("log").scrollTop = $("log").scrollHeight; }
         if (event.done) { stats = event.stats; audit = event.audit; }
       }
@@ -306,14 +306,20 @@ async function send(text) {
       const box = document.createElement("div"); box.className = "flag";
       box.textContent = "核验未通过：模型回答中有与已核验排盘或规则不符的陈述——" + audit.problems.join("；") + " 请以左侧引擎结果为准。";
       bubble.appendChild(box);
+      if (audit.engine) {
+        const extra = document.createElement("div"); extra.className = "json";
+        extra.textContent = "规则引擎：" + audit.engine.label + " = " + audit.engine.engine;
+        bubble.appendChild(extra);
+      }
     } else if (audit && audit.checked) {
       const box = document.createElement("div"); box.className = "meta";
-      box.textContent = `核验：回答中 ${audit.checked} 处可核对的陈述与已核验排盘一致。`;
+      box.textContent = `核验：回答中 ${audit.checked} 处可核对的陈述与已核验排盘和规则表一致。`;
       bubble.appendChild(box);
     }
     if (stats) {
       const meta = document.createElement("div"); meta.className = "meta";
-      meta.textContent = `${stats.adapter ? "微调适配器" : "基础模型"} · ${stats.completion_tokens} 词元 · ${stats.tokens_per_second} 词元/秒 · ${stats.seconds} 秒`;
+      const names = {chart: "历法推导", rule: "规则问答", policy: "预测类提问", counterfactual: "情形对比", followup: "复核"};
+      meta.textContent = `${stats.adapter ? "微调适配器" : "基础模型"} · 提问格式：${names[format] || format} · ${stats.completion_tokens} 词元 · ${stats.tokens_per_second} 词元/秒 · ${stats.seconds} 秒`;
       bubble.appendChild(meta);
     }
     history.push({role: "user", content: message}, {role: "assistant", content: answer});

@@ -41,7 +41,7 @@ Description and leakage guards: [../data/phase2/README.md](../data/phase2/README
 # 20 real optimizer steps into *_smoke folders (about two minutes)
 .venv-mlx/bin/python scripts/phase2/train_lora.py --config configs/phase2/qwen3_4b_lora_v1.yaml --smoke
 
-# the full first epoch (2,171 iterations, about 2 h 11 min, 22 GB peak)
+# the first round: one epoch, 2,171 iterations, about 2 h 11 min, 22 GB peak
 nohup .venv-mlx/bin/python scripts/phase2/train_lora.py \
   --config configs/phase2/qwen3_4b_lora_v1.yaml > artifacts/logs/train_v1.log 2>&1 &
 ```
@@ -66,16 +66,15 @@ Keep the Mac awake and plugged in. Close other heavy applications: other work on
 
 The script loads the highest-numbered checkpoint in the adapter folder and continues to the configured number of iterations. The learning-rate schedule continues from the same point; the optimizer's moment estimates restart, and the data order is reshuffled.
 
-### Train further from a finished run (second epoch)
+### Second round: warm start on revised data
 
 ```bash
-mkdir -p artifacts/adapters/bazireason-qwen3-4b-lora-v1-e2
-cp artifacts/adapters/bazireason-qwen3-4b-lora-v1/0002171_adapters.safetensors \
-   artifacts/adapters/bazireason-qwen3-4b-lora-v1-e2/
-.venv-mlx/bin/python scripts/phase2/train_lora.py --config configs/phase2/qwen3_4b_lora_v1_e2.yaml --resume
+.venv-mlx/bin/python scripts/phase2/build_dataset.py --dataset 2 --check
+nohup .venv-mlx/bin/python scripts/phase2/train_lora.py \
+  --config configs/phase2/qwen3_4b_lora_v2.yaml > artifacts/logs/train_v2.log 2>&1 &
 ```
 
-`qwen3_4b_lora_v1_e2.yaml` is the same configuration with `epochs: 2.0` and its own output folders, so iterations 2,172-4,343 are a second pass over the data.
+`qwen3_4b_lora_v2.yaml` sets `init_adapter` to the selected first-round adapter, so training starts from those weights with a fresh schedule (peak learning rate 1e-4) on `data/phase2/train_v2`. It ran 1,714 iterations in 100 minutes. Any later round can be chained the same way: generate or edit data, point `init_adapter` at the adapter to continue from, and give the run its own `adapter_dir` and `log_dir`.
 
 ### If memory runs out
 
@@ -132,7 +131,7 @@ Letting friends try it:
 ## 7. Tests
 
 ```bash
-.venv/bin/python -m pytest -q          # 200 tests: 176 from Phase 1 plus 24 for Phase 2
+.venv/bin/python -m pytest -q          # 202 tests: 176 from Phase 1 plus 26 for Phase 2
 .venv-mlx/bin/ruff check src scripts tests
 ```
 

@@ -472,3 +472,56 @@ def test_second_round_wording_spells_out_each_addition():
     assert "9 + 5×118 + 29 + 222 = 850" in old
     assert "5×118 = 590，9 + 590 = 599，599 + 29 = 628，628 + 222 = 850" in new
     assert "戊为阳干、辛为阴干" in reason and reason.endswith("故为正印")
+
+
+# ---- Demo: request formats and the engine cross-check (no model needed) --------------------
+
+
+def test_demo_never_guesses_and_routes_questions_to_trained_formats():
+    from bazireason import demo_app as A
+
+    birth = {"date": "1995-08-21", "time": "09:40:00", "timezone": "Asia/Shanghai", "sect": 2}
+    payload = A.chart_payload(dict(birth, gender="female"))
+    assert payload["chart"]["pillars"] == {
+        "year": "乙亥",
+        "month": "甲申",
+        "day": "甲申",
+        "hour": "己巳",
+    }
+    missing = A.chart_payload(
+        {"date": "1995-08-21", "time": "", "timezone": "Asia/Shanghai", "sect": 2}
+    )
+    assert missing["chart"]["pillars"] is None and missing["uncertainties"][0].startswith(
+        "未给出四柱"
+    )
+    late = A.chart_payload({"date": "2001-03-10", "time": "23:30:00", "timezone": "Asia/Shanghai"})
+    assert late["chart"]["status"] == "ambiguous"
+    assert A.route("为什么日柱是甲申？请按规则推一遍。", True) == "chart"
+    assert A.route("我明年会不会发财？", True) == "policy"
+    assert A.route("月干是日主的什么十神？", True) == "rule"
+    assert A.route("不对吧，你是不是算错了？", False) == "followup"
+    messages, kind = A.chat_messages(birth, [], "月干是日主的什么十神？")
+    assert kind == "rule" and messages[0]["content"] == P2_SYSTEM
+    assert messages[1]["content"].startswith("八字：年柱乙亥 月柱甲申 日柱甲申 时柱己巳（日主甲）")
+    derivation, kind = A.chat_messages(birth, [], "为什么日柱是甲申？")
+    assert kind == "chart" and "[历法工具·时间事实]" in derivation[1]["content"]
+
+
+def test_demo_cross_checks_model_statements_against_the_engine():
+    from bazireason import demo_app as A
+
+    birth = {"date": "1995-08-21", "time": "09:40:00", "timezone": "Asia/Shanghai", "sect": 2}
+    wrong = A.audit_reply(
+        '故为食神。\n结论JSON: {"answer":"食神"}', birth, "月干是日主的什么十神？"
+    )
+    assert wrong["engine"]["engine"] == "比肩" and wrong["problems"]
+    right = A.audit_reply(
+        '故为比肩。\n结论JSON: {"answer":"比肩"}', birth, "月干是日主的什么十神？"
+    )
+    assert right["problems"] == [] and right["engine"]["agrees"]
+    luck = A.audit_reply("年干乙为阴干，所以大运顺行。", birth, "")
+    assert any("没有填写性别" in problem for problem in luck["problems"])
+    pillar = A.audit_reply("日柱为乙酉，日主为乙。", birth, "")
+    assert len(pillar["problems"]) == 2
+    claim = A.audit_reply("此命注定大富大贵。", birth, "")
+    assert any("无法核验" in problem for problem in claim["problems"])
