@@ -1,0 +1,618 @@
+{
+  "version": "rules_v2",
+  "note": "Phase 3 rule cards. Quotations are verbatim from the zh.wikisource.org transcriptions named in source_pages (retrieved 2026-11-11), including any transcription errors there. Statements are this project's paraphrases. Phase 2 cards (rules_v1) are unchanged and listed by id only.",
+  "source_pages": {
+    "yuanhai.txt": {
+      "wikisource_titles": [
+        "淵海子平"
+      ],
+      "sha256_of_downloaded_wikitext": "a4447be5d95eb073857cb8cba8f0e58a500de1c283016c76cfdedb0d1b2bb133"
+    },
+    "sanming2.txt": {
+      "wikisource_titles": [
+        "三命通會/卷二"
+      ],
+      "sha256_of_downloaded_wikitext": "e58c3f48d5f983548a35783c8f4961768a5c71edfa6d88f8fb37bc07acd53e0d"
+    },
+    "sanming3.txt": {
+      "wikisource_titles": [
+        "三命通會/卷三"
+      ],
+      "sha256_of_downloaded_wikitext": "2de8fc1bf46eb4ecc5436b6cece6d4a06e56330565f3aa6e4cfaa581f5b0488e"
+    },
+    "qiongtong.txt": {
+      "wikisource_titles": [
+        "穷通宝鉴"
+      ],
+      "sha256_of_downloaded_wikitext": "8ba17242f116583de2e10172e006f5ce5f74b23ccfc0bd24b886be135e9f20bd"
+    },
+    "ditian.txt": {
+      "wikisource_titles": [
+        "滴天髓/01",
+        "滴天髓/02",
+        "滴天髓/03",
+        "滴天髓/09",
+        "滴天髓/10",
+        "滴天髓/11",
+        "滴天髓/12"
+      ],
+      "sha256_of_downloaded_wikitext": "818d788b2835a695f70eca4b2dc05bdd0893bda5ab74c7557d5819b0013775f4"
+    }
+  },
+  "kinds": [
+    "declared_convention",
+    "deterministic_table",
+    "traditional_association"
+  ],
+  "cards": [
+    {
+      "id": "R-SS-02",
+      "kind": "deterministic_table",
+      "title": "十神五类之间的生克",
+      "statement": "十神按五行分为比劫、食伤、财、官杀、印五类。依五行次序：比劫生食伤、食伤生财、财生官杀、官杀生印、印生比劫；比劫克财、食伤克官杀、财克印、官杀克比劫（日主）、印克食伤。",
+      "quotations": [
+        {
+          "work": "《渊海子平》",
+          "attribution": "宋·徐大升 编（明刊本题 杨淙 增校）",
+          "section": "卷首·十干",
+          "text": "见庚：为偏官、七杀、官鬼、将星。",
+          "wikisource_page": "淵海子平",
+          "local_file": "yuanhai.txt",
+          "rights": "public domain",
+          "verified": true
+        },
+        {
+          "work": "《渊海子平》",
+          "attribution": "宋·徐大升 编（明刊本题 杨淙 增校）",
+          "section": "卷首·十干",
+          "text": "见己：为正财、正妻，剋母，为合神。",
+          "wikisource_page": "淵海子平",
+          "local_file": "yuanhai.txt",
+          "rights": "public domain",
+          "verified": true
+        }
+      ],
+      "works_cited_without_quotation": [],
+      "note": "Follows mechanically from R-WX-02 and R-SS-01; unit tests check all 5 x 5 class pairs.",
+      "review_status": "Quotations are verbatim from the zh.wikisource.org transcription and are checked by scripts/phase3/build_knowledge.py; the statement is this project's paraphrase. No domain expert has reviewed it."
+    },
+    {
+      "id": "R-SS-03",
+      "kind": "declared_convention",
+      "title": "天干十神组合的名称",
+      "statement": "年、月、时三干同时透出两类十神时，传统上给这种搭配起了名字：食神与七杀为食神制杀，伤官与正官为伤官见官，偏印与食神为枭神夺食，财与印为财坏印，比劫与财为比劫夺财，正官与印为官印相生，七杀与印为杀印相生，食伤与财为食伤生财，财与官杀为财生官杀，正官与七杀并见为官杀混杂。本项目只按“三干是否同时出现”来标注，不衡量远近、强弱与藏干，所以它只是标签，不是吉凶判断。",
+      "quotations": [
+        {
+          "work": "《渊海子平》",
+          "attribution": "宋·徐大升 编（明刊本题 杨淙 增校）",
+          "section": "诗诀",
+          "text": "伤官见官，为祸百端",
+          "wikisource_page": "淵海子平",
+          "local_file": "yuanhai.txt",
+          "rights": "public domain",
+          "verified": true
+        },
+        {
+          "work": "《渊海子平》",
+          "attribution": "宋·徐大升 编（明刊本题 杨淙 增校）",
+          "section": "诗诀",
+          "text": "食神制杀逢梟，不贫则夭。",
+          "wikisource_page": "淵海子平",
+          "local_file": "yuanhai.txt",
+          "rights": "public domain",
+          "verified": true
+        }
+      ],
+      "works_cited_without_quotation": [],
+      "note": "The classical verses attach outcomes to these pairings; this project reports only whether the pairing is present.",
+      "review_status": "Quotations are verbatim from the zh.wikisource.org transcription and are checked by scripts/phase3/build_knowledge.py; the statement is this project's paraphrase. No domain expert has reviewed it."
+    },
+    {
+      "id": "R-TG-01",
+      "kind": "declared_convention",
+      "title": "透干与通根",
+      "statement": "地支藏干若同时出现在年、月、时的天干上，称为透干。天干在某支的藏干中有同五行者，称为在该支通根，本气根最重，中气、余气次之。也有只认“同一个天干”才算根的做法，本项目按同五行计。",
+      "quotations": [],
+      "works_cited_without_quotation": [
+        {
+          "work": "《滴天髓》",
+          "attribution": "旧题 京图 撰、刘基 注",
+          "rights": "public domain"
+        },
+        {
+          "work": "《子平真诠》",
+          "attribution": "清·沈孝瞻",
+          "rights": "public domain"
+        }
+      ],
+      "note": "",
+      "review_status": "Quotations are verbatim from the zh.wikisource.org transcription and are checked by scripts/phase3/build_knowledge.py; the statement is this project's paraphrase. No domain expert has reviewed it."
+    },
+    {
+      "id": "R-GJ-02",
+      "kind": "declared_convention",
+      "title": "月令透干取格",
+      "statement": "月支本气为日主的比肩或劫财时，记作建禄格、阳刃格（阳干）或月劫格（阴干）。否则按本气、中气、余气的顺序，取月支藏干中第一个透于年、月、时干且不是比劫的，以它的十神名格；都不透则取本气。各家对多干并透、会合变格的处理不同，这里是一个明确写出的约定。",
+      "quotations": [],
+      "works_cited_without_quotation": [
+        {
+          "work": "《子平真诠》",
+          "attribution": "清·沈孝瞻",
+          "rights": "public domain"
+        }
+      ],
+      "note": "No verified quotation: 《子平真诠》 was not available on zh.wikisource.org when the knowledge base was built, so the work is cited without a quotation.",
+      "review_status": "Quotations are verbatim from the zh.wikisource.org transcription and are checked by scripts/phase3/build_knowledge.py; the statement is this project's paraphrase. No domain expert has reviewed it."
+    },
+    {
+      "id": "R-YS-01",
+      "kind": "declared_convention",
+      "title": "扶抑用神",
+      "statement": "扶抑一派看日主强弱：偏弱时喜印与比劫来生扶，偏强时喜食伤、财、官杀来泄耗克制。强弱沿用规则 R-QR-01 的三项计数，所以结论随那个约定而定。",
+      "quotations": [
+        {
+          "work": "《滴天髓》",
+          "attribution": "旧题 京图 撰、刘基 注",
+          "section": "衰旺论",
+          "text": "能知衰旺之真機，其於立命之奧，思過半矣。",
+          "wikisource_page": "滴天髓/11",
+          "local_file": "ditian.txt",
+          "rights": "public domain",
+          "verified": true
+        },
+        {
+          "work": "《滴天髓》",
+          "attribution": "旧题 京图 撰、刘基 注",
+          "section": "衰旺论（注）",
+          "text": "旺則宜洩宜傷，衰則喜幫喜助，子平之理也",
+          "wikisource_page": "滴天髓/11",
+          "local_file": "ditian.txt",
+          "rights": "public domain",
+          "verified": true
+        },
+        {
+          "work": "《滴天髓》",
+          "attribution": "旧题 京图 撰、刘基 注",
+          "section": "体用论",
+          "text": "道有體用，不可以一端論也，要在扶之抑之得其宜。",
+          "wikisource_page": "滴天髓/11",
+          "local_file": "ditian.txt",
+          "rights": "public domain",
+          "verified": true
+        }
+      ],
+      "works_cited_without_quotation": [],
+      "note": "",
+      "review_status": "Quotations are verbatim from the zh.wikisource.org transcription and are checked by scripts/phase3/build_knowledge.py; the statement is this project's paraphrase. No domain expert has reviewed it."
+    },
+    {
+      "id": "R-YS-02",
+      "kind": "declared_convention",
+      "title": "调候（简化）",
+      "statement": "调候一派看出生月份的寒暖燥湿。本项目只取最粗的一条：生于亥、子、丑月（冬）取火暖局，生于巳、午、未月（夏）取水润局，其余月份不特别论调候。《穷通宝鉴》按日干逐月给出的取用远比这细，本项目没有采用那张表。",
+      "quotations": [
+        {
+          "work": "《穷通宝鉴》",
+          "attribution": "清·余春台 编",
+          "section": "三冬乙木",
+          "text": "喜用丙火解冻，则花木有向阳之意",
+          "wikisource_page": "穷通宝鉴",
+          "local_file": "qiongtong.txt",
+          "rights": "public domain",
+          "verified": true
+        },
+        {
+          "work": "《穷通宝鉴》",
+          "attribution": "清·余春台 编",
+          "section": "五行总论",
+          "text": "故高者抑之使平，下者举之使崇，或益其不及，或损其太过。",
+          "wikisource_page": "穷通宝鉴",
+          "local_file": "qiongtong.txt",
+          "rights": "public domain",
+          "verified": true
+        }
+      ],
+      "works_cited_without_quotation": [],
+      "note": "",
+      "review_status": "Quotations are verbatim from the zh.wikisource.org transcription and are checked by scripts/phase3/build_knowledge.py; the statement is this project's paraphrase. No domain expert has reviewed it."
+    },
+    {
+      "id": "R-YS-03",
+      "kind": "declared_convention",
+      "title": "格局用神与三派并列",
+      "statement": "格局一派以月令所取的格局之神为用神，并分顺用（正官、财、印、食神）与逆用（七杀、伤官、劫刃）。扶抑、调候、格局三派回答的不是同一个问题，结论可以不同；没有说明流派时，“用神是什么”没有唯一答案，应分别列出。",
+      "quotations": [],
+      "works_cited_without_quotation": [
+        {
+          "work": "《子平真诠》",
+          "attribution": "清·沈孝瞻",
+          "rights": "public domain"
+        }
+      ],
+      "note": "No verified quotation (see R-GJ-02).",
+      "review_status": "Quotations are verbatim from the zh.wikisource.org transcription and are checked by scripts/phase3/build_knowledge.py; the statement is this project's paraphrase. No domain expert has reviewed it."
+    },
+    {
+      "id": "R-SM-01",
+      "kind": "deterministic_table",
+      "title": "禄、阳刃、天乙贵人（以日干查）",
+      "statement": "禄：甲寅、乙卯、丙戊巳、丁己午、庚申、辛酉、壬亥、癸子。阳刃为禄前一位，只有阳干有：甲卯、丙戊午、庚酉、壬子。天乙贵人：甲戊庚见丑未，乙己见子申，丙丁见亥酉，壬癸见卯巳，辛见寅午。天乙贵人另有“甲戊兼牛羊、庚辛逢马虎”的歌诀版本，本项目用上面这一版。",
+      "quotations": [
+        {
+          "work": "《三命通会》卷三",
+          "attribution": "明·万民英",
+          "section": "论十干禄",
+          "text": "甲禄寅，乙禄卯，庚禄申，辛禄酉，壬禄亥，癸禄子",
+          "wikisource_page": "三命通會/卷三",
+          "local_file": "sanming3.txt",
+          "rights": "public domain",
+          "verified": true
+        },
+        {
+          "work": "《渊海子平》",
+          "attribution": "宋·徐大升 编（明刊本题 杨淙 增校）",
+          "section": "论阳刃",
+          "text": "以禄前一位是也；如甲禄在寅，卯为阳刃。",
+          "wikisource_page": "淵海子平",
+          "local_file": "yuanhai.txt",
+          "rights": "public domain",
+          "verified": true
+        },
+        {
+          "work": "《渊海子平》",
+          "attribution": "宋·徐大升 编（明刊本题 杨淙 增校）",
+          "section": "论阳刃",
+          "text": "甲丙戊庚壬五阳有刃，乙丁己辛癸五阴无刃，故名阳刃。",
+          "wikisource_page": "淵海子平",
+          "local_file": "yuanhai.txt",
+          "rights": "public domain",
+          "verified": true
+        },
+        {
+          "work": "《三命通会》卷三",
+          "attribution": "明·万民英",
+          "section": "论天乙贵人",
+          "text": "寄火贵于酉亥，寄水贵于卯巳",
+          "wikisource_page": "三命通會/卷三",
+          "local_file": "sanming3.txt",
+          "rights": "public domain",
+          "verified": true
+        }
+      ],
+      "works_cited_without_quotation": [],
+      "note": "",
+      "review_status": "Quotations are verbatim from the zh.wikisource.org transcription and are checked by scripts/phase3/build_knowledge.py; the statement is this project's paraphrase. No domain expert has reviewed it."
+    },
+    {
+      "id": "R-SM-02",
+      "kind": "declared_convention",
+      "title": "驿马、桃花（咸池）、华盖（以三合局查）",
+      "statement": "申子辰：马在寅、桃花在酉、华盖在辰；寅午戌：马在申、桃花在卯、华盖在戌；巳酉丑：马在亥、桃花在午、华盖在丑；亥卯未：马在巳、桃花在子、华盖在未。古书以年支所在的三合局查，后来也有以日支查的；两种查法结果可能不同，回答时须说明以哪一支为准。",
+      "quotations": [
+        {
+          "work": "《三命通会》卷三",
+          "attribution": "明·万民英",
+          "section": "论驿马",
+          "text": "申子辰人，马在寅而五阳干乘之。",
+          "wikisource_page": "三命通會/卷三",
+          "local_file": "sanming3.txt",
+          "rights": "public domain",
+          "verified": true
+        },
+        {
+          "work": "《三命通会》卷三",
+          "attribution": "明·万民英",
+          "section": "论驿马",
+          "text": "寅午戌生人，马在申而五阳干乘之。",
+          "wikisource_page": "三命通會/卷三",
+          "local_file": "sanming3.txt",
+          "rights": "public domain",
+          "verified": true
+        },
+        {
+          "work": "《三命通会》卷二",
+          "attribution": "明·万民英",
+          "section": "论咸池",
+          "text": "申子辰酉、亥卯未子即长生第二位沐浴之宫是也。一名败神，一名桃花煞",
+          "wikisource_page": "三命通會/卷二",
+          "local_file": "sanming2.txt",
+          "rights": "public domain",
+          "verified": true
+        }
+      ],
+      "works_cited_without_quotation": [],
+      "note": "",
+      "review_status": "Quotations are verbatim from the zh.wikisource.org transcription and are checked by scripts/phase3/build_knowledge.py; the statement is this project's paraphrase. No domain expert has reviewed it."
+    },
+    {
+      "id": "R-SY-01",
+      "kind": "deterministic_table",
+      "title": "流年、大运与原局的关系",
+      "statement": "流年干支按 (Y − 4) mod 60 求出后：流年天干对日主论十神；流年地支与四柱地支逐一查合冲刑害破。流年与某柱干支完全相同为伏吟；地支相冲而且天干五行相克为天克地冲（反吟）；流年地支与年支相同为值太岁，相冲为冲太岁；流年与当前大运干支相同为岁运并临。这些都是可以机械判定的关系，本身不说明会发生什么事。",
+      "quotations": [
+        {
+          "work": "《渊海子平》",
+          "attribution": "宋·徐大升 编（明刊本题 杨淙 增校）",
+          "section": "论大运",
+          "text": "子平之法，大运看支，岁君看干，交运同接木。",
+          "wikisource_page": "淵海子平",
+          "local_file": "yuanhai.txt",
+          "rights": "public domain",
+          "verified": true
+        },
+        {
+          "work": "《渊海子平》",
+          "attribution": "宋·徐大升 编（明刊本题 杨淙 增校）",
+          "section": "论阳刃",
+          "text": "忌反吟伏吟",
+          "wikisource_page": "淵海子平",
+          "local_file": "yuanhai.txt",
+          "rights": "public domain",
+          "verified": true
+        }
+      ],
+      "works_cited_without_quotation": [],
+      "note": "",
+      "review_status": "Quotations are verbatim from the zh.wikisource.org transcription and are checked by scripts/phase3/build_knowledge.py; the statement is this project's paraphrase. No domain expert has reviewed it."
+    },
+    {
+      "id": "R-LQ-02",
+      "kind": "traditional_association",
+      "title": "四柱宫位的传统对应",
+      "statement": "传统上以年柱象祖上与父母、月柱象父母兄弟、日柱象自身与配偶（日支称配偶宫）、时柱象子女。这是象征性的对应，不能据此断定任何人的实际情况。",
+      "quotations": [
+        {
+          "work": "《三命通会》卷二",
+          "attribution": "明·万民英",
+          "section": "论年月日时",
+          "text": "年为根，月为苗，日为花，时为实",
+          "wikisource_page": "三命通會/卷二",
+          "local_file": "sanming2.txt",
+          "rights": "public domain",
+          "verified": true
+        },
+        {
+          "work": "《渊海子平》",
+          "attribution": "宋·徐大升 编（明刊本题 杨淙 增校）",
+          "section": "诗诀",
+          "text": "日上傷官，難為配偶，時上傷官，子嗣無傳。",
+          "wikisource_page": "淵海子平",
+          "local_file": "yuanhai.txt",
+          "rights": "public domain",
+          "verified": true
+        }
+      ],
+      "works_cited_without_quotation": [],
+      "note": "The second quotation shows the classical day-to-spouse and hour-to-children association; its claim about outcomes is not adopted.",
+      "review_status": "Quotations are verbatim from the zh.wikisource.org transcription and are checked by scripts/phase3/build_knowledge.py; the statement is this project's paraphrase. No domain expert has reviewed it."
+    },
+    {
+      "id": "R-YD-01",
+      "kind": "declared_convention",
+      "title": "流年“引动”的判定",
+      "statement": "本项目把下面两种情形记为某一方面被流年引动：流年天干是该方面的星（如男命看婚姻的财、女命的官杀），记作“星现”；流年地支与对应宫位的地支相冲或六合，记作“宫动”。这只是把符号上的巧合列出来，传统上用它来提示“值得留意的年份”，并不是对事件的预测。",
+      "quotations": [],
+      "works_cited_without_quotation": [
+        {
+          "work": "《渊海子平》",
+          "attribution": "宋·徐大升 编（明刊本题 杨淙 增校）",
+          "rights": "public domain"
+        },
+        {
+          "work": "《三命通会》卷二",
+          "attribution": "明·万民英",
+          "rights": "public domain"
+        }
+      ],
+      "note": "Declared convention of this project; practitioners use many further conditions.",
+      "review_status": "Quotations are verbatim from the zh.wikisource.org transcription and are checked by scripts/phase3/build_knowledge.py; the statement is this project's paraphrase. No domain expert has reviewed it."
+    }
+  ],
+  "phase2_card_ids": [
+    "R-WX-01",
+    "R-WX-02",
+    "R-GZ-01",
+    "R-SS-01",
+    "R-CG-01",
+    "R-HE-01",
+    "R-ZH-01",
+    "R-ZH-02",
+    "R-ZH-03",
+    "R-KW-01",
+    "R-WS-01",
+    "R-CS-01",
+    "R-GJ-01",
+    "R-QR-01",
+    "R-DY-01",
+    "R-DY-02",
+    "R-LN-01",
+    "R-LQ-01"
+  ],
+  "tables": {
+    "禄": {
+      "甲": "寅",
+      "乙": "卯",
+      "丙": "巳",
+      "丁": "午",
+      "戊": "巳",
+      "己": "午",
+      "庚": "申",
+      "辛": "酉",
+      "壬": "亥",
+      "癸": "子"
+    },
+    "阳刃": {
+      "甲": "卯",
+      "丙": "午",
+      "戊": "午",
+      "庚": "酉",
+      "壬": "子"
+    },
+    "天乙贵人": {
+      "甲": "丑未",
+      "戊": "丑未",
+      "庚": "丑未",
+      "乙": "子申",
+      "己": "子申",
+      "丙": "亥酉",
+      "丁": "亥酉",
+      "壬": "卯巳",
+      "癸": "卯巳",
+      "辛": "寅午"
+    },
+    "驿马": {
+      "申子辰": "寅",
+      "寅午戌": "申",
+      "巳酉丑": "亥",
+      "亥卯未": "巳"
+    },
+    "桃花": {
+      "申子辰": "酉",
+      "寅午戌": "卯",
+      "巳酉丑": "午",
+      "亥卯未": "子"
+    },
+    "华盖": {
+      "申子辰": "辰",
+      "寅午戌": "戌",
+      "巳酉丑": "丑",
+      "亥卯未": "未"
+    },
+    "十神五类": {
+      "比肩": "比劫",
+      "劫财": "比劫",
+      "食神": "食伤",
+      "伤官": "食伤",
+      "偏财": "财",
+      "正财": "财",
+      "七杀": "官杀",
+      "正官": "官杀",
+      "偏印": "印",
+      "正印": "印"
+    },
+    "十神组合": [
+      [
+        [
+          "食神"
+        ],
+        [
+          "七杀"
+        ],
+        "食神制杀",
+        "克"
+      ],
+      [
+        [
+          "伤官"
+        ],
+        [
+          "正官"
+        ],
+        "伤官见官",
+        "克"
+      ],
+      [
+        [
+          "偏印"
+        ],
+        [
+          "食神"
+        ],
+        "枭神夺食",
+        "克"
+      ],
+      [
+        [
+          "正财",
+          "偏财"
+        ],
+        [
+          "正印",
+          "偏印"
+        ],
+        "财坏印",
+        "克"
+      ],
+      [
+        [
+          "比肩",
+          "劫财"
+        ],
+        [
+          "正财",
+          "偏财"
+        ],
+        "比劫夺财",
+        "克"
+      ],
+      [
+        [
+          "正官"
+        ],
+        [
+          "正印",
+          "偏印"
+        ],
+        "官印相生",
+        "生"
+      ],
+      [
+        [
+          "七杀"
+        ],
+        [
+          "正印",
+          "偏印"
+        ],
+        "杀印相生",
+        "生"
+      ],
+      [
+        [
+          "食神",
+          "伤官"
+        ],
+        [
+          "正财",
+          "偏财"
+        ],
+        "食伤生财",
+        "生"
+      ],
+      [
+        [
+          "正财",
+          "偏财"
+        ],
+        [
+          "正官",
+          "七杀"
+        ],
+        "财生官杀",
+        "生"
+      ],
+      [
+        [
+          "正官"
+        ],
+        [
+          "七杀"
+        ],
+        "官杀混杂",
+        "并见"
+      ]
+    ],
+    "格局顺逆": {
+      "正官": "顺用",
+      "正财": "顺用",
+      "偏财": "顺用",
+      "正印": "顺用",
+      "偏印": "顺用",
+      "食神": "顺用",
+      "七杀": "逆用",
+      "伤官": "逆用",
+      "比肩": "逆用",
+      "劫财": "逆用"
+    }
+  }
+}
