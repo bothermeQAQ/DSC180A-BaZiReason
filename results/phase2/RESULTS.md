@@ -403,6 +403,13 @@ The published numbers use a different data version, prompt flow, chart source an
 
 Reply length: A. base, no tools: 237 tokens, 67.4% truncated; B. base, verified tools: 215 tokens, 33.9% truncated; C. fine-tuned, no tools: 57 tokens, 3.4% truncated; D. fine-tuned, verified tools: 69 tokens, 4.6% truncated.
 
+### Sensitivity: untuned model with a 1,024-token budget (one sampled run)
+
+| Condition | Accuracy, all 555 | Unanswered | Accuracy, BaZi-only |
+|---|---:|---:|---:|
+| A. base, no tools | 25.6% | 15.1% | 27.9% |
+| B. base, verified tools | 31.2% | 4.3% | 31.4% |
+
 ### Second-round adapter on BaziQA (same protocol; base rows are the same runs as above)
 
 | Condition | All 555 | 95% interval | BaZi-only 290 | Official keys 365 | Unanswered | Paper years macro |

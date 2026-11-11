@@ -15,7 +15,7 @@ All numbers below come from files under `results/phase2/`; the full tables are i
 | Selected adapter | `artifacts/adapters/bazireason-qwen3-4b-lora-v2/adapters.safetensors`, SHA-256 `4a61e636…ded8f418`, chosen over the round-1 adapter on a validation split (64.0% vs 50.7% of items correct) |
 | Main gains over the untuned model | Held-out items correct 8.4% → 72.0%; exact four pillars 0/190 → 152/190; benchmark_v3 with visible reasoning 0/225 → 204/225 exact with tool facts and 156/225 without; corrupted charts detected 0/39 → 38/39; definite personal predictions declined 1/20 → 20/20 |
 | What is still weak or got worse | Strict one-pass JSON without the answer in context: still 0/225 exact. A corrupted tool answer in that format is still followed 98.8% of the time. The model still gives a definite chart for 29-41% of requests that have none. Round 2 asks for a tool less often when it should. Rule look-ups are right only about half the time |
-| BaziQA contest accuracy | Fine-tuned: 30.4% without tools and 31.7% with verified tools on all 555 questions (chance 24.7%). Untuned: 8.3% and 20.7%, mostly because it runs out of its token budget before answering |
+| BaziQA contest accuracy | Fine-tuned: 30.4% without tools and 31.7% with verified tools on all 555 questions (chance 24.7%). Untuned at the same 256-token budget: 8.3% and 20.7%, because it runs out of budget before answering; with 1,024 tokens it reaches 25.6% and 31.2%. Fine-tuning did not improve contest accuracy |
 | Versus published baselines | Hosted frontier models in the BaziQA paper: 32-37% on 2021-2025. This model: 26.5-30.7% on those years. Human contest champions: 55% on average. Not like-for-like (see section 6) |
 | Research contribution | A measured reliability gain that is attributable: tools alone do nothing for the untuned small model, fine-tuning alone gets 69%, the two together 91% on an independent benchmark, with the known failure modes quantified |
 | Run the chatbot | `.venv-mlx/bin/python -m bazireason.demo_app`, then open `http://127.0.0.1:8765` |
@@ -135,7 +135,7 @@ BaziQA commit `3bad3de` (data identical to tag v2.3.0): 555 questions about 117 
 How to read this:
 
 - **The fine-tuned model is about six points above chance, and the interval excludes chance.** That is a small effect.
-- **Most of the gap to the untuned model is answering at all.** The untuned model ran out of its budget on 41-72% of questions. On the questions it did answer it was right 30-35% of the time, the same range as the fine-tuned model. The data therefore do not show that fine-tuning improved contest judgement; they show it made the model answer concisely. SENSITIVITY_PLACEHOLDER
+- **Most of the gap to the untuned model is answering at all.** The untuned model ran out of its budget on 41-72% of questions. On the questions it did answer it was right 30-35% of the time, the same range as the fine-tuned model. The data therefore do not show that fine-tuning improved contest judgement; they show it made the model answer concisely. A follow-up run confirms it: given 1,024 tokens instead of 256 (one sampled run), the untuned model scores 25.6% [21.8, 29.6] without tools and 31.2% [27.2, 35.2] with verified charts, with 15% and 4% unanswered. With room to finish, the untuned model with tools matches the fine-tuned model.
 - **Verified charts did not help the fine-tuned model:** +1.3 points [−1.5, +4.1] in round 2 and −1.0 [−4.3, +2.3] in round 1. A correct chart is not what limits contest accuracy.
 - **The score does not track the method.** Across both adapters, accuracy was 26-29% on questions whose setter wrote "八字" and 33-39% on questions set with Zi Wei Dou Shu, for which our BaZi chart is the wrong instrument. This suggests the above-chance part comes from which answers are plausible for a life in general, not from reading the chart.
 - **Comparison with people and with published systems.** Contest champions averaged 55.4% on the twelve contests with an archived score; this model scores about 30% on the same questions. The BaziQA paper reports 32.1-36.7% for five hosted frontier models on 2021-2025; this 4 B local model scores 26.5% (no tools) and 30.7% (tools) on those years. The paper used an earlier data version, its own charts and a multi-turn flow, so the rows are context, not a ranking.
@@ -155,7 +155,8 @@ Tables by contest year, question category, setter's method and person are in `RE
 | Exact four pillars, boundary cases (solar term or Zi hour), held-out split | 0/41 | 20/27 | 29/41 |
 | Using a correct supplied answer, strict JSON | 224/225 | n/a | 225/225 |
 | Rejecting a corrupted supplied answer, strict JSON | 0% | n/a | 1.2% |
-| BaziQA, all questions | 20.7% | 30.4% | 31.7% |
+| BaziQA, all questions, 256-token budget | 20.7% | 30.4% | 31.7% |
+| BaziQA, all questions, untuned model given 1,024 tokens | 31.2% | n/a | n/a |
 
 The held-out "fine-tuning alone" and "both" columns use different requests (the no-tool rows and the with-facts rows of the split), so that row shows levels, not a paired difference.
 
@@ -167,7 +168,7 @@ The held-out "fine-tuning alone" and "both" columns use different requests (the 
 4. **Rule look-ups are unreliable.** 47/96 on the first split and 37/72 on the fresh one. Typical errors are a wrong polarity or direction in a Ten God, and missed relations in a pairwise scan. The same question in three wordings gets three identical answers for 46 of 84 questions, and three correct answers for 27.
 5. **Strict one-pass computation did not improve at all** (section 6.2), and corrupted tool answers in that format are still followed.
 6. **Free-form questions are brittle.** In the demo, a question phrased unlike the training data produced a made-up "traditional" statement. The demo now phrases requests in trained formats and checks each reply against the engine (section 9).
-7. **Contest judgement** did not measurably improve (section 6.3).
+7. **Contest judgement did not improve.** At an equal chance to finish its answer, the untuned model with verified charts scores 31.2%, the same as the fine-tuned model (section 6.3).
 
 ## 8. Research contribution
 
@@ -179,7 +180,7 @@ The differentiating claim is reliability that can be measured and attributed, no
 4. **Counterfactual comparisons** at 89-97% on held-out pairs.
 5. **A first test of H1-H3 with a real model**, including a clean H1 pattern (coin-flip near a solar term without facts) and an H2 effect whose size depends on what the model can already compute.
 6. **An attribution result:** for this small model, tools alone do nothing, fine-tuning alone does most of the work, and tools add what cannot be computed.
-7. **A negative transfer result:** better calendar reasoning did not improve agreement with contest answer keys.
+7. **A negative transfer result:** better calendar reasoning did not improve agreement with contest answer keys; the only contest-side gain from fine-tuning is concise answers (57-69 tokens instead of 215-500).
 
 ## 9. Demo
 
@@ -192,7 +193,7 @@ Because the model still makes rule slips, every reply is checked: named pillars,
 - **One base model, one seed per round, one machine.** No variance across training seeds was measured.
 - **Templated data.** The held-out split shares the generator and answer style of the training data. It tests unseen dates, events and some wordings, not open conversation. benchmark_v3 is independent in cases but shares prompt formats that were also used in training.
 - **Test reuse.** The first test split informed the round-2 data change. The fresh split and benchmark_v3 were not used that way; round-2 claims rest on them.
-- **Untuned baseline and budgets.** The untuned model loses many items by not concluding within the token limit. Its zero on exact charts is real; its BaziQA and overall held-out scores understate what it could do with a longer budget.
+- **Untuned baseline and budgets.** The untuned model loses many items by not concluding within the token limit. Its zero on exact charts is real, and on BaziQA the larger-budget run removes the effect. The held-out split was not rerun with a larger budget, so the untuned model's 8.4% there is a lower bound on what it could do; none of its parsed charts was correct.
 - **Single-engine labels.** All labels inherit the fixed UTC+08:00 profile of the Phase 1 engine. This is not local or true-solar-time charting.
 - **Conventions.** The pattern label and strength count are declared simplifications. No domain expert has reviewed the rule statements or their attribution.
 - **BaziQA.** Public data, possible pretraining contamination, answer keys of mixed provenance (365 official, 190 from a repost that matches every official key that could be checked), and a category scheme based on keywords written for this project.

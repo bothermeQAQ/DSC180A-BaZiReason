@@ -28,7 +28,7 @@ Headline results (untuned model → fine-tuned model, identical prompts):
 - **Held-out split, unseen years:** 8.4% → 72.0% of 633 items correct; exact four pillars 0/190 → 152/190.
 - **benchmark_v3 with visible reasoning:** exact four pillars 0/225 → 204/225 with tool facts and 0/225 → 156/225 without. H2 (tool facts minus direct) is +21.3 points [13.1, 30.1] for the fine-tuned model and 0 for the untuned one.
 - **benchmark_v3, strict one-pass JSON:** still 0/225 without the answer in context, and a corrupted tool answer is still followed 98.8% of the time. Fine-tuning fixed the output format, not one-pass computation.
-- **BaziQA contest questions (evaluation only, never trained on):** 30.4% without tools and 31.7% with verified charts on 555 questions; chance is 24.7%, human champions average 55%. Verified charts did not help, and the data do not show better contest judgement than the untuned model has on the questions it manages to answer. Agreement with contest answer keys is not evidence that destiny can be predicted.
+- **BaziQA contest questions (evaluation only, never trained on):** 30.4% without tools and 31.7% with verified charts on 555 questions; chance is 24.7%, human champions average 55%. Verified charts did not help the fine-tuned model, and fine-tuning did not improve contest accuracy: the untuned model scores 8-21% at the same 256-token budget only because it runs out of room, and 25.6% / 31.2% (without / with charts) when given 1,024 tokens. Agreement with contest answer keys is not evidence that destiny can be predicted.
 
 ```bash
 .venv-mlx/bin/python -m bazireason.demo_app     # local chat demo at http://127.0.0.1:8765

@@ -7596,6 +7596,1954 @@
    }
   }
  },
+ "baziqa_budget1024": {
+  "benchmark": "BaziQA",
+  "benchmark_commit": "3bad3deaa5aa3a191c9c68b4d8b17f46decff45e",
+  "note": "Agreement with published contest answer keys. Not evidence that destiny can be predicted. Unanswered replies are wrong.",
+  "tracks": {
+   "full": 555,
+   "bazi_only": 290,
+   "official_key": 365,
+   "bazi_only_official_key": 160,
+   "contest8_2021_2026": 240,
+   "paper_years_2021_2025": 200
+  },
+  "completeness": {
+   "base_no_tools": {
+    "1": 555
+   },
+   "base_tools": {
+    "1": 555
+   }
+  },
+  "conditions": {
+   "base_no_tools": {
+    "full": {
+     "n_questions": 555,
+     "n_runs": 1,
+     "accuracy_mean": 0.25585585585585585,
+     "accuracy_sd_over_runs": 0.0,
+     "accuracy_per_run": [
+      0.25585585585585585
+     ],
+     "macro_average_over_years": 0.24384920634920637,
+     "by_year": {
+      "2010": 0.2222222222222222,
+      "2011": 0.0,
+      "2012": 0.2,
+      "2013": 0.3125,
+      "2014": 0.11428571428571428,
+      "2015": 0.17142857142857143,
+      "2016": 0.3142857142857143,
+      "2017": 0.2857142857142857,
+      "2018": 0.375,
+      "2019": 0.375,
+      "2020": 0.2,
+      "2021": 0.25,
+      "2022": 0.2,
+      "2023": 0.325,
+      "2024": 0.3,
+      "2025": 0.225,
+      "2026": 0.275
+     },
+     "majority_vote": 0.25585585585585585,
+     "unanswered_rate": 0.15135135135135136,
+     "accuracy_among_answered": 0.30148619957537154,
+     "n_answered": 471,
+     "chance": 0.24738738738738741,
+     "interval95_person_bootstrap": [
+      0.21794871794871795,
+      0.2961672473867596
+     ],
+     "above_chance": 0.008468468468468437
+    },
+    "bazi_only": {
+     "n_questions": 290,
+     "n_runs": 1,
+     "accuracy_mean": 0.2793103448275862,
+     "accuracy_sd_over_runs": 0.0,
+     "accuracy_per_run": [
+      0.2793103448275862
+     ],
+     "macro_average_over_years": 0.26498168498168495,
+     "by_year": {
+      "2014": 0.1,
+      "2015": 0.16,
+      "2016": 0.4,
+      "2017": 0.26666666666666666,
+      "2018": 0.4,
+      "2019": 0.44,
+      "2020": 0.17142857142857143,
+      "2021": 0.25,
+      "2022": 0.0,
+      "2023": 0.4,
+      "2024": 0.26666666666666666,
+      "2025": 0.24,
+      "2026": 0.35
+     },
+     "majority_vote": 0.2793103448275862,
+     "unanswered_rate": 0.1413793103448276,
+     "accuracy_among_answered": 0.3253012048192771,
+     "n_answered": 249,
+     "chance": 0.24913793103448276,
+     "interval95_person_bootstrap": [
+      0.2222222222222222,
+      0.3401360544217687
+     ],
+     "above_chance": 0.030172413793103453
+    },
+    "official_key": {
+     "n_questions": 365,
+     "n_runs": 1,
+     "accuracy_mean": 0.2602739726027397,
+     "accuracy_sd_over_runs": 0.0,
+     "accuracy_per_run": [
+      0.2602739726027397
+     ],
+     "macro_average_over_years": 0.243369708994709,
+     "by_year": {
+      "2010": 0.2222222222222222,
+      "2011": 0.0,
+      "2012": 0.2,
+      "2013": 0.3125,
+      "2015": 0.17142857142857143,
+      "2016": 0.3142857142857143,
+      "2018": 0.375,
+      "2022": 0.2,
+      "2023": 0.325,
+      "2024": 0.3,
+      "2025": 0.225,
+      "2026": 0.275
+     },
+     "majority_vote": 0.2602739726027397,
+     "unanswered_rate": 0.16986301369863013,
+     "accuracy_among_answered": 0.31353135313531355,
+     "n_answered": 303,
+     "chance": 0.2467123287671233,
+     "interval95_person_bootstrap": [
+      0.21351351351351353,
+      0.30939226519337015
+     ],
+     "above_chance": 0.013561643835616422
+    },
+    "bazi_only_official_key": {
+     "n_questions": 160,
+     "n_runs": 1,
+     "accuracy_mean": 0.30625,
+     "accuracy_sd_over_runs": 0.0,
+     "accuracy_per_run": [
+      0.30625
+     ],
+     "macro_average_over_years": 0.27708333333333335,
+     "by_year": {
+      "2015": 0.16,
+      "2016": 0.4,
+      "2018": 0.4,
+      "2022": 0.0,
+      "2023": 0.4,
+      "2024": 0.26666666666666666,
+      "2025": 0.24,
+      "2026": 0.35
+     },
+     "majority_vote": 0.30625,
+     "unanswered_rate": 0.15625,
+     "accuracy_among_answered": 0.362962962962963,
+     "n_answered": 135,
+     "chance": 0.25,
+     "interval95_person_bootstrap": [
+      0.22929936305732485,
+      0.3885350318471338
+     ],
+     "above_chance": 0.05625000000000002
+    },
+    "contest8_2021_2026": {
+     "n_questions": 240,
+     "n_runs": 1,
+     "accuracy_mean": 0.2625,
+     "accuracy_sd_over_runs": 0.0,
+     "accuracy_per_run": [
+      0.2625
+     ],
+     "macro_average_over_years": 0.2625,
+     "by_year": {
+      "2021": 0.25,
+      "2022": 0.2,
+      "2023": 0.325,
+      "2024": 0.3,
+      "2025": 0.225,
+      "2026": 0.275
+     },
+     "majority_vote": 0.2625,
+     "unanswered_rate": 0.16666666666666666,
+     "accuracy_among_answered": 0.315,
+     "n_answered": 200,
+     "chance": 0.25,
+     "interval95_person_bootstrap": [
+      0.2024793388429752,
+      0.32231404958677684
+     ],
+     "above_chance": 0.012500000000000011
+    },
+    "paper_years_2021_2025": {
+     "n_questions": 200,
+     "n_runs": 1,
+     "accuracy_mean": 0.26,
+     "accuracy_sd_over_runs": 0.0,
+     "accuracy_per_run": [
+      0.26
+     ],
+     "macro_average_over_years": 0.26,
+     "by_year": {
+      "2021": 0.25,
+      "2022": 0.2,
+      "2023": 0.325,
+      "2024": 0.3,
+      "2025": 0.225
+     },
+     "majority_vote": 0.26,
+     "unanswered_rate": 0.165,
+     "accuracy_among_answered": 0.31137724550898205,
+     "n_answered": 167,
+     "chance": 0.25,
+     "interval95_person_bootstrap": [
+      0.19801980198019803,
+      0.32338308457711445
+     ],
+     "above_chance": 0.010000000000000009
+    },
+    "by_category_full": {
+     "事业": {
+      "n": 68,
+      "accuracy": 0.22058823529411764
+     },
+     "健康灾厄": {
+      "n": 55,
+      "accuracy": 0.23636363636363636
+     },
+     "六亲家庭": {
+      "n": 73,
+      "accuracy": 0.2328767123287671
+     },
+     "其他": {
+      "n": 64,
+      "accuracy": 0.3125
+     },
+     "学业": {
+      "n": 41,
+      "accuracy": 0.21951219512195122
+     },
+     "性格外貌": {
+      "n": 28,
+      "accuracy": 0.42857142857142855
+     },
+     "感情婚姻": {
+      "n": 116,
+      "accuracy": 0.2672413793103448
+     },
+     "流年应期": {
+      "n": 77,
+      "accuracy": 0.23376623376623376
+     },
+     "财富": {
+      "n": 33,
+      "accuracy": 0.21212121212121213
+     }
+    },
+    "by_category_bazi_only": {
+     "事业": {
+      "n": 41,
+      "accuracy": 0.21951219512195122
+     },
+     "健康灾厄": {
+      "n": 33,
+      "accuracy": 0.30303030303030304
+     },
+     "六亲家庭": {
+      "n": 30,
+      "accuracy": 0.23333333333333334
+     },
+     "其他": {
+      "n": 35,
+      "accuracy": 0.34285714285714286
+     },
+     "学业": {
+      "n": 18,
+      "accuracy": 0.2777777777777778
+     },
+     "性格外貌": {
+      "n": 14,
+      "accuracy": 0.2857142857142857
+     },
+     "感情婚姻": {
+      "n": 65,
+      "accuracy": 0.27692307692307694
+     },
+     "流年应期": {
+      "n": 38,
+      "accuracy": 0.2894736842105263
+     },
+     "财富": {
+      "n": 16,
+      "accuracy": 0.3125
+     }
+    },
+    "by_method_full": {
+     "八字": {
+      "n": 190,
+      "accuracy": 0.24210526315789474
+     },
+     "四柱八字": {
+      "n": 25,
+      "accuracy": 0.4
+     },
+     "奇门遁甲": {
+      "n": 11,
+      "accuracy": 0.18181818181818182
+     },
+     "子平八字": {
+      "n": 65,
+      "accuracy": 0.3230769230769231
+     },
+     "未注明": {
+      "n": 124,
+      "accuracy": 0.22580645161290322
+     },
+     "盲派八字": {
+      "n": 10,
+      "accuracy": 0.4
+     },
+     "紫微斗数": {
+      "n": 115,
+      "accuracy": 0.2608695652173913
+     },
+     "紫微斗数（天盘计算）": {
+      "n": 5,
+      "accuracy": 0.0
+     },
+     "紫微斗数（紫微玄机）": {
+      "n": 5,
+      "accuracy": 0.0
+     },
+     "紫微斗数（陆斌兆派）": {
+      "n": 5,
+      "accuracy": 0.2
+     }
+    },
+    "by_answer_source_full": {
+     "official": {
+      "n": 365,
+      "accuracy": 0.2602739726027397
+     },
+     "secondary": {
+      "n": 190,
+      "accuracy": 0.24736842105263157
+     }
+    },
+    "by_person_full": {
+     "2010_C1_female_19820927": {
+      "n": 3,
+      "accuracy": 0.0
+     },
+     "2010_C2_male_19601210": {
+      "n": 3,
+      "accuracy": 0.3333333333333333
+     },
+     "2010_C3_female_19620929": {
+      "n": 3,
+      "accuracy": 0.3333333333333333
+     },
+     "2011_C1_male_19721102": {
+      "n": 5,
+      "accuracy": 0.0
+     },
+     "2011_C2_male_19810908": {
+      "n": 5,
+      "accuracy": 0.0
+     },
+     "2011_C3_male_19940828": {
+      "n": 5,
+      "accuracy": 0.0
+     },
+     "2012_C1_female_19791005": {
+      "n": 5,
+      "accuracy": 0.4
+     },
+     "2012_C2_female_19830628": {
+      "n": 5,
+      "accuracy": 0.0
+     },
+     "2012_C3_male_19550325": {
+      "n": 5,
+      "accuracy": 0.2
+     },
+     "2013_C1_male_19680410": {
+      "n": 5,
+      "accuracy": 0.4
+     },
+     "2013_C2_female_19721106": {
+      "n": 5,
+      "accuracy": 0.2
+     },
+     "2013_C3_male_19720115": {
+      "n": 5,
+      "accuracy": 0.4
+     },
+     "2013_C4_female_19700814": {
+      "n": 1,
+      "accuracy": 0.0
+     },
+     "2014_C1_male_19620825": {
+      "n": 5,
+      "accuracy": 0.0
+     },
+     "2014_C2_male_19650305": {
+      "n": 5,
+      "accuracy": 0.0
+     },
+     "2014_C3_male_19791010": {
+      "n": 5,
+      "accuracy": 0.2
+     },
+     "2014_C4_female_19750926": {
+      "n": 5,
+      "accuracy": 0.2
+     },
+     "2014_C5_female_19920506": {
+      "n": 5,
+      "accuracy": 0.0
+     },
+     "2014_C6_male_19740316": {
+      "n": 5,
+      "accuracy": 0.4
+     },
+     "2014_C7_female_19610710": {
+      "n": 5,
+      "accuracy": 0.0
+     },
+     "2015_C1_female_19571107": {
+      "n": 5,
+      "accuracy": 0.2
+     },
+     "2015_C2_female_19570104": {
+      "n": 5,
+      "accuracy": 0.2
+     },
+     "2015_C3_male_19640316": {
+      "n": 5,
+      "accuracy": 0.2
+     },
+     "2015_C4_male_19740813": {
+      "n": 5,
+      "accuracy": 0.4
+     },
+     "2015_C5_male_19630813": {
+      "n": 5,
+      "accuracy": 0.0
+     },
+     "2015_C6_female_19960310": {
+      "n": 5,
+      "accuracy": 0.0
+     },
+     "2015_C7_female_19590906": {
+      "n": 5,
+      "accuracy": 0.2
+     },
+     "2016_C1_male_19520615": {
+      "n": 5,
+      "accuracy": 0.0
+     },
+     "2016_C2_male_19750920": {
+      "n": 5,
+      "accuracy": 0.2
+     },
+     "2016_C3_female_19700605": {
+      "n": 5,
+      "accuracy": 0.6
+     },
+     "2016_C4_male_19630206": {
+      "n": 5,
+      "accuracy": 0.6
+     },
+     "2016_C5_male_19520226": {
+      "n": 5,
+      "accuracy": 0.0
+     },
+     "2016_C6_male_19820530": {
+      "n": 5,
+      "accuracy": 0.2
+     },
+     "2016_C7_female_19701005": {
+      "n": 5,
+      "accuracy": 0.6
+     },
+     "2017_C1_male_19611005": {
+      "n": 5,
+      "accuracy": 0.0
+     },
+     "2017_C2_male_19800625": {
+      "n": 5,
+      "accuracy": 0.4
+     },
+     "2017_C3_female_19610125": {
+      "n": 5,
+      "accuracy": 0.2
+     },
+     "2017_C4_male_19800812": {
+      "n": 5,
+      "accuracy": 0.2
+     },
+     "2017_C5_female_19800202": {
+      "n": 5,
+      "accuracy": 0.4
+     },
+     "2017_C6_male_19760515": {
+      "n": 5,
+      "accuracy": 0.4
+     },
+     "2017_C7a_female_19510124": {
+      "n": 3,
+      "accuracy": 0.3333333333333333
+     },
+     "2017_C7b_female_19510124": {
+      "n": 2,
+      "accuracy": 0.5
+     },
+     "2018_C1a_male_19941104": {
+      "n": 2,
+      "accuracy": 1.0
+     },
+     "2018_C1b_female_19730607": {
+      "n": 3,
+      "accuracy": 0.3333333333333333
+     },
+     "2018_C2_male_19720126": {
+      "n": 5,
+      "accuracy": 0.2
+     },
+     "2018_C3_male_19540205": {
+      "n": 5,
+      "accuracy": 0.0
+     },
+     "2018_C4_male_19600529": {
+      "n": 5,
+      "accuracy": 0.6
+     },
+     "2018_C5_female_19401013": {
+      "n": 5,
+      "accuracy": 0.8
+     },
+     "2018_C6_female_19930817": {
+      "n": 5,
+      "accuracy": 0.4
+     },
+     "2018_C7_female_19610325": {
+      "n": 5,
+      "accuracy": 0.2
+     },
+     "2018_C8_female_19580416": {
+      "n": 5,
+      "accuracy": 0.2
+     },
+     "2019_C1_male_19820123": {
+      "n": 5,
+      "accuracy": 0.2
+     },
+     "2019_C2_male_19870710": {
+      "n": 5,
+      "accuracy": 0.2
+     },
+     "2019_C3_female_19841228": {
+      "n": 5,
+      "accuracy": 0.2
+     },
+     "2019_C4_female_19710528": {
+      "n": 5,
+      "accuracy": 0.6
+     },
+     "2019_C5_female_19620826": {
+      "n": 5,
+      "accuracy": 0.2
+     },
+     "2019_C6_female_19770430": {
+      "n": 5,
+      "accuracy": 0.4
+     },
+     "2019_C7_female_19860723": {
+      "n": 5,
+      "accuracy": 0.4
+     },
+     "2019_C8_female_19820127": {
+      "n": 5,
+      "accuracy": 0.8
+     },
+     "2020_C1_female_19620404": {
+      "n": 5,
+      "accuracy": 0.2
+     },
+     "2020_C2_female_19790301": {
+      "n": 5,
+      "accuracy": 0.2
+     },
+     "2020_C3_female_19850315": {
+      "n": 5,
+      "accuracy": 0.0
+     },
+     "2020_C4_male_19790721": {
+      "n": 5,
+      "accuracy": 0.6
+     },
+     "2020_C5_female_19860506": {
+      "n": 5,
+      "accuracy": 0.0
+     },
+     "2020_C6_female_19620616": {
+      "n": 5,
+      "accuracy": 0.4
+     },
+     "2020_C7_female_19931125": {
+      "n": 5,
+      "accuracy": 0.0
+     },
+     "2020_C8a_male_19630626": {
+      "n": 3,
+      "accuracy": 0.0
+     },
+     "2020_C8b_male_19760812": {
+      "n": 2,
+      "accuracy": 0.5
+     },
+     "2026_C1_male_19820612": {
+      "n": 5,
+      "accuracy": 0.4
+     },
+     "2026_C2_female_19810120": {
+      "n": 5,
+      "accuracy": 0.0
+     },
+     "2026_C3_male_19560903": {
+      "n": 5,
+      "accuracy": 0.2
+     },
+     "2026_C4_male_19511105": {
+      "n": 5,
+      "accuracy": 0.8
+     },
+     "2026_C5_male_19870626": {
+      "n": 5,
+      "accuracy": 0.2
+     },
+     "2026_C6_female_19611104": {
+      "n": 5,
+      "accuracy": 0.0
+     },
+     "2026_C7_female_19990814": {
+      "n": 5,
+      "accuracy": 0.4
+     },
+     "2026_C8_male_19811019": {
+      "n": 5,
+      "accuracy": 0.2
+     },
+     "beijing_male_19700722_P008": {
+      "n": 5,
+      "accuracy": 0.4
+     },
+     "chaozhou_male_19720108_P002": {
+      "n": 5,
+      "accuracy": 0.4
+     },
+     "female_19581027_P014": {
+      "n": 5,
+      "accuracy": 0.4
+     },
+     "female_19661018_P009": {
+      "n": 5,
+      "accuracy": 0.4
+     },
+     "female_19670827_P034": {
+      "n": 2,
+      "accuracy": 0.5
+     },
+     "female_19710412_P005": {
+      "n": 5,
+      "accuracy": 0.2
+     },
+     "female_19750107_P030": {
+      "n": 5,
+      "accuracy": 0.2
+     },
+     "female_19771026_P020": {
+      "n": 5,
+      "accuracy": 0.0
+     },
+     "female_19780405_P013": {
+      "n": 5,
+      "accuracy": 0.4
+     },
+     "female_19800921_P007": {
+      "n": 5,
+      "accuracy": 0.4
+     },
+     "female_19810526_P018": {
+      "n": 5,
+      "accuracy": 0.0
+     },
+     "female_19830326_P006": {
+      "n": 5,
+      "accuracy": 0.2
+     },
+     "female_19831028_P004": {
+      "n": 5,
+      "accuracy": 0.2
+     },
+     "female_19841209_P023": {
+      "n": 5,
+      "accuracy": 0.2
+     },
+     "female_19841220_P027": {
+      "n": 5,
+      "accuracy": 0.0
+     },
+     "female_19900523_P019": {
+      "n": 5,
+      "accuracy": 0.0
+     },
+     "female_20020601_P015": {
+      "n": 5,
+      "accuracy": 0.6
+     },
+     "guangdong_female_19511114_P001": {
+      "n": 5,
+      "accuracy": 0.2
+     },
+     "guangdong_female_19800824_P001": {
+      "n": 5,
+      "accuracy": 0.6
+     },
+     "hongkong_female_19870705_P002": {
+      "n": 5,
+      "accuracy": 0.2
+     },
+     "malaysia_male_19730824_P006": {
+      "n": 5,
+      "accuracy": 0.2
+     },
+     "malaysia_male_19880110_P005": {
+      "n": 5,
+      "accuracy": 0.4
+     },
+     "male_19530127_P031": {
+      "n": 5,
+      "accuracy": 0.0
+     },
+     "male_19540318_P025": {
+      "n": 5,
+      "accuracy": 0.2
+     },
+     "male_19560311_P012": {
+      "n": 5,
+      "accuracy": 0.0
+     },
+     "male_19611230_P003": {
+      "n": 5,
+      "accuracy": 0.0
+     },
+     "male_19620806_P010": {
+      "n": 5,
+      "accuracy": 0.2
+     },
+     "male_19700723_P029": {
+      "n": 5,
+      "accuracy": 0.6
+     },
+     "male_19710910_P033": {
+      "n": 3,
+      "accuracy": 1.0
+     },
+     "male_19740428_P017": {
+      "n": 5,
+      "accuracy": 0.2
+     },
+     "male_19770706_P028": {
+      "n": 5,
+      "accuracy": 0.2
+     },
+     "male_19800711_P016": {
+      "n": 5,
+      "accuracy": 0.4
+     },
+     "male_19810617_P024": {
+      "n": 5,
+      "accuracy": 0.2
+     },
+     "male_19831019_P026": {
+      "n": 5,
+      "accuracy": 0.0
+     },
+     "male_19831101_P022": {
+      "n": 5,
+      "accuracy": 0.4
+     },
+     "male_19850629_P021": {
+      "n": 5,
+      "accuracy": 0.6
+     },
+     "male_19860424_P011": {
+      "n": 5,
+      "accuracy": 0.2
+     },
+     "male_20070131_P008": {
+      "n": 5,
+      "accuracy": 0.4
+     },
+     "miyazaki_male_19830421_P003": {
+      "n": 5,
+      "accuracy": 0.0
+     },
+     "singapore_male_19930408_P004": {
+      "n": 5,
+      "accuracy": 0.4
+     },
+     "taiwan_female_19880215_P007": {
+      "n": 5,
+      "accuracy": 0.0
+     }
+    },
+    "parseable_rate": 0.8486486486486486,
+    "truncated_rate": 0.13333333333333333,
+    "mean_completion_tokens": 500.75315315315316,
+    "answer_letter_share": {
+     "A": 0.14054054054054055,
+     "B": 0.22162162162162163,
+     "C": 0.25405405405405407,
+     "D": 0.22522522522522523,
+     "E": 0.007207207207207207,
+     "none": 0.15135135135135136
+    }
+   },
+   "base_tools": {
+    "full": {
+     "n_questions": 555,
+     "n_runs": 1,
+     "accuracy_mean": 0.3117117117117117,
+     "accuracy_sd_over_runs": 0.0,
+     "accuracy_per_run": [
+      0.3117117117117117
+     ],
+     "macro_average_over_years": 0.30692110177404297,
+     "by_year": {
+      "2010": 0.1111111111111111,
+      "2011": 0.2,
+      "2012": 0.3333333333333333,
+      "2013": 0.5625,
+      "2014": 0.17142857142857143,
+      "2015": 0.22857142857142856,
+      "2016": 0.37142857142857144,
+      "2017": 0.3142857142857143,
+      "2018": 0.25,
+      "2019": 0.375,
+      "2020": 0.4,
+      "2021": 0.3,
+      "2022": 0.3,
+      "2023": 0.275,
+      "2024": 0.325,
+      "2025": 0.375,
+      "2026": 0.325
+     },
+     "majority_vote": 0.3117117117117117,
+     "unanswered_rate": 0.043243243243243246,
+     "accuracy_among_answered": 0.3258003766478343,
+     "n_answered": 531,
+     "chance": 0.24738738738738741,
+     "interval95_person_bootstrap": [
+      0.27175843694493784,
+      0.3522935779816514
+     ],
+     "above_chance": 0.06432432432432428
+    },
+    "bazi_only": {
+     "n_questions": 290,
+     "n_runs": 1,
+     "accuracy_mean": 0.3137931034482759,
+     "accuracy_sd_over_runs": 0.0,
+     "accuracy_per_run": [
+      0.3137931034482759
+     ],
+     "macro_average_over_years": 0.28703296703296705,
+     "by_year": {
+      "2014": 0.1,
+      "2015": 0.2,
+      "2016": 0.36,
+      "2017": 0.3,
+      "2018": 0.32,
+      "2019": 0.44,
+      "2020": 0.37142857142857144,
+      "2021": 0.2,
+      "2022": 0.0,
+      "2023": 0.35,
+      "2024": 0.2,
+      "2025": 0.44,
+      "2026": 0.45
+     },
+     "majority_vote": 0.3137931034482759,
+     "unanswered_rate": 0.041379310344827586,
+     "accuracy_among_answered": 0.3273381294964029,
+     "n_answered": 278,
+     "chance": 0.24913793103448276,
+     "interval95_person_bootstrap": [
+      0.2604166666666667,
+      0.36713286713286714
+     ],
+     "above_chance": 0.06465517241379312
+    },
+    "official_key": {
+     "n_questions": 365,
+     "n_runs": 1,
+     "accuracy_mean": 0.3095890410958904,
+     "accuracy_sd_over_runs": 0.0,
+     "accuracy_per_run": [
+      0.3095890410958904
+     ],
+     "macro_average_over_years": 0.30474537037037036,
+     "by_year": {
+      "2010": 0.1111111111111111,
+      "2011": 0.2,
+      "2012": 0.3333333333333333,
+      "2013": 0.5625,
+      "2015": 0.22857142857142856,
+      "2016": 0.37142857142857144,
+      "2018": 0.25,
+      "2022": 0.3,
+      "2023": 0.275,
+      "2024": 0.325,
+      "2025": 0.375,
+      "2026": 0.325
+     },
+     "majority_vote": 0.3095890410958904,
+     "unanswered_rate": 0.04657534246575343,
+     "accuracy_among_answered": 0.32471264367816094,
+     "n_answered": 348,
+     "chance": 0.2467123287671233,
+     "interval95_person_bootstrap": [
+      0.2611111111111111,
+      0.3604336043360434
+     ],
+     "above_chance": 0.06287671232876713
+    },
+    "bazi_only_official_key": {
+     "n_questions": 160,
+     "n_runs": 1,
+     "accuracy_mean": 0.325,
+     "accuracy_sd_over_runs": 0.0,
+     "accuracy_per_run": [
+      0.325
+     ],
+     "macro_average_over_years": 0.29,
+     "by_year": {
+      "2015": 0.2,
+      "2016": 0.36,
+      "2018": 0.32,
+      "2022": 0.0,
+      "2023": 0.35,
+      "2024": 0.2,
+      "2025": 0.44,
+      "2026": 0.45
+     },
+     "majority_vote": 0.325,
+     "unanswered_rate": 0.04375,
+     "accuracy_among_answered": 0.33986928104575165,
+     "n_answered": 153,
+     "chance": 0.25,
+     "interval95_person_bootstrap": [
+      0.2606060606060606,
+      0.389937106918239
+     ],
+     "above_chance": 0.07500000000000001
+    },
+    "contest8_2021_2026": {
+     "n_questions": 240,
+     "n_runs": 1,
+     "accuracy_mean": 0.31666666666666665,
+     "accuracy_sd_over_runs": 0.0,
+     "accuracy_per_run": [
+      0.31666666666666665
+     ],
+     "macro_average_over_years": 0.31666666666666665,
+     "by_year": {
+      "2021": 0.3,
+      "2022": 0.3,
+      "2023": 0.275,
+      "2024": 0.325,
+      "2025": 0.375,
+      "2026": 0.325
+     },
+     "majority_vote": 0.31666666666666665,
+     "unanswered_rate": 0.029166666666666667,
+     "accuracy_among_answered": 0.3261802575107296,
+     "n_answered": 233,
+     "chance": 0.25,
+     "interval95_person_bootstrap": [
+      0.2530612244897959,
+      0.3817427385892116
+     ],
+     "above_chance": 0.06666666666666665
+    },
+    "paper_years_2021_2025": {
+     "n_questions": 200,
+     "n_runs": 1,
+     "accuracy_mean": 0.315,
+     "accuracy_sd_over_runs": 0.0,
+     "accuracy_per_run": [
+      0.315
+     ],
+     "macro_average_over_years": 0.315,
+     "by_year": {
+      "2021": 0.3,
+      "2022": 0.3,
+      "2023": 0.275,
+      "2024": 0.325,
+      "2025": 0.375
+     },
+     "majority_vote": 0.315,
+     "unanswered_rate": 0.025,
+     "accuracy_among_answered": 0.3230769230769231,
+     "n_answered": 195,
+     "chance": 0.25,
+     "interval95_person_bootstrap": [
+      0.24630541871921183,
+      0.3865979381443299
+     ],
+     "above_chance": 0.065
+    },
+    "by_category_full": {
+     "事业": {
+      "n": 68,
+      "accuracy": 0.3088235294117647
+     },
+     "健康灾厄": {
+      "n": 55,
+      "accuracy": 0.2727272727272727
+     },
+     "六亲家庭": {
+      "n": 73,
+      "accuracy": 0.3287671232876712
+     },
+     "其他": {
+      "n": 64,
+      "accuracy": 0.34375
+     },
+     "学业": {
+      "n": 41,
+      "accuracy": 0.2926829268292683
+     },
+     "性格外貌": {
+      "n": 28,
+      "accuracy": 0.5357142857142857
+     },
+     "感情婚姻": {
+      "n": 116,
+      "accuracy": 0.33620689655172414
+     },
+     "流年应期": {
+      "n": 77,
+      "accuracy": 0.23376623376623376
+     },
+     "财富": {
+      "n": 33,
+      "accuracy": 0.21212121212121213
+     }
+    },
+    "by_category_bazi_only": {
+     "事业": {
+      "n": 41,
+      "accuracy": 0.2682926829268293
+     },
+     "健康灾厄": {
+      "n": 33,
+      "accuracy": 0.24242424242424243
+     },
+     "六亲家庭": {
+      "n": 30,
+      "accuracy": 0.4
+     },
+     "其他": {
+      "n": 35,
+      "accuracy": 0.37142857142857144
+     },
+     "学业": {
+      "n": 18,
+      "accuracy": 0.3888888888888889
+     },
+     "性格外貌": {
+      "n": 14,
+      "accuracy": 0.5
+     },
+     "感情婚姻": {
+      "n": 65,
+      "accuracy": 0.3384615384615385
+     },
+     "流年应期": {
+      "n": 38,
+      "accuracy": 0.18421052631578946
+     },
+     "财富": {
+      "n": 16,
+      "accuracy": 0.25
+     }
+    },
+    "by_method_full": {
+     "八字": {
+      "n": 190,
+      "accuracy": 0.30526315789473685
+     },
+     "四柱八字": {
+      "n": 25,
+      "accuracy": 0.36
+     },
+     "奇门遁甲": {
+      "n": 11,
+      "accuracy": 0.09090909090909091
+     },
+     "子平八字": {
+      "n": 65,
+      "accuracy": 0.3384615384615385
+     },
+     "未注明": {
+      "n": 124,
+      "accuracy": 0.3225806451612903
+     },
+     "盲派八字": {
+      "n": 10,
+      "accuracy": 0.2
+     },
+     "紫微斗数": {
+      "n": 115,
+      "accuracy": 0.33043478260869563
+     },
+     "紫微斗数（天盘计算）": {
+      "n": 5,
+      "accuracy": 0.0
+     },
+     "紫微斗数（紫微玄机）": {
+      "n": 5,
+      "accuracy": 0.4
+     },
+     "紫微斗数（陆斌兆派）": {
+      "n": 5,
+      "accuracy": 0.2
+     }
+    },
+    "by_answer_source_full": {
+     "official": {
+      "n": 365,
+      "accuracy": 0.3095890410958904
+     },
+     "secondary": {
+      "n": 190,
+      "accuracy": 0.3157894736842105
+     }
+    },
+    "by_person_full": {
+     "2010_C1_female_19820927": {
+      "n": 3,
+      "accuracy": 0.0
+     },
+     "2010_C2_male_19601210": {
+      "n": 3,
+      "accuracy": 0.0
+     },
+     "2010_C3_female_19620929": {
+      "n": 3,
+      "accuracy": 0.3333333333333333
+     },
+     "2011_C1_male_19721102": {
+      "n": 5,
+      "accuracy": 0.0
+     },
+     "2011_C2_male_19810908": {
+      "n": 5,
+      "accuracy": 0.4
+     },
+     "2011_C3_male_19940828": {
+      "n": 5,
+      "accuracy": 0.2
+     },
+     "2012_C1_female_19791005": {
+      "n": 5,
+      "accuracy": 0.6
+     },
+     "2012_C2_female_19830628": {
+      "n": 5,
+      "accuracy": 0.2
+     },
+     "2012_C3_male_19550325": {
+      "n": 5,
+      "accuracy": 0.2
+     },
+     "2013_C1_male_19680410": {
+      "n": 5,
+      "accuracy": 0.6
+     },
+     "2013_C2_female_19721106": {
+      "n": 5,
+      "accuracy": 0.6
+     },
+     "2013_C3_male_19720115": {
+      "n": 5,
+      "accuracy": 0.6
+     },
+     "2013_C4_female_19700814": {
+      "n": 1,
+      "accuracy": 0.0
+     },
+     "2014_C1_male_19620825": {
+      "n": 5,
+      "accuracy": 0.2
+     },
+     "2014_C2_male_19650305": {
+      "n": 5,
+      "accuracy": 0.2
+     },
+     "2014_C3_male_19791010": {
+      "n": 5,
+      "accuracy": 0.0
+     },
+     "2014_C4_female_19750926": {
+      "n": 5,
+      "accuracy": 0.0
+     },
+     "2014_C5_female_19920506": {
+      "n": 5,
+      "accuracy": 0.0
+     },
+     "2014_C6_male_19740316": {
+      "n": 5,
+      "accuracy": 0.4
+     },
+     "2014_C7_female_19610710": {
+      "n": 5,
+      "accuracy": 0.4
+     },
+     "2015_C1_female_19571107": {
+      "n": 5,
+      "accuracy": 0.2
+     },
+     "2015_C2_female_19570104": {
+      "n": 5,
+      "accuracy": 0.2
+     },
+     "2015_C3_male_19640316": {
+      "n": 5,
+      "accuracy": 0.4
+     },
+     "2015_C4_male_19740813": {
+      "n": 5,
+      "accuracy": 0.2
+     },
+     "2015_C5_male_19630813": {
+      "n": 5,
+      "accuracy": 0.0
+     },
+     "2015_C6_female_19960310": {
+      "n": 5,
+      "accuracy": 0.2
+     },
+     "2015_C7_female_19590906": {
+      "n": 5,
+      "accuracy": 0.4
+     },
+     "2016_C1_male_19520615": {
+      "n": 5,
+      "accuracy": 0.6
+     },
+     "2016_C2_male_19750920": {
+      "n": 5,
+      "accuracy": 0.2
+     },
+     "2016_C3_female_19700605": {
+      "n": 5,
+      "accuracy": 0.4
+     },
+     "2016_C4_male_19630206": {
+      "n": 5,
+      "accuracy": 0.6
+     },
+     "2016_C5_male_19520226": {
+      "n": 5,
+      "accuracy": 0.0
+     },
+     "2016_C6_male_19820530": {
+      "n": 5,
+      "accuracy": 0.4
+     },
+     "2016_C7_female_19701005": {
+      "n": 5,
+      "accuracy": 0.4
+     },
+     "2017_C1_male_19611005": {
+      "n": 5,
+      "accuracy": 0.6
+     },
+     "2017_C2_male_19800625": {
+      "n": 5,
+      "accuracy": 0.4
+     },
+     "2017_C3_female_19610125": {
+      "n": 5,
+      "accuracy": 0.0
+     },
+     "2017_C4_male_19800812": {
+      "n": 5,
+      "accuracy": 0.2
+     },
+     "2017_C5_female_19800202": {
+      "n": 5,
+      "accuracy": 0.4
+     },
+     "2017_C6_male_19760515": {
+      "n": 5,
+      "accuracy": 0.2
+     },
+     "2017_C7a_female_19510124": {
+      "n": 3,
+      "accuracy": 0.6666666666666666
+     },
+     "2017_C7b_female_19510124": {
+      "n": 2,
+      "accuracy": 0.0
+     },
+     "2018_C1a_male_19941104": {
+      "n": 2,
+      "accuracy": 0.0
+     },
+     "2018_C1b_female_19730607": {
+      "n": 3,
+      "accuracy": 0.3333333333333333
+     },
+     "2018_C2_male_19720126": {
+      "n": 5,
+      "accuracy": 0.2
+     },
+     "2018_C3_male_19540205": {
+      "n": 5,
+      "accuracy": 0.0
+     },
+     "2018_C4_male_19600529": {
+      "n": 5,
+      "accuracy": 0.2
+     },
+     "2018_C5_female_19401013": {
+      "n": 5,
+      "accuracy": 0.6
+     },
+     "2018_C6_female_19930817": {
+      "n": 5,
+      "accuracy": 0.2
+     },
+     "2018_C7_female_19610325": {
+      "n": 5,
+      "accuracy": 0.4
+     },
+     "2018_C8_female_19580416": {
+      "n": 5,
+      "accuracy": 0.2
+     },
+     "2019_C1_male_19820123": {
+      "n": 5,
+      "accuracy": 0.0
+     },
+     "2019_C2_male_19870710": {
+      "n": 5,
+      "accuracy": 0.2
+     },
+     "2019_C3_female_19841228": {
+      "n": 5,
+      "accuracy": 0.4
+     },
+     "2019_C4_female_19710528": {
+      "n": 5,
+      "accuracy": 0.4
+     },
+     "2019_C5_female_19620826": {
+      "n": 5,
+      "accuracy": 0.0
+     },
+     "2019_C6_female_19770430": {
+      "n": 5,
+      "accuracy": 0.6
+     },
+     "2019_C7_female_19860723": {
+      "n": 5,
+      "accuracy": 0.6
+     },
+     "2019_C8_female_19820127": {
+      "n": 5,
+      "accuracy": 0.8
+     },
+     "2020_C1_female_19620404": {
+      "n": 5,
+      "accuracy": 0.6
+     },
+     "2020_C2_female_19790301": {
+      "n": 5,
+      "accuracy": 0.4
+     },
+     "2020_C3_female_19850315": {
+      "n": 5,
+      "accuracy": 0.2
+     },
+     "2020_C4_male_19790721": {
+      "n": 5,
+      "accuracy": 0.6
+     },
+     "2020_C5_female_19860506": {
+      "n": 5,
+      "accuracy": 0.2
+     },
+     "2020_C6_female_19620616": {
+      "n": 5,
+      "accuracy": 0.6
+     },
+     "2020_C7_female_19931125": {
+      "n": 5,
+      "accuracy": 0.6
+     },
+     "2020_C8a_male_19630626": {
+      "n": 3,
+      "accuracy": 0.0
+     },
+     "2020_C8b_male_19760812": {
+      "n": 2,
+      "accuracy": 0.0
+     },
+     "2026_C1_male_19820612": {
+      "n": 5,
+      "accuracy": 0.4
+     },
+     "2026_C2_female_19810120": {
+      "n": 5,
+      "accuracy": 0.4
+     },
+     "2026_C3_male_19560903": {
+      "n": 5,
+      "accuracy": 0.4
+     },
+     "2026_C4_male_19511105": {
+      "n": 5,
+      "accuracy": 0.6
+     },
+     "2026_C5_male_19870626": {
+      "n": 5,
+      "accuracy": 0.0
+     },
+     "2026_C6_female_19611104": {
+      "n": 5,
+      "accuracy": 0.2
+     },
+     "2026_C7_female_19990814": {
+      "n": 5,
+      "accuracy": 0.0
+     },
+     "2026_C8_male_19811019": {
+      "n": 5,
+      "accuracy": 0.6
+     },
+     "beijing_male_19700722_P008": {
+      "n": 5,
+      "accuracy": 0.8
+     },
+     "chaozhou_male_19720108_P002": {
+      "n": 5,
+      "accuracy": 0.4
+     },
+     "female_19581027_P014": {
+      "n": 5,
+      "accuracy": 0.2
+     },
+     "female_19661018_P009": {
+      "n": 5,
+      "accuracy": 0.2
+     },
+     "female_19670827_P034": {
+      "n": 2,
+      "accuracy": 0.0
+     },
+     "female_19710412_P005": {
+      "n": 5,
+      "accuracy": 0.0
+     },
+     "female_19750107_P030": {
+      "n": 5,
+      "accuracy": 0.2
+     },
+     "female_19771026_P020": {
+      "n": 5,
+      "accuracy": 0.0
+     },
+     "female_19780405_P013": {
+      "n": 5,
+      "accuracy": 0.4
+     },
+     "female_19800921_P007": {
+      "n": 5,
+      "accuracy": 0.4
+     },
+     "female_19810526_P018": {
+      "n": 5,
+      "accuracy": 0.2
+     },
+     "female_19830326_P006": {
+      "n": 5,
+      "accuracy": 0.2
+     },
+     "female_19831028_P004": {
+      "n": 5,
+      "accuracy": 0.4
+     },
+     "female_19841209_P023": {
+      "n": 5,
+      "accuracy": 0.2
+     },
+     "female_19841220_P027": {
+      "n": 5,
+      "accuracy": 0.2
+     },
+     "female_19900523_P019": {
+      "n": 5,
+      "accuracy": 0.6
+     },
+     "female_20020601_P015": {
+      "n": 5,
+      "accuracy": 0.6
+     },
+     "guangdong_female_19511114_P001": {
+      "n": 5,
+      "accuracy": 0.4
+     },
+     "guangdong_female_19800824_P001": {
+      "n": 5,
+      "accuracy": 1.0
+     },
+     "hongkong_female_19870705_P002": {
+      "n": 5,
+      "accuracy": 0.4
+     },
+     "malaysia_male_19730824_P006": {
+      "n": 5,
+      "accuracy": 0.2
+     },
+     "malaysia_male_19880110_P005": {
+      "n": 5,
+      "accuracy": 0.2
+     },
+     "male_19530127_P031": {
+      "n": 5,
+      "accuracy": 0.4
+     },
+     "male_19540318_P025": {
+      "n": 5,
+      "accuracy": 0.2
+     },
+     "male_19560311_P012": {
+      "n": 5,
+      "accuracy": 0.2
+     },
+     "male_19611230_P003": {
+      "n": 5,
+      "accuracy": 0.0
+     },
+     "male_19620806_P010": {
+      "n": 5,
+      "accuracy": 0.0
+     },
+     "male_19700723_P029": {
+      "n": 5,
+      "accuracy": 0.6
+     },
+     "male_19710910_P033": {
+      "n": 3,
+      "accuracy": 0.6666666666666666
+     },
+     "male_19740428_P017": {
+      "n": 5,
+      "accuracy": 0.4
+     },
+     "male_19770706_P028": {
+      "n": 5,
+      "accuracy": 0.4
+     },
+     "male_19800711_P016": {
+      "n": 5,
+      "accuracy": 0.4
+     },
+     "male_19810617_P024": {
+      "n": 5,
+      "accuracy": 0.4
+     },
+     "male_19831019_P026": {
+      "n": 5,
+      "accuracy": 0.0
+     },
+     "male_19831101_P022": {
+      "n": 5,
+      "accuracy": 0.4
+     },
+     "male_19850629_P021": {
+      "n": 5,
+      "accuracy": 0.2
+     },
+     "male_19860424_P011": {
+      "n": 5,
+      "accuracy": 0.2
+     },
+     "male_20070131_P008": {
+      "n": 5,
+      "accuracy": 0.2
+     },
+     "miyazaki_male_19830421_P003": {
+      "n": 5,
+      "accuracy": 0.4
+     },
+     "singapore_male_19930408_P004": {
+      "n": 5,
+      "accuracy": 0.6
+     },
+     "taiwan_female_19880215_P007": {
+      "n": 5,
+      "accuracy": 0.0
+     }
+    },
+    "parseable_rate": 0.9567567567567568,
+    "truncated_rate": 0.03063063063063063,
+    "mean_completion_tokens": 300.4108108108108,
+    "answer_letter_share": {
+     "A": 0.14414414414414414,
+     "B": 0.26306306306306304,
+     "C": 0.2990990990990991,
+     "D": 0.24504504504504504,
+     "E": 0.005405405405405406,
+     "none": 0.043243243243243246
+    }
+   }
+  },
+  "comparisons": {
+   "base_tools_minus_base_no_tools": {
+    "effect_of": "tools, base model",
+    "full": {
+     "n_persons": 117,
+     "n_questions": 555,
+     "difference": 0.05585585585585585,
+     "interval95": [
+      0.014625228519195616,
+      0.09689213893967093
+     ],
+     "resampling_unit": "person (chart)"
+    },
+    "bazi_only": {
+     "n_persons": 62,
+     "n_questions": 290,
+     "difference": 0.034482758620689655,
+     "interval95": [
+      -0.021660649819494587,
+      0.09059233449477352
+     ],
+     "resampling_unit": "person (chart)"
+    },
+    "official_key": {
+     "n_persons": 76,
+     "n_questions": 365,
+     "difference": 0.049315068493150684,
+     "interval95": [
+      -7.143526163807978e-18,
+      0.1002710027100271
+     ],
+     "resampling_unit": "person (chart)"
+    },
+    "bazi_only_official_key": {
+     "n_persons": 33,
+     "n_questions": 160,
+     "difference": 0.018749999999999996,
+     "interval95": [
+      -0.050955414012738856,
+      0.0875
+     ],
+     "resampling_unit": "person (chart)"
+    },
+    "contest8_2021_2026": {
+     "n_persons": 49,
+     "n_questions": 240,
+     "difference": 0.05416666666666667,
+     "interval95": [
+      -0.008733624454148475,
+      0.11836734693877551
+     ],
+     "resampling_unit": "person (chart)"
+    },
+    "paper_years_2021_2025": {
+     "n_persons": 41,
+     "n_questions": 200,
+     "difference": 0.055,
+     "interval95": [
+      -0.010050251256281405,
+      0.12195121951219512
+     ],
+     "resampling_unit": "person (chart)"
+    }
+   }
+  },
+  "human_champions": {
+   "2010": {
+    "correct": 6,
+    "questions": 9,
+    "accuracy": 0.6666666666666666
+   },
+   "2011": {
+    "correct": 8,
+    "questions": 15,
+    "accuracy": 0.5333333333333333
+   },
+   "2012": {
+    "correct": 8,
+    "questions": 15,
+    "accuracy": 0.5333333333333333
+   },
+   "2015": {
+    "correct": 15,
+    "questions": 35,
+    "accuracy": 0.42857142857142855
+   },
+   "2016": {
+    "correct": 23,
+    "questions": 35,
+    "accuracy": 0.6571428571428571
+   },
+   "2018": {
+    "correct": 19,
+    "questions": 40,
+    "accuracy": 0.475
+   },
+   "2019": {
+    "correct": 20,
+    "questions": 40,
+    "accuracy": 0.5
+   },
+   "2020": {
+    "correct": 17,
+    "questions": 40,
+    "accuracy": 0.425
+   },
+   "2022": {
+    "correct": 19,
+    "questions": 40,
+    "accuracy": 0.475
+   },
+   "2023": {
+    "correct": 21,
+    "questions": 40,
+    "accuracy": 0.525
+   },
+   "2024": {
+    "correct": 26,
+    "questions": 40,
+    "accuracy": 0.65
+   },
+   "2026": {
+    "correct": 31,
+    "questions": 40,
+    "accuracy": 0.775
+   }
+  },
+  "published_model_baselines_v1_data_2021_2025": {
+   "DeepSeek-Chat-V3 (multi-turn)": 0.367,
+   "DeepSeek-R1 (multi-turn)": 0.341,
+   "GPT-5.1-Chat (multi-turn)": 0.325,
+   "Gemini-2.5-Flash (multi-turn)": 0.324,
+   "Gemini-3-Pro (multi-turn)": 0.321
+  },
+  "human_comparison": {
+   "base_no_tools": {
+    "by_year": {
+     "2010": {
+      "model_accuracy": 0.2222222222222222,
+      "champion_accuracy": 0.6666666666666666
+     },
+     "2011": {
+      "model_accuracy": 0.0,
+      "champion_accuracy": 0.5333333333333333
+     },
+     "2012": {
+      "model_accuracy": 0.2,
+      "champion_accuracy": 0.5333333333333333
+     },
+     "2015": {
+      "model_accuracy": 0.17142857142857143,
+      "champion_accuracy": 0.42857142857142855
+     },
+     "2016": {
+      "model_accuracy": 0.3142857142857143,
+      "champion_accuracy": 0.6571428571428571
+     },
+     "2018": {
+      "model_accuracy": 0.375,
+      "champion_accuracy": 0.475
+     },
+     "2019": {
+      "model_accuracy": 0.375,
+      "champion_accuracy": 0.5
+     },
+     "2020": {
+      "model_accuracy": 0.2,
+      "champion_accuracy": 0.425
+     },
+     "2022": {
+      "model_accuracy": 0.2,
+      "champion_accuracy": 0.475
+     },
+     "2023": {
+      "model_accuracy": 0.325,
+      "champion_accuracy": 0.525
+     },
+     "2024": {
+      "model_accuracy": 0.3,
+      "champion_accuracy": 0.65
+     },
+     "2026": {
+      "model_accuracy": 0.275,
+      "champion_accuracy": 0.775
+     }
+    },
+    "mean_model": 0.24649470899470902,
+    "mean_champion": 0.553670634920635
+   },
+   "base_tools": {
+    "by_year": {
+     "2010": {
+      "model_accuracy": 0.1111111111111111,
+      "champion_accuracy": 0.6666666666666666
+     },
+     "2011": {
+      "model_accuracy": 0.2,
+      "champion_accuracy": 0.5333333333333333
+     },
+     "2012": {
+      "model_accuracy": 0.3333333333333333,
+      "champion_accuracy": 0.5333333333333333
+     },
+     "2015": {
+      "model_accuracy": 0.22857142857142856,
+      "champion_accuracy": 0.42857142857142855
+     },
+     "2016": {
+      "model_accuracy": 0.37142857142857144,
+      "champion_accuracy": 0.6571428571428571
+     },
+     "2018": {
+      "model_accuracy": 0.25,
+      "champion_accuracy": 0.475
+     },
+     "2019": {
+      "model_accuracy": 0.375,
+      "champion_accuracy": 0.5
+     },
+     "2020": {
+      "model_accuracy": 0.4,
+      "champion_accuracy": 0.425
+     },
+     "2022": {
+      "model_accuracy": 0.3,
+      "champion_accuracy": 0.475
+     },
+     "2023": {
+      "model_accuracy": 0.275,
+      "champion_accuracy": 0.525
+     },
+     "2024": {
+      "model_accuracy": 0.325,
+      "champion_accuracy": 0.65
+     },
+     "2026": {
+      "model_accuracy": 0.325,
+      "champion_accuracy": 0.775
+     }
+    },
+    "mean_model": 0.2912037037037037,
+    "mean_champion": 0.553670634920635
+   }
+  },
+  "explanation_audit": {
+   "method": "share of fixed-form, checkable statements (a named pillar, the day master, the pillar of a calendar year, the Ten God of a named stem) that match the verified chart; not a similarity score and not a judgement of the interpretation",
+   "by_condition": {
+    "base_no_tools": {
+     "pillar": {
+      "n_claims": 2021,
+      "correct": 341,
+      "rate": 0.16872835230084116
+     },
+     "all": {
+      "n_claims": 4024,
+      "correct": 1100,
+      "rate": 0.27335984095427435
+     },
+     "day_master": {
+      "n_claims": 843,
+      "correct": 121,
+      "rate": 0.1435349940688019
+     },
+     "flow_year": {
+      "n_claims": 1157,
+      "correct": 638,
+      "rate": 0.5514261019878998
+     },
+     "ten_god": {
+      "n_claims": 3,
+      "correct": 0,
+      "rate": 0.0
+     }
+    },
+    "base_tools": {
+     "day_master": {
+      "n_claims": 594,
+      "correct": 594,
+      "rate": 1.0
+     },
+     "all": {
+      "n_claims": 2158,
+      "correct": 2046,
+      "rate": 0.9481000926784059
+     },
+     "flow_year": {
+      "n_claims": 1085,
+      "correct": 983,
+      "rate": 0.9059907834101383
+     },
+     "pillar": {
+      "n_claims": 464,
+      "correct": 457,
+      "rate": 0.9849137931034483
+     },
+     "ten_god": {
+      "n_claims": 15,
+      "correct": 12,
+      "rate": 0.8
+     }
+    }
+   }
+  },
+  "self_derived_charts": {
+   "base_no_tools": {
+    "persons": 117,
+    "verified_chart_available": 116,
+    "gave_a_chart": 0,
+    "exact_four_pillars": 0,
+    "exact_rate_over_verifiable": 0.0,
+    "wrong_chart_shown_to_itself": 0,
+    "status_counts": {
+     "unparsed": 116,
+     "ambiguous": 1
+    }
+   }
+  }
+ },
  "baziqa_v2": {
   "benchmark": "BaziQA",
   "benchmark_commit": "3bad3deaa5aa3a191c9c68b4d8b17f46decff45e",

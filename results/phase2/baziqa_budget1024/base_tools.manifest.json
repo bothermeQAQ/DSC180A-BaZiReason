@@ -21,5 +21,6 @@
   "adapter_path": null,
   "adapter_sha256": null,
   "contest_data_used_for_training": false,
-  "status": "running"
+  "status": "complete",
+  "wall_seconds": 2231.0
 }
