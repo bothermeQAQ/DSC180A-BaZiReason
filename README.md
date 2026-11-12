@@ -43,11 +43,11 @@ The demo shows the engine's chart, lets a tester switch between the untuned and 
 | | |
 |---|---|
 | Rules | 12 new sourced rule cards with 20 quotations checked against zh.wikisource ([`data/phase3/`](data/phase3/README.md)) |
-| Training | three LoRA rounds, each starting from the previous adapter. The final adapter is round 3, a corrective round that keeps the Phase 2 calendar skills ([why](docs/phase3_progress_report.md#5-training-and-selection)) |
+| Training | three LoRA rounds, each starting from the previous adapter. Round 2 is the pre-registered validation winner. Round 3, a corrective round that keeps the Phase 2 calendar skills, is the experimental demo model; it was chosen after the held-out test results had been inspected, so its Phase 3 test numbers are not an untouched evaluation ([details](docs/phase3_progress_report.md#5-training-and-selection)) |
 | Results | [`results/phase3/RESULTS.md`](results/phase3/RESULTS.md); narrative and tradeoffs in the [progress report](docs/phase3_progress_report.md) |
 | How to run | [`docs/phase3_training.md`](docs/phase3_training.md) |
 
-Headline results (held-out years, identical prompts, real local inference; final adapter = round 3):
+Headline results (held-out years, identical prompts, real local inference; round 3, numbers post-selection):
 
 - **Rule reasoning, Phase 3 test split (621 items):** untuned 6.0%, Phase 2 15.8%, Phase 3 65.1%. Phase 3 minus Phase 2 is +49.3 points [45.2, 53.5].
 - **Rule questions in the Phase 2 wording (240 items on three splits):** 122 right for Phase 2, 149 for Phase 3.

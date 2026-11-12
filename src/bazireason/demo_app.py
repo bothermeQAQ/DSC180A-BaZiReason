@@ -47,8 +47,9 @@ from bazireason.train_tasks import chart_line, compare_charts
 
 STATIC = Path(__file__).parent / "demo_static"
 DEFAULT_MODEL = "models/qwen3-4b-instruct-2507-mlx-4bit"
-# The final Phase 3 adapter (results/phase3/final_choice.json): round 3, which keeps the
-# Phase 2 calendar skills; round 2 can still be loaded with --adapter.
+# The experimental demo model: Phase 3 round 3, chosen after the Phase 3 test results had been
+# inspected (results/phase3/final_choice.json). Round 2, the pre-registered validation winner,
+# loads with --adapter; Phase 4 adapters likewise.
 DEFAULT_ADAPTER = "artifacts/adapters/bazireason-qwen3-4b-lora-p3-r3"
 DEFAULT_ADAPTER_P2 = "artifacts/adapters/bazireason-qwen3-4b-lora-v2"
 MODEL_IDS = ("p3", "p2", "base")

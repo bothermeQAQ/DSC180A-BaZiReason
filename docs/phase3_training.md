@@ -70,10 +70,10 @@ The calendar check split then showed that round 2 breaks a constraint of the bri
 ```bash
 .venv-mlx/bin/python scripts/phase3/make_report.py   # writes summary.json
 .venv/bin/python scripts/phase3/final_choice.py       # writes results/phase3/final_choice.json
-.venv-mlx/bin/python scripts/phase3/make_report.py   # marks the final round
+.venv-mlx/bin/python scripts/phase3/make_report.py   # marks the demo round
 ```
 
-**The Phase 3 adapter is `artifacts/adapters/bazireason-qwen3-4b-lora-p3-r3`.** Its test numbers are post-selection (two candidates; BaziQA not consulted). Round 2 remains on disk and can be loaded with `--adapter`.
+**The experimental demo model is `artifacts/adapters/bazireason-qwen3-4b-lora-p3-r3`; the pre-registered validation winner is round 2 (`-p3-r2`).** Round 3 was chosen after the test splits had been read, so its test numbers are post-selection and not an untouched evaluation (two candidates; BaziQA not consulted). Phase 4 ([phase4_report.md](phase4_report.md)) compares every adapter on a new sealed split.
 
 ## 5. Evaluation
 

@@ -22,6 +22,7 @@ from bazireason.calendar_engine import compute_chart
 from bazireason.controls import corrupt_context
 from bazireason.dataset_generator import read_jsonl
 from bazireason.mlx_backend import MLXChatModel, ReplayClient, file_sha256
+from bazireason.prompts import PROMPT_VERSION
 
 DATA = "data/synthetic/benchmark_v3.jsonl"
 DEFAULT_MODEL = "models/qwen3-4b-instruct-2507-mlx-4bit"
@@ -88,6 +89,14 @@ def main():
         "workflow": "w2_tool_check",
         "dataset_sha256": hashlib.sha256(Path(DATA).read_bytes()).hexdigest(),
         "methods": ["tool_corrupted"],
+        "protocol": "strict",
+        "prompt_version": PROMPT_VERSION + "+w2-tool-check-note",
+        "case_ids": [c["case_id"] for c in cases],
+        "trials": 1,
+        "n_calls": len(cases),
+        "n_observations": len(cases),
+        "synthetic": False,
+        "backend": "mlx_local",
         "model": chat.model,
         "adapter_path": args.adapter,
         "adapter_sha256": file_sha256(adapter_file) if adapter_file else None,

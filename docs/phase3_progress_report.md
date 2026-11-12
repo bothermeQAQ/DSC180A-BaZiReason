@@ -11,7 +11,7 @@ All numbers come from files under `results/phase3/` (full tables in [`results/ph
 |---|---|
 | Starting point | Phase 2 adapter `bazireason-qwen3-4b-lora-v2` on `Qwen/Qwen3-4B-Instruct-2507` (4-bit). LoRA rank 16 on the last 16 layers, 14.68 M trainable parameters |
 | Training | Three rounds, each warm-started from the one before. 14,400 training rows in total, 7,199 iterations (3,599 optimizer updates), 393 minutes, 10.5 M sequence tokens, peak memory 20.6 GB |
-| Final adapter | `artifacts/adapters/bazireason-qwen3-4b-lora-p3-r3/adapters.safetensors` (56 MB, SHA-256 `b559c219…6f600dfa6d`). Round 3 was chosen over round 2 after the test splits, by the brief's calendar constraint. The validation rule had preferred round 2 by 357 to 353 (section 5) |
+| Adapters | **Experimental demo model:** round 3, `artifacts/adapters/bazireason-qwen3-4b-lora-p3-r3/adapters.safetensors` (56 MB, SHA-256 `b559c219…6f600dfa6d`), chosen *after* the held-out test results had been inspected. **Pre-registered validation winner:** round 2 (`-p3-r2`), which the rule fixed before round 3 was scored preferred by 357 to 353. Round 3's test numbers below are post-selection, not an untouched final evaluation (section 5) |
 | Rule reasoning | **Improved.** On the Phase 3 test split (621 reasoning items, unseen years): untuned 6.0%, Phase 2 15.8%, Phase 3 65.1%, i.e. +49.3 points over Phase 2 [45.2, 53.5]. Single table lookups: 26.7% → 87.3%. Rule questions in the Phase 2 wording: 122 → 149 of 240 |
 | Ambiguity | **Improved.** Definite answers where none exists: 11/32 → 1/32 on the Phase 3 split. On benchmark_v3 strict: 76.2% → 28.6% of ambiguous requests, while the right status rose from 89.3% to 92.7% |
 | Strict corrupted charts | **Not meaningfully improved.** In one-pass JSON, wrong tool answers corrected: 4/150 → 8/150. On benchmark_v3, corrupted answers followed: 98.8% → 98.0% |
@@ -97,7 +97,7 @@ Interpretation that no rule settles is declined, not invented.
 
 LoRA settings as in Phase 2: rank 16, scale 2.0, last 16 layers, batch 2 × gradient accumulation 2, AdamW with warm-up and cosine decay. The peak learning rate was 1e-4 in rounds 1–2 and 5e-5 in round 3.
 
-**How the final round was chosen.**
+**How the demo model was chosen (and why its test numbers are not untouched).**
 
 1. **Round 1 vs round 2 (validation rule, fixed in advance).** Round 2 won: 227 vs 198 of 298 Phase 3 validation items.
 2. **Round 2 vs round 3 (second validation rule, fixed before round 3 was scored).** The rule added the correct answers on the Phase 3 validation split (298) and on the Phase 2 validation split (203), to weigh calendar skills alongside rule reasoning. Round 2 won by 4 items:
@@ -115,7 +115,7 @@ LoRA settings as in Phase 2: rank 16, scale 2.0, last 16 layers, batch 2 × grad
 
 ### 6.1 Rule reasoning (Phase 3 test split, unseen years)
 
-| Family | Untuned | Phase 2 | Round 1 | Round 2 | **Round 3 (final)** |
+| Family | Untuned | Phase 2 | Round 1 | Round 2 | **Round 3 (demo; post-selection)** |
 |---|---:|---:|---:|---:|---:|
 | Single table lookup (`drill`) | 11/150 | 40/150 | 133/150 | 133/150 | **131/150** |
 | Ten Gods and pairings | 0/40 | 0/40 | 3/40 | 23/40 | **19/40** |
@@ -179,7 +179,7 @@ With visible steps, detection is near ceiling for every model. On the three Phas
 
 ### 6.4 Calendar skills
 
-| | Phase 2 | Round 2 | **Round 3 (final)** |
+| | Phase 2 | Round 2 | **Round 3 (demo; post-selection)** |
 |---|---:|---:|---:|
 | **Check split, never inspected, all rows (485)** | 349 | 314 (−7.2 [−11.2, −3.4]) | **345 (−0.8 [−4.7, +2.9])** |
 | … calendar rows, difference from Phase 2 | – | −11.2 [−16.2, −6.6] | **−4.0 [−9.2, +1.3]** |
@@ -215,7 +215,7 @@ Round 3 replayed the Phase 2 families at half the learning rate. It is back at t
 
 ## 7. What regressed, and the tradeoffs
 
-**Round 3 (final) against Phase 2:**
+**Round 3 (demo model) against Phase 2:**
 
 | Regression | Size | Likely cause |
 |---|---|---|
@@ -240,7 +240,7 @@ Round 3 replayed the Phase 2 families at half the learning rate. It is back at t
 - **Round 2:** 10% replay bought the best rule scores at a calendar cost that is significant on every split.
 - **Round 3:** 51% replay and half the learning rate restored calendar skills and fixed the citation, loop and over-abstention defects. Rule reasoning stayed within 1.6 points of round 2; the losses are concentrated in multiple choice and overviews.
 
-The brief ranks calendar skills as not to be sacrificed, which is why round 3 is final. Round 2 stays on disk for anyone who weighs rule reasoning higher.
+The brief ranks calendar skills as not to be sacrificed, which is why round 3 became the experimental demo model. Round 2 remains the pre-registered validation winner and stays on disk. Because the switch was made after the test splits had been read, Phase 4 builds a new, untouched final test split (see [phase4_report.md](phase4_report.md)).
 
 ## 8. What distinguishes BaZiReason from a general-purpose LLM
 
@@ -290,7 +290,7 @@ After this run I added two prose checks: the named pattern, and the spouse star 
 - **Templated Chinese.** The model is better inside the trained formats than outside: wording seen in training 74.0%, unseen 52.2%. Later turns can copy the previous answer.
 - **This project's conventions.** The strength count, the 透干 pattern rule, the simplified 调候 and the trigger rule are declared conventions; a practitioner may disagree, and none has reviewed them.
 - **Small sets.** Several families have 20–50 items, so a few items' difference is noise. Intervals are reported for the main contrasts.
-- **Post-selection test numbers.** The final round was chosen after the test splits were scored (section 5).
+- **Post-selection test numbers.** Round 3 was chosen after the test splits were scored (section 5), so none of its Phase 3 test numbers is an untouched final evaluation. Phase 4 evaluates every adapter on a new sealed split.
 - **BaziQA is not an untouched test.** It was evaluated in Phase 2. Nothing was tuned on it, but it was not unseen by the researcher.
 - **One machine, one base model.** A 4-bit 4B model with LoRA; a larger model may behave differently.
 

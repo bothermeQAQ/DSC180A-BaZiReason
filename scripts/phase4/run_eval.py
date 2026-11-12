@@ -20,7 +20,6 @@ from pathlib import Path
 
 from bazireason import workflow as W
 from bazireason.indep_rules import score_indep
-from bazireason.mlx_backend import MLXChatModel, file_sha256
 from bazireason.p2_eval import score_row, summarize
 from bazireason.p3_eval import score3, summarize3
 
@@ -72,6 +71,8 @@ def main():
         if not (ROOT / "selection.json").exists():
             parser.error("The final test is sealed until results/phase4/selection.json exists")
         log_access(args)
+    from bazireason.mlx_backend import MLXChatModel, file_sha256  # needs MLX; after the seal check
+
     out_dir = ROOT / args.split
     out_dir.mkdir(parents=True, exist_ok=True)
     suffix = "" if args.workflow == "w0" else f"_{args.workflow}"
