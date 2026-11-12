@@ -17,7 +17,8 @@ from pathlib import Path
 
 from bazireason import baziqa as B
 
-MODELS = (("base", "base"), ("p2", "tuned"), ("p3", "tuned"))
+# p3 is round 2 (scored first); p3r3 is the corrective round 3.
+MODELS = (("base", "base"), ("p2", "tuned"), ("p3", "tuned"), ("p3r3", "tuned"))
 TOOLS = ("no_tools", "tools")
 REPORT_TRACKS = (
     "full",
@@ -95,6 +96,10 @@ def main():
         summary["conditions"][name] = block
     pairs = []
     for tools in TOOLS:
+        pairs += [
+            (f"p3r3_{tools}", f"p2_{tools}", f"Phase 3 round 3 beyond Phase 2 ({tools})"),
+            (f"p3r3_{tools}", f"p3_{tools}", f"round 3 beyond round 2 ({tools})"),
+        ]
         pairs += [
             (f"p3_{tools}", f"p2_{tools}", f"Phase 3 training beyond Phase 2 ({tools})"),
             (f"p3_{tools}", f"base_{tools}", f"Phase 2 and 3 training together ({tools})"),

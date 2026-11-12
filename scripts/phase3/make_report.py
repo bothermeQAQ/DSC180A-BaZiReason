@@ -14,7 +14,11 @@ from bazireason.p3_eval import paired_difference
 
 ROOT = Path("results/phase3")
 P2 = Path("results/phase2")
-ROUNDS = ("bazireason-qwen3-4b-lora-p3-r1", "bazireason-qwen3-4b-lora-p3-r2")
+ROUNDS = (
+    "bazireason-qwen3-4b-lora-p3-r1",
+    "bazireason-qwen3-4b-lora-p3-r2",
+    "bazireason-qwen3-4b-lora-p3-r3",
+)
 MISSING = []
 
 
@@ -34,10 +38,10 @@ def records(path):
     return [json.loads(line)["score"] for line in path.read_text().splitlines()]
 
 
-def cell(block, hits="hits"):
+def cell(block):
     if not block or not block.get("n"):
         return "–"
-    k = block.get(hits, block.get("k"))
+    k = block.get("hits", block.get("k"))
     return f"{k}/{block['n']} ({100 * k / block['n']:.1f}%)"
 
 
@@ -46,6 +50,10 @@ def pp(estimate):
         return "–"
     low, high = estimate["interval95"]
     return f"{100 * estimate['difference']:+.1f} pp [{100 * low:+.1f}, {100 * high:+.1f}]"
+
+
+def pct(value):
+    return "–" if value is None else f"{100 * value:.1f}%"
 
 
 def loss_curve(name):
@@ -89,26 +97,25 @@ def loss_curve(name):
 
 
 def training(lines, summary):
-    lines.append("## 1. Training runs\n")
+    lines.append("## 1. Training runs and adapter selection\n")
     lines.append(
-        "| Run | Starts from | Rows | Iterations | Optimizer updates | Minutes | Validation loss "
-        "(start → selected) | Sequence tokens | Peak memory |"
+        "| Run | Starts from | Rows | Iterations | Optimizer updates | Peak LR | Minutes | "
+        "Validation loss (start → selected) | Sequence tokens | Peak memory |"
     )
-    lines.append("|---|---|---:|---:|---:|---:|---|---:|---:|")
+    lines.append("|---|---|---:|---:|---:|---:|---:|---|---:|---:|")
     summary["training"] = {}
     for name in ROUNDS:
-        done = load(ROOT / "training" / name / "training_summary.json")
-        plan = load(ROOT / "training" / name / "training_plan.json")
-        if not done or not plan:
+        folder = ROOT / "training" / name
+        if not (folder / "training_summary.json").exists():
             continue
-        log = [
-            json.loads(x)
-            for x in (ROOT / "training" / name / "metrics.jsonl").read_text().splitlines()
-        ]
+        done = load(folder / "training_summary.json")
+        plan = load(folder / "training_plan.json")
+        log = [json.loads(x) for x in (folder / "metrics.jsonl").read_text().splitlines()]
         first = next(r["val_loss"] for r in log if r["kind"] == "valid")
+        peak = max(r["learning_rate"] for r in log if r["kind"] == "train")
         lines.append(
             f"| `{name}` | `{Path(plan['init_adapter']).parent.name}` | {plan['train_rows']:,} | "
-            f"{plan['iterations']:,} | {plan['optimizer_updates']:,} | "
+            f"{plan['iterations']:,} | {plan['optimizer_updates']:,} | {peak:.0e} | "
             f"{done['duration_seconds'] / 60:.0f} | {first:.3f} → {done['selected_validation_loss']:.4f} "
             f"(iteration {done['selected_checkpoint_iteration']}) | "
             f"{done.get('sequence_tokens_processed', plan['train_sequence_tokens_per_epoch']):,} | "
@@ -129,27 +136,45 @@ def training(lines, summary):
         }
         loss_curve(name)
     lines.append("")
+    lines.append(
+        "Validation losses of different rounds are not comparable: each round's validation rows "
+        "come from its own dataset.\n"
+    )
     for name in ROUNDS:
         if (ROOT / "training" / name / "loss_curve.png").exists():
             lines.append(f"![loss curve](training/{name}/loss_curve.png)\n")
-    selection = load(ROOT / "selection.json")
-    if selection:
-        summary["selection"] = selection
+    first = load(ROOT / "selection.json")
+    if first:
+        summary["selection_round1_round2"] = first
         lines.append(
-            "**Adapter selection** (rule fixed before round 2 was scored: "
-            + selection["rule"]
-            + ").\n"
+            f"**Round 1 against round 2.** Rule fixed before round 2 was scored: {first['rule']}.\n"
         )
-        lines.append("| Round | Validation answers correct | Reasoning rows correct |")
-        lines.append("|---|---:|---:|")
-        for row in selection["rounds"]:
-            mark = " **(selected)**" if row["round"] == selection["selected"] else ""
+        lines.append("| Round | Phase 3 validation answers correct |")
+        lines.append("|---|---:|")
+        for row in first["rounds"]:
+            mark = " (chosen)" if row["round"] == first["selected"] else ""
             lines.append(
-                f"| {row['round']}{mark} | {row['validation_correct']}/{row['validation_rows']} | "
-                f"{row['reasoning_correct']}/{row['reasoning_rows']} |"
+                f"| {row['round']}{mark} | {row['validation_correct']}/{row['validation_rows']} |"
             )
         lines.append("")
-    return selection
+    final = (
+        load(ROOT / "selection_final.json") if (ROOT / "selection_final.json").exists() else None
+    )
+    if final:
+        summary["selection_final"] = final
+        lines.append(
+            f"**Round 2 against round 3.** Rule fixed before round 3 was scored: {final['rule']}.\n"
+        )
+        lines.append("| Round | Phase 3 validation | Phase 2 validation | Total |")
+        lines.append("|---|---:|---:|---:|")
+        for row in final["candidates"]:
+            mark = " **(final)**" if row["round"] == final["selected"] else ""
+            lines.append(
+                f"| {row['round']}{mark} | {row['phase3_valid'][0]}/{row['phase3_valid'][1]} | "
+                f"{row['phase2_valid'][0]}/{row['phase2_valid'][1]} | {row['total']} |"
+            )
+        lines.append("")
+    return (final or first or {}).get("selected", "p3-r2").replace("-", "")
 
 
 FAMILY_NOTES = {
@@ -172,26 +197,27 @@ FAMILY_NOTES = {
 
 def heldout3(lines, summary, names):
     """Phase 3 test split: one column per model."""
-    reports = {
-        label: load(ROOT / "heldout" / f"p3test_{stem}.jsonl.scores.json") for label, stem in names
-    }
-    reports = {k: v["summary"] for k, v in reports.items() if v}
+    reports = {}
+    for label, stem in names:
+        report = load(ROOT / "heldout" / f"p3test_{stem}.jsonl.scores.json")
+        if report:
+            reports[label] = report["summary"]
     if not reports:
         return
     labels = list(reports)
     lines.append(
-        "## 2. Phase 3 held-out test split (801 rows, unseen years, one third unseen wordings)\n"
+        "## 2. Phase 3 held-out test split (801 rows, unseen years, a third in unseen wordings)\n"
     )
     lines.append("Greedy decoding, same prompts and 800-token budget for every model.\n")
     lines.append("| Task family | What it asks | " + " | ".join(labels) + " |")
     lines.append("|---|---|" + "---:|" * len(labels))
-    families = [f for f in FAMILY_NOTES if any(f in r["by_family"] for r in reports.values())]
-    for family in families:
-        lines.append(
-            f"| `{family}` | {FAMILY_NOTES[family]} | "
-            + " | ".join(cell(reports[label]["by_family"].get(family)) for label in labels)
-            + " |"
-        )
+    for family in FAMILY_NOTES:
+        if any(family in r["by_family"] for r in reports.values()):
+            lines.append(
+                f"| `{family}` | {FAMILY_NOTES[family]} | "
+                + " | ".join(cell(reports[label]["by_family"].get(family)) for label in labels)
+                + " |"
+            )
     lines.append(
         "| **Reasoning tasks (all but the strict audit)** | | "
         + " | ".join(f"**{cell(reports[label]['reasoning_tasks'])}**" for label in labels)
@@ -202,7 +228,7 @@ def heldout3(lines, summary, names):
         + " | ".join(f"**{cell(reports[label]['overall'])}**" for label in labels)
         + " |\n"
     )
-    summary["phase3_test"] = {label: reports[label] for label in labels}
+    summary["phase3_test"] = reports
     lines.append("| Breakdown | " + " | ".join(labels) + " |")
     lines.append("|---|" + "---:|" * len(labels))
     rows = (
@@ -222,10 +248,7 @@ def heldout3(lines, summary, names):
             "Ambiguity: declined although an answer exists (lower is better)",
             lambda r: cell(r["ambiguity"]["abstained_on_determinate"]),
         ),
-        (
-            "Claims: single verdicts right",
-            lambda r: f"{100 * r['claims']['verdict_accuracy']:.1f}%",
-        ),
+        ("Claims: single verdicts right", lambda r: pct(r["claims"]["verdict_accuracy"])),
         (
             "Claims: unverifiable prediction called correct (lower is better)",
             lambda r: "{}/{}".format(*r["claims"]["speculative_endorsed"]),
@@ -240,16 +263,11 @@ def heldout3(lines, summary, names):
             f"| {label_} | " + " | ".join(getter(reports[label]) for label in labels) + " |"
         )
     lines.append("")
-    # Strict audit by kind of error.
     lines.append(
-        "**One-pass audit of a supplied tool answer (strict JSON, 180 rows).** "
-        "`day_shift_midday` and `hour_stem_night` never occur in training.\n"
+        "**One-pass audit of a supplied tool answer (strict JSON, 180 rows): corrected / followed the "
+        "error.** `day_shift_midday` and `hour_stem_night` never occur in training.\n"
     )
-    lines.append(
-        "| Supplied answer | "
-        + " | ".join(f"{label}: right / followed the error" for label in labels)
-        + " |"
-    )
+    lines.append("| Supplied answer | " + " | ".join(labels) + " |")
     lines.append("|---|" + "---|" * len(labels))
     kinds = sorted(
         {k for r in reports.values() for k in r.get("strict_audit", {}).get("by_kind", {})}
@@ -274,14 +292,14 @@ def heldout3(lines, summary, names):
             else "–"
         )
     lines.append("| **all wrong answers** | " + " | ".join(cells) + " |\n")
-    # Paired differences between models on the same rows.
     scores = {label: records(ROOT / "heldout" / f"p3test_{stem}.jsonl") for label, stem in names}
     scores = {k: v for k, v in scores.items() if v}
-    pairs = [
-        (a, b) for i, a in enumerate(labels) for b in labels[i + 1 :] if a in scores and b in scores
-    ]
+    base = [label for label in labels if label in scores]
+    pairs = [(a, b) for i, a in enumerate(base) for b in base[i + 1 :]]
     if pairs:
-        lines.append("| Paired difference (row-group bootstrap) | All rows | Reasoning tasks |")
+        lines.append(
+            "| Paired difference on the same rows (row-group bootstrap) | All rows | Reasoning tasks |"
+        )
         lines.append("|---|---|---|")
         summary["phase3_test_paired"] = {}
         for first, second in pairs:
@@ -297,128 +315,115 @@ def heldout3(lines, summary, names):
         lines.append("")
 
 
-def regression(lines, summary, best):
-    """Phase 2 held-out splits: did the calendar skills survive?"""
-    lines.append("## 3. Regression on the Phase 2 held-out splits\n")
-    pairs = (
+def p2_rows(a):
+    return [
+        ("All rows", a["overall"]),
+        ("Exact four pillars", a["calendar"]["exact_four_pillar"]),
+        ("Exact four pillars, no tools", a["calendar"]["exact_no_tools"]),
+        ("Exact four pillars, with tool facts", a["calendar"]["exact_with_facts"]),
+        ("Rule tasks (Phase 2 prompts)", a["by_family"].get("rule")),
+        ("Internal consistency of a chart", a["by_family"].get("internal")),
+        ("Rule multiple choice", a["by_family"].get("mcq")),
+        ("Multi-turn", a["by_family"].get("multi_turn")),
+        ("Counterfactual comparison", a["by_family"].get("counterfactual")),
+        ("Corrupted charts detected", a["verification"]["corruption_detection"]),
         (
-            "First split (633 rows)",
-            P2 / "heldout/tuned_v2.jsonl",
-            ROOT / f"heldout/p2test_{best}.jsonl",
+            "False alarms on sound charts (lower is better)",
+            a["verification"]["false_alarm_on_sound_charts"],
+        ),
+        ("Definite predictions declined", a["policy"]["declined_definite_prediction"]),
+    ]
+
+
+def regression(lines, summary, columns):
+    """Phase 2-style splits: did the calendar skills survive?"""
+    lines.append("## 3. Calendar and Phase 2 skills\n")
+    splits = (
+        (
+            "Never-inspected check split (485 rows, generated after round 2)",
+            {"Phase 2": ROOT / "heldout/p2check_p2.jsonl"}
+            | {label: ROOT / f"heldout/p2check_{stem}.jsonl" for label, stem in columns},
         ),
         (
-            "Fresh split (486 rows)",
-            P2 / "heldout/fresh_tuned_v2.jsonl",
-            ROOT / f"heldout/p2fresh_{best}.jsonl",
+            "Phase 2 first test split (633 rows; read row by row while diagnosing round 2)",
+            {"Phase 2": P2 / "heldout/tuned_v2.jsonl"}
+            | {label: ROOT / f"heldout/p2test_{stem}.jsonl" for label, stem in columns},
+        ),
+        (
+            "Phase 2 fresh test split (486 rows)",
+            {"Phase 2": P2 / "heldout/fresh_tuned_v2.jsonl"}
+            | {label: ROOT / f"heldout/p2fresh_{stem}.jsonl" for label, stem in columns},
         ),
     )
-    summary["phase2_regression"] = {}
-    for title, old_path, new_path in pairs:
-        old, new = load(str(old_path) + ".scores.json"), load(str(new_path) + ".scores.json")
-        if not old or not new:
+    summary["phase2_skills"] = {}
+    for title, paths in splits:
+        reports = {}
+        for label, path in paths.items():
+            if Path(str(path) + ".scores.json").exists():
+                reports[label] = json.loads(Path(str(path) + ".scores.json").read_text())["summary"]
+        if len(reports) < 2:
             continue
-        a, b = old["summary"], new["summary"]
+        labels = list(reports)
         lines.append(f"**{title}**\n")
-        lines.append("| Measure | Phase 2 adapter | Phase 3 adapter |")
-        lines.append("|---|---:|---:|")
-
-        def k(block):
-            return cell(block, "k")
-
-        rows = [
-            ("All rows", a["overall"], b["overall"]),
-            (
-                "Exact four pillars",
-                a["calendar"]["exact_four_pillar"],
-                b["calendar"]["exact_four_pillar"],
-            ),
-            (
-                "Exact four pillars, no tools",
-                a["calendar"]["exact_no_tools"],
-                b["calendar"]["exact_no_tools"],
-            ),
-            (
-                "Exact four pillars, with tool facts",
-                a["calendar"]["exact_with_facts"],
-                b["calendar"]["exact_with_facts"],
-            ),
-            (
-                "Rule tasks (Ten Gods, relations, …)",
-                a["by_family"].get("rule"),
-                b["by_family"].get("rule"),
-            ),
-            (
-                "Internal consistency of a chart",
-                a["by_family"].get("internal"),
-                b["by_family"].get("internal"),
-            ),
-            ("Rule multiple choice", a["by_family"].get("mcq"), b["by_family"].get("mcq")),
-            ("Multi-turn", a["by_family"].get("multi_turn"), b["by_family"].get("multi_turn")),
-            (
-                "Counterfactual comparison",
-                a["by_family"].get("counterfactual"),
-                b["by_family"].get("counterfactual"),
-            ),
-            (
-                "Corrupted charts detected",
-                a["verification"]["corruption_detection"],
-                b["verification"]["corruption_detection"],
-            ),
-            (
-                "False alarms on sound charts",
-                a["verification"]["false_alarm_on_sound_charts"],
-                b["verification"]["false_alarm_on_sound_charts"],
-            ),
-            (
-                "Definite predictions declined",
-                a["policy"]["declined_definite_prediction"],
-                b["policy"]["declined_definite_prediction"],
-            ),
-        ]
-        for name, left, right in rows:
-            lines.append(f"| {name} | {k(left)} | {k(right)} |")
-        first, second = records(old_path), records(new_path)
-        if first and second:
-            everything = paired_difference(first, second)
-            rule = paired_difference(first, second, where=lambda s: s["family"] == "rule")
-            lines.append(f"| Paired difference, all rows | | {pp(everything)} |")
-            lines.append(f"| Paired difference, rule tasks | | {pp(rule)} |")
-            summary["phase2_regression"][title] = {
-                "phase2": a,
-                "phase3": b,
-                "paired_all": everything,
-                "paired_rule": rule,
-            }
+        lines.append("| Measure | " + " | ".join(labels) + " |")
+        lines.append("|---|" + "---:|" * len(labels))
+        table = {label: p2_rows(reports[label]) for label in labels}
+        for index, (name, _) in enumerate(table[labels[0]]):
+            lines.append(
+                f"| {name} | " + " | ".join(cell(table[label][index][1]) for label in labels) + " |"
+            )
+        first = records(paths["Phase 2"])
+        diffs = {}
+        for label in labels[1:]:
+            second = records(paths[label])
+            if first and second:
+                diffs[label] = {
+                    "all": paired_difference(first, second),
+                    "calendar": paired_difference(
+                        first, second, where=lambda s: s["task"] == "chart"
+                    ),
+                    "rule": paired_difference(first, second, where=lambda s: s["family"] == "rule"),
+                }
+        for key, name in (
+            ("all", "all rows"),
+            ("calendar", "calendar rows"),
+            ("rule", "rule tasks"),
+        ):
+            lines.append(
+                f"| Paired difference against Phase 2, {name} | – | "
+                + " | ".join(pp(diffs.get(label, {}).get(key)) for label in labels[1:])
+                + " |"
+            )
         lines.append("")
+        summary["phase2_skills"][title] = {"summaries": reports, "paired_vs_phase2": diffs}
 
 
-def benchmark_v3(lines, summary, best):
-    strict_new = load(ROOT / f"v3/{best}_strict.jsonl.scores.json")
-    strict_old = load(P2 / "v3/tuned_v2_strict.jsonl.scores.json")
-    strict_base = load(P2 / "v3/base_strict.jsonl.scores.json")
-    if not strict_new:
+def benchmark_v3(lines, summary, columns):
+    strict = {
+        "Untuned": load(P2 / "v3/base_strict.jsonl.scores.json"),
+        "Phase 2": load(P2 / "v3/tuned_v2_strict.jsonl.scores.json"),
+    }
+    for label, stem in columns:
+        strict[label] = load(ROOT / f"v3/{stem}_strict.jsonl.scores.json")
+    strict = {k: v for k, v in strict.items() if v}
+    if len(strict) < 3:
         return
+    labels = list(strict)
     lines.append("## 4. benchmark_v3 (261 cases; the checkpoint's own prompts and evaluator)\n")
     lines.append("**Strict protocol: one JSON object, no visible reasoning.**\n")
-    lines.append("| Condition | Measure | Untuned | Phase 2 | Phase 3 |")
-    lines.append("|---|---|---:|---:|---:|")
+    lines.append("| Condition | Measure | " + " | ".join(labels) + " |")
+    lines.append("|---|---|" + "---:|" * len(labels))
 
     def get(report, method, key):
         return (
-            report["methods"][method]["overall"].get(key)
-            if report and method in report["methods"]
-            else None
+            report["methods"][method]["overall"].get(key) if method in report["methods"] else None
         )
 
-    def show(value, percent=True):
-        if value is None:
-            return "–"
-        return f"{100 * value:.1f}%" if percent else str(value)
-
     summary["benchmark_v3_strict"] = {}
-    for method, key, label in (
+    for method, key, text in (
         ("direct", "exact_accuracy", "exact four pillars (225 answerable)"),
         ("direct", "decision_accuracy", "right status (261)"),
+        ("direct", "false_refusal_rate", "answerable request refused (lower is better)"),
         (
             "direct",
             "ambiguous_definitive_rate",
@@ -432,64 +437,60 @@ def benchmark_v3(lines, summary, best):
             "corruption_following_rate",
             "followed the wrong tool answer (lower is better)",
         ),
-        ("tool_corrupted", "decision_accuracy", "right status"),
     ):
-        values = [get(r, method, key) for r in (strict_base, strict_old, strict_new)]
-        summary["benchmark_v3_strict"][f"{method}.{key}"] = dict(
-            zip(("base", "phase2", "phase3"), values, strict=True)
-        )
-        lines.append(f"| `{method}` | {label} | " + " | ".join(show(v) for v in values) + " |")
+        values = [get(strict[label], method, key) for label in labels]
+        summary["benchmark_v3_strict"][f"{method}.{key}"] = dict(zip(labels, values, strict=True))
+        lines.append(f"| `{method}` | {text} | " + " | ".join(pct(v) for v in values) + " |")
     lines.append("")
     lines.append("Followed the wrong tool answer, by kind of error:\n")
     lines.append(
-        "| Kind of error | Cases | Visible in the chart itself? | Untuned | Phase 2 | Phase 3 |"
+        "| Kind of error | Cases | Visible in the supplied chart itself? | "
+        + " | ".join(labels)
+        + " |"
     )
-    lines.append("|---|---:|---|---:|---:|---:|")
+    lines.append("|---|---:|---|" + "---:|" * len(labels))
     visible = {
         "hour_stem": "yes (五鼠遁)",
-        "day_rollover": "partly (day and hour disagree; which one is wrong is not shown)",
+        "day_rollover": "partly (day and hour disagree; which is wrong is not shown)",
         "default_guess": "yes (the request itself is ambiguous)",
         "jie_side": "no (needs the solar-term instant)",
     }
-    by_type = {}
-    for name, report in (("base", strict_base), ("phase2", strict_old), ("phase3", strict_new)):
-        by_type[name] = (
-            (get(report, "tool_corrupted", "corruption_following_by_type") or {}) if report else {}
-        )
+    by_type = {
+        label: get(strict[label], "tool_corrupted", "corruption_following_by_type") or {}
+        for label in labels
+    }
     summary["benchmark_v3_strict"]["following_by_type"] = by_type
-    for kind in ("hour_stem", "day_rollover", "default_guess", "jie_side"):
-        n = by_type["phase3"].get(kind, {}).get("n", "–")
+    for kind in visible:
+        n = by_type[labels[-1]].get(kind, {}).get("n", "–")
         lines.append(
             f"| `{kind}` | {n} | {visible[kind]} | "
             + " | ".join(
-                show(by_type[m].get(kind, {}).get("following_rate"))
-                for m in ("base", "phase2", "phase3")
+                pct(by_type[label].get(kind, {}).get("following_rate")) for label in labels
             )
             + " |"
         )
     lines.append("")
-    contrasts = strict_new.get("comparisons") or {}
-    summary["benchmark_v3_strict"]["comparisons_keys"] = sorted(contrasts)[:20]
-    reasoned_new = load(ROOT / f"v3/{best}_reasoned.jsonl.scores.json")
-    reasoned_old = load(P2 / "v3/tuned_v2_reasoned.jsonl.scores.json")
-    if reasoned_new:
-        lines.append("**Reasoned protocol: visible reasoning, then the JSON object.**\n")
-        lines.append("| Condition | Exact four pillars, Phase 2 | Exact four pillars, Phase 3 |")
-        lines.append("|---|---:|---:|")
+    reasoned = {"Phase 2": load(P2 / "v3/tuned_v2_reasoned.jsonl.scores.json")}
+    for label, stem in columns:
+        reasoned[label] = load(ROOT / f"v3/{stem}_reasoned.jsonl.scores.json")
+    reasoned = {k: v for k, v in reasoned.items() if v}
+    if len(reasoned) >= 2:
+        names = list(reasoned)
+        lines.append(
+            "**Reasoned protocol: visible reasoning, then the JSON object. Exact four pillars.**\n"
+        )
+        lines.append("| Condition | " + " | ".join(names) + " |")
+        lines.append("|---|" + "---:|" * len(names))
         summary["benchmark_v3_reasoned"] = {}
         for method in ("direct", "tool_intermediate"):
-            old = reasoned_old["methods"][method]["overall"] if reasoned_old else None
-            new = reasoned_new["methods"][method]["overall"]
+            values = [reasoned[n]["methods"][method]["overall"] for n in names]
             summary["benchmark_v3_reasoned"][method] = {
-                "phase2": old and old["exact_matches"],
-                "phase3": new["exact_matches"],
-                "n": new["n_labeled"],
+                n: [v["exact_matches"], v["n_labeled"]] for n, v in zip(names, values, strict=True)
             }
             lines.append(
-                f"| `{method}` | {old['exact_matches']}/{old['n_labeled']} | "
-                f"{new['exact_matches']}/{new['n_labeled']} |"
-                if old
-                else f"| `{method}` | – | {new['exact_matches']}/{new['n_labeled']} |"
+                f"| `{method}` | "
+                + " | ".join(f"{v['exact_matches']}/{v['n_labeled']}" for v in values)
+                + " |"
             )
         lines.append("")
 
@@ -498,6 +499,7 @@ def baziqa(lines, summary):
     report = load(ROOT / "baziqa1024/summary.json")
     if not report:
         return
+    loops = load(ROOT / "baziqa1024/citations_and_loops.json")
     summary["baziqa_1024"] = {
         "conditions": {
             name: {track: block[track] for track in report["tracks"]}
@@ -512,20 +514,22 @@ def baziqa(lines, summary):
         "comparisons": report["comparisons"],
         "human_comparison": report["human_comparison"],
         "self_derived_charts": report["self_derived_charts"],
+        "citations_and_loops": loops,
     }
+    names = {"base": "Untuned", "p2": "Phase 2", "p3": "Phase 3 round 2", "p3r3": "Phase 3 round 3"}
     lines.append("## 5. BaziQA contest questions, 1,024-token budget\n")
     lines.append(
-        "555 questions on 117 charts; chance is 24.7%. Same prompt, sampling settings and budget for "
-        "every model. BaziQA was already evaluated in Phase 2, so it is an existing benchmark, not an "
-        "untouched test. Agreement with a contest key is not evidence that destiny can be predicted.\n"
+        "555 questions on 117 charts; chance is 24.7%. Same prompt, sampling settings (temperature 0.7) "
+        "and budget for every model. BaziQA was already evaluated in Phase 2, so it is an existing "
+        "benchmark, not an untouched test, and nothing was tuned on it. Agreement with a contest key "
+        "is not evidence that destiny can be predicted.\n"
     )
     lines.append(
         "| Model | Chart tool | Runs | All 555 [95% interval] | BaZi-only (290) | Official keys (365) | "
         "BaZi-only, official keys | Unanswered | Mean reply tokens |"
     )
     lines.append("|---|---|---:|---|---:|---:|---:|---:|---:|")
-    names = {"base": "Untuned", "p2": "Phase 2", "p3": "Phase 3"}
-    for model in ("base", "p2", "p3"):
+    for model in names:
         for tools in ("no_tools", "tools"):
             block = report["conditions"].get(f"{model}_{tools}")
             if not block:
@@ -535,10 +539,9 @@ def baziqa(lines, summary):
             lines.append(
                 f"| {names[model]} | {'verified' if tools == 'tools' else 'none'} | {full['n_runs']} | "
                 f"{100 * full['accuracy_mean']:.1f}% [{100 * low:.1f}, {100 * high:.1f}] | "
-                f"{100 * block['bazi_only']['accuracy_mean']:.1f}% | "
-                f"{100 * block['official_key']['accuracy_mean']:.1f}% | "
-                f"{100 * block['bazi_only_official_key']['accuracy_mean']:.1f}% | "
-                f"{100 * full['unanswered_rate']:.1f}% | {block['mean_completion_tokens']:.0f} |"
+                f"{pct(block['bazi_only']['accuracy_mean'])} | {pct(block['official_key']['accuracy_mean'])} | "
+                f"{pct(block['bazi_only_official_key']['accuracy_mean'])} | "
+                f"{pct(full['unanswered_rate'])} | {block['mean_completion_tokens']:.0f} |"
             )
     lines.append("")
     lines.append(
@@ -550,13 +553,16 @@ def baziqa(lines, summary):
             f"| {block['effect_of']} | {pp(block['full'])} | {pp(block['bazi_only'])} | {pp(block['official_key'])} |"
         )
     lines.append("")
-    categories = sorted({c for b in report["conditions"].values() for c in b["by_category_full"]})
-    present = [n for n in ("base_tools", "p2_tools", "p3_tools") if n in report["conditions"]]
+    present = [
+        n for n in ("base_tools", "p2_tools", "p3_tools", "p3r3_tools") if n in report["conditions"]
+    ]
+    label = {n: names[n.rsplit("_", 1)[0]] for n in present}
     if present:
-        lines.append("Accuracy by question category, with the verified chart tool:\n")
-        lines.append(
-            "| Category | Questions | " + " | ".join(names[n.split("_")[0]] for n in present) + " |"
+        categories = sorted(
+            {c for n in present for c in report["conditions"][n]["by_category_full"]}
         )
+        lines.append("Accuracy by question category, with the verified chart tool:\n")
+        lines.append("| Category | Questions | " + " | ".join(label[n] for n in present) + " |")
         lines.append("|---|---:|" + "---:|" * len(present))
         for category in categories:
             first = report["conditions"][present[0]]["by_category_full"].get(category, {})
@@ -564,41 +570,51 @@ def baziqa(lines, summary):
             lines.append(
                 f"| {category} | {first.get('n', 0) // max(runs, 1)} | "
                 + " | ".join(
-                    f"{100 * report['conditions'][n]['by_category_full'].get(category, {'accuracy': 0})['accuracy']:.1f}%"
+                    pct(
+                        report["conditions"][n]["by_category_full"]
+                        .get(category, {})
+                        .get("accuracy")
+                    )
                     for n in present
                 )
                 + " |"
             )
         lines.append("")
-    years = sorted(report["conditions"][present[0]]["full"]["by_year"]) if present else []
-    if years:
+        years = sorted(report["conditions"][present[0]]["full"]["by_year"])
         lines.append("Accuracy by contest year, with the verified chart tool:\n")
-        lines.append("| Year | " + " | ".join(names[n.split("_")[0]] for n in present) + " |")
+        lines.append("| Year | " + " | ".join(label[n] for n in present) + " |")
         lines.append("|---|" + "---:|" * len(present))
         for year in years:
             lines.append(
                 f"| {year} | "
                 + " | ".join(
-                    f"{100 * report['conditions'][n]['full']['by_year'][year]:.1f}%"
-                    for n in present
+                    pct(report["conditions"][n]["full"]["by_year"].get(year)) for n in present
                 )
                 + " |"
             )
         lines.append("")
     lines.append(
-        "| Model and tool setting | Checkable statements in the explanations that match the verified chart |"
+        "| Model and tool setting | Checkable statements matching the verified chart | Replies naming a book "
+        "| Naming a book not in a list of real classics | Repetition loops |"
     )
-    lines.append("|---|---:|")
+    lines.append("|---|---:|---:|---:|---:|")
     for name, block in report["conditions"].items():
-        audit = block["checkable_statements"]
-        if audit:
-            lines.append(
-                f"| {name} | {audit['correct']}/{audit['n_claims']} ({100 * audit['rate']:.1f}%) |"
+        audit = block["checkable_statements"] or {}
+        extra = (loops or {}).get(name, {})
+        lines.append(
+            f"| {name} | "
+            + (
+                f"{audit['correct']}/{audit['n_claims']} ({100 * audit['rate']:.1f}%)"
+                if audit
+                else "–"
             )
+            + f" | {extra.get('names_a_book', '–')}/{extra.get('replies', '–')} | "
+            f"{extra.get('names_unknown_book', '–')} | {extra.get('repetition_loop', '–')} |"
+        )
     lines.append("")
     if report["self_derived_charts"]:
         lines.append(
-            "| Model | Own chart exactly right (no tool), of charts the engine can verify |"
+            "| Model | Own chart exactly right without the tool (of charts the engine can verify) |"
         )
         lines.append("|---|---:|")
         for model, block in report["self_derived_charts"].items():
@@ -624,19 +640,14 @@ def main():
         "inference and training on an Apple M5 with 32 GB; no mock output.\n"
     )
     summary = {}
-    selection = training(lines, summary)
-    best = (selection or {}).get("selected", "p3-r1").replace("-", "")
-    other = "p3r1" if best == "p3r2" else "p3r2"
-    names = [
-        ("Untuned", "base"),
-        ("Phase 2", "p2"),
-        (f"Phase 3 ({other[-2:]})", other),
-        (f"Phase 3 ({best[-2:]}, selected)", best),
-    ]
-    heldout3(lines, summary, names)
-    regression(lines, summary, best)
-    benchmark_v3(lines, summary, best)
+    final = training(lines, summary)
+    rounds = [("Round 1", "p3r1"), ("Round 2", "p3r2"), ("Round 3", "p3r3")]
+    rounds = [(f"{name} (final)" if stem == final else name, stem) for name, stem in rounds]
+    heldout3(lines, summary, [("Untuned", "base"), ("Phase 2", "p2"), *rounds])
+    regression(lines, summary, rounds[1:])
+    benchmark_v3(lines, summary, rounds[1:])
     baziqa(lines, summary)
+    summary["final_round"] = final
     if MISSING:
         lines.append("## Files not present when this report was built\n")
         lines.extend(f"- `{name}`" for name in sorted(set(MISSING)))
