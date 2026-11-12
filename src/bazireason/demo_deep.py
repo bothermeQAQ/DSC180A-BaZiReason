@@ -108,15 +108,19 @@ RULE_KEYWORDS = {
 
 def card_view(card: dict) -> dict:
     """A Phase 3 rule card in the shape the page shows (quotations become the check line)."""
-    quotes = "；".join(
-        f"{q['work']}·{q['section']}：“{q['text']}”" for q in card["quotations"]
-    ) or "未引原文；" + "、".join(w["work"] for w in card["works_cited_without_quotation"])
+    if card["quotations"]:
+        source = "原文（维基文库录文）" + "；".join(
+            f"{q['work']}·{q['section']}：“{q['text']}”" for q in card["quotations"]
+        )
+    else:
+        works = "、".join(w["work"] for w in card["works_cited_without_quotation"])
+        source = f"未引原文，仅注明出处：{works}"
     return {
         "id": card["id"],
         "kind": card["kind"],
         "title": card["title"],
         "statement": card["statement"],
-        "cross_check": "原文（维基文库录文）" + quotes,
+        "cross_check": source,
     }
 
 
