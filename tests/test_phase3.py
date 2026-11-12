@@ -388,3 +388,123 @@ def test_ambiguity_scoring_separates_overconfidence_from_overcaution(splits):
     assert E.score3(closed_row, refuse)["abstained_on_determinate"]
     assert extract_final_json(open_row["messages"][-1]["content"])["determinate"] is False
     assert all(len(row["meta"]["pillars"]) == len(PILLARS) for row in rows)
+
+
+# ---- Second-round wording and the demo ---------------------------------------------------------
+
+
+def test_second_round_dataset_is_reproducible_explicit_and_isolated():
+    folder = ROOT / "data/phase3/train_v2"
+    manifest = json.loads((folder / "manifest.json").read_text())
+    train, valid = _rows("train", folder), _rows("valid", folder)
+    assert (
+        P.sha256_bytes((folder / "train.jsonl").read_bytes())
+        == (manifest["files"]["train.jsonl"]["sha256"])
+    )
+    blocked = TD.benchmark_exclusions(ROOT / "data/synthetic") | TD.contest_exclusions(
+        ROOT / "data/phase2/exclusions/contest_birth_dates.json"
+    )
+    assert (
+        P.dataset_bytes(P.generate_split("valid", blocked=blocked, version=2))
+        == (folder / "valid.jsonl").read_bytes()
+    )
+    years = TD.split_years()
+    for split, rows in (("train", train), ("valid", valid)):
+        for row in rows:
+            if row["family"].startswith("replay_"):
+                continue
+            for day in _written_dates(row):
+                assert day not in blocked and day.year in years[split], row["id"]
+    # Fresh samples: no prompt repeats a first-round row outside the finite drills.
+    first = {
+        json.dumps(r["messages"][:-1], ensure_ascii=False)
+        for split in P.SPLITS
+        for r in _rows(split)
+        if r["family"] != "drill"
+    }
+    assert not any(
+        json.dumps(r["messages"][:-1], ensure_ascii=False) in first
+        for r in train
+        if r["family"] != "drill"
+    )
+    gods = next(r for r in train if r["family"] == "gods")["messages"][-1]["content"]
+    assert "十神表（日主" in gods and "逐项检查十神组合" in gods and "查表" in gods
+    pairs = next(r for r in train if r["family"] == "interact")["messages"][-1]["content"]
+    assert "卡的" in pairs or "不在" in pairs
+    assert any(r["meta"]["kind"] == "silent_check" for r in train if r["family"] == "drill")
+
+
+def test_ten_god_table_matches_the_rule_table_in_both_wordings():
+    from bazireason import textstyle
+
+    for day in STEMS:
+        table = K.god_table(day)
+        assert all(f"{stem}{R.ten_god(day, stem)}" in table for stem in STEMS)
+    textstyle.set_version(3)
+    try:
+        for day in STEMS:
+            for stem in STEMS:
+                assert K.god_reason(day, stem).endswith("故为" + R.ten_god(day, stem))
+                assert K.read(day, stem) == f"查表，{stem}为{R.ten_god(day, stem)}"
+    finally:
+        textstyle.set_version(1)
+    assert K.god_reason("甲", "庚") == R.ten_god_reason("甲", "庚")
+
+
+def test_demo_routes_questions_to_trained_formats_and_never_predicts():
+    from bazireason import demo_app as A
+    from bazireason import demo_deep as X
+
+    birth = {
+        "date": "1990-05-17",
+        "time": "14:30:00",
+        "timezone": "Asia/Shanghai",
+        "sect": 2,
+        "gender": "female",
+    }
+    chart = A.chart_payload(birth)["chart"]
+    expect = {
+        "请整体解读一下这个盘": "overview",
+        "日主强弱怎么数？": "strength",
+        "按透干取格是什么格局？": "pattern",
+        "这个八字的用神是什么？": "ambig",
+        "按扶抑一派喜什么？": "yongshen",
+        "原局有哪些合冲刑害？": "interact",
+        "2031年流年如何": "flow",
+        "传统上怎么看婚姻方面？": "domain",
+        "这个八字的桃花在哪一支？": "ambig",
+        "这个八字好不好？": "ambig",
+    }
+    for question, kind in expect.items():
+        planned = X.plan(question, chart, today=2026)
+        assert planned and planned["kind"] == kind, question
+        messages, routed = A.chat_messages(birth, [], question)
+        assert routed == kind and messages[0]["content"] == A.P2_SYSTEM
+        # The rule code's own derivation, used as a reply, passes the check.
+        reply = (
+            planned["text"] + "\n结论JSON: " + json.dumps(planned["reference"], ensure_ascii=False)
+        )
+        audit = A.audit_reply(reply, birth, question)
+        assert audit["engine"]["agrees"] and not audit["problems"], question
+        assert not A.audit_reply('结论JSON: {"answer":"x"}', birth, question)["engine"]["agrees"]
+    # No unique answer: the reference itself declines.
+    assert X.plan("这个八字的用神是什么？", chart)["reference"]["determinate"] is False
+    assert X.plan("这个八字好不好？", chart)["reference"]["determinate"] is False
+    # A request for a definite personal outcome is left to the declining route.
+    for question in ("我什么时候会结婚？", "我明年会不会发财？", "2030年能不能升职"):
+        assert X.plan(question, chart, today=2026) is None
+        assert A.chat_messages(birth, [], question)[1] == "policy"
+    # Without a gender the marriage stars cannot be chosen, and no chart means no plan.
+    nogender = A.chart_payload(dict(birth, gender=None))["chart"]
+    assert X.plan("传统上怎么看婚姻方面？", nogender)["reference"]["needs"] == ["gender"]
+    undated = A.chart_payload(dict(birth, time=""))["chart"]
+    assert undated["status"] != "ok" and X.plan("日主强弱怎么数？", undated) is None
+    assert A.chart_payload(dict(birth, time=""))["deep"] == []
+    models = A.Models("models/none", "artifacts/adapters/none", "artifacts/adapters/none")
+    assert [m["id"] for m in models.available()] == [
+        "p3",
+        "p2",
+        "base",
+    ] and models.default() == "base"
+    cards = {card["id"] for card in X.relevant_cards("按扶抑一派的用神")}
+    assert "R-YS-01" in cards

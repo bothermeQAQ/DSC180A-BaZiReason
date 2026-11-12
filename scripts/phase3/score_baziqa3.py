@@ -19,7 +19,13 @@ from bazireason import baziqa as B
 
 MODELS = (("base", "base"), ("p2", "tuned"), ("p3", "tuned"))
 TOOLS = ("no_tools", "tools")
-REPORT_TRACKS = ("full", "bazi_only", "official_key", "bazi_only_official_key", "paper_years_2021_2025")
+REPORT_TRACKS = (
+    "full",
+    "bazi_only",
+    "official_key",
+    "bazi_only_official_key",
+    "paper_years_2021_2025",
+)
 
 
 def read(path):
@@ -101,7 +107,9 @@ def main():
             summary["comparisons"][f"{second}_minus_{first}"] = {
                 "effect_of": label,
                 **{
-                    track: B.paired_by_person(persons, conditions[first], conditions[second], tracks[track])
+                    track: B.paired_by_person(
+                        persons, conditions[first], conditions[second], tracks[track]
+                    )
                     for track in REPORT_TRACKS
                 },
             }
@@ -153,7 +161,9 @@ def main():
         )
     for name, block in summary["comparisons"].items():
         full = block["full"]
-        print(f"{name:34s} {full['difference']:+.3f} [{full['interval95'][0]:+.3f}, {full['interval95'][1]:+.3f}]")
+        print(
+            f"{name:34s} {full['difference']:+.3f} [{full['interval95'][0]:+.3f}, {full['interval95'][1]:+.3f}]"
+        )
     print(f"Wrote {output}")
 
 

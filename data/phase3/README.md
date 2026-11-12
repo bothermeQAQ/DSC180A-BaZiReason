@@ -68,6 +68,24 @@ The Phase 2 answers showed three root causes (see `docs/phase3_progress_report.m
 - The strength count, the 透干 pattern rule, the simplified 调候 rule and the trigger rule are this project's declared conventions. A practitioner may reach different conclusions.
 - Charts are sampled from real calendar dates in the split's years, but rule tasks show only the four pillars.
 
+## `train_v2/`: second-round dataset `p3_train_v2`
+
+`python scripts/phase3/build_dataset.py --dataset 2 --check`. 4,122 training and 181 validation rows, new samples from the same year blocks (its own random stream, so no prompt repeats a `train_v1` row outside the finite drills). It has no test split: the round is scored on the `train_v1` test split.
+
+The first round's answers on the development split showed where it failed, and each change answers one failure:
+
+| First-round failure (development split) | Change in `p3_train_v2` |
+|---|---|
+| Ten Gods wrong in about a quarter of the lookups once several were needed in one answer (4 of 35 whole-chart Ten-God answers right), although single lookups were right in drills. The 生克 direction was guessed in one sentence. | The answer first writes the day master's **Ten-God table**, derived from the 相生 cycle, then reads every Ten God from it. A new drill asks for the table itself. |
+| Named pairings invented or missed ("官生财"). | All ten pairings are checked one by one, each with the two gods it needs. |
+| Branch cards were always right (133 of 133), but pairs were then misread from them ("卯卯自刑", "子戌相害"). | Every pair states where the second branch appears on the first branch's card before concluding. |
+| Multiple choice over years (5 of 23): the pillar of each option's year was computed silently and was often wrong. | The question gives one known year, and the answer lists the pillar of every option before choosing. |
+| One-pass audit of a tool answer: 0 of 28 lookup-visible errors corrected (wrong hour stem, month stem, hour branch, year); only "confident chart for an ambiguous request" was caught. | More audit rows weighted to 五鼠遁 and 五虎遁 errors, plus drills that answer hour-pillar, month-pillar and consistency lookups with the JSON alone, since a one-pass check has no room for written steps. |
+
+Sizes: drills 760, `gods` 260, `interact` 300, `flow` 300, `domain` 220, `mcq3` 400, `strict_audit` 600, the other reasoning families 870, replay of Phase 2 families 412.
+
+`bazireason.textstyle` version 3 selects this wording; versions 1 and 2 are unchanged, so every earlier dataset still regenerates byte for byte.
+
 ## `dev_v1/dev.jsonl`: development split
 
 627 rows from the validation years with a different seed. It was used to read the first round's errors and decide on a second round, so that the test split stayed unopened until an adapter had been selected.
