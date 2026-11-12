@@ -160,6 +160,7 @@ def training(lines, summary):
     final = (
         load(ROOT / "selection_final.json") if (ROOT / "selection_final.json").exists() else None
     )
+    choice = load(ROOT / "final_choice.json") if (ROOT / "final_choice.json").exists() else None
     if final:
         summary["selection_final"] = final
         lines.append(
@@ -168,12 +169,32 @@ def training(lines, summary):
         lines.append("| Round | Phase 3 validation | Phase 2 validation | Total |")
         lines.append("|---|---:|---:|---:|")
         for row in final["candidates"]:
-            mark = " **(final)**" if row["round"] == final["selected"] else ""
+            mark = ""
+            if row["round"] == final["selected"]:
+                mark = " (chosen by this rule)" if choice else " **(final)**"
             lines.append(
                 f"| {row['round']}{mark} | {row['phase3_valid'][0]}/{row['phase3_valid'][1]} | "
                 f"{row['phase2_valid'][0]}/{row['phase2_valid'][1]} | {row['total']} |"
             )
         lines.append("")
+    if choice:
+        summary["final_choice"] = choice
+        lines.append(
+            "**Calendar constraint, applied after the test splits were scored "
+            "(`final_choice.json`).** " + choice["constraint"] + "\n"
+        )
+        lines.append("| Round | Calendar rows minus Phase 2 [95% interval] | Eligible |")
+        lines.append("|---|---|---|")
+        for stem, e in choice["evidence_check_split"].items():
+            low, high = e["interval95"]
+            mark = " **(final)**" if stem == choice["selected"] else ""
+            lines.append(
+                f"| {stem}{mark} | {100 * e['difference_vs_phase2']:+.1f} pp "
+                f"[{100 * low:+.1f}, {100 * high:+.1f}] | {'yes' if e['eligible'] else 'no'} |"
+            )
+        lines.append("")
+        lines.append(f"{choice['caveat']}\n")
+        return choice["selected"].replace("-", "")
     return (final or first or {}).get("selected", "p3-r2").replace("-", "")
 
 

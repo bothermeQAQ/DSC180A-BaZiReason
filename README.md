@@ -43,17 +43,20 @@ The demo shows the engine's chart, lets a tester switch between the untuned and 
 | | |
 |---|---|
 | Rules | 12 new sourced rule cards with 20 quotations checked against zh.wikisource ([`data/phase3/`](data/phase3/README.md)) |
-| Training | three LoRA rounds, each starting from the previous adapter. Round 2 was selected by a rule fixed in advance; round 3, a corrective round, did not beat it on the validation sets |
+| Training | three LoRA rounds, each starting from the previous adapter. The final adapter is round 3, a corrective round that keeps the Phase 2 calendar skills ([why](docs/phase3_progress_report.md#5-training-and-selection)) |
 | Results | [`results/phase3/RESULTS.md`](results/phase3/RESULTS.md); narrative and tradeoffs in the [progress report](docs/phase3_progress_report.md) |
 | How to run | [`docs/phase3_training.md`](docs/phase3_training.md) |
 
-Headline results (held-out years, identical prompts, real local inference):
+Headline results (held-out years, identical prompts, real local inference; final adapter = round 3):
 
-- **Rule reasoning, Phase 3 test split (621 items):** untuned 6.0%, Phase 2 15.8%, Phase 3 66.7%. Phase 3 minus Phase 2 is +50.9 points [46.7, 55.1].
-- **Questions without a unique answer:** a definite answer to 4 of 32 such questions, down from 11 of 32 for Phase 2. None of the 22 paired questions that do have an answer was declined.
-- **One-pass check of a wrong tool answer (strict JSON):** still weak. Phase 3 corrected 11 of 150 wrong answers, Phase 2 corrected 4. On benchmark_v3, Phase 3 follows 96.7% of corrupted answers.
-- **BaziQA contest questions:** no gain over Phase 2. With verified charts, Phase 3 scores 30.1% and Phase 2 31.9%; the difference is −1.8 points [−5.5, +1.8].
-- **Regression:** calendar computation got worse. On the two Phase 2 test splits, calendar rows are 4.4 and 7.2 points below Phase 2. The tradeoff is documented in the progress report.
+- **Rule reasoning, Phase 3 test split (621 items):** untuned 6.0%, Phase 2 15.8%, Phase 3 65.1%. Phase 3 minus Phase 2 is +49.3 points [45.2, 53.5].
+- **Rule questions in the Phase 2 wording (240 items on three splits):** 122 right for Phase 2, 149 for Phase 3.
+- **Questions without a unique answer:**
+  - Phase 3 test split: a definite answer to 1 of 32 such questions, against 11 of 32 for Phase 2.
+  - benchmark_v3: definite charts for 28.6% of ambiguous requests, against 76.2% for Phase 2.
+- **Calendar skills kept:** on a never-inspected 485-row split, Phase 3 is 0.8 points below Phase 2 [−4.7, +2.9].
+- **Still weak:** one-pass correction of a wrong tool answer in strict JSON. Phase 3 corrects 8 of 150 (Phase 2: 4) and follows 98.0% of corrupted answers on benchmark_v3.
+- **BaziQA contest questions:** no gain over Phase 2. Without tools: 30.6% vs 30.6%. With verified charts: 30.3% vs 31.9%, a difference of −1.6 points [−4.5, +1.2].
 
 ```bash
 .venv-mlx/bin/python -m bazireason.demo_app     # Phase 3 / Phase 2 / untuned model, http://127.0.0.1:8765

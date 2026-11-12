@@ -515,3 +515,21 @@ def test_demo_routes_questions_to_trained_formats_and_never_predicts():
     ] and models.default() == "base"
     cards = {card["id"] for card in X.relevant_cards("按扶抑一派的用神")}
     assert "R-YS-01" in cards
+
+
+def test_demo_checks_pattern_and_spouse_star_claims_in_prose():
+    from bazireason import demo_app as A
+
+    birth = {"date": "1990-05-17", "time": "14:30:00", "timezone": "Asia/Shanghai", "sect": 2}
+    # 壬 day master, month 巳 with 庚 revealed: 偏印格 by 透干, 偏财格 by main qi only.
+    wrong = A.audit_reply("按月令透干取格为伤官格。", birth)
+    assert any("伤官格" in p and "偏印格" in p for p in wrong["problems"])
+    for right in ("按月令透干取格为偏印格。", "只看本气是偏财格。", "格局为枭神格。"):
+        assert not A.audit_reply(right, birth)["problems"], right
+    # A spouse star for one gender is a problem only if it contradicts the input.
+    female_rule = "传统上女以正官、七杀象征配偶。"
+    assert any("没有填写性别" in p for p in A.audit_reply(female_rule, birth)["problems"])
+    assert not A.audit_reply(female_rule, dict(birth, gender="female"))["problems"]
+    assert A.audit_reply(female_rule, dict(birth, gender="male"))["problems"]
+    both = "男命以财为妻星，女命以官杀为夫星。"
+    assert not A.audit_reply(both, birth)["problems"]

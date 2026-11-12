@@ -63,13 +63,23 @@ Round 3 against round 2 uses a second rule, also written before round 3 was scor
 .venv/bin/python scripts/phase3/select_final.py   # writes results/phase3/selection_final.json
 ```
 
-The script adds the correct answers on the Phase 3 validation split (298 rows) and on the Phase 2 validation split `data/phase2/train_v2/valid.jsonl` (203 rows), so calendar skills count as much as rule reasoning. A tie keeps round 2. Round 2 won, 357 to 353, so **the Phase 3 adapter is `artifacts/adapters/bazireason-qwen3-4b-lora-p3-r2`**. Round 3 is still evaluated everywhere to document the tradeoff.
+The script adds the correct answers on the Phase 3 validation split (298 rows) and on the Phase 2 validation split `data/phase2/train_v2/valid.jsonl` (203 rows), so calendar skills count as much as rule reasoning. A tie keeps round 2. Round 2 won, 357 to 353.
+
+The calendar check split then showed that round 2 breaks a constraint of the brief: do not sacrifice the Phase 2 calendar skills. Round 2's calendar rows were 11.2 points below Phase 2 [−16.2, −6.6]; round 3's were −4.0 [−9.2, +1.3]. The final choice applies that constraint after the test splits were scored, and says so:
+
+```bash
+.venv-mlx/bin/python scripts/phase3/make_report.py   # writes summary.json
+.venv/bin/python scripts/phase3/final_choice.py       # writes results/phase3/final_choice.json
+.venv-mlx/bin/python scripts/phase3/make_report.py   # marks the final round
+```
+
+**The Phase 3 adapter is `artifacts/adapters/bazireason-qwen3-4b-lora-p3-r3`.** Its test numbers are post-selection (two candidates; BaziQA not consulted). Round 2 remains on disk and can be loaded with `--adapter`.
 
 ## 5. Evaluation
 
 ```bash
 PY=.venv-mlx/bin/python
-A=$(python3 -c "import json;print(json.load(open('results/phase3/selection_final.json'))['selected_adapter'])")
+A=$(python3 -c "import json;print(json.load(open('results/phase3/final_choice.json'))['selected_adapter'])")
 P2=artifacts/adapters/bazireason-qwen3-4b-lora-v2
 
 # Phase 3 held-out test split: the same prompts for every model
@@ -106,17 +116,17 @@ The calendar check split `data/phase3/p2check_v1/test.jsonl` is scored with `run
 .venv-mlx/bin/python -m bazireason.demo_app            # then open http://127.0.0.1:8765
 ```
 
-- **Three models.** The menu offers the Phase 3 adapter (round 2 by default), the Phase 2 adapter and the untuned base model. All three receive the same prompt. `--adapter` and `--adapter-p2` point at other adapter folders; `--preload all` loads the three models at start (about 9 GB).
+- **Three models.** The menu offers the Phase 3 adapter (round 3 by default), the Phase 2 adapter and the untuned base model. All three receive the same prompt. `--adapter` and `--adapter-p2` point at other adapter folders; `--preload all` loads the three models at start (about 9 GB).
 - **Verified chart.** The four pillars, the Ten Gods and the "深入结构" panel (strength count, pattern by 透干, 用神 by school, relations, stars) are computed by the engine and the rule code, never by the model.
 - **Question routing.** A free question is mapped to the closest trained request (`bazireason.demo_deep.plan`): whole-chart overview, strength, pattern, 用神, relations, a flow year, the traditional view of an area of life, a star, a list of statements to check. "查看实际发给模型的提问" under each reply shows the exact text the model received.
-- **Checks after each reply.** The reply's structured conclusion is compared with the rule code. On a mismatch the page shows the rule code's value and its full derivation.
+- **Checks after each reply.** The reply's structured conclusion is compared with the rule code. Fixed-form claims in the prose are checked too: pillars, Ten Gods, luck direction, a named pattern (X格), and a spouse star against the gender entered. On a mismatch the page shows the rule code's value and its full derivation.
 - **No predictions.** A question that asks for a definite personal outcome ("我什么时候会结婚？") is routed to the declining format. "用神是什么？" without a school, or "这个八字好不好？", is routed to the format that says there is no unique answer and why.
 - **Privacy.** Unchanged from Phase 2: local by default, nothing stored, feedback only with the consent box, conversation only with the second box, `--share-lan` with an access code for friends on the same network.
 
 ## 7. Tests
 
 ```bash
-.venv/bin/python -m pytest -q          # 176 Phase 1 + 28 Phase 2 + 24 Phase 3 tests
+.venv/bin/python -m pytest -q          # 176 Phase 1 + 28 Phase 2 + 25 Phase 3 tests
 .venv-mlx/bin/ruff check src scripts tests
 ```
 

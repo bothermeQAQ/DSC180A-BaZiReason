@@ -1,0 +1,31 @@
+{
+  "decided_after_test": true,
+  "constraint": "From the Phase 3 brief: do not sacrifice the Phase 2 calendar skills. A round is eligible only if its calendar rows on data/phase3/p2check_v1/test.jsonl are not significantly below the Phase 2 adapter (upper end of the 95% paired interval >= 0).",
+  "validation_rule_choice": "p3-r2",
+  "evidence_check_split": {
+    "p3-r2": {
+      "calendar_rows": 249,
+      "difference_vs_phase2": -0.1124,
+      "interval95": [
+        -0.1617,
+        -0.0661
+      ],
+      "all_rows_difference_vs_phase2": -0.0722,
+      "eligible": false
+    },
+    "p3-r3": {
+      "calendar_rows": 249,
+      "difference_vs_phase2": -0.0402,
+      "interval95": [
+        -0.0924,
+        0.013
+      ],
+      "all_rows_difference_vs_phase2": -0.0082,
+      "eligible": true
+    }
+  },
+  "selected": "p3-r3",
+  "selected_adapter": "artifacts/adapters/bazireason-qwen3-4b-lora-p3-r3",
+  "overrides_validation_rule": true,
+  "caveat": "Decided after the test splits were scored, so the selected round's test numbers are post-selection. Two candidates only; BaziQA was not consulted."
+}

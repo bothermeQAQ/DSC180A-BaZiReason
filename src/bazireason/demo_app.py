@@ -47,8 +47,9 @@ from bazireason.train_tasks import chart_line, compare_charts
 
 STATIC = Path(__file__).parent / "demo_static"
 DEFAULT_MODEL = "models/qwen3-4b-instruct-2507-mlx-4bit"
-# The Phase 3 adapter chosen by scripts/phase3/select_final.py (results/phase3/selection_final.json).
-DEFAULT_ADAPTER = "artifacts/adapters/bazireason-qwen3-4b-lora-p3-r2"
+# The final Phase 3 adapter (results/phase3/final_choice.json): round 3, which keeps the
+# Phase 2 calendar skills; round 2 can still be loaded with --adapter.
+DEFAULT_ADAPTER = "artifacts/adapters/bazireason-qwen3-4b-lora-p3-r3"
 DEFAULT_ADAPTER_P2 = "artifacts/adapters/bazireason-qwen3-4b-lora-v2"
 MODEL_IDS = ("p3", "p2", "base")
 COMMON_ZONES = (
@@ -283,6 +284,7 @@ def audit_reply(text: str, birth, message: str = "", first_turn: bool = True) ->
     claim = UNVERIFIABLE.search(text)
     if claim and "不能" not in text[max(0, claim.start() - 12) : claim.start()]:
         problems.append(f"回答里出现了无法核验的断语“{claim.group(1)}”，这类说法没有可验证的依据。")
+    checked, problems = prose_rule_checks(text, chart, birth, checked, problems)
     planned = demo_deep.plan(message, chart, first_turn=first_turn) if message else None
     if planned is not None:
         structured = demo_deep.check(planned, text)
@@ -295,6 +297,45 @@ def audit_reply(text: str, birth, message: str = "", first_turn: bool = True) ->
                 f"结构化结论与规则引擎不符：{structured['label']}按规则应为 {structured['engine']}。"
             )
     return {"checked": checked, "problems": problems, "engine": structured}
+
+
+PATTERN_CLAIM = re.compile(
+    r"(正官|七杀|偏官|正财|偏财|食神|伤官|正印|偏印|枭神|建禄|阳刃|月刃|月劫)格"
+)
+PATTERN_SYNONYMS = {"偏官": "七杀", "枭神": "偏印", "月刃": "阳刃"}
+SPOUSE_RULE = re.compile(r"([男女])命?以(?:正|偏|七|财|官)")
+
+
+def prose_rule_checks(text, chart, birth, checked, problems):
+    """Two fixed-form statements in free prose that the rule code decides.
+
+    A named pattern ("X格") must be the month-order pattern by 透干 or the simplified
+    main-qi label; a spouse star must follow the gender that was entered.
+    """
+    pillars = chart["pillars"]
+    claims = {PATTERN_SYNONYMS.get(c, c) + "格" for c in PATTERN_CLAIM.findall(text)}
+    if claims:
+        checked += 1
+        revealed = deep_rules.revealed_pattern(pillars)["pattern"]
+        simple = rules.month_pattern(pillars)
+        wrong = sorted(claims - {revealed, simple})
+        if wrong:
+            problems.append(
+                f"回答说本盘是{'、'.join(wrong)}；按月令透干取格的约定应为{revealed}"
+                f"（只看本气的简化标签是{simple}）。"
+            )
+    genders = set(SPOUSE_RULE.findall(text))
+    if len(genders) == 1:
+        checked += 1
+        used = genders.pop()
+        entered = {"male": "男", "female": "女"}.get(birth.get("gender"))
+        if entered is None:
+            problems.append(
+                f"没有填写性别，回答却按{used}命取配偶星；男命看财、女命看官杀，性别不同结论不同。"
+            )
+        elif used != entered:
+            problems.append(f"填写的是{entered}命，回答却按{used}命取配偶星。")
+    return checked, problems
 
 
 def chart_payload(birth: dict, until_year=None):

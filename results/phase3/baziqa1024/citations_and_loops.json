@@ -40,5 +40,19 @@
     "quotes_a_book": 46,
     "names_unknown_book": 24,
     "repetition_loop": 135
+  },
+  "p3r3_no_tools": {
+    "replies": 1665,
+    "names_a_book": 7,
+    "quotes_a_book": 1,
+    "names_unknown_book": 3,
+    "repetition_loop": 28
+  },
+  "p3r3_tools": {
+    "replies": 1665,
+    "names_a_book": 1,
+    "quotes_a_book": 0,
+    "names_unknown_book": 0,
+    "repetition_loop": 53
   }
 }
