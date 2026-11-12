@@ -54,8 +54,37 @@ def explicit() -> bool:
     return textstyle.version() >= 3
 
 
+def no_titles() -> bool:
+    """Round-3 wording: answers never name a book (sources stay on the rule cards)."""
+    return textstyle.version() >= 4
+
+
+def finer_tables() -> str:
+    return "更细的逐月取用表" if no_titles() else "《穷通宝鉴》逐月的取用更细"
+
+
 def class_chain(day: str) -> str:
     return "→".join(f"{D.class_element(day, c)}{c}" for c in D.CLASSES)
+
+
+def cycle_index_text(pair: str) -> str:
+    """Index of a sexagenary pair by formula, with its 旬 and void branches."""
+    s, b = STEMS.index(pair[0]), BRANCHES.index(pair[1])
+    index = CYCLE.index(pair)
+    start = index - index % 10
+    return (
+        f"{pair[0]}是第 {s} 干，{pair[1]}是第 {b} 支（都从 0 数）；序数 = (6×{s} − 5×{b}) mod 60 = "
+        f"{6 * s - 5 * b} mod 60 = {index}，旬首为{CYCLE[start]}，旬空{R.xun_kong(pair)}。"
+    )
+
+
+def relation_tables(pillars: dict) -> str:
+    """The pair tables a relation question needs: stem combinations and clashes, branch cards."""
+    branches = dict.fromkeys(pillars[name][1] for name in PILLARS)
+    return (
+        "天干五合：甲己、乙庚、丙辛、丁壬、戊癸；天干相冲：甲庚、乙辛、丙壬、丁癸。\n地支卡片：\n"
+        + "\n".join(D.branch_card_text(branch) for branch in branches)
+    )
 
 
 def god_table(day: str) -> str:
@@ -606,7 +635,7 @@ def yongshen_text(pillars, school):
         if result["needs"] is None:
             text = (
                 f"调候（简化约定）：冬月（亥子丑）取火，夏月（巳午未）取水。月支{month}不在其中，"
-                "按这个简化约定不特别论调候。《穷通宝鉴》逐月的取用更细，这里没有采用。"
+                f"按这个简化约定不特别论调候。{finer_tables()}，这里没有采用。"
             )
             return text, {"school": "调候", "needs": None, "present_in_stems": False}
         stems = [f"{POS[name]}干{pillars[name][0]}" for name in result["in_stems"]]
@@ -615,7 +644,7 @@ def yongshen_text(pillars, school):
             f"调候（简化约定）：冬月（亥子丑）取火，夏月（巳午未）取水。月支{month}属{result['season']}月，"
             f"取{result['needs']}。四干中属{result['needs']}的：{join(stems)}；"
             f"藏有{result['needs']}的地支：{join(hidden)}。"
-            "《穷通宝鉴》逐月的取用更细，这里没有采用。"
+            f"{finer_tables()}，这里没有采用。"
         )
         return text, {
             "school": "调候",

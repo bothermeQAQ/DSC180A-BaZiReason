@@ -1,0 +1,6 @@
+{
+  "purpose": "Never-inspected Phase 2-style test rows (test years, fresh seed) for comparing the Phase 2 adapter and Phase 3 rounds 2 and 3 on calendar skills after the Phase 2 test splits were read row by row while diagnosing round 2.",
+  "generator": "bazireason.train_data.generate_split('test', seed=2026111298, version=2), minus prompts identical to a row of data/phase2/train_v1/test.jsonl or train_v2/test.jsonl",
+  "rows": 485,
+  "sha256": "3f61beca7359bce9ac02c0cf9b3a86130af7032c800e435733cc43749f1931b9"
+}

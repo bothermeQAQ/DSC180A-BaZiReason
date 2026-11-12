@@ -1,0 +1,23 @@
+{
+  "rule": "most correct answers on data/phase3/train_v1/valid.jsonl; tie keeps the earlier round; test split and benchmarks not consulted",
+  "rounds": [
+    {
+      "round": "p3-r1",
+      "adapter": "artifacts/adapters/bazireason-qwen3-4b-lora-p3-r1",
+      "validation_correct": 198,
+      "validation_rows": 298,
+      "reasoning_correct": 145,
+      "reasoning_rows": 221
+    },
+    {
+      "round": "p3-r2",
+      "adapter": "artifacts/adapters/bazireason-qwen3-4b-lora-p3-r2",
+      "validation_correct": 227,
+      "validation_rows": 298,
+      "reasoning_correct": 175,
+      "reasoning_rows": 221
+    }
+  ],
+  "selected": "p3-r2",
+  "selected_adapter": "artifacts/adapters/bazireason-qwen3-4b-lora-p3-r2"
+}

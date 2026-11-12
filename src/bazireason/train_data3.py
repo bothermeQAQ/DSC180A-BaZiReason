@@ -83,12 +83,56 @@ SIZES_V2 = {
     "strict_audit": (600, 20, 0),
     "strict_shift": (0, 0, 0),
 }
+SIZES_V3 = {
+    # Third Phase 3 round (corrective): a smaller rehearsal of the Phase 3 families in the
+    # explicit wording without book titles; most rows replay the Phase 2 families.
+    "drill": (300, 20, 0),
+    "gods": (120, 5, 0),
+    "strength": (50, 3, 0),
+    "pattern": (60, 3, 0),
+    "yongshen": (60, 3, 0),
+    "interact": (140, 5, 0),
+    "flow": (140, 5, 0),
+    "domain": (90, 4, 0),
+    "claims": (100, 4, 0),
+    "ambig": (90, 9, 0),
+    "mcq3": (160, 6, 0),
+    "dialog": (70, 3, 0),
+    "overview": (50, 2, 0),
+    "strict_audit": (200, 8, 0),
+    "strict_shift": (0, 0, 0),
+}
 VERSIONS = {
     1: ("p3_train_v1", SIZES, REPLAY_SCALE),
     2: ("p3_train_v2", SIZES_V2, (0.12, 0.15, 0.0)),
+    3: ("p3_train_v3", SIZES_V3, (0.5, 0.5, 0.0)),
 }
-# Wording of the answers: 2 is the first round's, 3 the explicit second-round wording.
-TEXTSTYLE = {1: 2, 2: 3}
+# Wording of the answers: 2 is the first round's, 3 the explicit second-round wording,
+# 4 the explicit wording without book titles.
+TEXTSTYLE = {1: 2, 2: 3, 3: 4}
+# Phase 2 rule tasks whose replayed answers get the table they need written first (round 3).
+GOD_TABLE_TASKS = ("ten_god", "hidden", "flow_year", "pattern", "relatives", "strength")
+
+
+def explicit_phase2_rule(row):
+    """Prepend the needed table to a replayed Phase 2 rule answer; the rest is unchanged.
+
+    After round 2 the adapter used its explicit procedure only under Phase 3 wording and
+    still guessed Ten Gods and relations under the Phase 2 rule prompts.
+    """
+    kind = row["task"].removeprefix("rule_")
+    pillars = row["meta"]["pillars"]
+    if kind in GOD_TABLE_TASKS:
+        lead = K.god_table(pillars["day"][0])
+    elif kind == "relations":
+        lead = K.relation_tables(pillars)
+    elif kind == "xun_kong":
+        lead = K.cycle_index_text(pillars["day"])
+    else:
+        return row
+    answer = row["messages"][-1]
+    row["messages"][-1] = {**answer, "content": lead + "\n" + answer["content"]}
+    return row
 
 
 class Pool3(TD.Pool):
@@ -680,6 +724,8 @@ def generate_split(split, seed=SEED, blocked=None, scale=1.0, version=1):
     if replay[column]:
         old = TD.generate_split(split, seed + 7 * version, blocked, replay[column] * scale, 2)
         for row in old:
+            if version >= 3 and row["family"] == "rule":
+                explicit_phase2_rule(row)
             row["family"] = "replay_" + row["family"]
             row.pop("id", None)
         rows.extend(old)

@@ -1,0 +1,44 @@
+{
+  "base_no_tools": {
+    "replies": 555,
+    "names_a_book": 1,
+    "quotes_a_book": 0,
+    "names_unknown_book": 0,
+    "repetition_loop": 0
+  },
+  "base_tools": {
+    "replies": 555,
+    "names_a_book": 0,
+    "quotes_a_book": 0,
+    "names_unknown_book": 0,
+    "repetition_loop": 0
+  },
+  "p2_no_tools": {
+    "replies": 1665,
+    "names_a_book": 0,
+    "quotes_a_book": 0,
+    "names_unknown_book": 0,
+    "repetition_loop": 24
+  },
+  "p2_tools": {
+    "replies": 1665,
+    "names_a_book": 0,
+    "quotes_a_book": 0,
+    "names_unknown_book": 0,
+    "repetition_loop": 30
+  },
+  "p3_no_tools": {
+    "replies": 1665,
+    "names_a_book": 87,
+    "quotes_a_book": 34,
+    "names_unknown_book": 37,
+    "repetition_loop": 113
+  },
+  "p3_tools": {
+    "replies": 1665,
+    "names_a_book": 92,
+    "quotes_a_book": 46,
+    "names_unknown_book": 24,
+    "repetition_loop": 135
+  }
+}

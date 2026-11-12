@@ -1,0 +1,6280 @@
+{
+  "training": {
+    "bazireason-qwen3-4b-lora-p3-r1": {
+      "init_adapter": "artifacts/adapters/bazireason-qwen3-4b-lora-v2/adapters.safetensors",
+      "train_rows": 6933,
+      "iterations": 3466,
+      "optimizer_updates": 1733,
+      "trainable_parameters": 14680064,
+      "minutes": 177.64166666666668,
+      "validation_loss_start": 1.0840872526168823,
+      "validation_loss_selected": 0.02122129127383232,
+      "selected_iteration": 3466,
+      "peak_memory_gb": 19.967216184,
+      "adapter_sha256": "7826a6b4216176e5e18723cdcc66e18743d07b5030b769e2cc9d24072887b062"
+    },
+    "bazireason-qwen3-4b-lora-p3-r2": {
+      "init_adapter": "artifacts/adapters/bazireason-qwen3-4b-lora-p3-r1/adapters.safetensors",
+      "train_rows": 4122,
+      "iterations": 2061,
+      "optimizer_updates": 1030,
+      "trainable_parameters": 14680064,
+      "minutes": 119.80166666666668,
+      "validation_loss_start": 0.5277326703071594,
+      "validation_loss_selected": 0.01261276938021183,
+      "selected_iteration": 2061,
+      "peak_memory_gb": 20.637672912,
+      "adapter_sha256": "2fa6fb7b94f411c443fbc2b7f081dc84980f95c344fc6de96024151f29747a31"
+    }
+  },
+  "selection": {
+    "rule": "most correct answers on data/phase3/train_v1/valid.jsonl; tie keeps the earlier round; test split and benchmarks not consulted",
+    "rounds": [
+      {
+        "round": "p3-r1",
+        "adapter": "artifacts/adapters/bazireason-qwen3-4b-lora-p3-r1",
+        "validation_correct": 198,
+        "validation_rows": 298,
+        "reasoning_correct": 145,
+        "reasoning_rows": 221
+      },
+      {
+        "round": "p3-r2",
+        "adapter": "artifacts/adapters/bazireason-qwen3-4b-lora-p3-r2",
+        "validation_correct": 227,
+        "validation_rows": 298,
+        "reasoning_correct": 175,
+        "reasoning_rows": 221
+      }
+    ],
+    "selected": "p3-r2",
+    "selected_adapter": "artifacts/adapters/bazireason-qwen3-4b-lora-p3-r2"
+  },
+  "phase3_test": {
+    "Untuned": {
+      "overall": {
+        "n": 801,
+        "hits": 67,
+        "rate": 0.08364544319600499
+      },
+      "reasoning_tasks": {
+        "n": 621,
+        "hits": 37,
+        "rate": 0.05958132045088567
+      },
+      "parsed": {
+        "n": 801,
+        "hits": 390,
+        "rate": 0.4868913857677903
+      },
+      "by_family": {
+        "ambig": {
+          "n": 54,
+          "hits": 0,
+          "rate": 0.0
+        },
+        "claims": {
+          "n": 48,
+          "hits": 0,
+          "rate": 0.0
+        },
+        "dialog": {
+          "n": 30,
+          "hits": 5,
+          "rate": 0.16666666666666666
+        },
+        "domain": {
+          "n": 36,
+          "hits": 0,
+          "rate": 0.0
+        },
+        "drill": {
+          "n": 150,
+          "hits": 11,
+          "rate": 0.07333333333333333
+        },
+        "flow": {
+          "n": 50,
+          "hits": 0,
+          "rate": 0.0
+        },
+        "gods": {
+          "n": 40,
+          "hits": 0,
+          "rate": 0.0
+        },
+        "interact": {
+          "n": 40,
+          "hits": 0,
+          "rate": 0.0
+        },
+        "mcq3": {
+          "n": 63,
+          "hits": 19,
+          "rate": 0.30158730158730157
+        },
+        "overview": {
+          "n": 20,
+          "hits": 0,
+          "rate": 0.0
+        },
+        "pattern": {
+          "n": 30,
+          "hits": 2,
+          "rate": 0.06666666666666667
+        },
+        "strength": {
+          "n": 30,
+          "hits": 0,
+          "rate": 0.0
+        },
+        "strict_shift": {
+          "n": 180,
+          "hits": 30,
+          "rate": 0.16666666666666666
+        },
+        "yongshen": {
+          "n": 30,
+          "hits": 0,
+          "rate": 0.0
+        }
+      },
+      "by_kind": {
+        "ambig/gender_given": {
+          "n": 6,
+          "hits": 0,
+          "rate": 0.0
+        },
+        "ambig/gender_needed": {
+          "n": 6,
+          "hits": 0,
+          "rate": 0.0
+        },
+        "ambig/hour_needed": {
+          "n": 6,
+          "hits": 0,
+          "rate": 0.0
+        },
+        "ambig/hour_not_needed": {
+          "n": 6,
+          "hits": 0,
+          "rate": 0.0
+        },
+        "ambig/hour_strength": {
+          "n": 6,
+          "hits": 0,
+          "rate": 0.0
+        },
+        "ambig/no_rule": {
+          "n": 6,
+          "hits": 0,
+          "rate": 0.0
+        },
+        "ambig/star_basis": {
+          "n": 6,
+          "hits": 0,
+          "rate": 0.0
+        },
+        "ambig/yongshen_named": {
+          "n": 6,
+          "hits": 0,
+          "rate": 0.0
+        },
+        "ambig/yongshen_open": {
+          "n": 6,
+          "hits": 0,
+          "rate": 0.0
+        },
+        "claims/claims": {
+          "n": 48,
+          "hits": 0,
+          "rate": 0.0
+        },
+        "dialog/decline": {
+          "n": 7,
+          "hits": 5,
+          "rate": 0.7142857142857143
+        },
+        "dialog/followup": {
+          "n": 7,
+          "hits": 0,
+          "rate": 0.0
+        },
+        "dialog/pushback": {
+          "n": 8,
+          "hits": 0,
+          "rate": 0.0
+        },
+        "dialog/self_correct": {
+          "n": 8,
+          "hits": 0,
+          "rate": 0.0
+        },
+        "domain/career": {
+          "n": 7,
+          "hits": 0,
+          "rate": 0.0
+        },
+        "domain/children": {
+          "n": 7,
+          "hits": 0,
+          "rate": 0.0
+        },
+        "domain/marriage": {
+          "n": 8,
+          "hits": 0,
+          "rate": 0.0
+        },
+        "domain/study": {
+          "n": 7,
+          "hits": 0,
+          "rate": 0.0
+        },
+        "domain/wealth": {
+          "n": 7,
+          "hits": 0,
+          "rate": 0.0
+        },
+        "drill/branch_card": {
+          "n": 10,
+          "hits": 0,
+          "rate": 0.0
+        },
+        "drill/branch_pair": {
+          "n": 10,
+          "hits": 0,
+          "rate": 0.0
+        },
+        "drill/class": {
+          "n": 10,
+          "hits": 0,
+          "rate": 0.0
+        },
+        "drill/cycle": {
+          "n": 10,
+          "hits": 0,
+          "rate": 0.0
+        },
+        "drill/element": {
+          "n": 10,
+          "hits": 0,
+          "rate": 0.0
+        },
+        "drill/hidden": {
+          "n": 10,
+          "hits": 0,
+          "rate": 0.0
+        },
+        "drill/hour_stem": {
+          "n": 10,
+          "hits": 1,
+          "rate": 0.1
+        },
+        "drill/luck_dir": {
+          "n": 10,
+          "hits": 0,
+          "rate": 0.0
+        },
+        "drill/month_stem": {
+          "n": 10,
+          "hits": 0,
+          "rate": 0.0
+        },
+        "drill/season": {
+          "n": 10,
+          "hits": 3,
+          "rate": 0.3
+        },
+        "drill/stage": {
+          "n": 10,
+          "hits": 1,
+          "rate": 0.1
+        },
+        "drill/star": {
+          "n": 10,
+          "hits": 2,
+          "rate": 0.2
+        },
+        "drill/stem_pair": {
+          "n": 10,
+          "hits": 0,
+          "rate": 0.0
+        },
+        "drill/ten_god": {
+          "n": 10,
+          "hits": 3,
+          "rate": 0.3
+        },
+        "drill/year": {
+          "n": 10,
+          "hits": 1,
+          "rate": 0.1
+        },
+        "flow/flow": {
+          "n": 50,
+          "hits": 0,
+          "rate": 0.0
+        },
+        "gods/gods": {
+          "n": 40,
+          "hits": 0,
+          "rate": 0.0
+        },
+        "interact/interact": {
+          "n": 40,
+          "hits": 0,
+          "rate": 0.0
+        },
+        "mcq3/clash_year": {
+          "n": 7,
+          "hits": 2,
+          "rate": 0.2857142857142857
+        },
+        "mcq3/config": {
+          "n": 7,
+          "hits": 3,
+          "rate": 0.42857142857142855
+        },
+        "mcq3/flow_god": {
+          "n": 7,
+          "hits": 2,
+          "rate": 0.2857142857142857
+        },
+        "mcq3/fuyi": {
+          "n": 7,
+          "hits": 1,
+          "rate": 0.14285714285714285
+        },
+        "mcq3/luck_god": {
+          "n": 7,
+          "hits": 2,
+          "rate": 0.2857142857142857
+        },
+        "mcq3/palace": {
+          "n": 7,
+          "hits": 2,
+          "rate": 0.2857142857142857
+        },
+        "mcq3/pattern2": {
+          "n": 7,
+          "hits": 2,
+          "rate": 0.2857142857142857
+        },
+        "mcq3/star_year": {
+          "n": 7,
+          "hits": 1,
+          "rate": 0.14285714285714285
+        },
+        "mcq3/true_claim": {
+          "n": 7,
+          "hits": 4,
+          "rate": 0.5714285714285714
+        },
+        "overview/overview": {
+          "n": 20,
+          "hits": 0,
+          "rate": 0.0
+        },
+        "pattern/pattern": {
+          "n": 30,
+          "hits": 2,
+          "rate": 0.06666666666666667
+        },
+        "strength/strength": {
+          "n": 30,
+          "hits": 0,
+          "rate": 0.0
+        },
+        "strict_shift/clean": {
+          "n": 30,
+          "hits": 30,
+          "rate": 1.0
+        },
+        "strict_shift/day_rollover": {
+          "n": 20,
+          "hits": 0,
+          "rate": 0.0
+        },
+        "strict_shift/day_shift_midday": {
+          "n": 30,
+          "hits": 0,
+          "rate": 0.0
+        },
+        "strict_shift/default_guess": {
+          "n": 15,
+          "hits": 0,
+          "rate": 0.0
+        },
+        "strict_shift/hour_branch": {
+          "n": 10,
+          "hits": 0,
+          "rate": 0.0
+        },
+        "strict_shift/hour_stem": {
+          "n": 20,
+          "hits": 0,
+          "rate": 0.0
+        },
+        "strict_shift/hour_stem_night": {
+          "n": 30,
+          "hits": 0,
+          "rate": 0.0
+        },
+        "strict_shift/month_stem": {
+          "n": 15,
+          "hits": 0,
+          "rate": 0.0
+        },
+        "strict_shift/year_shift": {
+          "n": 10,
+          "hits": 0,
+          "rate": 0.0
+        },
+        "yongshen/扶抑": {
+          "n": 15,
+          "hits": 0,
+          "rate": 0.0
+        },
+        "yongshen/格局": {
+          "n": 8,
+          "hits": 0,
+          "rate": 0.0
+        },
+        "yongshen/调候": {
+          "n": 7,
+          "hits": 0,
+          "rate": 0.0
+        }
+      },
+      "by_mode": {
+        "none": {
+          "n": 474,
+          "hits": 21,
+          "rate": 0.04430379746835443
+        },
+        "chart": {
+          "n": 147,
+          "hits": 16,
+          "rate": 0.10884353741496598
+        }
+      },
+      "unseen_wording": {
+        "n": 255,
+        "hits": 6,
+        "rate": 0.023529411764705882
+      },
+      "seen_wording": {
+        "n": 366,
+        "hits": 31,
+        "rate": 0.08469945355191257
+      },
+      "ambiguity": {
+        "decision_correct": {
+          "n": 54,
+          "hits": 10,
+          "rate": 0.18518518518518517
+        },
+        "definite_on_indeterminate": {
+          "n": 32,
+          "hits": 4,
+          "rate": 0.125
+        },
+        "abstained_on_determinate": {
+          "n": 22,
+          "hits": 6,
+          "rate": 0.2727272727272727
+        }
+      },
+      "claims": {
+        "all_verdicts_right": {
+          "n": 48,
+          "hits": 0,
+          "rate": 0.0
+        },
+        "verdict_accuracy": 0.010416666666666666,
+        "speculative_endorsed": [
+          0,
+          30
+        ],
+        "false_claims_accepted": [
+          1,
+          84
+        ]
+      },
+      "strict_audit": {
+        "corrupted_correct": {
+          "n": 150,
+          "hits": 0,
+          "rate": 0.0
+        },
+        "corrupted_followed": {
+          "n": 150,
+          "hits": 150,
+          "rate": 1.0
+        },
+        "clean_kept": {
+          "n": 30,
+          "hits": 30,
+          "rate": 1.0
+        },
+        "by_kind": {
+          "clean": {
+            "correct": {
+              "n": 30,
+              "hits": 30,
+              "rate": 1.0
+            },
+            "followed": {
+              "n": 30,
+              "hits": 0,
+              "rate": 0.0
+            }
+          },
+          "day_rollover": {
+            "correct": {
+              "n": 20,
+              "hits": 0,
+              "rate": 0.0
+            },
+            "followed": {
+              "n": 20,
+              "hits": 20,
+              "rate": 1.0
+            }
+          },
+          "day_shift_midday": {
+            "correct": {
+              "n": 30,
+              "hits": 0,
+              "rate": 0.0
+            },
+            "followed": {
+              "n": 30,
+              "hits": 30,
+              "rate": 1.0
+            }
+          },
+          "default_guess": {
+            "correct": {
+              "n": 15,
+              "hits": 0,
+              "rate": 0.0
+            },
+            "followed": {
+              "n": 15,
+              "hits": 15,
+              "rate": 1.0
+            }
+          },
+          "hour_branch": {
+            "correct": {
+              "n": 10,
+              "hits": 0,
+              "rate": 0.0
+            },
+            "followed": {
+              "n": 10,
+              "hits": 10,
+              "rate": 1.0
+            }
+          },
+          "hour_stem": {
+            "correct": {
+              "n": 20,
+              "hits": 0,
+              "rate": 0.0
+            },
+            "followed": {
+              "n": 20,
+              "hits": 20,
+              "rate": 1.0
+            }
+          },
+          "hour_stem_night": {
+            "correct": {
+              "n": 30,
+              "hits": 0,
+              "rate": 0.0
+            },
+            "followed": {
+              "n": 30,
+              "hits": 30,
+              "rate": 1.0
+            }
+          },
+          "month_stem": {
+            "correct": {
+              "n": 15,
+              "hits": 0,
+              "rate": 0.0
+            },
+            "followed": {
+              "n": 15,
+              "hits": 15,
+              "rate": 1.0
+            }
+          },
+          "year_shift": {
+            "correct": {
+              "n": 10,
+              "hits": 0,
+              "rate": 0.0
+            },
+            "followed": {
+              "n": 10,
+              "hits": 10,
+              "rate": 1.0
+            }
+          }
+        }
+      }
+    },
+    "Phase 2": {
+      "overall": {
+        "n": 801,
+        "hits": 132,
+        "rate": 0.1647940074906367
+      },
+      "reasoning_tasks": {
+        "n": 621,
+        "hits": 98,
+        "rate": 0.15780998389694043
+      },
+      "parsed": {
+        "n": 801,
+        "hits": 783,
+        "rate": 0.9775280898876404
+      },
+      "by_family": {
+        "ambig": {
+          "n": 54,
+          "hits": 5,
+          "rate": 0.09259259259259259
+        },
+        "claims": {
+          "n": 48,
+          "hits": 7,
+          "rate": 0.14583333333333334
+        },
+        "dialog": {
+          "n": 30,
+          "hits": 9,
+          "rate": 0.3
+        },
+        "domain": {
+          "n": 36,
+          "hits": 0,
+          "rate": 0.0
+        },
+        "drill": {
+          "n": 150,
+          "hits": 40,
+          "rate": 0.26666666666666666
+        },
+        "flow": {
+          "n": 50,
+          "hits": 0,
+          "rate": 0.0
+        },
+        "gods": {
+          "n": 40,
+          "hits": 0,
+          "rate": 0.0
+        },
+        "interact": {
+          "n": 40,
+          "hits": 0,
+          "rate": 0.0
+        },
+        "mcq3": {
+          "n": 63,
+          "hits": 25,
+          "rate": 0.3968253968253968
+        },
+        "overview": {
+          "n": 20,
+          "hits": 0,
+          "rate": 0.0
+        },
+        "pattern": {
+          "n": 30,
+          "hits": 8,
+          "rate": 0.26666666666666666
+        },
+        "strength": {
+          "n": 30,
+          "hits": 4,
+          "rate": 0.13333333333333333
+        },
+        "strict_shift": {
+          "n": 180,
+          "hits": 34,
+          "rate": 0.18888888888888888
+        },
+        "yongshen": {
+          "n": 30,
+          "hits": 0,
+          "rate": 0.0
+        }
+      },
+      "by_kind": {
+        "ambig/gender_given": {
+          "n": 6,
+          "hits": 0,
+          "rate": 0.0
+        },
+        "ambig/gender_needed": {
+          "n": 6,
+          "hits": 0,
+          "rate": 0.0
+        },
+        "ambig/hour_needed": {
+          "n": 6,
+          "hits": 0,
+          "rate": 0.0
+        },
+        "ambig/hour_not_needed": {
+          "n": 6,
+          "hits": 4,
+          "rate": 0.6666666666666666
+        },
+        "ambig/hour_strength": {
+          "n": 6,
+          "hits": 1,
+          "rate": 0.16666666666666666
+        },
+        "ambig/no_rule": {
+          "n": 6,
+          "hits": 0,
+          "rate": 0.0
+        },
+        "ambig/star_basis": {
+          "n": 6,
+          "hits": 0,
+          "rate": 0.0
+        },
+        "ambig/yongshen_named": {
+          "n": 6,
+          "hits": 0,
+          "rate": 0.0
+        },
+        "ambig/yongshen_open": {
+          "n": 6,
+          "hits": 0,
+          "rate": 0.0
+        },
+        "claims/claims": {
+          "n": 48,
+          "hits": 7,
+          "rate": 0.14583333333333334
+        },
+        "dialog/decline": {
+          "n": 7,
+          "hits": 6,
+          "rate": 0.8571428571428571
+        },
+        "dialog/followup": {
+          "n": 7,
+          "hits": 1,
+          "rate": 0.14285714285714285
+        },
+        "dialog/pushback": {
+          "n": 8,
+          "hits": 0,
+          "rate": 0.0
+        },
+        "dialog/self_correct": {
+          "n": 8,
+          "hits": 2,
+          "rate": 0.25
+        },
+        "domain/career": {
+          "n": 7,
+          "hits": 0,
+          "rate": 0.0
+        },
+        "domain/children": {
+          "n": 7,
+          "hits": 0,
+          "rate": 0.0
+        },
+        "domain/marriage": {
+          "n": 8,
+          "hits": 0,
+          "rate": 0.0
+        },
+        "domain/study": {
+          "n": 7,
+          "hits": 0,
+          "rate": 0.0
+        },
+        "domain/wealth": {
+          "n": 7,
+          "hits": 0,
+          "rate": 0.0
+        },
+        "drill/branch_card": {
+          "n": 10,
+          "hits": 0,
+          "rate": 0.0
+        },
+        "drill/branch_pair": {
+          "n": 10,
+          "hits": 0,
+          "rate": 0.0
+        },
+        "drill/class": {
+          "n": 10,
+          "hits": 0,
+          "rate": 0.0
+        },
+        "drill/cycle": {
+          "n": 10,
+          "hits": 0,
+          "rate": 0.0
+        },
+        "drill/element": {
+          "n": 10,
+          "hits": 0,
+          "rate": 0.0
+        },
+        "drill/hidden": {
+          "n": 10,
+          "hits": 7,
+          "rate": 0.7
+        },
+        "drill/hour_stem": {
+          "n": 10,
+          "hits": 0,
+          "rate": 0.0
+        },
+        "drill/luck_dir": {
+          "n": 10,
+          "hits": 6,
+          "rate": 0.6
+        },
+        "drill/month_stem": {
+          "n": 10,
+          "hits": 0,
+          "rate": 0.0
+        },
+        "drill/season": {
+          "n": 10,
+          "hits": 4,
+          "rate": 0.4
+        },
+        "drill/stage": {
+          "n": 10,
+          "hits": 8,
+          "rate": 0.8
+        },
+        "drill/star": {
+          "n": 10,
+          "hits": 0,
+          "rate": 0.0
+        },
+        "drill/stem_pair": {
+          "n": 10,
+          "hits": 0,
+          "rate": 0.0
+        },
+        "drill/ten_god": {
+          "n": 10,
+          "hits": 5,
+          "rate": 0.5
+        },
+        "drill/year": {
+          "n": 10,
+          "hits": 10,
+          "rate": 1.0
+        },
+        "flow/flow": {
+          "n": 50,
+          "hits": 0,
+          "rate": 0.0
+        },
+        "gods/gods": {
+          "n": 40,
+          "hits": 0,
+          "rate": 0.0
+        },
+        "interact/interact": {
+          "n": 40,
+          "hits": 0,
+          "rate": 0.0
+        },
+        "mcq3/clash_year": {
+          "n": 7,
+          "hits": 3,
+          "rate": 0.42857142857142855
+        },
+        "mcq3/config": {
+          "n": 7,
+          "hits": 5,
+          "rate": 0.7142857142857143
+        },
+        "mcq3/flow_god": {
+          "n": 7,
+          "hits": 0,
+          "rate": 0.0
+        },
+        "mcq3/fuyi": {
+          "n": 7,
+          "hits": 3,
+          "rate": 0.42857142857142855
+        },
+        "mcq3/luck_god": {
+          "n": 7,
+          "hits": 4,
+          "rate": 0.5714285714285714
+        },
+        "mcq3/palace": {
+          "n": 7,
+          "hits": 1,
+          "rate": 0.14285714285714285
+        },
+        "mcq3/pattern2": {
+          "n": 7,
+          "hits": 5,
+          "rate": 0.7142857142857143
+        },
+        "mcq3/star_year": {
+          "n": 7,
+          "hits": 1,
+          "rate": 0.14285714285714285
+        },
+        "mcq3/true_claim": {
+          "n": 7,
+          "hits": 3,
+          "rate": 0.42857142857142855
+        },
+        "overview/overview": {
+          "n": 20,
+          "hits": 0,
+          "rate": 0.0
+        },
+        "pattern/pattern": {
+          "n": 30,
+          "hits": 8,
+          "rate": 0.26666666666666666
+        },
+        "strength/strength": {
+          "n": 30,
+          "hits": 4,
+          "rate": 0.13333333333333333
+        },
+        "strict_shift/clean": {
+          "n": 30,
+          "hits": 30,
+          "rate": 1.0
+        },
+        "strict_shift/day_rollover": {
+          "n": 20,
+          "hits": 0,
+          "rate": 0.0
+        },
+        "strict_shift/day_shift_midday": {
+          "n": 30,
+          "hits": 0,
+          "rate": 0.0
+        },
+        "strict_shift/default_guess": {
+          "n": 15,
+          "hits": 4,
+          "rate": 0.26666666666666666
+        },
+        "strict_shift/hour_branch": {
+          "n": 10,
+          "hits": 0,
+          "rate": 0.0
+        },
+        "strict_shift/hour_stem": {
+          "n": 20,
+          "hits": 0,
+          "rate": 0.0
+        },
+        "strict_shift/hour_stem_night": {
+          "n": 30,
+          "hits": 0,
+          "rate": 0.0
+        },
+        "strict_shift/month_stem": {
+          "n": 15,
+          "hits": 0,
+          "rate": 0.0
+        },
+        "strict_shift/year_shift": {
+          "n": 10,
+          "hits": 0,
+          "rate": 0.0
+        },
+        "yongshen/扶抑": {
+          "n": 15,
+          "hits": 0,
+          "rate": 0.0
+        },
+        "yongshen/格局": {
+          "n": 8,
+          "hits": 0,
+          "rate": 0.0
+        },
+        "yongshen/调候": {
+          "n": 7,
+          "hits": 0,
+          "rate": 0.0
+        }
+      },
+      "by_mode": {
+        "none": {
+          "n": 474,
+          "hits": 71,
+          "rate": 0.14978902953586498
+        },
+        "chart": {
+          "n": 147,
+          "hits": 27,
+          "rate": 0.1836734693877551
+        }
+      },
+      "unseen_wording": {
+        "n": 255,
+        "hits": 28,
+        "rate": 0.10980392156862745
+      },
+      "seen_wording": {
+        "n": 366,
+        "hits": 70,
+        "rate": 0.1912568306010929
+      },
+      "ambiguity": {
+        "decision_correct": {
+          "n": 54,
+          "hits": 37,
+          "rate": 0.6851851851851852
+        },
+        "definite_on_indeterminate": {
+          "n": 32,
+          "hits": 11,
+          "rate": 0.34375
+        },
+        "abstained_on_determinate": {
+          "n": 22,
+          "hits": 6,
+          "rate": 0.2727272727272727
+        }
+      },
+      "claims": {
+        "all_verdicts_right": {
+          "n": 48,
+          "hits": 7,
+          "rate": 0.14583333333333334
+        },
+        "verdict_accuracy": 0.53125,
+        "speculative_endorsed": [
+          0,
+          30
+        ],
+        "false_claims_accepted": [
+          15,
+          84
+        ]
+      },
+      "strict_audit": {
+        "corrupted_correct": {
+          "n": 150,
+          "hits": 4,
+          "rate": 0.02666666666666667
+        },
+        "corrupted_followed": {
+          "n": 150,
+          "hits": 146,
+          "rate": 0.9733333333333334
+        },
+        "clean_kept": {
+          "n": 30,
+          "hits": 30,
+          "rate": 1.0
+        },
+        "by_kind": {
+          "clean": {
+            "correct": {
+              "n": 30,
+              "hits": 30,
+              "rate": 1.0
+            },
+            "followed": {
+              "n": 30,
+              "hits": 0,
+              "rate": 0.0
+            }
+          },
+          "day_rollover": {
+            "correct": {
+              "n": 20,
+              "hits": 0,
+              "rate": 0.0
+            },
+            "followed": {
+              "n": 20,
+              "hits": 20,
+              "rate": 1.0
+            }
+          },
+          "day_shift_midday": {
+            "correct": {
+              "n": 30,
+              "hits": 0,
+              "rate": 0.0
+            },
+            "followed": {
+              "n": 30,
+              "hits": 30,
+              "rate": 1.0
+            }
+          },
+          "default_guess": {
+            "correct": {
+              "n": 15,
+              "hits": 4,
+              "rate": 0.26666666666666666
+            },
+            "followed": {
+              "n": 15,
+              "hits": 11,
+              "rate": 0.7333333333333333
+            }
+          },
+          "hour_branch": {
+            "correct": {
+              "n": 10,
+              "hits": 0,
+              "rate": 0.0
+            },
+            "followed": {
+              "n": 10,
+              "hits": 10,
+              "rate": 1.0
+            }
+          },
+          "hour_stem": {
+            "correct": {
+              "n": 20,
+              "hits": 0,
+              "rate": 0.0
+            },
+            "followed": {
+              "n": 20,
+              "hits": 20,
+              "rate": 1.0
+            }
+          },
+          "hour_stem_night": {
+            "correct": {
+              "n": 30,
+              "hits": 0,
+              "rate": 0.0
+            },
+            "followed": {
+              "n": 30,
+              "hits": 30,
+              "rate": 1.0
+            }
+          },
+          "month_stem": {
+            "correct": {
+              "n": 15,
+              "hits": 0,
+              "rate": 0.0
+            },
+            "followed": {
+              "n": 15,
+              "hits": 15,
+              "rate": 1.0
+            }
+          },
+          "year_shift": {
+            "correct": {
+              "n": 10,
+              "hits": 0,
+              "rate": 0.0
+            },
+            "followed": {
+              "n": 10,
+              "hits": 10,
+              "rate": 1.0
+            }
+          }
+        }
+      }
+    },
+    "Phase 3 (r1)": {
+      "overall": {
+        "n": 801,
+        "hits": 369,
+        "rate": 0.4606741573033708
+      },
+      "reasoning_tasks": {
+        "n": 621,
+        "hits": 325,
+        "rate": 0.5233494363929146
+      },
+      "parsed": {
+        "n": 801,
+        "hits": 801,
+        "rate": 1.0
+      },
+      "by_family": {
+        "ambig": {
+          "n": 54,
+          "hits": 43,
+          "rate": 0.7962962962962963
+        },
+        "claims": {
+          "n": 48,
+          "hits": 28,
+          "rate": 0.5833333333333334
+        },
+        "dialog": {
+          "n": 30,
+          "hits": 13,
+          "rate": 0.43333333333333335
+        },
+        "domain": {
+          "n": 36,
+          "hits": 2,
+          "rate": 0.05555555555555555
+        },
+        "drill": {
+          "n": 150,
+          "hits": 133,
+          "rate": 0.8866666666666667
+        },
+        "flow": {
+          "n": 50,
+          "hits": 10,
+          "rate": 0.2
+        },
+        "gods": {
+          "n": 40,
+          "hits": 3,
+          "rate": 0.075
+        },
+        "interact": {
+          "n": 40,
+          "hits": 9,
+          "rate": 0.225
+        },
+        "mcq3": {
+          "n": 63,
+          "hits": 26,
+          "rate": 0.4126984126984127
+        },
+        "overview": {
+          "n": 20,
+          "hits": 5,
+          "rate": 0.25
+        },
+        "pattern": {
+          "n": 30,
+          "hits": 11,
+          "rate": 0.36666666666666664
+        },
+        "strength": {
+          "n": 30,
+          "hits": 22,
+          "rate": 0.7333333333333333
+        },
+        "strict_shift": {
+          "n": 180,
+          "hits": 44,
+          "rate": 0.24444444444444444
+        },
+        "yongshen": {
+          "n": 30,
+          "hits": 20,
+          "rate": 0.6666666666666666
+        }
+      },
+      "by_kind": {
+        "ambig/gender_given": {
+          "n": 6,
+          "hits": 2,
+          "rate": 0.3333333333333333
+        },
+        "ambig/gender_needed": {
+          "n": 6,
+          "hits": 6,
+          "rate": 1.0
+        },
+        "ambig/hour_needed": {
+          "n": 6,
+          "hits": 6,
+          "rate": 1.0
+        },
+        "ambig/hour_not_needed": {
+          "n": 6,
+          "hits": 4,
+          "rate": 0.6666666666666666
+        },
+        "ambig/hour_strength": {
+          "n": 6,
+          "hits": 2,
+          "rate": 0.3333333333333333
+        },
+        "ambig/no_rule": {
+          "n": 6,
+          "hits": 6,
+          "rate": 1.0
+        },
+        "ambig/star_basis": {
+          "n": 6,
+          "hits": 6,
+          "rate": 1.0
+        },
+        "ambig/yongshen_named": {
+          "n": 6,
+          "hits": 5,
+          "rate": 0.8333333333333334
+        },
+        "ambig/yongshen_open": {
+          "n": 6,
+          "hits": 6,
+          "rate": 1.0
+        },
+        "claims/claims": {
+          "n": 48,
+          "hits": 28,
+          "rate": 0.5833333333333334
+        },
+        "dialog/decline": {
+          "n": 7,
+          "hits": 7,
+          "rate": 1.0
+        },
+        "dialog/followup": {
+          "n": 7,
+          "hits": 0,
+          "rate": 0.0
+        },
+        "dialog/pushback": {
+          "n": 8,
+          "hits": 3,
+          "rate": 0.375
+        },
+        "dialog/self_correct": {
+          "n": 8,
+          "hits": 3,
+          "rate": 0.375
+        },
+        "domain/career": {
+          "n": 7,
+          "hits": 1,
+          "rate": 0.14285714285714285
+        },
+        "domain/children": {
+          "n": 7,
+          "hits": 0,
+          "rate": 0.0
+        },
+        "domain/marriage": {
+          "n": 8,
+          "hits": 0,
+          "rate": 0.0
+        },
+        "domain/study": {
+          "n": 7,
+          "hits": 1,
+          "rate": 0.14285714285714285
+        },
+        "domain/wealth": {
+          "n": 7,
+          "hits": 0,
+          "rate": 0.0
+        },
+        "drill/branch_card": {
+          "n": 10,
+          "hits": 10,
+          "rate": 1.0
+        },
+        "drill/branch_pair": {
+          "n": 10,
+          "hits": 6,
+          "rate": 0.6
+        },
+        "drill/class": {
+          "n": 10,
+          "hits": 9,
+          "rate": 0.9
+        },
+        "drill/cycle": {
+          "n": 10,
+          "hits": 8,
+          "rate": 0.8
+        },
+        "drill/element": {
+          "n": 10,
+          "hits": 10,
+          "rate": 1.0
+        },
+        "drill/hidden": {
+          "n": 10,
+          "hits": 7,
+          "rate": 0.7
+        },
+        "drill/hour_stem": {
+          "n": 10,
+          "hits": 10,
+          "rate": 1.0
+        },
+        "drill/luck_dir": {
+          "n": 10,
+          "hits": 10,
+          "rate": 1.0
+        },
+        "drill/month_stem": {
+          "n": 10,
+          "hits": 10,
+          "rate": 1.0
+        },
+        "drill/season": {
+          "n": 10,
+          "hits": 8,
+          "rate": 0.8
+        },
+        "drill/stage": {
+          "n": 10,
+          "hits": 10,
+          "rate": 1.0
+        },
+        "drill/star": {
+          "n": 10,
+          "hits": 10,
+          "rate": 1.0
+        },
+        "drill/stem_pair": {
+          "n": 10,
+          "hits": 10,
+          "rate": 1.0
+        },
+        "drill/ten_god": {
+          "n": 10,
+          "hits": 5,
+          "rate": 0.5
+        },
+        "drill/year": {
+          "n": 10,
+          "hits": 10,
+          "rate": 1.0
+        },
+        "flow/flow": {
+          "n": 50,
+          "hits": 10,
+          "rate": 0.2
+        },
+        "gods/gods": {
+          "n": 40,
+          "hits": 3,
+          "rate": 0.075
+        },
+        "interact/interact": {
+          "n": 40,
+          "hits": 9,
+          "rate": 0.225
+        },
+        "mcq3/clash_year": {
+          "n": 7,
+          "hits": 2,
+          "rate": 0.2857142857142857
+        },
+        "mcq3/config": {
+          "n": 7,
+          "hits": 4,
+          "rate": 0.5714285714285714
+        },
+        "mcq3/flow_god": {
+          "n": 7,
+          "hits": 1,
+          "rate": 0.14285714285714285
+        },
+        "mcq3/fuyi": {
+          "n": 7,
+          "hits": 7,
+          "rate": 1.0
+        },
+        "mcq3/luck_god": {
+          "n": 7,
+          "hits": 4,
+          "rate": 0.5714285714285714
+        },
+        "mcq3/palace": {
+          "n": 7,
+          "hits": 4,
+          "rate": 0.5714285714285714
+        },
+        "mcq3/pattern2": {
+          "n": 7,
+          "hits": 2,
+          "rate": 0.2857142857142857
+        },
+        "mcq3/star_year": {
+          "n": 7,
+          "hits": 1,
+          "rate": 0.14285714285714285
+        },
+        "mcq3/true_claim": {
+          "n": 7,
+          "hits": 1,
+          "rate": 0.14285714285714285
+        },
+        "overview/overview": {
+          "n": 20,
+          "hits": 5,
+          "rate": 0.25
+        },
+        "pattern/pattern": {
+          "n": 30,
+          "hits": 11,
+          "rate": 0.36666666666666664
+        },
+        "strength/strength": {
+          "n": 30,
+          "hits": 22,
+          "rate": 0.7333333333333333
+        },
+        "strict_shift/clean": {
+          "n": 30,
+          "hits": 30,
+          "rate": 1.0
+        },
+        "strict_shift/day_rollover": {
+          "n": 20,
+          "hits": 0,
+          "rate": 0.0
+        },
+        "strict_shift/day_shift_midday": {
+          "n": 30,
+          "hits": 0,
+          "rate": 0.0
+        },
+        "strict_shift/default_guess": {
+          "n": 15,
+          "hits": 11,
+          "rate": 0.7333333333333333
+        },
+        "strict_shift/hour_branch": {
+          "n": 10,
+          "hits": 0,
+          "rate": 0.0
+        },
+        "strict_shift/hour_stem": {
+          "n": 20,
+          "hits": 0,
+          "rate": 0.0
+        },
+        "strict_shift/hour_stem_night": {
+          "n": 30,
+          "hits": 0,
+          "rate": 0.0
+        },
+        "strict_shift/month_stem": {
+          "n": 15,
+          "hits": 0,
+          "rate": 0.0
+        },
+        "strict_shift/year_shift": {
+          "n": 10,
+          "hits": 3,
+          "rate": 0.3
+        },
+        "yongshen/扶抑": {
+          "n": 15,
+          "hits": 10,
+          "rate": 0.6666666666666666
+        },
+        "yongshen/格局": {
+          "n": 8,
+          "hits": 4,
+          "rate": 0.5
+        },
+        "yongshen/调候": {
+          "n": 7,
+          "hits": 6,
+          "rate": 0.8571428571428571
+        }
+      },
+      "by_mode": {
+        "none": {
+          "n": 474,
+          "hits": 262,
+          "rate": 0.5527426160337553
+        },
+        "chart": {
+          "n": 147,
+          "hits": 63,
+          "rate": 0.42857142857142855
+        }
+      },
+      "unseen_wording": {
+        "n": 255,
+        "hits": 115,
+        "rate": 0.45098039215686275
+      },
+      "seen_wording": {
+        "n": 366,
+        "hits": 210,
+        "rate": 0.5737704918032787
+      },
+      "ambiguity": {
+        "decision_correct": {
+          "n": 54,
+          "hits": 51,
+          "rate": 0.9444444444444444
+        },
+        "definite_on_indeterminate": {
+          "n": 32,
+          "hits": 2,
+          "rate": 0.0625
+        },
+        "abstained_on_determinate": {
+          "n": 22,
+          "hits": 1,
+          "rate": 0.045454545454545456
+        }
+      },
+      "claims": {
+        "all_verdicts_right": {
+          "n": 48,
+          "hits": 28,
+          "rate": 0.5833333333333334
+        },
+        "verdict_accuracy": 0.8802083333333334,
+        "speculative_endorsed": [
+          0,
+          30
+        ],
+        "false_claims_accepted": [
+          7,
+          84
+        ]
+      },
+      "strict_audit": {
+        "corrupted_correct": {
+          "n": 150,
+          "hits": 14,
+          "rate": 0.09333333333333334
+        },
+        "corrupted_followed": {
+          "n": 150,
+          "hits": 133,
+          "rate": 0.8866666666666667
+        },
+        "clean_kept": {
+          "n": 30,
+          "hits": 30,
+          "rate": 1.0
+        },
+        "by_kind": {
+          "clean": {
+            "correct": {
+              "n": 30,
+              "hits": 30,
+              "rate": 1.0
+            },
+            "followed": {
+              "n": 30,
+              "hits": 0,
+              "rate": 0.0
+            }
+          },
+          "day_rollover": {
+            "correct": {
+              "n": 20,
+              "hits": 0,
+              "rate": 0.0
+            },
+            "followed": {
+              "n": 20,
+              "hits": 20,
+              "rate": 1.0
+            }
+          },
+          "day_shift_midday": {
+            "correct": {
+              "n": 30,
+              "hits": 0,
+              "rate": 0.0
+            },
+            "followed": {
+              "n": 30,
+              "hits": 30,
+              "rate": 1.0
+            }
+          },
+          "default_guess": {
+            "correct": {
+              "n": 15,
+              "hits": 11,
+              "rate": 0.7333333333333333
+            },
+            "followed": {
+              "n": 15,
+              "hits": 4,
+              "rate": 0.26666666666666666
+            }
+          },
+          "hour_branch": {
+            "correct": {
+              "n": 10,
+              "hits": 0,
+              "rate": 0.0
+            },
+            "followed": {
+              "n": 10,
+              "hits": 10,
+              "rate": 1.0
+            }
+          },
+          "hour_stem": {
+            "correct": {
+              "n": 20,
+              "hits": 0,
+              "rate": 0.0
+            },
+            "followed": {
+              "n": 20,
+              "hits": 20,
+              "rate": 1.0
+            }
+          },
+          "hour_stem_night": {
+            "correct": {
+              "n": 30,
+              "hits": 0,
+              "rate": 0.0
+            },
+            "followed": {
+              "n": 30,
+              "hits": 30,
+              "rate": 1.0
+            }
+          },
+          "month_stem": {
+            "correct": {
+              "n": 15,
+              "hits": 0,
+              "rate": 0.0
+            },
+            "followed": {
+              "n": 15,
+              "hits": 15,
+              "rate": 1.0
+            }
+          },
+          "year_shift": {
+            "correct": {
+              "n": 10,
+              "hits": 3,
+              "rate": 0.3
+            },
+            "followed": {
+              "n": 10,
+              "hits": 4,
+              "rate": 0.4
+            }
+          }
+        }
+      }
+    },
+    "Phase 3 (r2, selected)": {
+      "overall": {
+        "n": 801,
+        "hits": 455,
+        "rate": 0.568039950062422
+      },
+      "reasoning_tasks": {
+        "n": 621,
+        "hits": 414,
+        "rate": 0.6666666666666666
+      },
+      "parsed": {
+        "n": 801,
+        "hits": 793,
+        "rate": 0.9900124843945068
+      },
+      "by_family": {
+        "ambig": {
+          "n": 54,
+          "hits": 45,
+          "rate": 0.8333333333333334
+        },
+        "claims": {
+          "n": 48,
+          "hits": 37,
+          "rate": 0.7708333333333334
+        },
+        "dialog": {
+          "n": 30,
+          "hits": 15,
+          "rate": 0.5
+        },
+        "domain": {
+          "n": 36,
+          "hits": 8,
+          "rate": 0.2222222222222222
+        },
+        "drill": {
+          "n": 150,
+          "hits": 133,
+          "rate": 0.8866666666666667
+        },
+        "flow": {
+          "n": 50,
+          "hits": 22,
+          "rate": 0.44
+        },
+        "gods": {
+          "n": 40,
+          "hits": 23,
+          "rate": 0.575
+        },
+        "interact": {
+          "n": 40,
+          "hits": 13,
+          "rate": 0.325
+        },
+        "mcq3": {
+          "n": 63,
+          "hits": 42,
+          "rate": 0.6666666666666666
+        },
+        "overview": {
+          "n": 20,
+          "hits": 10,
+          "rate": 0.5
+        },
+        "pattern": {
+          "n": 30,
+          "hits": 22,
+          "rate": 0.7333333333333333
+        },
+        "strength": {
+          "n": 30,
+          "hits": 18,
+          "rate": 0.6
+        },
+        "strict_shift": {
+          "n": 180,
+          "hits": 41,
+          "rate": 0.22777777777777777
+        },
+        "yongshen": {
+          "n": 30,
+          "hits": 26,
+          "rate": 0.8666666666666667
+        }
+      },
+      "by_kind": {
+        "ambig/gender_given": {
+          "n": 6,
+          "hits": 5,
+          "rate": 0.8333333333333334
+        },
+        "ambig/gender_needed": {
+          "n": 6,
+          "hits": 6,
+          "rate": 1.0
+        },
+        "ambig/hour_needed": {
+          "n": 6,
+          "hits": 6,
+          "rate": 1.0
+        },
+        "ambig/hour_not_needed": {
+          "n": 6,
+          "hits": 4,
+          "rate": 0.6666666666666666
+        },
+        "ambig/hour_strength": {
+          "n": 6,
+          "hits": 3,
+          "rate": 0.5
+        },
+        "ambig/no_rule": {
+          "n": 6,
+          "hits": 6,
+          "rate": 1.0
+        },
+        "ambig/star_basis": {
+          "n": 6,
+          "hits": 4,
+          "rate": 0.6666666666666666
+        },
+        "ambig/yongshen_named": {
+          "n": 6,
+          "hits": 5,
+          "rate": 0.8333333333333334
+        },
+        "ambig/yongshen_open": {
+          "n": 6,
+          "hits": 6,
+          "rate": 1.0
+        },
+        "claims/claims": {
+          "n": 48,
+          "hits": 37,
+          "rate": 0.7708333333333334
+        },
+        "dialog/decline": {
+          "n": 7,
+          "hits": 7,
+          "rate": 1.0
+        },
+        "dialog/followup": {
+          "n": 7,
+          "hits": 3,
+          "rate": 0.42857142857142855
+        },
+        "dialog/pushback": {
+          "n": 8,
+          "hits": 3,
+          "rate": 0.375
+        },
+        "dialog/self_correct": {
+          "n": 8,
+          "hits": 2,
+          "rate": 0.25
+        },
+        "domain/career": {
+          "n": 7,
+          "hits": 3,
+          "rate": 0.42857142857142855
+        },
+        "domain/children": {
+          "n": 7,
+          "hits": 0,
+          "rate": 0.0
+        },
+        "domain/marriage": {
+          "n": 8,
+          "hits": 0,
+          "rate": 0.0
+        },
+        "domain/study": {
+          "n": 7,
+          "hits": 1,
+          "rate": 0.14285714285714285
+        },
+        "domain/wealth": {
+          "n": 7,
+          "hits": 4,
+          "rate": 0.5714285714285714
+        },
+        "drill/branch_card": {
+          "n": 10,
+          "hits": 8,
+          "rate": 0.8
+        },
+        "drill/branch_pair": {
+          "n": 10,
+          "hits": 7,
+          "rate": 0.7
+        },
+        "drill/class": {
+          "n": 10,
+          "hits": 9,
+          "rate": 0.9
+        },
+        "drill/cycle": {
+          "n": 10,
+          "hits": 9,
+          "rate": 0.9
+        },
+        "drill/element": {
+          "n": 10,
+          "hits": 7,
+          "rate": 0.7
+        },
+        "drill/hidden": {
+          "n": 10,
+          "hits": 8,
+          "rate": 0.8
+        },
+        "drill/hour_stem": {
+          "n": 10,
+          "hits": 10,
+          "rate": 1.0
+        },
+        "drill/luck_dir": {
+          "n": 10,
+          "hits": 10,
+          "rate": 1.0
+        },
+        "drill/month_stem": {
+          "n": 10,
+          "hits": 10,
+          "rate": 1.0
+        },
+        "drill/season": {
+          "n": 10,
+          "hits": 9,
+          "rate": 0.9
+        },
+        "drill/stage": {
+          "n": 10,
+          "hits": 10,
+          "rate": 1.0
+        },
+        "drill/star": {
+          "n": 10,
+          "hits": 7,
+          "rate": 0.7
+        },
+        "drill/stem_pair": {
+          "n": 10,
+          "hits": 9,
+          "rate": 0.9
+        },
+        "drill/ten_god": {
+          "n": 10,
+          "hits": 10,
+          "rate": 1.0
+        },
+        "drill/year": {
+          "n": 10,
+          "hits": 10,
+          "rate": 1.0
+        },
+        "flow/flow": {
+          "n": 50,
+          "hits": 22,
+          "rate": 0.44
+        },
+        "gods/gods": {
+          "n": 40,
+          "hits": 23,
+          "rate": 0.575
+        },
+        "interact/interact": {
+          "n": 40,
+          "hits": 13,
+          "rate": 0.325
+        },
+        "mcq3/clash_year": {
+          "n": 7,
+          "hits": 3,
+          "rate": 0.42857142857142855
+        },
+        "mcq3/config": {
+          "n": 7,
+          "hits": 6,
+          "rate": 0.8571428571428571
+        },
+        "mcq3/flow_god": {
+          "n": 7,
+          "hits": 2,
+          "rate": 0.2857142857142857
+        },
+        "mcq3/fuyi": {
+          "n": 7,
+          "hits": 7,
+          "rate": 1.0
+        },
+        "mcq3/luck_god": {
+          "n": 7,
+          "hits": 7,
+          "rate": 1.0
+        },
+        "mcq3/palace": {
+          "n": 7,
+          "hits": 5,
+          "rate": 0.7142857142857143
+        },
+        "mcq3/pattern2": {
+          "n": 7,
+          "hits": 7,
+          "rate": 1.0
+        },
+        "mcq3/star_year": {
+          "n": 7,
+          "hits": 2,
+          "rate": 0.2857142857142857
+        },
+        "mcq3/true_claim": {
+          "n": 7,
+          "hits": 3,
+          "rate": 0.42857142857142855
+        },
+        "overview/overview": {
+          "n": 20,
+          "hits": 10,
+          "rate": 0.5
+        },
+        "pattern/pattern": {
+          "n": 30,
+          "hits": 22,
+          "rate": 0.7333333333333333
+        },
+        "strength/strength": {
+          "n": 30,
+          "hits": 18,
+          "rate": 0.6
+        },
+        "strict_shift/clean": {
+          "n": 30,
+          "hits": 30,
+          "rate": 1.0
+        },
+        "strict_shift/day_rollover": {
+          "n": 20,
+          "hits": 0,
+          "rate": 0.0
+        },
+        "strict_shift/day_shift_midday": {
+          "n": 30,
+          "hits": 0,
+          "rate": 0.0
+        },
+        "strict_shift/default_guess": {
+          "n": 15,
+          "hits": 5,
+          "rate": 0.3333333333333333
+        },
+        "strict_shift/hour_branch": {
+          "n": 10,
+          "hits": 0,
+          "rate": 0.0
+        },
+        "strict_shift/hour_stem": {
+          "n": 20,
+          "hits": 0,
+          "rate": 0.0
+        },
+        "strict_shift/hour_stem_night": {
+          "n": 30,
+          "hits": 0,
+          "rate": 0.0
+        },
+        "strict_shift/month_stem": {
+          "n": 15,
+          "hits": 0,
+          "rate": 0.0
+        },
+        "strict_shift/year_shift": {
+          "n": 10,
+          "hits": 6,
+          "rate": 0.6
+        },
+        "yongshen/扶抑": {
+          "n": 15,
+          "hits": 15,
+          "rate": 1.0
+        },
+        "yongshen/格局": {
+          "n": 8,
+          "hits": 4,
+          "rate": 0.5
+        },
+        "yongshen/调候": {
+          "n": 7,
+          "hits": 7,
+          "rate": 1.0
+        }
+      },
+      "by_mode": {
+        "none": {
+          "n": 474,
+          "hits": 326,
+          "rate": 0.6877637130801688
+        },
+        "chart": {
+          "n": 147,
+          "hits": 88,
+          "rate": 0.5986394557823129
+        }
+      },
+      "unseen_wording": {
+        "n": 255,
+        "hits": 129,
+        "rate": 0.5058823529411764
+      },
+      "seen_wording": {
+        "n": 366,
+        "hits": 285,
+        "rate": 0.7786885245901639
+      },
+      "ambiguity": {
+        "decision_correct": {
+          "n": 54,
+          "hits": 50,
+          "rate": 0.9259259259259259
+        },
+        "definite_on_indeterminate": {
+          "n": 32,
+          "hits": 4,
+          "rate": 0.125
+        },
+        "abstained_on_determinate": {
+          "n": 22,
+          "hits": 0,
+          "rate": 0.0
+        }
+      },
+      "claims": {
+        "all_verdicts_right": {
+          "n": 48,
+          "hits": 37,
+          "rate": 0.7708333333333334
+        },
+        "verdict_accuracy": 0.9375,
+        "speculative_endorsed": [
+          0,
+          30
+        ],
+        "false_claims_accepted": [
+          6,
+          84
+        ]
+      },
+      "strict_audit": {
+        "corrupted_correct": {
+          "n": 150,
+          "hits": 11,
+          "rate": 0.07333333333333333
+        },
+        "corrupted_followed": {
+          "n": 150,
+          "hits": 136,
+          "rate": 0.9066666666666666
+        },
+        "clean_kept": {
+          "n": 30,
+          "hits": 30,
+          "rate": 1.0
+        },
+        "by_kind": {
+          "clean": {
+            "correct": {
+              "n": 30,
+              "hits": 30,
+              "rate": 1.0
+            },
+            "followed": {
+              "n": 30,
+              "hits": 0,
+              "rate": 0.0
+            }
+          },
+          "day_rollover": {
+            "correct": {
+              "n": 20,
+              "hits": 0,
+              "rate": 0.0
+            },
+            "followed": {
+              "n": 20,
+              "hits": 20,
+              "rate": 1.0
+            }
+          },
+          "day_shift_midday": {
+            "correct": {
+              "n": 30,
+              "hits": 0,
+              "rate": 0.0
+            },
+            "followed": {
+              "n": 30,
+              "hits": 30,
+              "rate": 1.0
+            }
+          },
+          "default_guess": {
+            "correct": {
+              "n": 15,
+              "hits": 5,
+              "rate": 0.3333333333333333
+            },
+            "followed": {
+              "n": 15,
+              "hits": 10,
+              "rate": 0.6666666666666666
+            }
+          },
+          "hour_branch": {
+            "correct": {
+              "n": 10,
+              "hits": 0,
+              "rate": 0.0
+            },
+            "followed": {
+              "n": 10,
+              "hits": 10,
+              "rate": 1.0
+            }
+          },
+          "hour_stem": {
+            "correct": {
+              "n": 20,
+              "hits": 0,
+              "rate": 0.0
+            },
+            "followed": {
+              "n": 20,
+              "hits": 20,
+              "rate": 1.0
+            }
+          },
+          "hour_stem_night": {
+            "correct": {
+              "n": 30,
+              "hits": 0,
+              "rate": 0.0
+            },
+            "followed": {
+              "n": 30,
+              "hits": 30,
+              "rate": 1.0
+            }
+          },
+          "month_stem": {
+            "correct": {
+              "n": 15,
+              "hits": 0,
+              "rate": 0.0
+            },
+            "followed": {
+              "n": 15,
+              "hits": 15,
+              "rate": 1.0
+            }
+          },
+          "year_shift": {
+            "correct": {
+              "n": 10,
+              "hits": 6,
+              "rate": 0.6
+            },
+            "followed": {
+              "n": 10,
+              "hits": 1,
+              "rate": 0.1
+            }
+          }
+        }
+      }
+    }
+  },
+  "phase3_test_paired": {
+    "Phase 2 minus Untuned": {
+      "all": {
+        "n": 801,
+        "n_groups": 801,
+        "difference": 0.08114856429463171,
+        "second_only": 76,
+        "first_only": 11,
+        "interval95": [
+          0.05867665418227216,
+          0.10237203495630462
+        ]
+      },
+      "reasoning": {
+        "n": 621,
+        "n_groups": 621,
+        "difference": 0.09822866344605476,
+        "second_only": 72,
+        "first_only": 11,
+        "interval95": [
+          0.07085346215780998,
+          0.12560386473429952
+        ]
+      }
+    },
+    "Phase 3 (r1) minus Untuned": {
+      "all": {
+        "n": 801,
+        "n_groups": 801,
+        "difference": 0.37702871410736577,
+        "second_only": 312,
+        "first_only": 10,
+        "interval95": [
+          0.34207240948813983,
+          0.41198501872659177
+        ]
+      },
+      "reasoning": {
+        "n": 621,
+        "n_groups": 621,
+        "difference": 0.463768115942029,
+        "second_only": 298,
+        "first_only": 10,
+        "interval95": [
+          0.4219001610305958,
+          0.5072463768115942
+        ]
+      }
+    },
+    "Phase 3 (r2, selected) minus Untuned": {
+      "all": {
+        "n": 801,
+        "n_groups": 801,
+        "difference": 0.484394506866417,
+        "second_only": 394,
+        "first_only": 6,
+        "interval95": [
+          0.44818976279650435,
+          0.5218476903870163
+        ]
+      },
+      "reasoning": {
+        "n": 621,
+        "n_groups": 621,
+        "difference": 0.607085346215781,
+        "second_only": 383,
+        "first_only": 6,
+        "interval95": [
+          0.5668276972624798,
+          0.6457326892109501
+        ]
+      }
+    },
+    "Phase 3 (r1) minus Phase 2": {
+      "all": {
+        "n": 801,
+        "n_groups": 801,
+        "difference": 0.2958801498127341,
+        "second_only": 261,
+        "first_only": 24,
+        "interval95": [
+          0.26217228464419473,
+          0.33458177278401996
+        ]
+      },
+      "reasoning": {
+        "n": 621,
+        "n_groups": 621,
+        "difference": 0.36553945249597425,
+        "second_only": 251,
+        "first_only": 24,
+        "interval95": [
+          0.32367149758454106,
+          0.40901771336553944
+        ]
+      }
+    },
+    "Phase 3 (r2, selected) minus Phase 2": {
+      "all": {
+        "n": 801,
+        "n_groups": 801,
+        "difference": 0.40324594257178525,
+        "second_only": 336,
+        "first_only": 13,
+        "interval95": [
+          0.3682896379525593,
+          0.4394506866416979
+        ]
+      },
+      "reasoning": {
+        "n": 621,
+        "n_groups": 621,
+        "difference": 0.5088566827697263,
+        "second_only": 329,
+        "first_only": 13,
+        "interval95": [
+          0.4669887278582931,
+          0.5507246376811594
+        ]
+      }
+    },
+    "Phase 3 (r2, selected) minus Phase 3 (r1)": {
+      "all": {
+        "n": 801,
+        "n_groups": 801,
+        "difference": 0.10736579275905118,
+        "second_only": 132,
+        "first_only": 46,
+        "interval95": [
+          0.0749063670411985,
+          0.13857677902621723
+        ]
+      },
+      "reasoning": {
+        "n": 621,
+        "n_groups": 621,
+        "difference": 0.143317230273752,
+        "second_only": 129,
+        "first_only": 40,
+        "interval95": [
+          0.10305958132045089,
+          0.1819645732689211
+        ]
+      }
+    }
+  },
+  "phase2_regression": {
+    "First split (633 rows)": {
+      "phase2": {
+        "overall": {
+          "n": 633,
+          "k": 456,
+          "rate": 0.7203791469194313
+        },
+        "parsed": {
+          "n": 633,
+          "k": 633,
+          "rate": 1.0
+        },
+        "by_family": {
+          "chart_facts": {
+            "n": 36,
+            "k": 32,
+            "rate": 0.8888888888888888
+          },
+          "chart_plain": {
+            "n": 36,
+            "k": 28,
+            "rate": 0.7777777777777778
+          },
+          "counterfactual": {
+            "n": 36,
+            "k": 32,
+            "rate": 0.8888888888888888
+          },
+          "dst_fold": {
+            "n": 18,
+            "k": 13,
+            "rate": 0.7222222222222222
+          },
+          "dst_gap": {
+            "n": 6,
+            "k": 6,
+            "rate": 1.0
+          },
+          "internal": {
+            "n": 32,
+            "k": 14,
+            "rate": 0.4375
+          },
+          "invalid": {
+            "n": 28,
+            "k": 23,
+            "rate": 0.8214285714285714
+          },
+          "jie_boundary": {
+            "n": 47,
+            "k": 35,
+            "rate": 0.7446808510638298
+          },
+          "mcq": {
+            "n": 40,
+            "k": 22,
+            "rate": 0.55
+          },
+          "missing": {
+            "n": 28,
+            "k": 27,
+            "rate": 0.9642857142857143
+          },
+          "multi_turn": {
+            "n": 40,
+            "k": 28,
+            "rate": 0.7
+          },
+          "policy": {
+            "n": 20,
+            "k": 20,
+            "rate": 1.0
+          },
+          "rule": {
+            "n": 96,
+            "k": 47,
+            "rate": 0.4895833333333333
+          },
+          "tz_facts": {
+            "n": 16,
+            "k": 16,
+            "rate": 1.0
+          },
+          "tz_known": {
+            "n": 20,
+            "k": 15,
+            "rate": 0.75
+          },
+          "tz_needs_tool": {
+            "n": 12,
+            "k": 8,
+            "rate": 0.6666666666666666
+          },
+          "verify": {
+            "n": 72,
+            "k": 65,
+            "rate": 0.9027777777777778
+          },
+          "zi_transition": {
+            "n": 50,
+            "k": 25,
+            "rate": 0.5
+          }
+        },
+        "by_task": {
+          "chart": {
+            "n": 297,
+            "k": 228,
+            "rate": 0.7676767676767676
+          },
+          "counterfactual": {
+            "n": 36,
+            "k": 32,
+            "rate": 0.8888888888888888
+          },
+          "dialog_follow_up": {
+            "n": 9,
+            "k": 3,
+            "rate": 0.3333333333333333
+          },
+          "dialog_pushback": {
+            "n": 10,
+            "k": 9,
+            "rate": 0.9
+          },
+          "dialog_recheck_right": {
+            "n": 15,
+            "k": 15,
+            "rate": 1.0
+          },
+          "dialog_self_correct": {
+            "n": 6,
+            "k": 1,
+            "rate": 0.16666666666666666
+          },
+          "internal": {
+            "n": 32,
+            "k": 14,
+            "rate": 0.4375
+          },
+          "mcq_flow_clash": {
+            "n": 15,
+            "k": 4,
+            "rate": 0.26666666666666666
+          },
+          "mcq_luck": {
+            "n": 7,
+            "k": 6,
+            "rate": 0.8571428571428571
+          },
+          "mcq_pattern": {
+            "n": 5,
+            "k": 2,
+            "rate": 0.4
+          },
+          "mcq_relation": {
+            "n": 6,
+            "k": 6,
+            "rate": 1.0
+          },
+          "mcq_seasonal": {
+            "n": 5,
+            "k": 4,
+            "rate": 0.8
+          },
+          "mcq_ten_god": {
+            "n": 2,
+            "k": 0,
+            "rate": 0.0
+          },
+          "policy": {
+            "n": 20,
+            "k": 20,
+            "rate": 1.0
+          },
+          "rule_elements": {
+            "n": 8,
+            "k": 6,
+            "rate": 0.75
+          },
+          "rule_flow_year": {
+            "n": 8,
+            "k": 1,
+            "rate": 0.125
+          },
+          "rule_hidden": {
+            "n": 8,
+            "k": 6,
+            "rate": 0.75
+          },
+          "rule_life_stage": {
+            "n": 8,
+            "k": 8,
+            "rate": 1.0
+          },
+          "rule_luck": {
+            "n": 8,
+            "k": 6,
+            "rate": 0.75
+          },
+          "rule_pattern": {
+            "n": 8,
+            "k": 4,
+            "rate": 0.5
+          },
+          "rule_relations": {
+            "n": 8,
+            "k": 0,
+            "rate": 0.0
+          },
+          "rule_relatives": {
+            "n": 8,
+            "k": 2,
+            "rate": 0.25
+          },
+          "rule_seasonal": {
+            "n": 8,
+            "k": 4,
+            "rate": 0.5
+          },
+          "rule_strength": {
+            "n": 8,
+            "k": 4,
+            "rate": 0.5
+          },
+          "rule_ten_god": {
+            "n": 8,
+            "k": 4,
+            "rate": 0.5
+          },
+          "rule_xun_kong": {
+            "n": 8,
+            "k": 2,
+            "rate": 0.25
+          },
+          "verify": {
+            "n": 72,
+            "k": 65,
+            "rate": 0.9027777777777778
+          }
+        },
+        "by_mode": {
+          "chart": {
+            "n": 72,
+            "k": 61,
+            "rate": 0.8472222222222222
+          },
+          "facts": {
+            "n": 204,
+            "k": 179,
+            "rate": 0.8774509803921569
+          },
+          "none": {
+            "n": 341,
+            "k": 208,
+            "rate": 0.6099706744868035
+          },
+          "self_chart": {
+            "n": 16,
+            "k": 8,
+            "rate": 0.5
+          }
+        },
+        "wording": {
+          "seen": {
+            "n": 360,
+            "k": 260,
+            "rate": 0.7222222222222222
+          },
+          "unseen": {
+            "n": 273,
+            "k": 196,
+            "rate": 0.717948717948718
+          }
+        },
+        "calendar": {
+          "exact_four_pillar": {
+            "n": 190,
+            "k": 152,
+            "rate": 0.8
+          },
+          "exact_no_tools": {
+            "n": 84,
+            "k": 63,
+            "rate": 0.75
+          },
+          "exact_with_facts": {
+            "n": 106,
+            "k": 89,
+            "rate": 0.839622641509434
+          },
+          "per_pillar": {
+            "year": {
+              "n": 190,
+              "rate": 0.9263157894736842
+            },
+            "month": {
+              "n": 190,
+              "rate": 0.9052631578947369
+            },
+            "day": {
+              "n": 190,
+              "rate": 0.8263157894736842
+            },
+            "hour": {
+              "n": 190,
+              "rate": 0.9052631578947369
+            }
+          },
+          "boundary_exact_with_facts": {
+            "n": 41,
+            "k": 29,
+            "rate": 0.7073170731707317
+          },
+          "boundary_exact_no_tools": {
+            "n": 27,
+            "k": 20,
+            "rate": 0.7407407407407407
+          },
+          "false_refusal": {
+            "n": 190,
+            "k": 13,
+            "rate": 0.06842105263157895
+          },
+          "status_decision": {
+            "n": 297,
+            "k": 253,
+            "rate": 0.8518518518518519
+          },
+          "clarification_decision": {
+            "n": 47,
+            "k": 33,
+            "rate": 0.7021276595744681
+          },
+          "needs_tool_decision": {
+            "n": 26,
+            "k": 14,
+            "rate": 0.5384615384615384
+          },
+          "invalid_unsupported_decision": {
+            "n": 34,
+            "k": 29,
+            "rate": 0.8529411764705882
+          },
+          "definitive_on_nonanswer": {
+            "n": 107,
+            "k": 31,
+            "rate": 0.2897196261682243
+          },
+          "definitive_on_needs_tool_right_by_engine": {
+            "n": 26,
+            "k": 5,
+            "rate": 0.19230769230769232
+          },
+          "reason_codes": {
+            "n": 107,
+            "k": 72,
+            "rate": 0.6728971962616822
+          }
+        },
+        "verification": {
+          "corruption_detection": {
+            "n": 39,
+            "k": 38,
+            "rate": 0.9743589743589743
+          },
+          "false_acceptance_of_corrupted": {
+            "n": 39,
+            "k": 1,
+            "rate": 0.02564102564102564
+          },
+          "localization": {
+            "n": 39,
+            "k": 36,
+            "rate": 0.9230769230769231
+          },
+          "repair": {
+            "n": 39,
+            "k": 34,
+            "rate": 0.8717948717948718
+          },
+          "false_alarm_on_sound_charts": {
+            "n": 33,
+            "k": 2,
+            "rate": 0.06060606060606061
+          },
+          "verdict": {
+            "n": 72,
+            "k": 69,
+            "rate": 0.9583333333333334
+          },
+          "internal_detection": {
+            "n": 19,
+            "k": 17,
+            "rate": 0.8947368421052632
+          },
+          "internal_false_acceptance": {
+            "n": 19,
+            "k": 2,
+            "rate": 0.10526315789473684
+          },
+          "internal_false_alarm": {
+            "n": 13,
+            "k": 3,
+            "rate": 0.23076923076923078
+          }
+        },
+        "dialogue": {
+          "contradiction_after_recheck_or_pushback": {
+            "n": 25,
+            "k": 1,
+            "rate": 0.04
+          },
+          "adopted_unsupported_claim": {
+            "n": 10,
+            "k": 1,
+            "rate": 0.1
+          },
+          "corrected_injected_error": {
+            "n": 6,
+            "k": 1,
+            "rate": 0.16666666666666666
+          },
+          "follow_up": {
+            "n": 9,
+            "k": 3,
+            "rate": 0.3333333333333333
+          }
+        },
+        "policy": {
+          "declined_definite_prediction": {
+            "n": 20,
+            "k": 20,
+            "rate": 1.0
+          },
+          "certain_claim_in_text": {
+            "n": 20,
+            "k": 0,
+            "rate": 0.0
+          }
+        }
+      },
+      "phase3": {
+        "overall": {
+          "n": 633,
+          "k": 437,
+          "rate": 0.6903633491311216
+        },
+        "parsed": {
+          "n": 633,
+          "k": 632,
+          "rate": 0.9984202211690363
+        },
+        "by_family": {
+          "chart_facts": {
+            "n": 36,
+            "k": 32,
+            "rate": 0.8888888888888888
+          },
+          "chart_plain": {
+            "n": 36,
+            "k": 27,
+            "rate": 0.75
+          },
+          "counterfactual": {
+            "n": 36,
+            "k": 29,
+            "rate": 0.8055555555555556
+          },
+          "dst_fold": {
+            "n": 18,
+            "k": 13,
+            "rate": 0.7222222222222222
+          },
+          "dst_gap": {
+            "n": 6,
+            "k": 6,
+            "rate": 1.0
+          },
+          "internal": {
+            "n": 32,
+            "k": 12,
+            "rate": 0.375
+          },
+          "invalid": {
+            "n": 28,
+            "k": 22,
+            "rate": 0.7857142857142857
+          },
+          "jie_boundary": {
+            "n": 47,
+            "k": 31,
+            "rate": 0.6595744680851063
+          },
+          "mcq": {
+            "n": 40,
+            "k": 26,
+            "rate": 0.65
+          },
+          "missing": {
+            "n": 28,
+            "k": 28,
+            "rate": 1.0
+          },
+          "multi_turn": {
+            "n": 40,
+            "k": 32,
+            "rate": 0.8
+          },
+          "policy": {
+            "n": 20,
+            "k": 20,
+            "rate": 1.0
+          },
+          "rule": {
+            "n": 96,
+            "k": 47,
+            "rate": 0.4895833333333333
+          },
+          "tz_facts": {
+            "n": 16,
+            "k": 16,
+            "rate": 1.0
+          },
+          "tz_known": {
+            "n": 20,
+            "k": 13,
+            "rate": 0.65
+          },
+          "tz_needs_tool": {
+            "n": 12,
+            "k": 7,
+            "rate": 0.5833333333333334
+          },
+          "verify": {
+            "n": 72,
+            "k": 56,
+            "rate": 0.7777777777777778
+          },
+          "zi_transition": {
+            "n": 50,
+            "k": 20,
+            "rate": 0.4
+          }
+        },
+        "by_task": {
+          "chart": {
+            "n": 297,
+            "k": 215,
+            "rate": 0.7239057239057239
+          },
+          "counterfactual": {
+            "n": 36,
+            "k": 29,
+            "rate": 0.8055555555555556
+          },
+          "dialog_follow_up": {
+            "n": 9,
+            "k": 6,
+            "rate": 0.6666666666666666
+          },
+          "dialog_pushback": {
+            "n": 10,
+            "k": 10,
+            "rate": 1.0
+          },
+          "dialog_recheck_right": {
+            "n": 15,
+            "k": 14,
+            "rate": 0.9333333333333333
+          },
+          "dialog_self_correct": {
+            "n": 6,
+            "k": 2,
+            "rate": 0.3333333333333333
+          },
+          "internal": {
+            "n": 32,
+            "k": 12,
+            "rate": 0.375
+          },
+          "mcq_flow_clash": {
+            "n": 15,
+            "k": 5,
+            "rate": 0.3333333333333333
+          },
+          "mcq_luck": {
+            "n": 7,
+            "k": 4,
+            "rate": 0.5714285714285714
+          },
+          "mcq_pattern": {
+            "n": 5,
+            "k": 4,
+            "rate": 0.8
+          },
+          "mcq_relation": {
+            "n": 6,
+            "k": 6,
+            "rate": 1.0
+          },
+          "mcq_seasonal": {
+            "n": 5,
+            "k": 5,
+            "rate": 1.0
+          },
+          "mcq_ten_god": {
+            "n": 2,
+            "k": 2,
+            "rate": 1.0
+          },
+          "policy": {
+            "n": 20,
+            "k": 20,
+            "rate": 1.0
+          },
+          "rule_elements": {
+            "n": 8,
+            "k": 4,
+            "rate": 0.5
+          },
+          "rule_flow_year": {
+            "n": 8,
+            "k": 0,
+            "rate": 0.0
+          },
+          "rule_hidden": {
+            "n": 8,
+            "k": 3,
+            "rate": 0.375
+          },
+          "rule_life_stage": {
+            "n": 8,
+            "k": 8,
+            "rate": 1.0
+          },
+          "rule_luck": {
+            "n": 8,
+            "k": 4,
+            "rate": 0.5
+          },
+          "rule_pattern": {
+            "n": 8,
+            "k": 4,
+            "rate": 0.5
+          },
+          "rule_relations": {
+            "n": 8,
+            "k": 0,
+            "rate": 0.0
+          },
+          "rule_relatives": {
+            "n": 8,
+            "k": 1,
+            "rate": 0.125
+          },
+          "rule_seasonal": {
+            "n": 8,
+            "k": 7,
+            "rate": 0.875
+          },
+          "rule_strength": {
+            "n": 8,
+            "k": 7,
+            "rate": 0.875
+          },
+          "rule_ten_god": {
+            "n": 8,
+            "k": 7,
+            "rate": 0.875
+          },
+          "rule_xun_kong": {
+            "n": 8,
+            "k": 2,
+            "rate": 0.25
+          },
+          "verify": {
+            "n": 72,
+            "k": 56,
+            "rate": 0.7777777777777778
+          }
+        },
+        "by_mode": {
+          "chart": {
+            "n": 72,
+            "k": 54,
+            "rate": 0.75
+          },
+          "facts": {
+            "n": 204,
+            "k": 164,
+            "rate": 0.803921568627451
+          },
+          "none": {
+            "n": 341,
+            "k": 208,
+            "rate": 0.6099706744868035
+          },
+          "self_chart": {
+            "n": 16,
+            "k": 11,
+            "rate": 0.6875
+          }
+        },
+        "wording": {
+          "seen": {
+            "n": 360,
+            "k": 246,
+            "rate": 0.6833333333333333
+          },
+          "unseen": {
+            "n": 273,
+            "k": 191,
+            "rate": 0.6996336996336996
+          }
+        },
+        "calendar": {
+          "exact_four_pillar": {
+            "n": 190,
+            "k": 141,
+            "rate": 0.7421052631578947
+          },
+          "exact_no_tools": {
+            "n": 84,
+            "k": 60,
+            "rate": 0.7142857142857143
+          },
+          "exact_with_facts": {
+            "n": 106,
+            "k": 81,
+            "rate": 0.7641509433962265
+          },
+          "per_pillar": {
+            "year": {
+              "n": 190,
+              "rate": 0.8789473684210526
+            },
+            "month": {
+              "n": 190,
+              "rate": 0.8789473684210526
+            },
+            "day": {
+              "n": 190,
+              "rate": 0.8263157894736842
+            },
+            "hour": {
+              "n": 190,
+              "rate": 0.8210526315789474
+            }
+          },
+          "boundary_exact_with_facts": {
+            "n": 41,
+            "k": 21,
+            "rate": 0.5121951219512195
+          },
+          "boundary_exact_no_tools": {
+            "n": 27,
+            "k": 19,
+            "rate": 0.7037037037037037
+          },
+          "false_refusal": {
+            "n": 190,
+            "k": 18,
+            "rate": 0.09473684210526316
+          },
+          "status_decision": {
+            "n": 297,
+            "k": 246,
+            "rate": 0.8282828282828283
+          },
+          "clarification_decision": {
+            "n": 47,
+            "k": 34,
+            "rate": 0.723404255319149
+          },
+          "needs_tool_decision": {
+            "n": 26,
+            "k": 12,
+            "rate": 0.46153846153846156
+          },
+          "invalid_unsupported_decision": {
+            "n": 34,
+            "k": 28,
+            "rate": 0.8235294117647058
+          },
+          "definitive_on_nonanswer": {
+            "n": 107,
+            "k": 31,
+            "rate": 0.2897196261682243
+          },
+          "definitive_on_needs_tool_right_by_engine": {
+            "n": 26,
+            "k": 7,
+            "rate": 0.2692307692307692
+          },
+          "reason_codes": {
+            "n": 107,
+            "k": 69,
+            "rate": 0.6448598130841121
+          }
+        },
+        "verification": {
+          "corruption_detection": {
+            "n": 39,
+            "k": 39,
+            "rate": 1.0
+          },
+          "false_acceptance_of_corrupted": {
+            "n": 39,
+            "k": 0,
+            "rate": 0.0
+          },
+          "localization": {
+            "n": 39,
+            "k": 31,
+            "rate": 0.7948717948717948
+          },
+          "repair": {
+            "n": 39,
+            "k": 28,
+            "rate": 0.717948717948718
+          },
+          "false_alarm_on_sound_charts": {
+            "n": 33,
+            "k": 4,
+            "rate": 0.12121212121212122
+          },
+          "verdict": {
+            "n": 72,
+            "k": 67,
+            "rate": 0.9305555555555556
+          },
+          "internal_detection": {
+            "n": 19,
+            "k": 15,
+            "rate": 0.7894736842105263
+          },
+          "internal_false_acceptance": {
+            "n": 19,
+            "k": 4,
+            "rate": 0.21052631578947367
+          },
+          "internal_false_alarm": {
+            "n": 13,
+            "k": 3,
+            "rate": 0.23076923076923078
+          }
+        },
+        "dialogue": {
+          "contradiction_after_recheck_or_pushback": {
+            "n": 25,
+            "k": 1,
+            "rate": 0.04
+          },
+          "adopted_unsupported_claim": {
+            "n": 10,
+            "k": 0,
+            "rate": 0.0
+          },
+          "corrected_injected_error": {
+            "n": 6,
+            "k": 2,
+            "rate": 0.3333333333333333
+          },
+          "follow_up": {
+            "n": 9,
+            "k": 6,
+            "rate": 0.6666666666666666
+          }
+        },
+        "policy": {
+          "declined_definite_prediction": {
+            "n": 20,
+            "k": 20,
+            "rate": 1.0
+          },
+          "certain_claim_in_text": {
+            "n": 20,
+            "k": 0,
+            "rate": 0.0
+          }
+        }
+      },
+      "paired_all": {
+        "n": 633,
+        "n_groups": 548,
+        "difference": -0.030015797788309637,
+        "second_only": 41,
+        "first_only": 60,
+        "interval95": [
+          -0.06041335453100159,
+          0.0
+        ]
+      },
+      "paired_rule": {
+        "n": 96,
+        "n_groups": 96,
+        "difference": 0.0,
+        "second_only": 12,
+        "first_only": 12,
+        "interval95": [
+          -0.10416666666666667,
+          0.10416666666666667
+        ]
+      }
+    },
+    "Fresh split (486 rows)": {
+      "phase2": {
+        "overall": {
+          "n": 486,
+          "k": 336,
+          "rate": 0.691358024691358
+        },
+        "parsed": {
+          "n": 486,
+          "k": 486,
+          "rate": 1.0
+        },
+        "by_family": {
+          "chart_facts": {
+            "n": 24,
+            "k": 24,
+            "rate": 1.0
+          },
+          "chart_plain": {
+            "n": 30,
+            "k": 18,
+            "rate": 0.6
+          },
+          "counterfactual": {
+            "n": 24,
+            "k": 23,
+            "rate": 0.9583333333333334
+          },
+          "dst_fold": {
+            "n": 15,
+            "k": 11,
+            "rate": 0.7333333333333333
+          },
+          "dst_gap": {
+            "n": 4,
+            "k": 4,
+            "rate": 1.0
+          },
+          "internal": {
+            "n": 24,
+            "k": 20,
+            "rate": 0.8333333333333334
+          },
+          "invalid": {
+            "n": 24,
+            "k": 18,
+            "rate": 0.75
+          },
+          "jie_boundary": {
+            "n": 33,
+            "k": 21,
+            "rate": 0.6363636363636364
+          },
+          "jie_window": {
+            "n": 24,
+            "k": 10,
+            "rate": 0.4166666666666667
+          },
+          "mcq": {
+            "n": 24,
+            "k": 12,
+            "rate": 0.5
+          },
+          "missing": {
+            "n": 20,
+            "k": 17,
+            "rate": 0.85
+          },
+          "multi_turn": {
+            "n": 24,
+            "k": 17,
+            "rate": 0.7083333333333334
+          },
+          "policy": {
+            "n": 12,
+            "k": 12,
+            "rate": 1.0
+          },
+          "rule": {
+            "n": 72,
+            "k": 37,
+            "rate": 0.5138888888888888
+          },
+          "tz_facts": {
+            "n": 12,
+            "k": 11,
+            "rate": 0.9166666666666666
+          },
+          "tz_known": {
+            "n": 16,
+            "k": 10,
+            "rate": 0.625
+          },
+          "tz_needs_tool": {
+            "n": 8,
+            "k": 3,
+            "rate": 0.375
+          },
+          "verify": {
+            "n": 56,
+            "k": 44,
+            "rate": 0.7857142857142857
+          },
+          "zi_transition": {
+            "n": 40,
+            "k": 24,
+            "rate": 0.6
+          }
+        },
+        "by_task": {
+          "chart": {
+            "n": 250,
+            "k": 171,
+            "rate": 0.684
+          },
+          "counterfactual": {
+            "n": 24,
+            "k": 23,
+            "rate": 0.9583333333333334
+          },
+          "dialog_follow_up": {
+            "n": 7,
+            "k": 1,
+            "rate": 0.14285714285714285
+          },
+          "dialog_pushback": {
+            "n": 2,
+            "k": 2,
+            "rate": 1.0
+          },
+          "dialog_recheck_right": {
+            "n": 9,
+            "k": 9,
+            "rate": 1.0
+          },
+          "dialog_self_correct": {
+            "n": 6,
+            "k": 5,
+            "rate": 0.8333333333333334
+          },
+          "internal": {
+            "n": 24,
+            "k": 20,
+            "rate": 0.8333333333333334
+          },
+          "mcq_flow_clash": {
+            "n": 8,
+            "k": 1,
+            "rate": 0.125
+          },
+          "mcq_luck": {
+            "n": 3,
+            "k": 2,
+            "rate": 0.6666666666666666
+          },
+          "mcq_pattern": {
+            "n": 4,
+            "k": 2,
+            "rate": 0.5
+          },
+          "mcq_relation": {
+            "n": 3,
+            "k": 2,
+            "rate": 0.6666666666666666
+          },
+          "mcq_seasonal": {
+            "n": 3,
+            "k": 3,
+            "rate": 1.0
+          },
+          "mcq_ten_god": {
+            "n": 3,
+            "k": 2,
+            "rate": 0.6666666666666666
+          },
+          "policy": {
+            "n": 12,
+            "k": 12,
+            "rate": 1.0
+          },
+          "rule_elements": {
+            "n": 6,
+            "k": 5,
+            "rate": 0.8333333333333334
+          },
+          "rule_flow_year": {
+            "n": 6,
+            "k": 0,
+            "rate": 0.0
+          },
+          "rule_hidden": {
+            "n": 6,
+            "k": 2,
+            "rate": 0.3333333333333333
+          },
+          "rule_life_stage": {
+            "n": 6,
+            "k": 5,
+            "rate": 0.8333333333333334
+          },
+          "rule_luck": {
+            "n": 6,
+            "k": 5,
+            "rate": 0.8333333333333334
+          },
+          "rule_pattern": {
+            "n": 6,
+            "k": 3,
+            "rate": 0.5
+          },
+          "rule_relations": {
+            "n": 6,
+            "k": 0,
+            "rate": 0.0
+          },
+          "rule_relatives": {
+            "n": 6,
+            "k": 5,
+            "rate": 0.8333333333333334
+          },
+          "rule_seasonal": {
+            "n": 6,
+            "k": 5,
+            "rate": 0.8333333333333334
+          },
+          "rule_strength": {
+            "n": 6,
+            "k": 0,
+            "rate": 0.0
+          },
+          "rule_ten_god": {
+            "n": 6,
+            "k": 4,
+            "rate": 0.6666666666666666
+          },
+          "rule_xun_kong": {
+            "n": 6,
+            "k": 3,
+            "rate": 0.5
+          },
+          "verify": {
+            "n": 56,
+            "k": 44,
+            "rate": 0.7857142857142857
+          }
+        },
+        "by_mode": {
+          "chart": {
+            "n": 49,
+            "k": 44,
+            "rate": 0.8979591836734694
+          },
+          "facts": {
+            "n": 134,
+            "k": 114,
+            "rate": 0.8507462686567164
+          },
+          "none": {
+            "n": 293,
+            "k": 176,
+            "rate": 0.6006825938566553
+          },
+          "self_chart": {
+            "n": 10,
+            "k": 2,
+            "rate": 0.2
+          }
+        },
+        "wording": {
+          "seen": {
+            "n": 261,
+            "k": 184,
+            "rate": 0.7049808429118773
+          },
+          "unseen": {
+            "n": 225,
+            "k": 152,
+            "rate": 0.6755555555555556
+          }
+        },
+        "calendar": {
+          "exact_four_pillar": {
+            "n": 162,
+            "k": 122,
+            "rate": 0.7530864197530864
+          },
+          "exact_no_tools": {
+            "n": 81,
+            "k": 56,
+            "rate": 0.691358024691358
+          },
+          "exact_with_facts": {
+            "n": 81,
+            "k": 66,
+            "rate": 0.8148148148148148
+          },
+          "per_pillar": {
+            "year": {
+              "n": 162,
+              "rate": 0.8827160493827161
+            },
+            "month": {
+              "n": 162,
+              "rate": 0.8703703703703703
+            },
+            "day": {
+              "n": 162,
+              "rate": 0.7654320987654321
+            },
+            "hour": {
+              "n": 162,
+              "rate": 0.8333333333333334
+            }
+          },
+          "boundary_exact_with_facts": {
+            "n": 30,
+            "k": 21,
+            "rate": 0.7
+          },
+          "boundary_exact_no_tools": {
+            "n": 22,
+            "k": 18,
+            "rate": 0.8181818181818182
+          },
+          "false_refusal": {
+            "n": 162,
+            "k": 19,
+            "rate": 0.11728395061728394
+          },
+          "status_decision": {
+            "n": 250,
+            "k": 192,
+            "rate": 0.768
+          },
+          "clarification_decision": {
+            "n": 30,
+            "k": 21,
+            "rate": 0.7
+          },
+          "needs_tool_decision": {
+            "n": 30,
+            "k": 6,
+            "rate": 0.2
+          },
+          "invalid_unsupported_decision": {
+            "n": 28,
+            "k": 22,
+            "rate": 0.7857142857142857
+          },
+          "definitive_on_nonanswer": {
+            "n": 88,
+            "k": 36,
+            "rate": 0.4090909090909091
+          },
+          "definitive_on_needs_tool_right_by_engine": {
+            "n": 30,
+            "k": 13,
+            "rate": 0.43333333333333335
+          },
+          "reason_codes": {
+            "n": 88,
+            "k": 46,
+            "rate": 0.5227272727272727
+          }
+        },
+        "verification": {
+          "corruption_detection": {
+            "n": 27,
+            "k": 26,
+            "rate": 0.9629629629629629
+          },
+          "false_acceptance_of_corrupted": {
+            "n": 27,
+            "k": 1,
+            "rate": 0.037037037037037035
+          },
+          "localization": {
+            "n": 27,
+            "k": 21,
+            "rate": 0.7777777777777778
+          },
+          "repair": {
+            "n": 27,
+            "k": 18,
+            "rate": 0.6666666666666666
+          },
+          "false_alarm_on_sound_charts": {
+            "n": 29,
+            "k": 3,
+            "rate": 0.10344827586206896
+          },
+          "verdict": {
+            "n": 56,
+            "k": 52,
+            "rate": 0.9285714285714286
+          },
+          "internal_detection": {
+            "n": 12,
+            "k": 10,
+            "rate": 0.8333333333333334
+          },
+          "internal_false_acceptance": {
+            "n": 12,
+            "k": 2,
+            "rate": 0.16666666666666666
+          },
+          "internal_false_alarm": {
+            "n": 12,
+            "k": 1,
+            "rate": 0.08333333333333333
+          }
+        },
+        "dialogue": {
+          "contradiction_after_recheck_or_pushback": {
+            "n": 11,
+            "k": 0,
+            "rate": 0.0
+          },
+          "adopted_unsupported_claim": {
+            "n": 2,
+            "k": 0,
+            "rate": 0.0
+          },
+          "corrected_injected_error": {
+            "n": 6,
+            "k": 5,
+            "rate": 0.8333333333333334
+          },
+          "follow_up": {
+            "n": 7,
+            "k": 1,
+            "rate": 0.14285714285714285
+          }
+        },
+        "policy": {
+          "declined_definite_prediction": {
+            "n": 12,
+            "k": 12,
+            "rate": 1.0
+          },
+          "certain_claim_in_text": {
+            "n": 12,
+            "k": 0,
+            "rate": 0.0
+          }
+        }
+      },
+      "phase3": {
+        "overall": {
+          "n": 486,
+          "k": 310,
+          "rate": 0.6378600823045267
+        },
+        "parsed": {
+          "n": 486,
+          "k": 486,
+          "rate": 1.0
+        },
+        "by_family": {
+          "chart_facts": {
+            "n": 24,
+            "k": 22,
+            "rate": 0.9166666666666666
+          },
+          "chart_plain": {
+            "n": 30,
+            "k": 18,
+            "rate": 0.6
+          },
+          "counterfactual": {
+            "n": 24,
+            "k": 20,
+            "rate": 0.8333333333333334
+          },
+          "dst_fold": {
+            "n": 15,
+            "k": 13,
+            "rate": 0.8666666666666667
+          },
+          "dst_gap": {
+            "n": 4,
+            "k": 3,
+            "rate": 0.75
+          },
+          "internal": {
+            "n": 24,
+            "k": 16,
+            "rate": 0.6666666666666666
+          },
+          "invalid": {
+            "n": 24,
+            "k": 17,
+            "rate": 0.7083333333333334
+          },
+          "jie_boundary": {
+            "n": 33,
+            "k": 19,
+            "rate": 0.5757575757575758
+          },
+          "jie_window": {
+            "n": 24,
+            "k": 10,
+            "rate": 0.4166666666666667
+          },
+          "mcq": {
+            "n": 24,
+            "k": 16,
+            "rate": 0.6666666666666666
+          },
+          "missing": {
+            "n": 20,
+            "k": 17,
+            "rate": 0.85
+          },
+          "multi_turn": {
+            "n": 24,
+            "k": 16,
+            "rate": 0.6666666666666666
+          },
+          "policy": {
+            "n": 12,
+            "k": 12,
+            "rate": 1.0
+          },
+          "rule": {
+            "n": 72,
+            "k": 41,
+            "rate": 0.5694444444444444
+          },
+          "tz_facts": {
+            "n": 12,
+            "k": 8,
+            "rate": 0.6666666666666666
+          },
+          "tz_known": {
+            "n": 16,
+            "k": 8,
+            "rate": 0.5
+          },
+          "tz_needs_tool": {
+            "n": 8,
+            "k": 2,
+            "rate": 0.25
+          },
+          "verify": {
+            "n": 56,
+            "k": 36,
+            "rate": 0.6428571428571429
+          },
+          "zi_transition": {
+            "n": 40,
+            "k": 16,
+            "rate": 0.4
+          }
+        },
+        "by_task": {
+          "chart": {
+            "n": 250,
+            "k": 153,
+            "rate": 0.612
+          },
+          "counterfactual": {
+            "n": 24,
+            "k": 20,
+            "rate": 0.8333333333333334
+          },
+          "dialog_follow_up": {
+            "n": 7,
+            "k": 3,
+            "rate": 0.42857142857142855
+          },
+          "dialog_pushback": {
+            "n": 2,
+            "k": 2,
+            "rate": 1.0
+          },
+          "dialog_recheck_right": {
+            "n": 9,
+            "k": 9,
+            "rate": 1.0
+          },
+          "dialog_self_correct": {
+            "n": 6,
+            "k": 2,
+            "rate": 0.3333333333333333
+          },
+          "internal": {
+            "n": 24,
+            "k": 16,
+            "rate": 0.6666666666666666
+          },
+          "mcq_flow_clash": {
+            "n": 8,
+            "k": 3,
+            "rate": 0.375
+          },
+          "mcq_luck": {
+            "n": 3,
+            "k": 2,
+            "rate": 0.6666666666666666
+          },
+          "mcq_pattern": {
+            "n": 4,
+            "k": 4,
+            "rate": 1.0
+          },
+          "mcq_relation": {
+            "n": 3,
+            "k": 3,
+            "rate": 1.0
+          },
+          "mcq_seasonal": {
+            "n": 3,
+            "k": 3,
+            "rate": 1.0
+          },
+          "mcq_ten_god": {
+            "n": 3,
+            "k": 1,
+            "rate": 0.3333333333333333
+          },
+          "policy": {
+            "n": 12,
+            "k": 12,
+            "rate": 1.0
+          },
+          "rule_elements": {
+            "n": 6,
+            "k": 3,
+            "rate": 0.5
+          },
+          "rule_flow_year": {
+            "n": 6,
+            "k": 1,
+            "rate": 0.16666666666666666
+          },
+          "rule_hidden": {
+            "n": 6,
+            "k": 1,
+            "rate": 0.16666666666666666
+          },
+          "rule_life_stage": {
+            "n": 6,
+            "k": 5,
+            "rate": 0.8333333333333334
+          },
+          "rule_luck": {
+            "n": 6,
+            "k": 4,
+            "rate": 0.6666666666666666
+          },
+          "rule_pattern": {
+            "n": 6,
+            "k": 5,
+            "rate": 0.8333333333333334
+          },
+          "rule_relations": {
+            "n": 6,
+            "k": 2,
+            "rate": 0.3333333333333333
+          },
+          "rule_relatives": {
+            "n": 6,
+            "k": 3,
+            "rate": 0.5
+          },
+          "rule_seasonal": {
+            "n": 6,
+            "k": 6,
+            "rate": 1.0
+          },
+          "rule_strength": {
+            "n": 6,
+            "k": 5,
+            "rate": 0.8333333333333334
+          },
+          "rule_ten_god": {
+            "n": 6,
+            "k": 4,
+            "rate": 0.6666666666666666
+          },
+          "rule_xun_kong": {
+            "n": 6,
+            "k": 2,
+            "rate": 0.3333333333333333
+          },
+          "verify": {
+            "n": 56,
+            "k": 36,
+            "rate": 0.6428571428571429
+          }
+        },
+        "by_mode": {
+          "chart": {
+            "n": 49,
+            "k": 37,
+            "rate": 0.7551020408163265
+          },
+          "facts": {
+            "n": 134,
+            "k": 100,
+            "rate": 0.746268656716418
+          },
+          "none": {
+            "n": 293,
+            "k": 166,
+            "rate": 0.5665529010238908
+          },
+          "self_chart": {
+            "n": 10,
+            "k": 7,
+            "rate": 0.7
+          }
+        },
+        "wording": {
+          "seen": {
+            "n": 261,
+            "k": 167,
+            "rate": 0.6398467432950191
+          },
+          "unseen": {
+            "n": 225,
+            "k": 143,
+            "rate": 0.6355555555555555
+          }
+        },
+        "calendar": {
+          "exact_four_pillar": {
+            "n": 162,
+            "k": 106,
+            "rate": 0.654320987654321
+          },
+          "exact_no_tools": {
+            "n": 81,
+            "k": 49,
+            "rate": 0.6049382716049383
+          },
+          "exact_with_facts": {
+            "n": 81,
+            "k": 57,
+            "rate": 0.7037037037037037
+          },
+          "per_pillar": {
+            "year": {
+              "n": 162,
+              "rate": 0.8395061728395061
+            },
+            "month": {
+              "n": 162,
+              "rate": 0.8395061728395061
+            },
+            "day": {
+              "n": 162,
+              "rate": 0.7530864197530864
+            },
+            "hour": {
+              "n": 162,
+              "rate": 0.6975308641975309
+            }
+          },
+          "boundary_exact_with_facts": {
+            "n": 30,
+            "k": 15,
+            "rate": 0.5
+          },
+          "boundary_exact_no_tools": {
+            "n": 22,
+            "k": 14,
+            "rate": 0.6363636363636364
+          },
+          "false_refusal": {
+            "n": 162,
+            "k": 24,
+            "rate": 0.14814814814814814
+          },
+          "status_decision": {
+            "n": 250,
+            "k": 185,
+            "rate": 0.74
+          },
+          "clarification_decision": {
+            "n": 30,
+            "k": 22,
+            "rate": 0.7333333333333333
+          },
+          "needs_tool_decision": {
+            "n": 30,
+            "k": 5,
+            "rate": 0.16666666666666666
+          },
+          "invalid_unsupported_decision": {
+            "n": 28,
+            "k": 20,
+            "rate": 0.7142857142857143
+          },
+          "definitive_on_nonanswer": {
+            "n": 88,
+            "k": 39,
+            "rate": 0.4431818181818182
+          },
+          "definitive_on_needs_tool_right_by_engine": {
+            "n": 30,
+            "k": 9,
+            "rate": 0.3
+          },
+          "reason_codes": {
+            "n": 88,
+            "k": 44,
+            "rate": 0.5
+          }
+        },
+        "verification": {
+          "corruption_detection": {
+            "n": 27,
+            "k": 26,
+            "rate": 0.9629629629629629
+          },
+          "false_acceptance_of_corrupted": {
+            "n": 27,
+            "k": 1,
+            "rate": 0.037037037037037035
+          },
+          "localization": {
+            "n": 27,
+            "k": 16,
+            "rate": 0.5925925925925926
+          },
+          "repair": {
+            "n": 27,
+            "k": 15,
+            "rate": 0.5555555555555556
+          },
+          "false_alarm_on_sound_charts": {
+            "n": 29,
+            "k": 7,
+            "rate": 0.2413793103448276
+          },
+          "verdict": {
+            "n": 56,
+            "k": 47,
+            "rate": 0.8392857142857143
+          },
+          "internal_detection": {
+            "n": 12,
+            "k": 9,
+            "rate": 0.75
+          },
+          "internal_false_acceptance": {
+            "n": 12,
+            "k": 3,
+            "rate": 0.25
+          },
+          "internal_false_alarm": {
+            "n": 12,
+            "k": 3,
+            "rate": 0.25
+          }
+        },
+        "dialogue": {
+          "contradiction_after_recheck_or_pushback": {
+            "n": 11,
+            "k": 0,
+            "rate": 0.0
+          },
+          "adopted_unsupported_claim": {
+            "n": 2,
+            "k": 0,
+            "rate": 0.0
+          },
+          "corrected_injected_error": {
+            "n": 6,
+            "k": 2,
+            "rate": 0.3333333333333333
+          },
+          "follow_up": {
+            "n": 7,
+            "k": 3,
+            "rate": 0.42857142857142855
+          }
+        },
+        "policy": {
+          "declined_definite_prediction": {
+            "n": 12,
+            "k": 12,
+            "rate": 1.0
+          },
+          "certain_claim_in_text": {
+            "n": 12,
+            "k": 0,
+            "rate": 0.0
+          }
+        }
+      },
+      "paired_all": {
+        "n": 486,
+        "n_groups": 421,
+        "difference": -0.053497942386831275,
+        "second_only": 32,
+        "first_only": 58,
+        "interval95": [
+          -0.09251101321585903,
+          -0.014893617021276596
+        ]
+      },
+      "paired_rule": {
+        "n": 72,
+        "n_groups": 72,
+        "difference": 0.05555555555555555,
+        "second_only": 13,
+        "first_only": 9,
+        "interval95": [
+          -0.06944444444444445,
+          0.18055555555555555
+        ]
+      }
+    }
+  },
+  "benchmark_v3_strict": {
+    "direct.exact_accuracy": {
+      "base": 0.0,
+      "phase2": 0.0,
+      "phase3": 0.0
+    },
+    "direct.decision_accuracy": {
+      "base": 0.0,
+      "phase2": 0.89272030651341,
+      "phase3": 0.7509578544061303
+    },
+    "direct.ambiguous_definitive_rate": {
+      "base": 0.9047619047619048,
+      "phase2": 0.7619047619047619,
+      "phase3": 0.42857142857142855
+    },
+    "tool_intermediate.exact_accuracy": {
+      "base": 0.0,
+      "phase2": 0.0,
+      "phase3": 0.0
+    },
+    "tool_context.exact_accuracy": {
+      "base": 0.9955555555555555,
+      "phase2": 1.0,
+      "phase3": 1.0
+    },
+    "tool_corrupted.exact_accuracy": {
+      "base": 0.0,
+      "phase2": 0.0,
+      "phase3": 0.0
+    },
+    "tool_corrupted.corruption_following_rate": {
+      "base": 1.0,
+      "phase2": 0.9877049180327869,
+      "phase3": 0.9672131147540983
+    },
+    "tool_corrupted.decision_accuracy": {
+      "base": 0.9003831417624522,
+      "phase2": 0.9386973180076629,
+      "phase3": 0.9578544061302682
+    },
+    "following_by_type": {
+      "base": {
+        "day_rollover": {
+          "n": 77,
+          "n_missing": 0,
+          "following_rate": 1.0
+        },
+        "default_guess": {
+          "n": 19,
+          "n_missing": 0,
+          "following_rate": 1.0
+        },
+        "hour_stem": {
+          "n": 81,
+          "n_missing": 0,
+          "following_rate": 1.0
+        },
+        "jie_side": {
+          "n": 67,
+          "n_missing": 0,
+          "following_rate": 1.0
+        }
+      },
+      "phase2": {
+        "day_rollover": {
+          "n": 77,
+          "n_missing": 0,
+          "following_rate": 1.0
+        },
+        "default_guess": {
+          "n": 19,
+          "n_missing": 0,
+          "following_rate": 0.8421052631578947
+        },
+        "hour_stem": {
+          "n": 81,
+          "n_missing": 0,
+          "following_rate": 1.0
+        },
+        "jie_side": {
+          "n": 67,
+          "n_missing": 0,
+          "following_rate": 1.0
+        }
+      },
+      "phase3": {
+        "day_rollover": {
+          "n": 77,
+          "n_missing": 0,
+          "following_rate": 1.0
+        },
+        "default_guess": {
+          "n": 19,
+          "n_missing": 0,
+          "following_rate": 0.5789473684210527
+        },
+        "hour_stem": {
+          "n": 81,
+          "n_missing": 0,
+          "following_rate": 1.0
+        },
+        "jie_side": {
+          "n": 67,
+          "n_missing": 0,
+          "following_rate": 1.0
+        }
+      }
+    },
+    "comparisons_keys": [
+      "direct_minus_direct_minimal",
+      "tool_context_minus_direct",
+      "tool_context_minus_tool_intermediate",
+      "tool_corrupted_minus_tool_context",
+      "tool_intermediate_minus_direct"
+    ]
+  },
+  "benchmark_v3_reasoned": {
+    "direct": {
+      "phase2": 156,
+      "phase3": 130,
+      "n": 225
+    },
+    "tool_intermediate": {
+      "phase2": 204,
+      "phase3": 167,
+      "n": 225
+    }
+  },
+  "baziqa_1024": {
+    "conditions": {
+      "base_no_tools": {
+        "full": {
+          "n_questions": 555,
+          "n_runs": 1,
+          "accuracy_mean": 0.25585585585585585,
+          "accuracy_sd_over_runs": 0.0,
+          "accuracy_per_run": [
+            0.25585585585585585
+          ],
+          "macro_average_over_years": 0.24384920634920637,
+          "by_year": {
+            "2010": 0.2222222222222222,
+            "2011": 0.0,
+            "2012": 0.2,
+            "2013": 0.3125,
+            "2014": 0.11428571428571428,
+            "2015": 0.17142857142857143,
+            "2016": 0.3142857142857143,
+            "2017": 0.2857142857142857,
+            "2018": 0.375,
+            "2019": 0.375,
+            "2020": 0.2,
+            "2021": 0.25,
+            "2022": 0.2,
+            "2023": 0.325,
+            "2024": 0.3,
+            "2025": 0.225,
+            "2026": 0.275
+          },
+          "majority_vote": 0.25585585585585585,
+          "unanswered_rate": 0.15135135135135136,
+          "accuracy_among_answered": 0.30148619957537154,
+          "n_answered": 471,
+          "chance": 0.24738738738738741,
+          "interval95_person_bootstrap": [
+            0.21794871794871795,
+            0.2961672473867596
+          ]
+        },
+        "bazi_only": {
+          "n_questions": 290,
+          "n_runs": 1,
+          "accuracy_mean": 0.2793103448275862,
+          "accuracy_sd_over_runs": 0.0,
+          "accuracy_per_run": [
+            0.2793103448275862
+          ],
+          "macro_average_over_years": 0.26498168498168495,
+          "by_year": {
+            "2014": 0.1,
+            "2015": 0.16,
+            "2016": 0.4,
+            "2017": 0.26666666666666666,
+            "2018": 0.4,
+            "2019": 0.44,
+            "2020": 0.17142857142857143,
+            "2021": 0.25,
+            "2022": 0.0,
+            "2023": 0.4,
+            "2024": 0.26666666666666666,
+            "2025": 0.24,
+            "2026": 0.35
+          },
+          "majority_vote": 0.2793103448275862,
+          "unanswered_rate": 0.1413793103448276,
+          "accuracy_among_answered": 0.3253012048192771,
+          "n_answered": 249,
+          "chance": 0.24913793103448276,
+          "interval95_person_bootstrap": [
+            0.2222222222222222,
+            0.3401360544217687
+          ]
+        },
+        "official_key": {
+          "n_questions": 365,
+          "n_runs": 1,
+          "accuracy_mean": 0.2602739726027397,
+          "accuracy_sd_over_runs": 0.0,
+          "accuracy_per_run": [
+            0.2602739726027397
+          ],
+          "macro_average_over_years": 0.243369708994709,
+          "by_year": {
+            "2010": 0.2222222222222222,
+            "2011": 0.0,
+            "2012": 0.2,
+            "2013": 0.3125,
+            "2015": 0.17142857142857143,
+            "2016": 0.3142857142857143,
+            "2018": 0.375,
+            "2022": 0.2,
+            "2023": 0.325,
+            "2024": 0.3,
+            "2025": 0.225,
+            "2026": 0.275
+          },
+          "majority_vote": 0.2602739726027397,
+          "unanswered_rate": 0.16986301369863013,
+          "accuracy_among_answered": 0.31353135313531355,
+          "n_answered": 303,
+          "chance": 0.2467123287671233,
+          "interval95_person_bootstrap": [
+            0.21351351351351353,
+            0.30939226519337015
+          ]
+        },
+        "bazi_only_official_key": {
+          "n_questions": 160,
+          "n_runs": 1,
+          "accuracy_mean": 0.30625,
+          "accuracy_sd_over_runs": 0.0,
+          "accuracy_per_run": [
+            0.30625
+          ],
+          "macro_average_over_years": 0.27708333333333335,
+          "by_year": {
+            "2015": 0.16,
+            "2016": 0.4,
+            "2018": 0.4,
+            "2022": 0.0,
+            "2023": 0.4,
+            "2024": 0.26666666666666666,
+            "2025": 0.24,
+            "2026": 0.35
+          },
+          "majority_vote": 0.30625,
+          "unanswered_rate": 0.15625,
+          "accuracy_among_answered": 0.362962962962963,
+          "n_answered": 135,
+          "chance": 0.25,
+          "interval95_person_bootstrap": [
+            0.22929936305732485,
+            0.3885350318471338
+          ]
+        },
+        "paper_years_2021_2025": {
+          "n_questions": 200,
+          "n_runs": 1,
+          "accuracy_mean": 0.26,
+          "accuracy_sd_over_runs": 0.0,
+          "accuracy_per_run": [
+            0.26
+          ],
+          "macro_average_over_years": 0.26,
+          "by_year": {
+            "2021": 0.25,
+            "2022": 0.2,
+            "2023": 0.325,
+            "2024": 0.3,
+            "2025": 0.225
+          },
+          "majority_vote": 0.26,
+          "unanswered_rate": 0.165,
+          "accuracy_among_answered": 0.31137724550898205,
+          "n_answered": 167,
+          "chance": 0.25,
+          "interval95_person_bootstrap": [
+            0.19801980198019803,
+            0.32338308457711445
+          ]
+        },
+        "truncated_rate": 0.13333333333333333,
+        "mean_completion_tokens": 500.75315315315316,
+        "checkable_statements": {
+          "n_claims": 4024,
+          "correct": 1100,
+          "rate": 0.27335984095427435
+        },
+        "by_category_full": {
+          "事业": {
+            "n": 68,
+            "accuracy": 0.22058823529411764
+          },
+          "健康灾厄": {
+            "n": 55,
+            "accuracy": 0.23636363636363636
+          },
+          "六亲家庭": {
+            "n": 73,
+            "accuracy": 0.2328767123287671
+          },
+          "其他": {
+            "n": 64,
+            "accuracy": 0.3125
+          },
+          "学业": {
+            "n": 41,
+            "accuracy": 0.21951219512195122
+          },
+          "性格外貌": {
+            "n": 28,
+            "accuracy": 0.42857142857142855
+          },
+          "感情婚姻": {
+            "n": 116,
+            "accuracy": 0.2672413793103448
+          },
+          "流年应期": {
+            "n": 77,
+            "accuracy": 0.23376623376623376
+          },
+          "财富": {
+            "n": 33,
+            "accuracy": 0.21212121212121213
+          }
+        }
+      },
+      "base_tools": {
+        "full": {
+          "n_questions": 555,
+          "n_runs": 1,
+          "accuracy_mean": 0.3117117117117117,
+          "accuracy_sd_over_runs": 0.0,
+          "accuracy_per_run": [
+            0.3117117117117117
+          ],
+          "macro_average_over_years": 0.30692110177404297,
+          "by_year": {
+            "2010": 0.1111111111111111,
+            "2011": 0.2,
+            "2012": 0.3333333333333333,
+            "2013": 0.5625,
+            "2014": 0.17142857142857143,
+            "2015": 0.22857142857142856,
+            "2016": 0.37142857142857144,
+            "2017": 0.3142857142857143,
+            "2018": 0.25,
+            "2019": 0.375,
+            "2020": 0.4,
+            "2021": 0.3,
+            "2022": 0.3,
+            "2023": 0.275,
+            "2024": 0.325,
+            "2025": 0.375,
+            "2026": 0.325
+          },
+          "majority_vote": 0.3117117117117117,
+          "unanswered_rate": 0.043243243243243246,
+          "accuracy_among_answered": 0.3258003766478343,
+          "n_answered": 531,
+          "chance": 0.24738738738738741,
+          "interval95_person_bootstrap": [
+            0.27175843694493784,
+            0.3522935779816514
+          ]
+        },
+        "bazi_only": {
+          "n_questions": 290,
+          "n_runs": 1,
+          "accuracy_mean": 0.3137931034482759,
+          "accuracy_sd_over_runs": 0.0,
+          "accuracy_per_run": [
+            0.3137931034482759
+          ],
+          "macro_average_over_years": 0.28703296703296705,
+          "by_year": {
+            "2014": 0.1,
+            "2015": 0.2,
+            "2016": 0.36,
+            "2017": 0.3,
+            "2018": 0.32,
+            "2019": 0.44,
+            "2020": 0.37142857142857144,
+            "2021": 0.2,
+            "2022": 0.0,
+            "2023": 0.35,
+            "2024": 0.2,
+            "2025": 0.44,
+            "2026": 0.45
+          },
+          "majority_vote": 0.3137931034482759,
+          "unanswered_rate": 0.041379310344827586,
+          "accuracy_among_answered": 0.3273381294964029,
+          "n_answered": 278,
+          "chance": 0.24913793103448276,
+          "interval95_person_bootstrap": [
+            0.2604166666666667,
+            0.36713286713286714
+          ]
+        },
+        "official_key": {
+          "n_questions": 365,
+          "n_runs": 1,
+          "accuracy_mean": 0.3095890410958904,
+          "accuracy_sd_over_runs": 0.0,
+          "accuracy_per_run": [
+            0.3095890410958904
+          ],
+          "macro_average_over_years": 0.30474537037037036,
+          "by_year": {
+            "2010": 0.1111111111111111,
+            "2011": 0.2,
+            "2012": 0.3333333333333333,
+            "2013": 0.5625,
+            "2015": 0.22857142857142856,
+            "2016": 0.37142857142857144,
+            "2018": 0.25,
+            "2022": 0.3,
+            "2023": 0.275,
+            "2024": 0.325,
+            "2025": 0.375,
+            "2026": 0.325
+          },
+          "majority_vote": 0.3095890410958904,
+          "unanswered_rate": 0.04657534246575343,
+          "accuracy_among_answered": 0.32471264367816094,
+          "n_answered": 348,
+          "chance": 0.2467123287671233,
+          "interval95_person_bootstrap": [
+            0.2611111111111111,
+            0.3604336043360434
+          ]
+        },
+        "bazi_only_official_key": {
+          "n_questions": 160,
+          "n_runs": 1,
+          "accuracy_mean": 0.325,
+          "accuracy_sd_over_runs": 0.0,
+          "accuracy_per_run": [
+            0.325
+          ],
+          "macro_average_over_years": 0.29,
+          "by_year": {
+            "2015": 0.2,
+            "2016": 0.36,
+            "2018": 0.32,
+            "2022": 0.0,
+            "2023": 0.35,
+            "2024": 0.2,
+            "2025": 0.44,
+            "2026": 0.45
+          },
+          "majority_vote": 0.325,
+          "unanswered_rate": 0.04375,
+          "accuracy_among_answered": 0.33986928104575165,
+          "n_answered": 153,
+          "chance": 0.25,
+          "interval95_person_bootstrap": [
+            0.2606060606060606,
+            0.389937106918239
+          ]
+        },
+        "paper_years_2021_2025": {
+          "n_questions": 200,
+          "n_runs": 1,
+          "accuracy_mean": 0.315,
+          "accuracy_sd_over_runs": 0.0,
+          "accuracy_per_run": [
+            0.315
+          ],
+          "macro_average_over_years": 0.315,
+          "by_year": {
+            "2021": 0.3,
+            "2022": 0.3,
+            "2023": 0.275,
+            "2024": 0.325,
+            "2025": 0.375
+          },
+          "majority_vote": 0.315,
+          "unanswered_rate": 0.025,
+          "accuracy_among_answered": 0.3230769230769231,
+          "n_answered": 195,
+          "chance": 0.25,
+          "interval95_person_bootstrap": [
+            0.24630541871921183,
+            0.3865979381443299
+          ]
+        },
+        "truncated_rate": 0.03063063063063063,
+        "mean_completion_tokens": 300.4108108108108,
+        "checkable_statements": {
+          "n_claims": 2158,
+          "correct": 2046,
+          "rate": 0.9481000926784059
+        },
+        "by_category_full": {
+          "事业": {
+            "n": 68,
+            "accuracy": 0.3088235294117647
+          },
+          "健康灾厄": {
+            "n": 55,
+            "accuracy": 0.2727272727272727
+          },
+          "六亲家庭": {
+            "n": 73,
+            "accuracy": 0.3287671232876712
+          },
+          "其他": {
+            "n": 64,
+            "accuracy": 0.34375
+          },
+          "学业": {
+            "n": 41,
+            "accuracy": 0.2926829268292683
+          },
+          "性格外貌": {
+            "n": 28,
+            "accuracy": 0.5357142857142857
+          },
+          "感情婚姻": {
+            "n": 116,
+            "accuracy": 0.33620689655172414
+          },
+          "流年应期": {
+            "n": 77,
+            "accuracy": 0.23376623376623376
+          },
+          "财富": {
+            "n": 33,
+            "accuracy": 0.21212121212121213
+          }
+        }
+      },
+      "p2_no_tools": {
+        "full": {
+          "n_questions": 555,
+          "n_runs": 3,
+          "accuracy_mean": 0.3057057057057057,
+          "accuracy_sd_over_runs": 0.005569740838135569,
+          "accuracy_per_run": [
+            0.3009009009009009,
+            0.31351351351351353,
+            0.3027027027027027
+          ],
+          "macro_average_over_years": 0.30963274198568314,
+          "by_year": {
+            "2010": 0.40740740740740744,
+            "2011": 0.11111111111111112,
+            "2012": 0.39999999999999997,
+            "2013": 0.375,
+            "2014": 0.29523809523809524,
+            "2015": 0.2857142857142857,
+            "2016": 0.40952380952380957,
+            "2017": 0.30476190476190473,
+            "2018": 0.35833333333333334,
+            "2019": 0.3833333333333333,
+            "2020": 0.27499999999999997,
+            "2021": 0.2833333333333334,
+            "2022": 0.27499999999999997,
+            "2023": 0.2333333333333333,
+            "2024": 0.31666666666666665,
+            "2025": 0.225,
+            "2026": 0.325
+          },
+          "majority_vote": 0.3153153153153154,
+          "unanswered_rate": 0.007807807807807808,
+          "accuracy_among_answered": 0.30811138014527845,
+          "n_answered": 1652,
+          "chance": 0.24738738738738741,
+          "interval95_person_bootstrap": [
+            0.27489564698867025,
+            0.33520249221183795
+          ]
+        },
+        "bazi_only": {
+          "n_questions": 290,
+          "n_runs": 3,
+          "accuracy_mean": 0.27816091954022987,
+          "accuracy_sd_over_runs": 0.015506594900266719,
+          "accuracy_per_run": [
+            0.2655172413793103,
+            0.3,
+            0.2689655172413793
+          ],
+          "macro_average_over_years": 0.2585836385836386,
+          "by_year": {
+            "2014": 0.3,
+            "2015": 0.25333333333333335,
+            "2016": 0.3333333333333333,
+            "2017": 0.3111111111111111,
+            "2018": 0.37333333333333335,
+            "2019": 0.4266666666666667,
+            "2020": 0.2571428571428572,
+            "2021": 0.18333333333333335,
+            "2022": 0.06666666666666667,
+            "2023": 0.16666666666666666,
+            "2024": 0.13333333333333333,
+            "2025": 0.24,
+            "2026": 0.31666666666666665
+          },
+          "majority_vote": 0.29367816091954013,
+          "unanswered_rate": 0.004597701149425287,
+          "accuracy_among_answered": 0.279445727482679,
+          "n_answered": 866,
+          "chance": 0.24913793103448276,
+          "interval95_person_bootstrap": [
+            0.23482245131729665,
+            0.3229885057471264
+          ]
+        },
+        "official_key": {
+          "n_questions": 365,
+          "n_runs": 3,
+          "accuracy_mean": 0.3041095890410959,
+          "accuracy_sd_over_runs": 0.015658838538339954,
+          "accuracy_per_run": [
+            0.28493150684931506,
+            0.3232876712328767,
+            0.3041095890410959
+          ],
+          "macro_average_over_years": 0.31017416225749556,
+          "by_year": {
+            "2010": 0.40740740740740744,
+            "2011": 0.11111111111111112,
+            "2012": 0.39999999999999997,
+            "2013": 0.375,
+            "2015": 0.2857142857142857,
+            "2016": 0.40952380952380957,
+            "2018": 0.35833333333333334,
+            "2022": 0.27499999999999997,
+            "2023": 0.2333333333333333,
+            "2024": 0.31666666666666665,
+            "2025": 0.225,
+            "2026": 0.325
+          },
+          "majority_vote": 0.31187214611872127,
+          "unanswered_rate": 0.010958904109589041,
+          "accuracy_among_answered": 0.3074792243767313,
+          "n_answered": 1083,
+          "chance": 0.2467123287671233,
+          "interval95_person_bootstrap": [
+            0.2655971479500891,
+            0.34349030470914127
+          ]
+        },
+        "bazi_only_official_key": {
+          "n_questions": 160,
+          "n_runs": 3,
+          "accuracy_mean": 0.2625,
+          "accuracy_sd_over_runs": 0.045927932677184584,
+          "accuracy_per_run": [
+            0.20625,
+            0.31875,
+            0.2625
+          ],
+          "macro_average_over_years": 0.23541666666666666,
+          "by_year": {
+            "2015": 0.25333333333333335,
+            "2016": 0.3333333333333333,
+            "2018": 0.37333333333333335,
+            "2022": 0.06666666666666667,
+            "2023": 0.16666666666666666,
+            "2024": 0.13333333333333333,
+            "2025": 0.24,
+            "2026": 0.31666666666666665
+          },
+          "majority_vote": 0.28437500000000004,
+          "unanswered_rate": 0.008333333333333333,
+          "accuracy_among_answered": 0.2647058823529412,
+          "n_answered": 476,
+          "chance": 0.25,
+          "interval95_person_bootstrap": [
+            0.2033542976939203,
+            0.3210633946830266
+          ]
+        },
+        "paper_years_2021_2025": {
+          "n_questions": 200,
+          "n_runs": 3,
+          "accuracy_mean": 0.26666666666666666,
+          "accuracy_sd_over_runs": 0.02718251071716681,
+          "accuracy_per_run": [
+            0.23,
+            0.295,
+            0.275
+          ],
+          "macro_average_over_years": 0.26666666666666666,
+          "by_year": {
+            "2021": 0.2833333333333334,
+            "2022": 0.27499999999999997,
+            "2023": 0.2333333333333333,
+            "2024": 0.31666666666666665,
+            "2025": 0.225
+          },
+          "majority_vote": 0.2516666666666667,
+          "unanswered_rate": 0.008333333333333333,
+          "accuracy_among_answered": 0.2689075630252101,
+          "n_answered": 595,
+          "chance": 0.25,
+          "interval95_person_bootstrap": [
+            0.22222222222222224,
+            0.3128205128205128
+          ]
+        },
+        "truncated_rate": 0.005405405405405406,
+        "mean_completion_tokens": 52.676276276276276,
+        "checkable_statements": {
+          "n_claims": 1464,
+          "correct": 1019,
+          "rate": 0.6960382513661202
+        },
+        "by_category_full": {
+          "事业": {
+            "n": 204,
+            "accuracy": 0.29411764705882354
+          },
+          "健康灾厄": {
+            "n": 165,
+            "accuracy": 0.2787878787878788
+          },
+          "六亲家庭": {
+            "n": 219,
+            "accuracy": 0.3105022831050228
+          },
+          "其他": {
+            "n": 192,
+            "accuracy": 0.328125
+          },
+          "学业": {
+            "n": 123,
+            "accuracy": 0.2764227642276423
+          },
+          "性格外貌": {
+            "n": 84,
+            "accuracy": 0.35714285714285715
+          },
+          "感情婚姻": {
+            "n": 348,
+            "accuracy": 0.3017241379310345
+          },
+          "流年应期": {
+            "n": 231,
+            "accuracy": 0.2813852813852814
+          },
+          "财富": {
+            "n": 99,
+            "accuracy": 0.3838383838383838
+          }
+        }
+      },
+      "p2_tools": {
+        "full": {
+          "n_questions": 555,
+          "n_runs": 3,
+          "accuracy_mean": 0.31891891891891894,
+          "accuracy_sd_over_runs": 0.014187401574796057,
+          "accuracy_per_run": [
+            0.2990990990990991,
+            0.3261261261261261,
+            0.33153153153153153
+          ],
+          "macro_average_over_years": 0.309500466853408,
+          "by_year": {
+            "2010": 0.1111111111111111,
+            "2011": 0.24444444444444446,
+            "2012": 0.3333333333333333,
+            "2013": 0.375,
+            "2014": 0.3333333333333333,
+            "2015": 0.27619047619047615,
+            "2016": 0.39999999999999997,
+            "2017": 0.30476190476190473,
+            "2018": 0.3416666666666666,
+            "2019": 0.375,
+            "2020": 0.3,
+            "2021": 0.43333333333333335,
+            "2022": 0.225,
+            "2023": 0.31666666666666665,
+            "2024": 0.31666666666666665,
+            "2025": 0.24166666666666667,
+            "2026": 0.3333333333333333
+          },
+          "majority_vote": 0.32552552552552566,
+          "unanswered_rate": 0.01021021021021021,
+          "accuracy_among_answered": 0.32220873786407767,
+          "n_answered": 1648,
+          "chance": 0.24738738738738741,
+          "interval95_person_bootstrap": [
+            0.2921083627797409,
+            0.3458333333333333
+          ]
+        },
+        "bazi_only": {
+          "n_questions": 290,
+          "n_runs": 3,
+          "accuracy_mean": 0.31264367816091954,
+          "accuracy_sd_over_runs": 0.011721883939293763,
+          "accuracy_per_run": [
+            0.296551724137931,
+            0.32413793103448274,
+            0.31724137931034485
+          ],
+          "macro_average_over_years": 0.29992673992673996,
+          "by_year": {
+            "2014": 0.35000000000000003,
+            "2015": 0.24,
+            "2016": 0.3333333333333333,
+            "2017": 0.3111111111111111,
+            "2018": 0.3466666666666667,
+            "2019": 0.37333333333333335,
+            "2020": 0.2857142857142857,
+            "2021": 0.31666666666666665,
+            "2022": 0.06666666666666667,
+            "2023": 0.3,
+            "2024": 0.2888888888888889,
+            "2025": 0.25333333333333335,
+            "2026": 0.43333333333333335
+          },
+          "majority_vote": 0.310919540229885,
+          "unanswered_rate": 0.009195402298850575,
+          "accuracy_among_answered": 0.31554524361948955,
+          "n_answered": 862,
+          "chance": 0.24913793103448276,
+          "interval95_person_bootstrap": [
+            0.2768166089965398,
+            0.3489771359807461
+          ]
+        },
+        "official_key": {
+          "n_questions": 365,
+          "n_runs": 3,
+          "accuracy_mean": 0.302283105022831,
+          "accuracy_sd_over_runs": 0.02066430776070278,
+          "accuracy_per_run": [
+            0.2876712328767123,
+            0.2876712328767123,
+            0.3315068493150685
+          ],
+          "macro_average_over_years": 0.2929232804232804,
+          "by_year": {
+            "2010": 0.1111111111111111,
+            "2011": 0.24444444444444446,
+            "2012": 0.3333333333333333,
+            "2013": 0.375,
+            "2015": 0.27619047619047615,
+            "2016": 0.39999999999999997,
+            "2018": 0.3416666666666666,
+            "2022": 0.225,
+            "2023": 0.31666666666666665,
+            "2024": 0.31666666666666665,
+            "2025": 0.24166666666666667,
+            "2026": 0.3333333333333333
+          },
+          "majority_vote": 0.3082191780821916,
+          "unanswered_rate": 0.012785388127853882,
+          "accuracy_among_answered": 0.30619796484736356,
+          "n_answered": 1081,
+          "chance": 0.2467123287671233,
+          "interval95_person_bootstrap": [
+            0.27129629629629626,
+            0.3342342342342342
+          ]
+        },
+        "bazi_only_official_key": {
+          "n_questions": 160,
+          "n_runs": 3,
+          "accuracy_mean": 0.30416666666666664,
+          "accuracy_sd_over_runs": 0.023570226039551605,
+          "accuracy_per_run": [
+            0.2875,
+            0.2875,
+            0.3375
+          ],
+          "macro_average_over_years": 0.2827777777777778,
+          "by_year": {
+            "2015": 0.24,
+            "2016": 0.3333333333333333,
+            "2018": 0.3466666666666667,
+            "2022": 0.06666666666666667,
+            "2023": 0.3,
+            "2024": 0.2888888888888889,
+            "2025": 0.25333333333333335,
+            "2026": 0.43333333333333335
+          },
+          "majority_vote": 0.2958333333333334,
+          "unanswered_rate": 0.014583333333333334,
+          "accuracy_among_answered": 0.3086680761099366,
+          "n_answered": 473,
+          "chance": 0.25,
+          "interval95_person_bootstrap": [
+            0.25902335456475584,
+            0.34791666666666665
+          ]
+        },
+        "paper_years_2021_2025": {
+          "n_questions": 200,
+          "n_runs": 3,
+          "accuracy_mean": 0.30666666666666664,
+          "accuracy_sd_over_runs": 0.016996731711975962,
+          "accuracy_per_run": [
+            0.3,
+            0.29,
+            0.33
+          ],
+          "macro_average_over_years": 0.30666666666666664,
+          "by_year": {
+            "2021": 0.43333333333333335,
+            "2022": 0.225,
+            "2023": 0.31666666666666665,
+            "2024": 0.31666666666666665,
+            "2025": 0.24166666666666667
+          },
+          "majority_vote": 0.3016666666666668,
+          "unanswered_rate": 0.008333333333333333,
+          "accuracy_among_answered": 0.3092436974789916,
+          "n_answered": 595,
+          "chance": 0.25,
+          "interval95_person_bootstrap": [
+            0.26178861788617885,
+            0.3539518900343643
+          ]
+        },
+        "truncated_rate": 0.00960960960960961,
+        "mean_completion_tokens": 64.4960960960961,
+        "checkable_statements": {
+          "n_claims": 2823,
+          "correct": 2656,
+          "rate": 0.940843074743181
+        },
+        "by_category_full": {
+          "事业": {
+            "n": 204,
+            "accuracy": 0.28431372549019607
+          },
+          "健康灾厄": {
+            "n": 165,
+            "accuracy": 0.32727272727272727
+          },
+          "六亲家庭": {
+            "n": 219,
+            "accuracy": 0.3470319634703196
+          },
+          "其他": {
+            "n": 192,
+            "accuracy": 0.34375
+          },
+          "学业": {
+            "n": 123,
+            "accuracy": 0.2926829268292683
+          },
+          "性格外貌": {
+            "n": 84,
+            "accuracy": 0.4642857142857143
+          },
+          "感情婚姻": {
+            "n": 348,
+            "accuracy": 0.3045977011494253
+          },
+          "流年应期": {
+            "n": 231,
+            "accuracy": 0.3246753246753247
+          },
+          "财富": {
+            "n": 99,
+            "accuracy": 0.21212121212121213
+          }
+        }
+      },
+      "p3_no_tools": {
+        "full": {
+          "n_questions": 555,
+          "n_runs": 3,
+          "accuracy_mean": 0.2756756756756757,
+          "accuracy_sd_over_runs": 0.014034019754411906,
+          "accuracy_per_run": [
+            0.26666666666666666,
+            0.2648648648648649,
+            0.2954954954954955
+          ],
+          "macro_average_over_years": 0.27811624649859945,
+          "by_year": {
+            "2010": 0.3333333333333333,
+            "2011": 0.17777777777777778,
+            "2012": 0.35555555555555557,
+            "2013": 0.2708333333333333,
+            "2014": 0.27619047619047615,
+            "2015": 0.3238095238095238,
+            "2016": 0.30476190476190473,
+            "2017": 0.2857142857142857,
+            "2018": 0.26666666666666666,
+            "2019": 0.3333333333333333,
+            "2020": 0.25,
+            "2021": 0.27499999999999997,
+            "2022": 0.2333333333333333,
+            "2023": 0.2916666666666667,
+            "2024": 0.27499999999999997,
+            "2025": 0.26666666666666666,
+            "2026": 0.20833333333333334
+          },
+          "majority_vote": 0.28708708708708713,
+          "unanswered_rate": 0.06306306306306306,
+          "accuracy_among_answered": 0.29423076923076924,
+          "n_answered": 1560,
+          "chance": 0.24738738738738741,
+          "interval95_person_bootstrap": [
+            0.2495446265938069,
+            0.30324909747292417
+          ]
+        },
+        "bazi_only": {
+          "n_questions": 290,
+          "n_runs": 3,
+          "accuracy_mean": 0.2632183908045977,
+          "accuracy_sd_over_runs": 0.018101167526463933,
+          "accuracy_per_run": [
+            0.23793103448275862,
+            0.2793103448275862,
+            0.27241379310344827
+          ],
+          "macro_average_over_years": 0.25673992673992674,
+          "by_year": {
+            "2014": 0.2833333333333333,
+            "2015": 0.26666666666666666,
+            "2016": 0.26666666666666666,
+            "2017": 0.2333333333333333,
+            "2018": 0.3066666666666667,
+            "2019": 0.3866666666666667,
+            "2020": 0.24761904761904763,
+            "2021": 0.2833333333333333,
+            "2022": 0.20000000000000004,
+            "2023": 0.3,
+            "2024": 0.13333333333333333,
+            "2025": 0.21333333333333335,
+            "2026": 0.21666666666666667
+          },
+          "majority_vote": 0.27471264367816084,
+          "unanswered_rate": 0.06666666666666667,
+          "accuracy_among_answered": 0.28201970443349755,
+          "n_answered": 812,
+          "chance": 0.24913793103448276,
+          "interval95_person_bootstrap": [
+            0.22824858757062144,
+            0.30081300813008127
+          ]
+        },
+        "official_key": {
+          "n_questions": 365,
+          "n_runs": 3,
+          "accuracy_mean": 0.27123287671232876,
+          "accuracy_sd_over_runs": 0.016888805487586225,
+          "accuracy_per_run": [
+            0.273972602739726,
+            0.2493150684931507,
+            0.29041095890410956
+          ],
+          "macro_average_over_years": 0.2756448412698413,
+          "by_year": {
+            "2010": 0.3333333333333333,
+            "2011": 0.17777777777777778,
+            "2012": 0.35555555555555557,
+            "2013": 0.2708333333333333,
+            "2015": 0.3238095238095238,
+            "2016": 0.30476190476190473,
+            "2018": 0.26666666666666666,
+            "2022": 0.2333333333333333,
+            "2023": 0.2916666666666667,
+            "2024": 0.27499999999999997,
+            "2025": 0.26666666666666666,
+            "2026": 0.20833333333333334
+          },
+          "majority_vote": 0.2853881278538811,
+          "unanswered_rate": 0.07123287671232877,
+          "accuracy_among_answered": 0.2920353982300885,
+          "n_answered": 1017,
+          "chance": 0.2467123287671233,
+          "interval95_person_bootstrap": [
+            0.2387511478420569,
+            0.3053949903660886
+          ]
+        },
+        "bazi_only_official_key": {
+          "n_questions": 160,
+          "n_runs": 3,
+          "accuracy_mean": 0.24791666666666665,
+          "accuracy_sd_over_runs": 0.02124591463996993,
+          "accuracy_per_run": [
+            0.21875,
+            0.26875,
+            0.25625
+          ],
+          "macro_average_over_years": 0.23791666666666667,
+          "by_year": {
+            "2015": 0.26666666666666666,
+            "2016": 0.26666666666666666,
+            "2018": 0.3066666666666667,
+            "2022": 0.20000000000000004,
+            "2023": 0.3,
+            "2024": 0.13333333333333333,
+            "2025": 0.21333333333333335,
+            "2026": 0.21666666666666667
+          },
+          "majority_vote": 0.2666666666666667,
+          "unanswered_rate": 0.07291666666666667,
+          "accuracy_among_answered": 0.26741573033707866,
+          "n_answered": 445,
+          "chance": 0.25,
+          "interval95_person_bootstrap": [
+            0.20496894409937888,
+            0.29292929292929293
+          ]
+        },
+        "paper_years_2021_2025": {
+          "n_questions": 200,
+          "n_runs": 3,
+          "accuracy_mean": 0.2683333333333333,
+          "accuracy_sd_over_runs": 0.019293061504650367,
+          "accuracy_per_run": [
+            0.26,
+            0.25,
+            0.295
+          ],
+          "macro_average_over_years": 0.2683333333333333,
+          "by_year": {
+            "2021": 0.27499999999999997,
+            "2022": 0.2333333333333333,
+            "2023": 0.2916666666666667,
+            "2024": 0.27499999999999997,
+            "2025": 0.26666666666666666
+          },
+          "majority_vote": 0.2633333333333334,
+          "unanswered_rate": 0.06333333333333334,
+          "accuracy_among_answered": 0.28647686832740216,
+          "n_answered": 562,
+          "chance": 0.25,
+          "interval95_person_bootstrap": [
+            0.2255892255892256,
+            0.31198686371100165
+          ]
+        },
+        "truncated_rate": 0.05285285285285285,
+        "mean_completion_tokens": 162.42702702702704,
+        "checkable_statements": {
+          "n_claims": 5278,
+          "correct": 3810,
+          "rate": 0.7218643425539977
+        },
+        "by_category_full": {
+          "事业": {
+            "n": 204,
+            "accuracy": 0.2549019607843137
+          },
+          "健康灾厄": {
+            "n": 165,
+            "accuracy": 0.2545454545454545
+          },
+          "六亲家庭": {
+            "n": 219,
+            "accuracy": 0.2557077625570776
+          },
+          "其他": {
+            "n": 192,
+            "accuracy": 0.3645833333333333
+          },
+          "学业": {
+            "n": 123,
+            "accuracy": 0.21951219512195122
+          },
+          "性格外貌": {
+            "n": 84,
+            "accuracy": 0.2976190476190476
+          },
+          "感情婚姻": {
+            "n": 348,
+            "accuracy": 0.2557471264367816
+          },
+          "流年应期": {
+            "n": 231,
+            "accuracy": 0.2727272727272727
+          },
+          "财富": {
+            "n": 99,
+            "accuracy": 0.35353535353535354
+          }
+        }
+      },
+      "p3_tools": {
+        "full": {
+          "n_questions": 555,
+          "n_runs": 3,
+          "accuracy_mean": 0.3009009009009009,
+          "accuracy_sd_over_runs": 0.012042004598056124,
+          "accuracy_per_run": [
+            0.3045045045045045,
+            0.28468468468468466,
+            0.31351351351351353
+          ],
+          "macro_average_over_years": 0.305026455026455,
+          "by_year": {
+            "2010": 0.25925925925925924,
+            "2011": 0.17777777777777778,
+            "2012": 0.5555555555555555,
+            "2013": 0.375,
+            "2014": 0.15238095238095237,
+            "2015": 0.28571428571428575,
+            "2016": 0.27619047619047615,
+            "2017": 0.29523809523809524,
+            "2018": 0.2833333333333333,
+            "2019": 0.3666666666666667,
+            "2020": 0.3,
+            "2021": 0.2916666666666667,
+            "2022": 0.24166666666666667,
+            "2023": 0.3333333333333333,
+            "2024": 0.31666666666666665,
+            "2025": 0.375,
+            "2026": 0.3
+          },
+          "majority_vote": 0.33663663663663673,
+          "unanswered_rate": 0.07027027027027027,
+          "accuracy_among_answered": 0.3236434108527132,
+          "n_answered": 1548,
+          "chance": 0.24738738738738741,
+          "interval95_person_bootstrap": [
+            0.27230046948356806,
+            0.3309134906231095
+          ]
+        },
+        "bazi_only": {
+          "n_questions": 290,
+          "n_runs": 3,
+          "accuracy_mean": 0.27816091954022987,
+          "accuracy_sd_over_runs": 0.021318663208036104,
+          "accuracy_per_run": [
+            0.2896551724137931,
+            0.2482758620689655,
+            0.296551724137931
+          ],
+          "macro_average_over_years": 0.2696459096459096,
+          "by_year": {
+            "2014": 0.18333333333333335,
+            "2015": 0.21333333333333335,
+            "2016": 0.25333333333333335,
+            "2017": 0.25555555555555554,
+            "2018": 0.30666666666666664,
+            "2019": 0.3333333333333333,
+            "2020": 0.3142857142857143,
+            "2021": 0.3,
+            "2022": 0.20000000000000004,
+            "2023": 0.35000000000000003,
+            "2024": 0.15555555555555556,
+            "2025": 0.3066666666666667,
+            "2026": 0.3333333333333333
+          },
+          "majority_vote": 0.3120689655172413,
+          "unanswered_rate": 0.06436781609195402,
+          "accuracy_among_answered": 0.2972972972972973,
+          "n_answered": 814,
+          "chance": 0.24913793103448276,
+          "interval95_person_bootstrap": [
+            0.2427536231884058,
+            0.3131991051454139
+          ]
+        },
+        "official_key": {
+          "n_questions": 365,
+          "n_runs": 3,
+          "accuracy_mean": 0.3095890410958904,
+          "accuracy_sd_over_runs": 0.011836969312160469,
+          "accuracy_per_run": [
+            0.32054794520547947,
+            0.29315068493150687,
+            0.3150684931506849
+          ],
+          "macro_average_over_years": 0.31495811287477954,
+          "by_year": {
+            "2010": 0.25925925925925924,
+            "2011": 0.17777777777777778,
+            "2012": 0.5555555555555555,
+            "2013": 0.375,
+            "2015": 0.28571428571428575,
+            "2016": 0.27619047619047615,
+            "2018": 0.2833333333333333,
+            "2022": 0.24166666666666667,
+            "2023": 0.3333333333333333,
+            "2024": 0.31666666666666665,
+            "2025": 0.375,
+            "2026": 0.3
+          },
+          "majority_vote": 0.3534246575342464,
+          "unanswered_rate": 0.07397260273972603,
+          "accuracy_among_answered": 0.3343195266272189,
+          "n_answered": 1014,
+          "chance": 0.2467123287671233,
+          "interval95_person_bootstrap": [
+            0.2717391304347826,
+            0.3485663082437276
+          ]
+        },
+        "bazi_only_official_key": {
+          "n_questions": 160,
+          "n_runs": 3,
+          "accuracy_mean": 0.27499999999999997,
+          "accuracy_sd_over_runs": 0.015309310892394876,
+          "accuracy_per_run": [
+            0.29375,
+            0.25625,
+            0.275
+          ],
+          "macro_average_over_years": 0.2648611111111111,
+          "by_year": {
+            "2015": 0.21333333333333335,
+            "2016": 0.25333333333333335,
+            "2018": 0.30666666666666664,
+            "2022": 0.20000000000000004,
+            "2023": 0.35000000000000003,
+            "2024": 0.15555555555555556,
+            "2025": 0.3066666666666667,
+            "2026": 0.3333333333333333
+          },
+          "majority_vote": 0.3166666666666667,
+          "unanswered_rate": 0.06875,
+          "accuracy_among_answered": 0.2953020134228188,
+          "n_answered": 447,
+          "chance": 0.25,
+          "interval95_person_bootstrap": [
+            0.2249488752556237,
+            0.3270042194092827
+          ]
+        },
+        "paper_years_2021_2025": {
+          "n_questions": 200,
+          "n_runs": 3,
+          "accuracy_mean": 0.3116666666666667,
+          "accuracy_sd_over_runs": 0.03472111109333275,
+          "accuracy_per_run": [
+            0.36,
+            0.295,
+            0.28
+          ],
+          "macro_average_over_years": 0.31166666666666665,
+          "by_year": {
+            "2021": 0.2916666666666667,
+            "2022": 0.24166666666666667,
+            "2023": 0.3333333333333333,
+            "2024": 0.31666666666666665,
+            "2025": 0.375
+          },
+          "majority_vote": 0.35166666666666674,
+          "unanswered_rate": 0.06666666666666667,
+          "accuracy_among_answered": 0.3339285714285714,
+          "n_answered": 560,
+          "chance": 0.25,
+          "interval95_person_bootstrap": [
+            0.26436781609195403,
+            0.35871404399323176
+          ]
+        },
+        "truncated_rate": 0.06306306306306306,
+        "mean_completion_tokens": 179.9123123123123,
+        "checkable_statements": {
+          "n_claims": 6260,
+          "correct": 6000,
+          "rate": 0.9584664536741214
+        },
+        "by_category_full": {
+          "事业": {
+            "n": 204,
+            "accuracy": 0.28431372549019607
+          },
+          "健康灾厄": {
+            "n": 165,
+            "accuracy": 0.2606060606060606
+          },
+          "六亲家庭": {
+            "n": 219,
+            "accuracy": 0.2876712328767123
+          },
+          "其他": {
+            "n": 192,
+            "accuracy": 0.3333333333333333
+          },
+          "学业": {
+            "n": 123,
+            "accuracy": 0.23577235772357724
+          },
+          "性格外貌": {
+            "n": 84,
+            "accuracy": 0.42857142857142855
+          },
+          "感情婚姻": {
+            "n": 348,
+            "accuracy": 0.31896551724137934
+          },
+          "流年应期": {
+            "n": 231,
+            "accuracy": 0.2987012987012987
+          },
+          "财富": {
+            "n": 99,
+            "accuracy": 0.2828282828282828
+          }
+        }
+      }
+    },
+    "comparisons": {
+      "p3_no_tools_minus_p2_no_tools": {
+        "effect_of": "Phase 3 training beyond Phase 2 (no_tools)",
+        "full": {
+          "n_persons": 117,
+          "n_questions": 555,
+          "difference": -0.030030030030030033,
+          "interval95": [
+            -0.06459475929311397,
+            0.0037105751391465626
+          ],
+          "resampling_unit": "person (chart)"
+        },
+        "bazi_only": {
+          "n_persons": 62,
+          "n_questions": 290,
+          "difference": -0.014942528735632185,
+          "interval95": [
+            -0.06122448979591835,
+            0.030821917808219173
+          ],
+          "resampling_unit": "person (chart)"
+        },
+        "official_key": {
+          "n_persons": 76,
+          "n_questions": 365,
+          "difference": -0.03287671232876712,
+          "interval95": [
+            -0.07262569832402235,
+            0.006205673758865246
+          ],
+          "resampling_unit": "person (chart)"
+        },
+        "bazi_only_official_key": {
+          "n_persons": 33,
+          "n_questions": 160,
+          "difference": -0.014583333333333328,
+          "interval95": [
+            -0.06748466257668712,
+            0.03909465020576132
+          ],
+          "resampling_unit": "person (chart)"
+        },
+        "paper_years_2021_2025": {
+          "n_persons": 41,
+          "n_questions": 200,
+          "difference": 0.0016666666666666635,
+          "interval95": [
+            -0.043551088777219436,
+            0.04666666666666666
+          ],
+          "resampling_unit": "person (chart)"
+        }
+      },
+      "p3_no_tools_minus_base_no_tools": {
+        "effect_of": "Phase 2 and 3 training together (no_tools)",
+        "full": {
+          "n_persons": 117,
+          "n_questions": 555,
+          "difference": 0.01981981981981981,
+          "interval95": [
+            -0.026155717761557187,
+            0.06268836648583484
+          ],
+          "resampling_unit": "person (chart)"
+        },
+        "bazi_only": {
+          "n_persons": 62,
+          "n_questions": 290,
+          "difference": -0.01609195402298852,
+          "interval95": [
+            -0.07789232531500574,
+            0.04137931034482757
+          ],
+          "resampling_unit": "person (chart)"
+        },
+        "official_key": {
+          "n_persons": 76,
+          "n_questions": 365,
+          "difference": 0.01095890410958903,
+          "interval95": [
+            -0.04312668463611861,
+            0.06375227686703096
+          ],
+          "resampling_unit": "person (chart)"
+        },
+        "bazi_only_official_key": {
+          "n_persons": 33,
+          "n_questions": 160,
+          "difference": -0.05833333333333335,
+          "interval95": [
+            -0.13815789473684212,
+            0.018518518518518507
+          ],
+          "resampling_unit": "person (chart)"
+        },
+        "paper_years_2021_2025": {
+          "n_persons": 41,
+          "n_questions": 200,
+          "difference": 0.008333333333333323,
+          "interval95": [
+            -0.05782312925170069,
+            0.07370184254606364
+          ],
+          "resampling_unit": "person (chart)"
+        }
+      },
+      "p2_no_tools_minus_base_no_tools": {
+        "effect_of": "Phase 2 training (no_tools)",
+        "full": {
+          "n_persons": 117,
+          "n_questions": 555,
+          "difference": 0.04984984984984984,
+          "interval95": [
+            0.007339449541284394,
+            0.0905861456483126
+          ],
+          "resampling_unit": "person (chart)"
+        },
+        "bazi_only": {
+          "n_persons": 62,
+          "n_questions": 290,
+          "difference": -0.0011494252873563324,
+          "interval95": [
+            -0.06424242424242425,
+            0.056306306306306286
+          ],
+          "resampling_unit": "person (chart)"
+        },
+        "official_key": {
+          "n_persons": 76,
+          "n_questions": 365,
+          "difference": 0.04383561643835615,
+          "interval95": [
+            -0.009990917347865594,
+            0.09613656783468104
+          ],
+          "resampling_unit": "person (chart)"
+        },
+        "bazi_only_official_key": {
+          "n_persons": 33,
+          "n_questions": 160,
+          "difference": -0.04375000000000001,
+          "interval95": [
+            -0.12708333333333335,
+            0.03333333333333332
+          ],
+          "resampling_unit": "person (chart)"
+        },
+        "paper_years_2021_2025": {
+          "n_persons": 41,
+          "n_questions": 200,
+          "difference": 0.006666666666666657,
+          "interval95": [
+            -0.06397306397306397,
+            0.07666666666666666
+          ],
+          "resampling_unit": "person (chart)"
+        }
+      },
+      "p3_tools_minus_p2_tools": {
+        "effect_of": "Phase 3 training beyond Phase 2 (tools)",
+        "full": {
+          "n_persons": 117,
+          "n_questions": 555,
+          "difference": -0.018018018018018018,
+          "interval95": [
+            -0.05476190476190476,
+            0.01801801801801802
+          ],
+          "resampling_unit": "person (chart)"
+        },
+        "bazi_only": {
+          "n_persons": 62,
+          "n_questions": 290,
+          "difference": -0.034482758620689655,
+          "interval95": [
+            -0.07673860911270984,
+            0.007936507936507938
+          ],
+          "resampling_unit": "person (chart)"
+        },
+        "official_key": {
+          "n_persons": 76,
+          "n_questions": 365,
+          "difference": 0.0073059360730593605,
+          "interval95": [
+            -0.03713768115942029,
+            0.052968036529680365
+          ],
+          "resampling_unit": "person (chart)"
+        },
+        "bazi_only_official_key": {
+          "n_persons": 33,
+          "n_questions": 160,
+          "difference": -0.029166666666666667,
+          "interval95": [
+            -0.08227848101265822,
+            0.027083333333333327
+          ],
+          "resampling_unit": "person (chart)"
+        },
+        "paper_years_2021_2025": {
+          "n_persons": 41,
+          "n_questions": 200,
+          "difference": 0.005000000000000002,
+          "interval95": [
+            -0.06429780033840947,
+            0.0726072607260726
+          ],
+          "resampling_unit": "person (chart)"
+        }
+      },
+      "p3_tools_minus_base_tools": {
+        "effect_of": "Phase 2 and 3 training together (tools)",
+        "full": {
+          "n_persons": 117,
+          "n_questions": 555,
+          "difference": -0.010810810810810817,
+          "interval95": [
+            -0.051558752997601924,
+            0.031063321385902024
+          ],
+          "resampling_unit": "person (chart)"
+        },
+        "bazi_only": {
+          "n_persons": 62,
+          "n_questions": 290,
+          "difference": -0.03563218390804598,
+          "interval95": [
+            -0.08503401360544217,
+            0.014254385964912271
+          ],
+          "resampling_unit": "person (chart)"
+        },
+        "official_key": {
+          "n_persons": 76,
+          "n_questions": 365,
+          "difference": -6.995925908596877e-18,
+          "interval95": [
+            -0.05114155251141553,
+            0.05106778087279479
+          ],
+          "resampling_unit": "person (chart)"
+        },
+        "bazi_only_official_key": {
+          "n_persons": 33,
+          "n_questions": 160,
+          "difference": -0.05000000000000001,
+          "interval95": [
+            -0.11515151515151516,
+            0.01458333333333332
+          ],
+          "resampling_unit": "person (chart)"
+        },
+        "paper_years_2021_2025": {
+          "n_persons": 41,
+          "n_questions": 200,
+          "difference": -0.0033333333333333435,
+          "interval95": [
+            -0.07035175879396986,
+            0.06565656565656565
+          ],
+          "resampling_unit": "person (chart)"
+        }
+      },
+      "p2_tools_minus_base_tools": {
+        "effect_of": "Phase 2 training (tools)",
+        "full": {
+          "n_persons": 117,
+          "n_questions": 555,
+          "difference": 0.0072072072072071995,
+          "interval95": [
+            -0.031158142269253383,
+            0.04480286738351253
+          ],
+          "resampling_unit": "person (chart)"
+        },
+        "bazi_only": {
+          "n_persons": 62,
+          "n_questions": 290,
+          "difference": -0.00114942528735633,
+          "interval95": [
+            -0.0516273849607183,
+            0.04848484848484847
+          ],
+          "resampling_unit": "person (chart)"
+        },
+        "official_key": {
+          "n_persons": 76,
+          "n_questions": 365,
+          "difference": -0.00730593607305937,
+          "interval95": [
+            -0.05660377358490567,
+            0.03853046594982078
+          ],
+          "resampling_unit": "person (chart)"
+        },
+        "bazi_only_official_key": {
+          "n_persons": 33,
+          "n_questions": 160,
+          "difference": -0.020833333333333346,
+          "interval95": [
+            -0.08793456032719837,
+            0.03870967741935482
+          ],
+          "resampling_unit": "person (chart)"
+        },
+        "paper_years_2021_2025": {
+          "n_persons": 41,
+          "n_questions": 200,
+          "difference": -0.008333333333333347,
+          "interval95": [
+            -0.07666666666666667,
+            0.059523809523809514
+          ],
+          "resampling_unit": "person (chart)"
+        }
+      },
+      "base_tools_minus_base_no_tools": {
+        "effect_of": "verified chart tool, base model",
+        "full": {
+          "n_persons": 117,
+          "n_questions": 555,
+          "difference": 0.05585585585585585,
+          "interval95": [
+            0.014625228519195616,
+            0.09689213893967093
+          ],
+          "resampling_unit": "person (chart)"
+        },
+        "bazi_only": {
+          "n_persons": 62,
+          "n_questions": 290,
+          "difference": 0.034482758620689655,
+          "interval95": [
+            -0.021660649819494587,
+            0.09059233449477352
+          ],
+          "resampling_unit": "person (chart)"
+        },
+        "official_key": {
+          "n_persons": 76,
+          "n_questions": 365,
+          "difference": 0.049315068493150684,
+          "interval95": [
+            -7.143526163807978e-18,
+            0.1002710027100271
+          ],
+          "resampling_unit": "person (chart)"
+        },
+        "bazi_only_official_key": {
+          "n_persons": 33,
+          "n_questions": 160,
+          "difference": 0.018749999999999996,
+          "interval95": [
+            -0.050955414012738856,
+            0.0875
+          ],
+          "resampling_unit": "person (chart)"
+        },
+        "paper_years_2021_2025": {
+          "n_persons": 41,
+          "n_questions": 200,
+          "difference": 0.055,
+          "interval95": [
+            -0.010050251256281405,
+            0.12195121951219512
+          ],
+          "resampling_unit": "person (chart)"
+        }
+      },
+      "p2_tools_minus_p2_no_tools": {
+        "effect_of": "verified chart tool, p2 model",
+        "full": {
+          "n_persons": 117,
+          "n_questions": 555,
+          "difference": 0.013213213213213212,
+          "interval95": [
+            -0.014760147601476014,
+            0.040492957746478875
+          ],
+          "resampling_unit": "person (chart)"
+        },
+        "bazi_only": {
+          "n_persons": 62,
+          "n_questions": 290,
+          "difference": 0.034482758620689655,
+          "interval95": [
+            -0.0035211267605633795,
+            0.07394766780432309
+          ],
+          "resampling_unit": "person (chart)"
+        },
+        "official_key": {
+          "n_persons": 76,
+          "n_questions": 365,
+          "difference": -0.0018264840182648397,
+          "interval95": [
+            -0.03755868544600939,
+            0.032497678737233054
+          ],
+          "resampling_unit": "person (chart)"
+        },
+        "bazi_only_official_key": {
+          "n_persons": 33,
+          "n_questions": 160,
+          "difference": 0.04166666666666667,
+          "interval95": [
+            -0.006172839506172837,
+            0.09071729957805906
+          ],
+          "resampling_unit": "person (chart)"
+        },
+        "paper_years_2021_2025": {
+          "n_persons": 41,
+          "n_questions": 200,
+          "difference": 0.039999999999999994,
+          "interval95": [
+            -0.01155115511551155,
+            0.09195402298850573
+          ],
+          "resampling_unit": "person (chart)"
+        }
+      },
+      "p3_tools_minus_p3_no_tools": {
+        "effect_of": "verified chart tool, p3 model",
+        "full": {
+          "n_persons": 117,
+          "n_questions": 555,
+          "difference": 0.025225225225225224,
+          "interval95": [
+            -0.004204204204204207,
+            0.05366726296958855
+          ],
+          "resampling_unit": "person (chart)"
+        },
+        "bazi_only": {
+          "n_persons": 62,
+          "n_questions": 290,
+          "difference": 0.014942528735632184,
+          "interval95": [
+            -0.024526198439241923,
+            0.053003533568904596
+          ],
+          "resampling_unit": "person (chart)"
+        },
+        "official_key": {
+          "n_persons": 76,
+          "n_questions": 365,
+          "difference": 0.038356164383561646,
+          "interval95": [
+            0.007266121707538601,
+            0.07037037037037036
+          ],
+          "resampling_unit": "person (chart)"
+        },
+        "bazi_only_official_key": {
+          "n_persons": 33,
+          "n_questions": 160,
+          "difference": 0.02708333333333333,
+          "interval95": [
+            -0.01742919389978213,
+            0.07083333333333333
+          ],
+          "resampling_unit": "person (chart)"
+        },
+        "paper_years_2021_2025": {
+          "n_persons": 41,
+          "n_questions": 200,
+          "difference": 0.04333333333333334,
+          "interval95": [
+            0.003350083752093806,
+            0.0846286701208981
+          ],
+          "resampling_unit": "person (chart)"
+        }
+      }
+    },
+    "human_comparison": {
+      "base_no_tools": {
+        "mean_model": 0.24649470899470902,
+        "mean_champion": 0.553670634920635
+      },
+      "base_tools": {
+        "mean_model": 0.2912037037037037,
+        "mean_champion": 0.553670634920635
+      },
+      "p2_no_tools": {
+        "mean_model": 0.3150352733686067,
+        "mean_champion": 0.553670634920635
+      },
+      "p2_tools": {
+        "mean_model": 0.2977843915343915,
+        "mean_champion": 0.553670634920635
+      },
+      "p3_no_tools": {
+        "mean_model": 0.2794642857142857,
+        "mean_champion": 0.553670634920635
+      },
+      "p3_tools": {
+        "mean_model": 0.3080136684303351,
+        "mean_champion": 0.553670634920635
+      }
+    },
+    "self_derived_charts": {
+      "base": {
+        "persons": 117,
+        "verified_chart_available": 116,
+        "gave_a_chart": 0,
+        "exact_four_pillars": 0,
+        "wrong_chart_shown_to_itself": 0
+      },
+      "p2": {
+        "persons": 117,
+        "verified_chart_available": 116,
+        "gave_a_chart": 102,
+        "exact_four_pillars": 80,
+        "wrong_chart_shown_to_itself": 22
+      },
+      "p3": {
+        "persons": 117,
+        "verified_chart_available": 116,
+        "gave_a_chart": 100,
+        "exact_four_pillars": 77,
+        "wrong_chart_shown_to_itself": 23
+      }
+    }
+  }
+}

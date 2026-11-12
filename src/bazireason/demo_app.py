@@ -433,14 +433,14 @@ def chat_messages(birth, history, message, compare=None):
             if chart and later != "followup"
             else None
         )
+        # A later turn keeps its own format: re-check, prediction request or rule question.
+        later_kind = later if later in ("followup", "policy") else "rule"
         if planned:
             turns[index]["content"] = demo_deep.turn_text(planned, chart, False)
         else:
-            turns[index]["content"] += (
-                "\n" + OUTPUT_HINTS["followup" if later == "followup" else "rule"]
-            )
+            turns[index]["content"] += "\n" + OUTPUT_HINTS[later_kind]
         if index == len(turns) - 1:
-            kind = planned["kind"] if planned else "followup" if later == "followup" else "rule"
+            kind = planned["kind"] if planned else later_kind
     return [{"role": "system", "content": P2_SYSTEM}, *turns], kind
 
 

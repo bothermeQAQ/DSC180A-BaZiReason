@@ -494,6 +494,13 @@ def test_demo_routes_questions_to_trained_formats_and_never_predicts():
     for question in ("我什么时候会结婚？", "我明年会不会发财？", "2030年能不能升职"):
         assert X.plan(question, chart, today=2026) is None
         assert A.chat_messages(birth, [], question)[1] == "policy"
+    # A prediction request in a later turn keeps the declining format.
+    history = [
+        {"role": "user", "content": "日主强弱怎么数？"},
+        {"role": "assistant", "content": "…"},
+    ]
+    messages, kind = A.chat_messages(birth, history, "我什么时候会结婚？")
+    assert kind == "policy" and messages[-1]["content"].endswith(A.OUTPUT_HINTS["policy"])
     # Without a gender the marriage stars cannot be chosen, and no chart means no plan.
     nogender = A.chart_payload(dict(birth, gender=None))["chart"]
     assert X.plan("传统上怎么看婚姻方面？", nogender)["reference"]["needs"] == ["gender"]

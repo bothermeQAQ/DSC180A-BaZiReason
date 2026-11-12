@@ -1,0 +1,21 @@
+{
+  "status": "complete",
+  "dataset": "data/phase3/train_v1/test.jsonl",
+  "dataset_sha256": "b1488b7d70e4595b2f16611e0c9ab0a19936f1a242e166e8478d149e1f6d2792",
+  "n_rows": 801,
+  "model": "base",
+  "model_path": "models/qwen3-4b-instruct-2507-mlx-4bit",
+  "model_weights_sha256": "2a73c6c248601ab904e035548abd8e6abb65ea27dcb5f342fb0a8910eb44173f",
+  "adapter_path": null,
+  "adapter_sha256": null,
+  "temperature": 0,
+  "max_tokens": 800,
+  "enable_thinking": false,
+  "wall_seconds": 2698.0,
+  "generation_totals": {
+    "prompt_tokens": 180012,
+    "completion_tokens": 427781,
+    "seconds": 2696.73,
+    "peak_memory_gb": 10.7
+  }
+}

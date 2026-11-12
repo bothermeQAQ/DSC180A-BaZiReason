@@ -1,0 +1,52 @@
+{
+  "run_name": "bazireason-qwen3-4b-lora-p3-r2",
+  "config_file": "configs/phase3/qwen3_4b_lora_p3_r2.yaml",
+  "config_sha256": "997586fb5714ae017095bdcf8b398d81bfe622e798facfbb932831fe9a54eeb3",
+  "init_adapter": "artifacts/adapters/bazireason-qwen3-4b-lora-p3-r1/adapters.safetensors",
+  "init_adapter_sha256": "7826a6b4216176e5e18723cdcc66e18743d07b5030b769e2cc9d24072887b062",
+  "train_file_sha256": "442846af6026298456626c559b9a1134fdb8819af0463fc454bd4788fa52c34b",
+  "valid_file_sha256": "ff5c015d174ab899be4aca592ceca3f41530610bd69e6f3312f8293b34e485af",
+  "train_rows": 4122,
+  "valid_rows_for_selection": 120,
+  "train_sequence_tokens_per_epoch": 3208346,
+  "iterations": 2061,
+  "start_iteration": 0,
+  "batch_size": 2,
+  "grad_accumulation_steps": 2,
+  "optimizer_updates": 1030,
+  "trainable_parameters": 14680064,
+  "stored_array_elements": 643356160,
+  "note_parameters": "stored_array_elements counts packed 4-bit arrays, not the 4.02e9 base parameters; trainable_parameters is the exact LoRA size.",
+  "software": {
+    "mlx": "0.32.4",
+    "mlx_lm": "0.32.2"
+  },
+  "duration_seconds": 7188.1,
+  "final_train_loss": 0.000864059547893703,
+  "validation_loss_by_iteration": {
+    "0": 0.5277326703071594,
+    "500": 0.025572579354047775,
+    "1000": 0.017159078270196915,
+    "1500": 0.013747354969382286,
+    "2000": 0.012708805501461029,
+    "2061": 0.01261276938021183
+  },
+  "initial_validation_loss": 0.5277326703071594,
+  "initial_weights": "warm start from init_adapter",
+  "selected_checkpoint_iteration": 2061,
+  "selected_validation_loss": 0.01261276938021183,
+  "selected_adapter": "artifacts/adapters/bazireason-qwen3-4b-lora-p3-r2/adapters.safetensors",
+  "selected_adapter_sha256": "2fa6fb7b94f411c443fbc2b7f081dc84980f95c344fc6de96024151f29747a31",
+  "peak_memory_gb": 20.637672912,
+  "loss_tokens_total": 945680,
+  "sequence_tokens_processed": 3208346,
+  "checkpoints": [
+    "0000500_adapters.safetensors",
+    "0001000_adapters.safetensors",
+    "0001500_adapters.safetensors",
+    "0002000_adapters.safetensors",
+    "0002061_adapters.safetensors"
+  ],
+  "resumed_from_iteration": null,
+  "resume_note": null
+}
