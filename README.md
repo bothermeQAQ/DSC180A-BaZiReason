@@ -36,6 +36,29 @@ Headline results (untuned model → fine-tuned model, identical prompts):
 
 The demo shows the engine's chart, lets a tester switch between the untuned and the fine-tuned model, and checks each model reply against the engine. Adapter weights are not in Git; see the training guide for how to rebuild or share them.
 
+## Phase 3 (branch `phase3/deep-reasoning`): traditional rule reasoning
+
+**Status, 12 November 2026.** Phase 3 continues from the Phase 2 adapter. It teaches the model to apply traditional rules (Ten Gods, strength, pattern, 用神 by a named school, branch relations, flow years, stars, areas of life) step by step. It also teaches the model to check statements and to say when a question has no unique answer. Phase 1 and Phase 2 files and adapters are unchanged.
+
+| | |
+|---|---|
+| Rules | 12 new sourced rule cards with 20 quotations checked against zh.wikisource ([`data/phase3/`](data/phase3/README.md)) |
+| Training | three LoRA rounds, each starting from the previous adapter. Round 2 was selected by a rule fixed in advance; round 3, a corrective round, did not beat it on the validation sets |
+| Results | [`results/phase3/RESULTS.md`](results/phase3/RESULTS.md); narrative and tradeoffs in the [progress report](docs/phase3_progress_report.md) |
+| How to run | [`docs/phase3_training.md`](docs/phase3_training.md) |
+
+Headline results (held-out years, identical prompts, real local inference):
+
+- **Rule reasoning, Phase 3 test split (621 items):** untuned 6.0%, Phase 2 15.8%, Phase 3 66.7%. Phase 3 minus Phase 2 is +50.9 points [46.7, 55.1].
+- **Questions without a unique answer:** a definite answer to 4 of 32 such questions, down from 11 of 32 for Phase 2. None of the 22 paired questions that do have an answer was declined.
+- **One-pass check of a wrong tool answer (strict JSON):** still weak. Phase 3 corrected 11 of 150 wrong answers, Phase 2 corrected 4. On benchmark_v3, Phase 3 follows 96.7% of corrupted answers.
+- **BaziQA contest questions:** no gain over Phase 2. With verified charts, Phase 3 scores 30.1% and Phase 2 31.9%; the difference is −1.8 points [−5.5, +1.8].
+- **Regression:** calendar computation got worse. On the two Phase 2 test splits, calendar rows are 4.4 and 7.2 points below Phase 2. The tradeoff is documented in the progress report.
+
+```bash
+.venv-mlx/bin/python -m bazireason.demo_app     # Phase 3 / Phase 2 / untuned model, http://127.0.0.1:8765
+```
+
 ## Research design
 
 | Hypothesis | Primary comparison | Data |

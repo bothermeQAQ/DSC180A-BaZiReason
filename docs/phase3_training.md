@@ -17,9 +17,10 @@ Downloads the cited public-domain texts from zh.wikisource.org into the git-igno
 ```bash
 .venv/bin/python scripts/phase3/build_dataset.py --check               # p3_train_v1
 .venv/bin/python scripts/phase3/build_dataset.py --dataset 2 --check   # p3_train_v2
+.venv/bin/python scripts/phase3/build_dataset.py --dataset 3 --check   # p3_train_v3
 ```
 
-Both regenerate byte for byte. Families, label sources and leakage guards: [../data/phase3/README.md](../data/phase3/README.md).
+All three regenerate byte for byte. Families, label sources and leakage guards: [../data/phase3/README.md](../data/phase3/README.md).
 
 ## 3. Training
 
@@ -33,11 +34,16 @@ nohup caffeinate -i .venv-mlx/bin/python scripts/phase2/train_lora.py \
 # Round 2: from the round-1 adapter, 4,122 rows in the explicit wording, about 2 hours
 nohup caffeinate -i .venv-mlx/bin/python scripts/phase2/train_lora.py \
   --config configs/phase3/qwen3_4b_lora_p3_r2.yaml > artifacts/logs/train_p3_r2.log 2>&1 &
+
+# Round 3 (corrective): from the round-2 adapter, 3,345 rows (half Phase 2 replay),
+# learning rate 5e-5, about 1.6 hours
+nohup caffeinate -i .venv-mlx/bin/python scripts/phase2/train_lora.py \
+  --config configs/phase3/qwen3_4b_lora_p3_r3.yaml > artifacts/logs/train_p3_r3.log 2>&1 &
 ```
 
 Add `--smoke` for 20 real steps into a `_smoke` folder, or `--resume` to continue an interrupted run from its last checkpoint. Outputs have the same layout as in Phase 2: checkpoints every 500 iterations and `adapters.safetensors` (lowest validation loss) under `artifacts/adapters/<run>/`, logs under `results/phase3/training/<run>/`.
 
-`scripts/phase3/queue_round2.sh` chains round 2, the adapter selection and every evaluation below, one GPU job at a time.
+`scripts/phase3/queue_round2.sh` and `queue_round3.sh` chain one round, its adapter selection and every evaluation below, one GPU job at a time.
 
 ## 4. Choosing the adapter
 
@@ -51,11 +57,19 @@ Add `--smoke` for 20 real steps into a `_smoke` folder, or `--resume` to continu
 
 The rule is fixed in the script: the round with more correct generated answers on the validation split wins; the test split and the benchmarks are not consulted. The first round's errors were read on `data/phase3/dev_v1/dev.jsonl` (validation years), never on the test split.
 
+Round 3 against round 2 uses a second rule, also written before round 3 was scored:
+
+```bash
+.venv/bin/python scripts/phase3/select_final.py   # writes results/phase3/selection_final.json
+```
+
+The script adds the correct answers on the Phase 3 validation split (298 rows) and on the Phase 2 validation split `data/phase2/train_v2/valid.jsonl` (203 rows), so calendar skills count as much as rule reasoning. A tie keeps round 2. Round 2 won, 357 to 353, so **the Phase 3 adapter is `artifacts/adapters/bazireason-qwen3-4b-lora-p3-r2`**. Round 3 is still evaluated everywhere to document the tradeoff.
+
 ## 5. Evaluation
 
 ```bash
 PY=.venv-mlx/bin/python
-A=$(python3 -c "import json;print(json.load(open('results/phase3/selection.json'))['selected_adapter'])")
+A=$(python3 -c "import json;print(json.load(open('results/phase3/selection_final.json'))['selected_adapter'])")
 P2=artifacts/adapters/bazireason-qwen3-4b-lora-v2
 
 # Phase 3 held-out test split: the same prompts for every model
@@ -84,7 +98,7 @@ $PY scripts/phase2/run_baziqa.py --who tuned --tools verified --adapter $P2 --ou
 $PY scripts/phase3/make_report.py      # writes results/phase3/RESULTS.md and summary.json
 ```
 
-The file names used by the queue script carry the round (`p3test_p3r2.jsonl` and so on); `make_report.py` reads those. No runner overwrites an existing output. `scripts/phase3/rescore.py` recomputes a score file from saved raw outputs without running the model.
+The calendar check split `data/phase3/p2check_v1/test.jsonl` is scored with `run_p2_eval.py --data` for the Phase 2 adapter and rounds 2 and 3. The file names used by the queue scripts carry the round (`p3test_p3r2.jsonl` and so on); `make_report.py` reads those. No runner overwrites an existing output. `scripts/phase3/rescore.py` recomputes a score file from saved raw outputs without running the model.
 
 ## 6. Chat demo
 
@@ -92,7 +106,7 @@ The file names used by the queue script carry the round (`p3test_p3r2.jsonl` and
 .venv-mlx/bin/python -m bazireason.demo_app            # then open http://127.0.0.1:8765
 ```
 
-- **Three models.** The menu offers the Phase 3 adapter, the Phase 2 adapter and the untuned base model. All three receive the same prompt. `--adapter` and `--adapter-p2` point at other adapter folders; `--preload all` loads the three models at start (about 9 GB).
+- **Three models.** The menu offers the Phase 3 adapter (round 2 by default), the Phase 2 adapter and the untuned base model. All three receive the same prompt. `--adapter` and `--adapter-p2` point at other adapter folders; `--preload all` loads the three models at start (about 9 GB).
 - **Verified chart.** The four pillars, the Ten Gods and the "深入结构" panel (strength count, pattern by 透干, 用神 by school, relations, stars) are computed by the engine and the rule code, never by the model.
 - **Question routing.** A free question is mapped to the closest trained request (`bazireason.demo_deep.plan`): whole-chart overview, strength, pattern, 用神, relations, a flow year, the traditional view of an area of life, a star, a list of statements to check. "查看实际发给模型的提问" under each reply shows the exact text the model received.
 - **Checks after each reply.** The reply's structured conclusion is compared with the rule code. On a mismatch the page shows the rule code's value and its full derivation.
@@ -102,7 +116,7 @@ The file names used by the queue script carry the round (`p3test_p3r2.jsonl` and
 ## 7. Tests
 
 ```bash
-.venv/bin/python -m pytest -q          # 176 Phase 1 + 28 Phase 2 + Phase 3 tests
+.venv/bin/python -m pytest -q          # 176 Phase 1 + 28 Phase 2 + 24 Phase 3 tests
 .venv-mlx/bin/ruff check src scripts tests
 ```
 

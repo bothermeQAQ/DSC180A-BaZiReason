@@ -47,7 +47,8 @@ from bazireason.train_tasks import chart_line, compare_charts
 
 STATIC = Path(__file__).parent / "demo_static"
 DEFAULT_MODEL = "models/qwen3-4b-instruct-2507-mlx-4bit"
-DEFAULT_ADAPTER = "artifacts/adapters/bazireason-qwen3-4b-lora-p3-r1"
+# The Phase 3 adapter chosen by scripts/phase3/select_final.py (results/phase3/selection_final.json).
+DEFAULT_ADAPTER = "artifacts/adapters/bazireason-qwen3-4b-lora-p3-r2"
 DEFAULT_ADAPTER_P2 = "artifacts/adapters/bazireason-qwen3-4b-lora-v2"
 MODEL_IDS = ("p3", "p2", "base")
 COMMON_ZONES = (

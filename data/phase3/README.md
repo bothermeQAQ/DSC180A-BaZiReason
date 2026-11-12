@@ -86,6 +86,25 @@ Sizes: drills 760, `gods` 260, `interact` 300, `flow` 300, `domain` 220, `mcq3` 
 
 `bazireason.textstyle` version 3 selects this wording; versions 1 and 2 are unchanged, so every earlier dataset still regenerates byte for byte.
 
+## `train_v3/`: corrective third-round dataset `p3_train_v3`
+
+`python scripts/phase3/build_dataset.py --dataset 3 --check`. 3,345 training and 191 validation rows from the same year blocks, with their own random stream. It has no test split.
+
+The round-2 adapter was selected and then tested. Four regressions showed up, and each change in this dataset answers one of them:
+
+| Round-2 problem (Phase 2 splits, benchmark_v3, BaziQA replies) | Change in `p3_train_v3` |
+|---|---|
+| Calendar skills forgotten: exact four pillars 141/190 vs 152/190 for Phase 2. Errors include the leap-day term dropped from the day count, wrong addition of negative numbers, and the late-子 hour stem. | 1,715 rows (51%) replay the Phase 2 families: charts, 子-hour transitions, solar-term boundaries, time zones, invalid input, policy. |
+| The explicit procedure was used only under Phase 3 wording; Phase 2 rule prompts still got guessed Ten Gods (47/96, the same as Phase 2). | 360 replayed Phase 2 rule answers start with the table they need: the day master's Ten-God table, the branch relation tables, or the 60-cycle index for 旬空. The rest of each answer is unchanged. |
+| A classical book was named in contest replies, some of them invented. The likely source: the 调候 answers named 《穷通宝鉴》 (100 rows in `train_v1`, 48 in `train_v2`). | Wording version 4: no answer text names a book (0 rows). The rule cards still carry their sources. |
+| Repetition loops on long contest questions. | Smaller Phase 3 share, and a peak learning rate of 5e-5 decaying to 5e-6, half that of the earlier rounds. |
+
+Phase 3 families, in the same wording otherwise: drills 300, `strict_audit` 200, `mcq3` 160, `interact` and `flow` 140 each, `gods` 120, the other reasoning families 510.
+
+## `p2check_v1/test.jsonl`: calendar check split
+
+The two Phase 2 test splits were read row by row while diagnosing the round-2 regression, so a clean comparison needed new rows. This split has 485 Phase 2-style rows from the test years with a new seed (`bazireason.train_data.generate_split('test', seed=2026111298, version=2)`). Prompts identical to a row of either Phase 2 test split were removed. The file was generated before round 3 was scored and not opened before scoring. It is used for one comparison: the Phase 2 adapter against Phase 3 rounds 2 and 3.
+
 ## `dev_v1/dev.jsonl`: development split
 
 627 rows from the validation years with a different seed. It was used to read the first round's errors and decide on a second round, so that the test split stayed unopened until an adapter had been selected.

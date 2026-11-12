@@ -1,0 +1,33 @@
+{
+  "rule": "most correct answers on data/phase3/train_v1/valid.jsonl plus data/phase2/train_v2/valid.jsonl; a tie keeps round 2; no test split or benchmark consulted; fixed before round 3 was scored",
+  "candidates": [
+    {
+      "round": "p3-r2",
+      "adapter": "artifacts/adapters/bazireason-qwen3-4b-lora-p3-r2",
+      "phase3_valid": [
+        227,
+        298
+      ],
+      "phase2_valid": [
+        130,
+        203
+      ],
+      "total": 357
+    },
+    {
+      "round": "p3-r3",
+      "adapter": "artifacts/adapters/bazireason-qwen3-4b-lora-p3-r3",
+      "phase3_valid": [
+        215,
+        298
+      ],
+      "phase2_valid": [
+        138,
+        203
+      ],
+      "total": 353
+    }
+  ],
+  "selected": "p3-r2",
+  "selected_adapter": "artifacts/adapters/bazireason-qwen3-4b-lora-p3-r2"
+}
