@@ -106,6 +106,16 @@ def check_reply(row, text, score):
     return False, differing_fields(row["meta"]["expected"], answer)
 
 
+def prompt_messages(row) -> list:
+    """The conversation sent to the model: the row's messages without a reference answer.
+
+    Training-format rows end with the reference assistant reply; the independent rows
+    carry their labels in ``meta`` and end with the question itself.
+    """
+    messages = row["messages"]
+    return messages[:-1] if messages and messages[-1]["role"] == "assistant" else list(messages)
+
+
 def repair_turn(row, text, fields) -> list:
     """The conversation for the second attempt: the first reply plus a value-free note."""
     if fields is None:
@@ -117,11 +127,12 @@ def repair_turn(row, text, fields) -> list:
         )
     else:
         note = "核验：你的结论与规则引擎的结果不一致（这里不提供正确值）。请重新逐步推导，再给出完整结论。"
+    prompt = prompt_messages(row)
     if is_strict(row):
         note += "只输出一个 JSON 对象。"
-    elif "结论JSON" in row["messages"][-2]["content"]:
+    elif "结论JSON" in prompt[-1]["content"]:
         note += "最后一行仍以“结论JSON:”给出。"
-    return row["messages"][:-1] + [
+    return prompt + [
         {"role": "assistant", "content": text or ""},
         {"role": "user", "content": note},
     ]

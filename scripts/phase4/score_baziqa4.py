@@ -25,6 +25,7 @@ CONDITIONS = {
     "p3r2_tools": P3 / "p3/tuned_tools.jsonl",
     "p3r3_no_tools": P3 / "p3r3/tuned_no_tools.jsonl",
     "p3r3_tools": P3 / "p3r3/tuned_tools.jsonl",
+    "p2_w3": P4 / "p2/tuned_tools_w3.jsonl",
     "p3r3_w3": P4 / "p3r3/tuned_tools_w3.jsonl",
     "p4a1_no_tools": P4 / "p4a1/tuned_no_tools.jsonl",
     "p4a1_tools": P4 / "p4a1/tuned_tools.jsonl",
@@ -33,6 +34,7 @@ CONDITIONS = {
 PAIRS = (
     ("p4a1_no_tools", "p3r3_no_tools", "approach A training, no tools"),
     ("p4a1_tools", "p3r3_tools", "approach A training, verified chart"),
+    ("p2_w3", "p2_tools", "approach B contest guard on Phase 2 (the selected adapter)"),
     ("p3r3_w3", "p3r3_tools", "approach B contest guard on R3"),
     ("p4a1_w3", "p4a1_tools", "approach B contest guard on A1"),
     ("p4a1_w3", "p3r3_tools", "A and B together, against R3 with the verified chart"),

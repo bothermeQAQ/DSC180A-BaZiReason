@@ -15,8 +15,9 @@ DIR=(p2 bazireason-qwen3-4b-lora-v2 p3r2 bazireason-qwen3-4b-lora-p3-r2 \
 for label in p4a1 p3r3 p2 p3r2; do
   run $PY scripts/phase4/run_eval.py --label $label --adapter $A/$DIR[$label] --split final_test --workflow w0
 done
-# 2. W1 (verify and repair) for R3 and A1; W2 (tool check) on the strict rows for P2, R3, A1.
-for label in p4a1 p3r3; do
+# 2. W1 (verify and repair) for R3 and the selected adapter (P2), plus A1 (exploratory);
+#    W2 (tool check) on the strict rows for P2, R3, A1.
+for label in p2 p3r3 p4a1; do
   run $PY scripts/phase4/run_eval.py --label $label --adapter $A/$DIR[$label] --split final_test --workflow w1
 done
 for label in p4a1 p3r3 p2; do
@@ -34,8 +35,10 @@ for label in p4a1 p3r3 p2; do
   run $PY scripts/phase4/run_v3_toolcheck.py --label $label --adapter $A/$DIR[$label] --output $V/${label}_w2_tool_corrupted.jsonl
   run .venv-mlx/bin/bazireason evaluate --predictions $V/${label}_w2_tool_corrupted.jsonl --output $V/${label}_w2_tool_corrupted.jsonl.scores.json
 done
-# 4. BaziQA (inspected): A1 under the Phase 3 conditions, then W3 for A1 and R3.
-mkdir -p $Q/p4a1 $Q/p3r3
+# 4. BaziQA (inspected): A1 under the Phase 3 conditions, then W3 for the selected adapter
+#    (P2), R3 and A1.
+mkdir -p $Q/p4a1 $Q/p3r3 $Q/p2
+run $PY scripts/phase4/run_baziqa_guard.py --adapter $A/$DIR[p2] --label p2 --output-dir $Q/p2
 for tools in none verified; do
   run $PY scripts/phase2/run_baziqa.py --who tuned --tools $tools --adapter $A/$DIR[p4a1] \
     --output-dir $Q/p4a1 --max-tokens 1024 --label "p4:p4a1"

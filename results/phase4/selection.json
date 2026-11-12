@@ -1,0 +1,116 @@
+{
+  "rule": "eligible if calendar rows (valid/p2, task == chart) minus P2 have a 95% lower bound >= -5.0 points; among eligible, most correct over valid p3 + p2 + indep; ties and no eligible adapter keep p3r3. Written before any candidate was scored.",
+  "candidates": [
+    {
+      "label": "p2",
+      "adapter": "artifacts/adapters/bazireason-qwen3-4b-lora-v2",
+      "correct": {
+        "p3": 48,
+        "p2": 206,
+        "indep": 82
+      },
+      "rows": {
+        "p3": 240,
+        "p2": 306,
+        "indep": 140
+      },
+      "total_correct": 336,
+      "calendar_vs_p2": {
+        "n": 168,
+        "n_groups": 120,
+        "difference": 0.0,
+        "second_only": 0,
+        "first_only": 0,
+        "interval95": [
+          0.0,
+          0.0
+        ]
+      },
+      "eligible": true
+    },
+    {
+      "label": "p3r2",
+      "adapter": "artifacts/adapters/bazireason-qwen3-4b-lora-p3-r2",
+      "correct": {
+        "p3": 184,
+        "p2": 191,
+        "indep": 78
+      },
+      "rows": {
+        "p3": 240,
+        "p2": 306,
+        "indep": 140
+      },
+      "total_correct": 453,
+      "calendar_vs_p2": {
+        "n": 168,
+        "n_groups": 120,
+        "difference": -0.09523809523809523,
+        "second_only": 5,
+        "first_only": 21,
+        "interval95": [
+          -0.15151515151515152,
+          -0.03870967741935484
+        ]
+      },
+      "eligible": false
+    },
+    {
+      "label": "p3r3",
+      "adapter": "artifacts/adapters/bazireason-qwen3-4b-lora-p3-r3",
+      "correct": {
+        "p3": 185,
+        "p2": 214,
+        "indep": 80
+      },
+      "rows": {
+        "p3": 240,
+        "p2": 306,
+        "indep": 140
+      },
+      "total_correct": 479,
+      "calendar_vs_p2": {
+        "n": 168,
+        "n_groups": 120,
+        "difference": 0.005952380952380952,
+        "second_only": 18,
+        "first_only": 17,
+        "interval95": [
+          -0.06626506024096386,
+          0.0782122905027933
+        ]
+      },
+      "eligible": false
+    },
+    {
+      "label": "p4a1",
+      "adapter": "artifacts/adapters/bazireason-qwen3-4b-lora-p4-a1",
+      "correct": {
+        "p3": 193,
+        "p2": 211,
+        "indep": 98
+      },
+      "rows": {
+        "p3": 240,
+        "p2": 306,
+        "indep": 140
+      },
+      "total_correct": 502,
+      "calendar_vs_p2": {
+        "n": 168,
+        "n_groups": 120,
+        "difference": -0.03571428571428571,
+        "second_only": 25,
+        "first_only": 31,
+        "interval95": [
+          -0.11764705882352941,
+          0.05063291139240506
+        ]
+      },
+      "eligible": false
+    }
+  ],
+  "selected": "p2",
+  "selected_adapter": "artifacts/adapters/bazireason-qwen3-4b-lora-v2",
+  "no_candidate_eligible": false
+}

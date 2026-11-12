@@ -82,6 +82,19 @@ def test_tool_check_flags_corruptions_and_passes_clean_answers():
     assert not any(seen[True]) and all(seen[False])
 
 
+def test_every_prompt_ends_with_the_question_and_never_with_the_answer():
+    from bazireason import workflow as W
+
+    for part in ("p3", "p2", "indep"):
+        for row in rows(DATA / "valid" / f"{part}.jsonl"):
+            prompt = W.prompt_messages(row)
+            assert prompt[-1]["role"] == "user", (part, row["id"])
+            assert len(prompt) >= len(row["messages"]) - 1
+    row = rows(DATA / "valid/indep.jsonl")[0]
+    repair = W.repair_turn(row, "结论JSON: {}", ["answer"])
+    assert repair[1] == row["messages"][1] and "结论JSON" in repair[-1]["content"]
+
+
 def test_repair_note_names_fields_but_never_values():
     from bazireason import workflow as W
 

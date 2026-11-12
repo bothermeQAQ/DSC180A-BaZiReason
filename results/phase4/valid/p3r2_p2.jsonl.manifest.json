@@ -1,0 +1,22 @@
+{
+  "status": "complete",
+  "split": "valid",
+  "part": "p2",
+  "workflow": "w0",
+  "dataset": "data/phase4/valid/p2.jsonl",
+  "dataset_sha256": "ac06c829fb774c1b519c9cd3a7c20e66d73d5f21032696af8f167adb5d837d1e",
+  "n_rows": 306,
+  "n_generated": 306,
+  "model": "p3r2",
+  "adapter_path": "artifacts/adapters/bazireason-qwen3-4b-lora-p3-r2",
+  "adapter_sha256": "2fa6fb7b94f411c443fbc2b7f081dc84980f95c344fc6de96024151f29747a31",
+  "temperature": 0,
+  "max_tokens": 700,
+  "wall_seconds": 701.1,
+  "generation_totals": {
+    "prompt_tokens": 55309,
+    "completion_tokens": 86422,
+    "seconds": 700.58,
+    "peak_memory_gb": 8.43
+  }
+}

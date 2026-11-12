@@ -104,7 +104,7 @@ def main():
         notes = {}
         for row in rows:
             if args.workflow == "w0":
-                jobs[row["id"]] = row["messages"][:-1]
+                jobs[row["id"]] = W.prompt_messages(row)
             elif args.workflow == "w1":
                 text = first[row["id"]]["raw_output"]
                 agrees, fields = W.check_reply(row, text, first[row["id"]]["score"])
@@ -116,7 +116,7 @@ def main():
                 failed = W.tool_check(meta["inputs"], meta["convention"], meta["supplied"])
                 notes[row["id"]] = failed
                 if failed:
-                    messages = [dict(m) for m in row["messages"][:-1]]
+                    messages = [dict(m) for m in W.prompt_messages(row)]
                     messages[-1]["content"] += "\n" + W.tool_note(failed)
                     jobs[row["id"]] = messages
         adapter_file = Path(args.adapter) / "adapters.safetensors" if args.adapter else None

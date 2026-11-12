@@ -259,6 +259,13 @@ def final_w0(lines, summary):
         )
     for k, (text, _) in prim.items():
         lines.append(f"| {k} | {text} |")
+    if sel == "p2":
+        lines += [
+            "",
+            "The frozen rule selected Phase 2 itself, so P-1 and P-3 against P2 compare P2 with "
+            "itself (difference 0 by construction). The same non-inferiority test for every other "
+            "adapter is in the exploratory table below.",
+        ]
     lines += [
         "",
         "**Other paired comparisons (exploratory)**\n",
@@ -305,7 +312,7 @@ def approach_b(lines, summary, runs):
         "|---|---|---:|---:|---:|---:|---:|",
     ]
     out = {}
-    for lab in ("p3r3", "p4a1"):
+    for lab in ("p2", "p3r3", "p4a1"):
         for part, where in (
             ("p3", REASONING),
             ("p2", CALENDAR),
@@ -339,7 +346,7 @@ def approach_b(lines, summary, runs):
                 "fixed": fixed,
                 "broken": broke,
             }
-    lines += ["", "**W2, independent tool check** on the 180 `strict_shift` rows (one-pass JSON with a supplied tool answer).\n",
+    lines += ["", "**W2, independent tool check** on the `strict_shift` rows (one-pass JSON with a supplied tool answer).\n",
               "| Adapter | Check flagged (corrupted / clean) | Corrected, W0 → W2 | Followed the error, W0 → W2 (lower is better) | Clean answers kept, W0 → W2 |",
               "|---|---|---|---|---|"]  # fmt: skip
     for lab in ("p2", "p3r3", "p4a1"):
