@@ -80,7 +80,7 @@ The first round's answers on the development split showed where it failed, and e
 | Named pairings invented or missed ("官生财"). | All ten pairings are checked one by one, each with the two gods it needs. |
 | Branch cards were always right (133 of 133), but pairs were then misread from them ("卯卯自刑", "子戌相害"). | Every pair states where the second branch appears on the first branch's card before concluding. |
 | Multiple choice over years (5 of 23): the pillar of each option's year was computed silently and was often wrong. | The question gives one known year, and the answer lists the pillar of every option before choosing. |
-| One-pass audit of a tool answer: 0 of 28 lookup-visible errors corrected (wrong hour stem, month stem, hour branch, year); only "confident chart for an ambiguous request" was caught. | More audit rows weighted to 五鼠遁 and 五虎遁 errors, plus drills that answer hour-pillar, month-pillar and consistency lookups with the JSON alone, since a one-pass check has no room for written steps. |
+| One-pass audit of a tool answer: 1 of 22 lookup-visible errors corrected (wrong hour stem, month stem, hour branch, year) and 0 of 10 day-rollover errors; only "confident chart for an ambiguous request" was caught (5 of 6). | More audit rows weighted to 五鼠遁 and 五虎遁 errors, plus drills that answer hour-pillar, month-pillar and consistency lookups with the JSON alone, since a one-pass check has no room for written steps. |
 
 Sizes: drills 760, `gods` 260, `interact` 300, `flow` 300, `domain` 220, `mcq3` 400, `strict_audit` 600, the other reasoning families 870, replay of Phase 2 families 412.
 
