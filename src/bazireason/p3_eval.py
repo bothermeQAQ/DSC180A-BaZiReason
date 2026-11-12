@@ -166,6 +166,7 @@ def score3(row, text):
         original = dict(row, family=family.removeprefix("replay_"))
         score = score_row(original, text)
         score["family"] = family
+        score["kind"] = row["task"]
         return score
     meta = row["meta"]
     expected = meta["expected"]

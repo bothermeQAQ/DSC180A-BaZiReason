@@ -1,0 +1,32 @@
+{
+  "run_name": "bazireason-qwen3-4b-lora-p3-r1",
+  "config_file": "configs/phase3/qwen3_4b_lora_p3_r1.yaml",
+  "config_sha256": "c92c39e0c28695d703d5057faa98c3d2d68950a07472eed733d3725ab42d7a09",
+  "init_adapter": "artifacts/adapters/bazireason-qwen3-4b-lora-v2/adapters.safetensors",
+  "init_adapter_sha256": "4a61e636732b9febd263549bcdfa2d813164597ce258a1eb44273b28ded8f418",
+  "train_file_sha256": "11b49b4aa1acdb1737945ef4d0273f001d568889344272a20d9c6f4dccf092ef",
+  "valid_file_sha256": "5b5285ee370f9c6f9ed7a7f5d8b841ecbe89db3dbe0c2488cbbb430f19b10905",
+  "train_rows": 6933,
+  "valid_rows_for_selection": 150,
+  "train_sequence_tokens_per_epoch": 4767981,
+  "iterations": 3466,
+  "start_iteration": 0,
+  "batch_size": 2,
+  "grad_accumulation_steps": 2,
+  "optimizer_updates": 1733,
+  "trainable_parameters": 14680064,
+  "stored_array_elements": 643356160,
+  "note_parameters": "stored_array_elements counts packed 4-bit arrays, not the 4.02e9 base parameters; trainable_parameters is the exact LoRA size.",
+  "software": {
+    "mlx": "0.32.4",
+    "mlx_lm": "0.32.2"
+  },
+  "device": {
+    "device_name": "Apple M5",
+    "max_recommended_working_set_size": 26800603136,
+    "memory_size": 34359738368,
+    "architecture": "applegpu_g17g",
+    "max_buffer_length": 20100448256,
+    "resource_limit": 499000
+  }
+}

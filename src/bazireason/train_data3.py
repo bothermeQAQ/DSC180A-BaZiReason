@@ -64,27 +64,31 @@ SIZES = {
 }
 REPLAY_SCALE = (0.2, 0.25, 0.0)
 SIZES_V2 = {
-    # Second Phase 3 round: fresh samples weighted by the first round's held-out errors.
-    "drill": (700, 30, 0),
-    "gods": (200, 8, 0),
-    "strength": (150, 6, 0),
-    "pattern": (150, 6, 0),
-    "yongshen": (150, 6, 0),
-    "interact": (350, 12, 0),
-    "flow": (350, 12, 0),
-    "domain": (200, 8, 0),
-    "claims": (300, 12, 0),
-    "ambig": (350, 12, 0),
-    "mcq3": (350, 12, 0),
-    "dialog": (150, 6, 0),
-    "overview": (100, 4, 0),
-    "strict_audit": (700, 20, 0),
+    # Second Phase 3 round: fresh samples in the explicit wording, weighted by the first
+    # round's errors on the development split (Ten Gods inside chart tasks, pair relations,
+    # multiple choice over years, one-pass tool audit).
+    "drill": (760, 30, 0),
+    "gods": (260, 10, 0),
+    "strength": (70, 4, 0),
+    "pattern": (110, 5, 0),
+    "yongshen": (120, 6, 0),
+    "interact": (300, 10, 0),
+    "flow": (300, 10, 0),
+    "domain": (220, 8, 0),
+    "claims": (200, 8, 0),
+    "ambig": (130, 9, 0),
+    "mcq3": (400, 14, 0),
+    "dialog": (120, 6, 0),
+    "overview": (120, 5, 0),
+    "strict_audit": (600, 20, 0),
     "strict_shift": (0, 0, 0),
 }
 VERSIONS = {
     1: ("p3_train_v1", SIZES, REPLAY_SCALE),
-    2: ("p3_train_v2", SIZES_V2, (0.15, 0.15, 0.0)),
+    2: ("p3_train_v2", SIZES_V2, (0.12, 0.15, 0.0)),
 }
+# Wording of the answers: 2 is the first round's, 3 the explicit second-round wording.
+TEXTSTYLE = {1: 2, 2: 3}
 
 
 class Pool3(TD.Pool):
@@ -149,7 +153,8 @@ def _meta(chart, expected, variant, kind, **extra):
 def drill(pool, count):
     rows = []
     while len(rows) < count:
-        kind = K.DRILLS[len(rows) % len(K.DRILLS)]
+        kinds = K.DRILLS_V3 if K.explicit() else K.DRILLS
+        kind = kinds[len(rows) % len(kinds)]
         variant = pool.variant()
         question, text, response = K.drill(kind, pool.rng, variant)
         rows.append(
@@ -159,7 +164,7 @@ def drill(pool, count):
                 "none",
                 f"drill-{len(rows)}",
                 chat_messages(question + "\n" + K.HINTS["answer"]),
-                text + "\n" + final_line(response),
+                (text + "\n" if text else "") + final_line(response),
                 {"expected": response, "template": variant, "kind": kind},
             )
         )
@@ -483,6 +488,17 @@ AUDIT_TRAIN = (
     ("default_guess", 6),
     ("clean_open", 3),
 )
+# Second round: more of the errors that a table lookup exposes, which the first round missed.
+AUDIT_TRAIN_V2 = (
+    ("clean", 42),
+    ("hour_stem", 22),
+    ("month_stem", 14),
+    ("day_rollover", 8),
+    ("year_shift", 5),
+    ("hour_branch", 4),
+    ("default_guess", 3),
+    ("clean_open", 2),
+)
 AUDIT_SHIFT = (
     ("clean", 30),
     ("hour_stem", 20),
@@ -616,7 +632,7 @@ def _audit(pool, count, weights, family):
 
 
 def strict_audit(pool, count):
-    return _audit(pool, count, AUDIT_TRAIN, "strict_audit")
+    return _audit(pool, count, AUDIT_TRAIN_V2 if K.explicit() else AUDIT_TRAIN, "strict_audit")
 
 
 def strict_shift(pool, count):
@@ -652,7 +668,7 @@ def generate_split(split, seed=SEED, blocked=None, scale=1.0, version=1):
     pool = Pool3(split, seed + version - 1, blocked, name)
     column = SPLITS.index(split)
     rows = []
-    textstyle.set_version(2)
+    textstyle.set_version(TEXTSTYLE[version])
     try:
         for family, builder in FAMILIES:
             target = round(sizes[family][column] * scale)

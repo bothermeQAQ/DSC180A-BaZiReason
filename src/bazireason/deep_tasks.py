@@ -13,6 +13,7 @@ what is missing.
 
 from bazireason import deep_rules as D
 from bazireason import rules as R
+from bazireason import textstyle
 from bazireason import train_tasks as T
 from bazireason.conventions import BRANCHES, CYCLE, PILLARS, STEMS
 from bazireason.worked import index_text, mod60_text
@@ -41,6 +42,54 @@ HINTS = {
 
 def polarity(symbol: str) -> str:
     return "阳" if R.is_yang(symbol) else "阴"
+
+
+def explicit() -> bool:
+    """Second-round wording: Ten Gods are read from a table that is written out first.
+
+    The first round derived each Ten God in a single sentence and got the 生克
+    direction wrong in about a quarter of them once several had to be found in
+    one answer, although the one-table drills were right.
+    """
+    return textstyle.version() >= 3
+
+
+def class_chain(day: str) -> str:
+    return "→".join(f"{D.class_element(day, c)}{c}" for c in D.CLASSES)
+
+
+def god_table(day: str) -> str:
+    """The ten stems with their Ten Gods for one day master, derived from the 相生 cycle."""
+    mine = R.STEM_ELEMENT[day]
+    same, other = polarity(day), "阴" if R.is_yang(day) else "阳"
+    groups = []
+    for cls in D.CLASSES:
+        element = D.class_element(day, cls)
+        stems = [s for s in STEMS if R.STEM_ELEMENT[s] == element]
+        groups.append("、".join(f"{s}{R.ten_god(day, s)}" for s in stems))
+    return (
+        f"十神表（日主{day}，{mine}，{same}）：从{mine}起按相生次序，{class_chain(day)}；"
+        f"{same}干取比肩、食神、偏财、七杀、偏印，{other}干取劫财、伤官、正财、正官、正印。"
+        f"即：{'；'.join(groups)}。"
+    )
+
+
+def god_reason(day: str, stem: str) -> str:
+    """One Ten God derived on its own (no table in the answer)."""
+    if not explicit():
+        return R.ten_god_reason(day, stem)
+    element, cls = R.STEM_ELEMENT[stem], D.GOD_CLASS[R.ten_god(day, stem)]
+    same = R.is_yang(day) == R.is_yang(stem)
+    return (
+        f"日主{day}属{R.STEM_ELEMENT[day]}，按相生次序{class_chain(day)}；{stem}属{element}，是{cls}；"
+        f"{stem}为{polarity(stem)}干、{day}为{polarity(day)}干，阴阳{'相同' if same else '相异'}，"
+        f"故为{R.ten_god(day, stem)}"
+    )
+
+
+def read(day: str, stem: str) -> str:
+    """A Ten God read from the table written earlier in the same answer."""
+    return f"查表，{stem}为{R.ten_god(day, stem)}" if explicit() else R.ten_god_reason(day, stem)
 
 
 def join(items, empty="无") -> str:
@@ -73,6 +122,12 @@ DRILLS = (
 )
 
 
+# Second-round additions: the Ten-God table itself, and lookups answered without any written
+# derivation, which is what a one-pass check of a supplied chart needs.
+DRILLS_V3 = DRILLS + ("god_table", "silent_hour", "silent_month", "silent_check", "silent_check")
+SILENT = "直接给出结论JSON，不要写推导。"
+
+
 def _symbol(rng):
     return rng.choice(STEMS + BRANCHES)
 
@@ -97,10 +152,7 @@ def drill(kind: str, rng, variant: int = 0):
             f"以{day}为日干，{other}属于哪个十神？",
             f"{other}对日主{day}而言是什么十神？",
         )[variant % 3]
-        text = (
-            f"日主为{day}（{R.STEM_ELEMENT[day]}，{polarity(day)}）。"
-            f"{R.ten_god_reason(day, other)}。"
-        )
+        text = f"日主为{day}（{R.STEM_ELEMENT[day]}，{polarity(day)}）。{god_reason(day, other)}。"
         return question, text, {"answer": R.ten_god(day, other)}
     if kind == "hidden":
         branch = rng.choice(BRANCHES)
@@ -336,6 +388,33 @@ def drill(kind: str, rng, variant: int = 0):
         text, index = mod60_text(year - 4)
         answer = f"{year} − 4 = {year - 4}，{text}；{index_text(index)}，为{CYCLE[index]}年。"
         return question, answer, {"answer": CYCLE[index]}
+    if kind == "god_table":
+        day = rng.choice(STEMS)
+        question = (
+            f"写出日主{day}的十神表（十个天干各是什么十神）。",
+            f"以{day}为日主，十个天干分别是什么十神？请先列表。",
+            f"请列出日主{day}对应的完整十神表。",
+        )[variant % 3]
+        return question, god_table(day), {"answer": {s: R.ten_god(day, s) for s in STEMS}}
+    if kind == "silent_hour":
+        stem, branch = rng.choice(STEMS), rng.choice(BRANCHES)
+        question = f"{stem}日的{branch}时，时柱是什么？{SILENT}"
+        return question, "", {"answer": R.hour_pillar_for(stem, branch)}
+    if kind == "silent_month":
+        stem, branch = rng.choice(STEMS), rng.choice(BRANCHES)
+        question = f"{stem}年的{branch}月，月柱是什么？{SILENT}"
+        return question, "", {"answer": R.month_pillar_for(stem, branch)}
+    if kind == "silent_check":
+        upper = rng.choice(CYCLE)
+        hour = rng.random() < 0.5
+        branch = rng.choice(BRANCHES)
+        right = (R.hour_pillar_for if hour else R.month_pillar_for)(upper[0], branch)
+        shown = right
+        if rng.random() < 0.5:
+            shown = CYCLE[(CYCLE.index(right) + rng.choice((12, 24, 36, 48))) % 60]
+        names = ("日柱", "时柱", "五鼠遁") if hour else ("年柱", "月柱", "五虎遁")
+        question = f"{names[0]}{upper}、{names[1]}{shown}，符合{names[2]}吗？{SILENT}"
+        return question, "", {"answer": {"consistent": shown == right, "expected": right}}
     raise ValueError(f"Unknown drill {kind}")
 
 
@@ -345,10 +424,10 @@ def drill(kind: str, rng, variant: int = 0):
 def gods_text(pillars):
     day = pillars["day"][0]
     lines = [f"日主为{day}（{R.STEM_ELEMENT[day]}，{polarity(day)}）。"]
+    if explicit():
+        lines.append(god_table(day))
     for name in OTHER:
-        lines.append(
-            f"{POS[name]}干{pillars[name][0]}：{R.ten_god_reason(day, pillars[name][0])}。"
-        )
+        lines.append(f"{POS[name]}干{pillars[name][0]}：{read(day, pillars[name][0])}。")
     hidden = []
     for name in PILLARS:
         branch = pillars[name][1]
@@ -362,6 +441,20 @@ def configs_text(pillars):
     gods = D.stem_gods(pillars)
     found = D.stem_configs(pillars)
     seen = "、".join(f"{POS[name]}干{gods[name]}" for name in OTHER)
+    if explicit():
+        present = set(gods.values())
+        checks = []
+        for name, first, second, _ in D.CONFIGS:
+            a, b = sorted(present & set(first)), sorted(present & set(second))
+            need = f"{'或'.join(first)}＋{'或'.join(second)}"
+            have = f"有{'、'.join(a)}" if a else "缺前者"
+            have += f"、有{'、'.join(b)}" if b else "、缺后者"
+            checks.append(f"{name}（{need}）：{have} {'✓' if name in found else '✗'}")
+        return (
+            f"三干十神：{seen}。逐项检查十神组合——" + "；".join(checks) + "。"
+            f"成立的：{join(found)}。这是搭配的名称，不是吉凶判断。",
+            found,
+        )
     if not found:
         return f"三干十神：{seen}。它们之间没有本项目标注的十神组合。", found
     parts = []
@@ -409,11 +502,12 @@ def strength_text(pillars):
         for name in OTHER
     )
     helpers = [f"{POS[name]}干{pillars[name][0]}" for name in s["supporting_stem_pillars"]]
+    chain = f"按相生次序{class_chain(day)}。" if explicit() else ""
     count = sum(s[key] for key in ("得令", "得地", "得势"))
     text = (
         f"得令：日主{day}属{mine}。{reason}；旺或相才算得令 → {yes[s['得令']]}。\n"
         f"得地：{hidden}。其中藏有{mine}的是{join(rooted)} → {yes[s['得地']]}。\n"
-        f"得势：{stems}。属比劫或印的是{join(helpers)}，共 {len(helpers)} 个，至少两个才算 → "
+        f"得势：{chain}{stems}。属比劫或印的是{join(helpers)}，共 {len(helpers)} 个，至少两个才算 → "
         f"{yes[s['得势']]}。\n"
         f"三项占 {count} 项，按“占两项为偏强”的计数约定记为{s['summary']}。"
         "各派权重不同，这是计数结果，不是定论。"
@@ -440,8 +534,13 @@ def pattern_text(pillars):
     visible = [pillars[name][0] for name in OTHER]
     lines = [
         f"月支{month_branch}藏{join(hidden)}。本气{hidden[0]}对日主{day}："
-        f"{R.ten_god_reason(day, hidden[0])}。"
+        f"{god_reason(day, hidden[0])}。"
     ]
+    if explicit():
+        lines = [
+            god_table(day),
+            f"月支{month_branch}藏{join(hidden)}。本气{hidden[0]}：{read(day, hidden[0])}。",
+        ]
     if result["basis"] == "main_is_peer":
         lines.append(
             f"本气是比劫，不按透干取格：比肩记建禄格，劫财在阳干记阳刃格、阴干记月劫格。"
@@ -493,7 +592,8 @@ def yongshen_text(pillars, school):
             if result["strength"] == "偏弱"
             else "偏强要泄耗克制，喜食伤、财、官杀"
         )
-        text += f"\n扶抑：{rule}。对日主{day}而言即{favorable}。"
+        chain = f"按相生次序{class_chain(day)}，" if explicit() else ""
+        text += f"\n扶抑：{rule}。对日主{day}而言{chain}即{favorable}。"
         return text, {
             "school": "扶抑",
             "strength": result["strength"],
@@ -566,15 +666,30 @@ def interact_task(pillars, rng, variant=0):
     lines = ["地支卡片："]
     for branch in dict.fromkeys(branches):
         lines.append(D.branch_card_text(branch))
+    if explicit():
+        lines.append("天干五合：甲己、乙庚、丙辛、丁壬、戊癸；天干相冲：甲庚、乙辛、丙壬、丁癸。")
     lines.append(T._pair_scan(stems, R.stem_pair_relations, "天干"))
     parts = []
     for i, first in enumerate(PILLARS):
         for second in PILLARS[i + 1 :]:
-            keys = R.branch_pair_relations(pillars[first][1], pillars[second][1])
+            a, b = pillars[first][1], pillars[second][1]
+            keys = R.branch_pair_relations(a, b)
             near = "相邻" if PILLARS.index(second) - i == 1 else "不相邻"
+            where = ""
+            if explicit():
+                # Say where the second branch appears on the first branch's card before concluding.
+                card = D.branch_card(a)
+                slots = [kind for kind in ("六合", "冲", "害", "破") if card[kind] == b]
+                if a != b and b in card["刑"]:
+                    slots.append("刑")
+                if a != b and b in card["半合"]:
+                    slots.append("半合")
+                if a == b:
+                    where = f"同支，{a}{'是' if card['刑'] == [a] else '不是'}自刑 → "
+                else:
+                    where = f"{b}在{a}卡的{'、'.join(slots)} → " if slots else f"{b}不在{a}卡 → "
             parts.append(
-                f"{POS[first]}{pillars[first][1]}–{POS[second]}{pillars[second][1]}（{near}）："
-                f"{relation_words(keys)}"
+                f"{POS[first]}{a}–{POS[second]}{b}（{near}）：{where}{relation_words(keys)}"
             )
     lines.append("地支两两比对——" + "；".join(parts) + "。")
     keys = R.chart_relations(pillars)
@@ -638,7 +753,9 @@ def flow_task(pillars, rng, variant=0, year=2030, cycles=None):
     main = R.HIDDEN_STEMS[flow[1]][0]
     lines = [
         f"流年：{year} − 4 = {year - 4}，{mod_text}；{index_text(index)}，{year} 年为{flow}年。",
-        f"天干：{R.ten_god_reason(day, flow[0])}。地支{flow[1]}本气{main}，为{R.ten_god(day, main)}。",
+        *([god_table(day)] if explicit() else []),
+        f"天干：{read(day, flow[0])}。地支{flow[1]}本气{main}，"
+        + (f"{read(day, main)}。" if explicit() else f"为{R.ten_god(day, main)}。"),
         "流年支卡片：" + D.branch_card_text(flow[1]) + "。",
         "与四柱地支："
         + "；".join(
@@ -694,6 +811,8 @@ def domain_task(pillars, rng, variant=0, gender="male", domain="marriage", first
     day = pillars["day"][0]
     tradition = f"【传统的对应】{GENDER_ZH[gender]}命以{join(gods)}象征{name}"
     tradition += f"，以{palace_name}为对应的宫位。" if palace else "。"
+    if explicit():
+        tradition += "\n" + god_table(day)
     stems = [
         f"{POS[p]}干{pillars[p][0]}（{R.ten_god(day, pillars[p][0])}）" for p in facts["in_stems"]
     ]
@@ -779,7 +898,7 @@ def make_claim(kind, pillars, rng, gender="male", truth=True):
         return (
             f"{POS[name]}干{stem}是日主的{said}",
             "正确" if truth else "错误",
-            R.ten_god_reason(day, stem),
+            god_reason(day, stem),
             None if truth else right,
         )
     if kind == "relation":
@@ -896,8 +1015,8 @@ def claims_task(pillars, rng, variant=0, gender="male", count=4):
         "请审查这些说法是否与盘面一致（正确／错误／无法验证），并改正错误的：",
     )[variant % 3]
     lines, corrections = [], {}
-    for i, (_, verdict, reason, correction) in enumerate(claims, 1):
-        line = f"{i}. {reason} → {verdict}"
+    for i, (_, verdict, why, correction) in enumerate(claims, 1):
+        line = f"{i}. {why} → {verdict}"
         if correction is not None:
             line += f"，应为{correction}"
             corrections[str(i)] = correction
@@ -1003,14 +1122,14 @@ def ambig_task(kind, pillars, rng, variant=0, gender="male"):
         elif choice == 1:
             stem = pillars["year"][0]
             question = f"年干{stem}是日主的什么十神？"
-            text = f"这个问题只用到日干和年干，时辰不详不影响。{R.ten_god_reason(day, stem)}。"
+            text = f"这个问题只用到日干和年干，时辰不详不影响。{god_reason(day, stem)}。"
             answer = R.ten_god(day, stem)
         else:
             main = R.HIDDEN_STEMS[pillars["month"][1]][0]
             question = "只看月支本气，格局标签是什么？"
             text = (
                 f"这个问题只用到日干和月支，时辰不详不影响。月支{pillars['month'][1]}本气为{main}。"
-                f"{R.ten_god_reason(day, main)}。按月令本气取格记作{R.month_pattern(pillars)}。"
+                f"{god_reason(day, main)}。按月令本气取格记作{R.month_pattern(pillars)}。"
             )
             answer = R.month_pattern(pillars)
         return "three", question, text, {"determinate": True, "needs": [], "answer": answer}
@@ -1184,8 +1303,7 @@ def mcq_task(kind, pillars, rng, gender="male", year=2030):
         question = f"下列哪一年的流年天干是此命日主的{god}？"
         flow = R.year_pillar(target)
         reason = (
-            f"{target} 年为{flow}年。{R.ten_god_reason(day, flow[0])}。"
-            "其余三年的流年天干都不是这个十神。"
+            f"{target} 年为{flow}年。{god_reason(day, flow[0])}。其余三年的流年天干都不是这个十神。"
         )
         answer, wrong = f"{target} 年", [f"{y} 年" for y in wrong]
     elif kind == "palace":
@@ -1242,7 +1360,8 @@ def mcq_task(kind, pillars, rng, gender="male", year=2030):
             "main_default": "藏干都不透，回到本气",
         }[result["basis"]]
         reason = (
-            f"月支{month}藏{join(R.HIDDEN_STEMS[month])}，三干为{join(pillars[n][0] for n in OTHER)}；"
+            (f"日主{day}按相生次序{class_chain(day)}。" if explicit() else "")
+            + f"月支{month}藏{join(R.HIDDEN_STEMS[month])}，三干为{join(pillars[n][0] for n in OTHER)}；"
             f"{how}，取{result['stem']}（{result['god']}），记作{answer}。"
         )
     elif kind == "fuyi":
@@ -1272,7 +1391,10 @@ def mcq_task(kind, pillars, rng, gender="male", year=2030):
         gods = D.stem_gods(pillars)
         question = "此命年、月、时三干之间构成下列哪一种十神组合？"
         reason = (
-            "三干十神为" + "、".join(f"{POS[n]}干{gods[n]}" for n in OTHER) + f"，构成{answer}；"
+            (f"日主{day}按相生次序{class_chain(day)}。" if explicit() else "")
+            + "三干十神为"
+            + "、".join(f"{POS[n]}干{pillars[n][0] if explicit() else ''}{gods[n]}" for n in OTHER)
+            + f"，构成{answer}；"
             "其余三项所需的十神没有同时出现。"
         )
     elif kind == "luck_god":
@@ -1287,7 +1409,7 @@ def mcq_task(kind, pillars, rng, gender="male", year=2030):
         stem = pillars["year"][0]
         reason = (
             f"年干{stem}为{polarity(stem)}干，{GENDER_ZH[gender]}命大运{word}行；从月柱{pillars['month']}"
-            f"{word}推第{ordinal}步为{pillar}。{R.ten_god_reason(day, pillar[0])}。"
+            f"{word}推第{ordinal}步为{pillar}。{god_reason(day, pillar[0])}。"
         )
     elif kind == "clash_year":
         years = list(range(year, year + 30))
@@ -1308,6 +1430,12 @@ def mcq_task(kind, pillars, rng, gender="male", year=2030):
     if len(set(wrong)) < 3 or answer in wrong:
         return None
     lines, letter = _options(answer, wrong, rng)
+    if explicit() and kind in ("flow_god", "palace", "star_year", "clash_year"):
+        # Give one known year and evaluate every option in the open instead of silently.
+        listed = sorted(int(line[3:7]) for line in lines)
+        question = f"已知 {listed[0]} 年为{R.year_pillar(listed[0])}年。" + question
+        each = "、".join(f"{line[0]} {line[3:7]}{R.year_pillar(int(line[3:7]))}" for line in lines)
+        reason = f"四个选项的流年：{each}。" + reason
     return {"question": question, "options": lines, "answer": letter, "reason": reason}
 
 
@@ -1347,6 +1475,7 @@ def overview_task(pillars, rng, variant=0, gender="male"):
         else f"只看本气的简化标签是{simple}"
     )
     lines = [
+        *([god_table(day)] if explicit() else []),
         f"一、日主与十神（确定）：日主{day}（{R.STEM_ELEMENT[day]}，{polarity(day)}）；"
         + "、".join(f"{POS[n]}干{pillars[n][0]}为{gods[n]}" for n in OTHER)
         + "。"

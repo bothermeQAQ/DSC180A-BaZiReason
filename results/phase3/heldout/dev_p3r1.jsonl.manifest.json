@@ -1,0 +1,21 @@
+{
+  "status": "complete",
+  "dataset": "data/phase3/dev_v1/dev.jsonl",
+  "dataset_sha256": "e7dfcb70b1782fccde0c5f2ba0e8b52741b492014ca021570a301158447fdd28",
+  "n_rows": 627,
+  "model": "p3-r1",
+  "model_path": "models/qwen3-4b-instruct-2507-mlx-4bit",
+  "model_weights_sha256": "2a73c6c248601ab904e035548abd8e6abb65ea27dcb5f342fb0a8910eb44173f",
+  "adapter_path": "artifacts/adapters/bazireason-qwen3-4b-lora-p3-r1",
+  "adapter_sha256": "7826a6b4216176e5e18723cdcc66e18743d07b5030b769e2cc9d24072887b062",
+  "temperature": 0,
+  "max_tokens": 800,
+  "enable_thinking": false,
+  "wall_seconds": 814.8,
+  "generation_totals": {
+    "prompt_tokens": 137592,
+    "completion_tokens": 98249,
+    "seconds": 813.55,
+    "peak_memory_gb": 8.43
+  }
+}

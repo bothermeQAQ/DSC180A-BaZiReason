@@ -1,0 +1,131 @@
+{
+  "dataset_version": "p3_train_v2",
+  "seed": 2026111201,
+  "generator": "bazireason.train_data3.generate_split",
+  "split_years": {
+    "train": [
+      1901,
+      2094,
+      119
+    ],
+    "valid": [
+      1910,
+      2092,
+      30
+    ],
+    "test": [
+      1915,
+      2099,
+      50
+    ]
+  },
+  "blocked_dates": 2719,
+  "contest_material_used": "birth dates only, as an exclusion list",
+  "files": {
+    "train.jsonl": {
+      "rows": 4122,
+      "sha256": "442846af6026298456626c559b9a1134fdb8819af0463fc454bd4788fa52c34b",
+      "families": {
+        "ambig": 130,
+        "claims": 200,
+        "dialog": 120,
+        "domain": 220,
+        "drill": 760,
+        "flow": 300,
+        "gods": 260,
+        "interact": 300,
+        "mcq3": 400,
+        "overview": 120,
+        "pattern": 110,
+        "replay_chart_facts": 10,
+        "replay_chart_plain": 36,
+        "replay_counterfactual": 7,
+        "replay_dst_fold": 12,
+        "replay_dst_gap": 1,
+        "replay_internal": 18,
+        "replay_invalid": 24,
+        "replay_jie_boundary": 21,
+        "replay_jie_window": 19,
+        "replay_mcq": 14,
+        "replay_missing": 10,
+        "replay_multi_turn": 14,
+        "replay_policy": 6,
+        "replay_rule": 86,
+        "replay_shanghai_dst": 4,
+        "replay_tz_facts": 5,
+        "replay_tz_known": 17,
+        "replay_tz_needs_tool": 5,
+        "replay_v3_strict": 18,
+        "replay_v4_reasoned": 14,
+        "replay_verify": 36,
+        "replay_zi_transition": 35,
+        "strength": 70,
+        "strict_audit": 600,
+        "yongshen": 120
+      },
+      "modes": {
+        "chart": 778,
+        "direct": 7,
+        "direct_minimal": 2,
+        "facts": 86,
+        "none": 2621,
+        "self_chart": 5,
+        "tool_context": 292,
+        "tool_context_minimal": 1,
+        "tool_corrupted": 316,
+        "tool_facts": 2,
+        "tool_intermediate": 11,
+        "tool_intermediate_minimal": 1
+      }
+    },
+    "valid.jsonl": {
+      "rows": 181,
+      "sha256": "ff5c015d174ab899be4aca592ceca3f41530610bd69e6f3312f8293b34e485af",
+      "families": {
+        "ambig": 9,
+        "claims": 8,
+        "dialog": 6,
+        "domain": 8,
+        "drill": 30,
+        "flow": 10,
+        "gods": 10,
+        "interact": 10,
+        "mcq3": 14,
+        "overview": 5,
+        "pattern": 5,
+        "replay_chart_facts": 1,
+        "replay_chart_plain": 2,
+        "replay_counterfactual": 1,
+        "replay_internal": 2,
+        "replay_invalid": 2,
+        "replay_jie_boundary": 3,
+        "replay_jie_window": 2,
+        "replay_mcq": 1,
+        "replay_missing": 1,
+        "replay_multi_turn": 1,
+        "replay_policy": 1,
+        "replay_rule": 5,
+        "replay_tz_facts": 1,
+        "replay_tz_known": 1,
+        "replay_tz_needs_tool": 1,
+        "replay_v3_strict": 2,
+        "replay_v4_reasoned": 1,
+        "replay_verify": 3,
+        "replay_zi_transition": 5,
+        "strength": 4,
+        "strict_audit": 20,
+        "yongshen": 6
+      },
+      "modes": {
+        "chart": 29,
+        "direct": 1,
+        "facts": 11,
+        "none": 117,
+        "self_chart": 1,
+        "tool_context": 10,
+        "tool_context_minimal": 1,
+        "tool_corrupted": 11
+      }
+    }
+  }
+}
