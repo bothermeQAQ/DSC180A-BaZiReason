@@ -52,7 +52,9 @@ DEFAULT_MODEL = "models/qwen3-4b-instruct-2507-mlx-4bit"
 # loads with --adapter; Phase 4 adapters likewise.
 DEFAULT_ADAPTER = "artifacts/adapters/bazireason-qwen3-4b-lora-p3-r3"
 DEFAULT_ADAPTER_P2 = "artifacts/adapters/bazireason-qwen3-4b-lora-v2"
-MODEL_IDS = ("p3", "p2", "base")
+# Phase 4 approach-A adapter, offered next to the demo model (not the default).
+DEFAULT_ADAPTER_P4 = "artifacts/adapters/bazireason-qwen3-4b-lora-p4-a1"
+MODEL_IDS = ("p3", "p4", "p2", "base")
 COMMON_ZONES = (
     "Asia/Shanghai",
     "Asia/Hong_Kong",
@@ -456,9 +458,11 @@ class Models:
     queued, which also means one generation at a time.
     """
 
-    def __init__(self, model_path, adapter_path, adapter_p2=DEFAULT_ADAPTER_P2):
+    def __init__(
+        self, model_path, adapter_path, adapter_p2=DEFAULT_ADAPTER_P2, adapter_p4=DEFAULT_ADAPTER_P4
+    ):
         self.model_path = model_path
-        self.adapters = {"p3": adapter_path, "p2": adapter_p2, "base": None}
+        self.adapters = {"p3": adapter_path, "p4": adapter_p4, "p2": adapter_p2, "base": None}
         self.loaded = {}
         self.jobs = queue.Queue()
         threading.Thread(target=self._work, daemon=True).start()
@@ -469,7 +473,12 @@ class Models:
 
     def available(self):
         return [
-            {"id": "p3", "name": "BaZiReason 第三阶段（规则推理）", "available": self.has("p3")},
+            {
+                "id": "p3",
+                "name": "BaZiReason 第三阶段（规则推理，演示默认）",
+                "available": self.has("p3"),
+            },
+            {"id": "p4", "name": "BaZiReason 第四阶段 A1（实验）", "available": self.has("p4")},
             {"id": "p2", "name": "BaZiReason 第二阶段（历法）", "available": self.has("p2")},
             {"id": "base", "name": "未微调的基础模型", "available": True},
         ]
@@ -709,6 +718,7 @@ def main():
     parser.add_argument("--model", default=DEFAULT_MODEL)
     parser.add_argument("--adapter", default=DEFAULT_ADAPTER, help="Phase 3 adapter folder")
     parser.add_argument("--adapter-p2", default=DEFAULT_ADAPTER_P2, help="Phase 2 adapter folder")
+    parser.add_argument("--adapter-p4", default=DEFAULT_ADAPTER_P4, help="Phase 4 adapter folder")
     parser.add_argument("--port", type=int, default=8765)
     parser.add_argument(
         "--share-lan",
@@ -719,7 +729,7 @@ def main():
     parser.add_argument("--preload", choices=("none", *MODEL_IDS, "all"), default="none")
     args = parser.parse_args()
     code = secrets.token_urlsafe(6) if args.share_lan else None
-    models = Models(args.model, args.adapter, args.adapter_p2)
+    models = Models(args.model, args.adapter, args.adapter_p2, args.adapter_p4)
     wanted = (
         MODEL_IDS if args.preload == "all" else () if args.preload == "none" else (args.preload,)
     )

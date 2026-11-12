@@ -507,9 +507,15 @@ def test_demo_routes_questions_to_trained_formats_and_never_predicts():
     undated = A.chart_payload(dict(birth, time=""))["chart"]
     assert undated["status"] != "ok" and X.plan("日主强弱怎么数？", undated) is None
     assert A.chart_payload(dict(birth, time=""))["deep"] == []
-    models = A.Models("models/none", "artifacts/adapters/none", "artifacts/adapters/none")
+    models = A.Models(
+        "models/none",
+        "artifacts/adapters/none",
+        "artifacts/adapters/none",
+        "artifacts/adapters/none",
+    )
     assert [m["id"] for m in models.available()] == [
         "p3",
+        "p4",
         "p2",
         "base",
     ] and models.default() == "base"
