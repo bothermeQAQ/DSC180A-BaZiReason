@@ -1,0 +1,525 @@
+{
+ "note": "Saved Phase 3 outputs only; every split here was inspected before Phase 4.",
+ "calendar_and_rules": {
+  "families_all_three_splits": {
+   "chart_facts": {
+    "p2": "79/84",
+    "p3r2": "74/84",
+    "p3r3": "79/84"
+   },
+   "chart_plain": {
+    "p2": "69/96",
+    "p3r2": "65/96",
+    "p3r3": "82/96"
+   },
+   "counterfactual": {
+    "p2": "74/84",
+    "p3r2": "69/84",
+    "p3r3": "68/84"
+   },
+   "dst_fold": {
+    "p2": "38/48",
+    "p3r2": "40/48",
+    "p3r3": "39/48"
+   },
+   "dst_gap": {
+    "p2": "14/14",
+    "p3r2": "13/14",
+    "p3r3": "14/14"
+   },
+   "internal": {
+    "p2": "48/80",
+    "p3r2": "40/80",
+    "p3r3": "48/80"
+   },
+   "invalid": {
+    "p2": "59/76",
+    "p3r2": "57/76",
+    "p3r3": "64/76"
+   },
+   "jie_boundary": {
+    "p2": "75/112",
+    "p3r2": "67/112",
+    "p3r3": "66/112"
+   },
+   "jie_window": {
+    "p2": "23/48",
+    "p3r2": "21/48",
+    "p3r3": "21/48"
+   },
+   "mcq": {
+    "p2": "49/88",
+    "p3r2": "57/88",
+    "p3r3": "48/88"
+   },
+   "missing": {
+    "p2": "63/68",
+    "p3r2": "63/68",
+    "p3r3": "67/68"
+   },
+   "multi_turn": {
+    "p2": "64/88",
+    "p3r2": "64/88",
+    "p3r3": "67/88"
+   },
+   "policy": {
+    "p2": "44/44",
+    "p3r2": "44/44",
+    "p3r3": "44/44"
+   },
+   "rule": {
+    "p2": "122/240",
+    "p3r2": "130/240",
+    "p3r3": "149/240"
+   },
+   "tz_facts": {
+    "p2": "39/40",
+    "p3r2": "36/40",
+    "p3r3": "37/40"
+   },
+   "tz_known": {
+    "p2": "36/52",
+    "p3r2": "30/52",
+    "p3r3": "40/52"
+   },
+   "tz_needs_tool": {
+    "p2": "18/28",
+    "p3r2": "15/28",
+    "p3r3": "2/28"
+   },
+   "verify": {
+    "p2": "154/184",
+    "p3r2": "130/184",
+    "p3r3": "147/184"
+   },
+   "zi_transition": {
+    "p2": "73/130",
+    "p3r2": "46/130",
+    "p3r3": "73/130"
+   }
+  },
+  "families_where_round3_below_phase2": {
+   "counterfactual": {
+    "p2": "74/84",
+    "p3r2": "69/84",
+    "p3r3": "68/84"
+   },
+   "jie_boundary": {
+    "p2": "75/112",
+    "p3r2": "67/112",
+    "p3r3": "66/112"
+   },
+   "jie_window": {
+    "p2": "23/48",
+    "p3r2": "21/48",
+    "p3r3": "21/48"
+   },
+   "mcq": {
+    "p2": "49/88",
+    "p3r2": "57/88",
+    "p3r3": "48/88"
+   },
+   "tz_facts": {
+    "p2": "39/40",
+    "p3r2": "36/40",
+    "p3r3": "37/40"
+   },
+   "tz_needs_tool": {
+    "p2": "18/28",
+    "p3r2": "15/28",
+    "p3r3": "2/28"
+   },
+   "verify": {
+    "p2": "154/184",
+    "p3r2": "130/184",
+    "p3r3": "147/184"
+   }
+  },
+  "phase2_right_round3_wrong_by_task": {
+   "tz_needs_tool/chart": 16,
+   "jie_boundary/chart": 13,
+   "verify/verify": 13,
+   "counterfactual/counterfactual": 10,
+   "zi_transition/chart": 8,
+   "rule/rule_elements": 8,
+   "tz_known/chart": 6,
+   "internal/internal": 6,
+   "mcq/mcq_luck": 6,
+   "chart_plain/chart": 3,
+   "chart_facts/chart": 3,
+   "jie_window/chart": 3,
+   "rule/rule_pattern": 3,
+   "mcq/mcq_pattern": 3,
+   "multi_turn/dialog_follow_up": 3,
+   "rule/rule_xun_kong": 3,
+   "multi_turn/dialog_self_correct": 3,
+   "tz_facts/chart": 2,
+   "rule/rule_strength": 2,
+   "rule/rule_hidden": 2,
+   "rule/rule_relatives": 2,
+   "mcq/mcq_flow_clash": 2,
+   "dst_fold/chart": 2,
+   "mcq/mcq_ten_god": 2,
+   "rule/rule_ten_god": 1,
+   "invalid/chart": 1,
+   "multi_turn/dialog_recheck_right": 1
+  },
+  "false_refusals": {
+   "p2/chart_plain": 13,
+   "p2/dst_fold": 2,
+   "p2/jie_boundary": 7,
+   "p2/jie_window": 1,
+   "p2/missing": 4,
+   "p2/tz_known": 12,
+   "p2/zi_transition": 3,
+   "p3r2/chart_facts": 2,
+   "p3r2/chart_plain": 15,
+   "p3r2/jie_boundary": 16,
+   "p3r2/jie_window": 1,
+   "p3r2/missing": 4,
+   "p3r2/tz_known": 12,
+   "p3r2/zi_transition": 8,
+   "p3r3/chart_facts": 1,
+   "p3r3/chart_plain": 1,
+   "p3r3/dst_fold": 4,
+   "p3r3/jie_boundary": 7,
+   "p3r3/jie_window": 1,
+   "p3r3/tz_known": 1,
+   "p3r3/zi_transition": 2
+  },
+  "phase2_rule_tasks_by_kind": {
+   "rule_elements": {
+    "p2": 14,
+    "p3r2": 9,
+    "p3r3": 6
+   },
+   "rule_flow_year": {
+    "p2": 2,
+    "p3r2": 2,
+    "p3r3": 8
+   },
+   "rule_hidden": {
+    "p2": 9,
+    "p3r2": 9,
+    "p3r3": 13
+   },
+   "rule_life_stage": {
+    "p2": 19,
+    "p3r2": 19,
+    "p3r3": 19
+   },
+   "rule_luck": {
+    "p2": 16,
+    "p3r2": 11,
+    "p3r3": 17
+   },
+   "rule_pattern": {
+    "p2": 10,
+    "p3r2": 13,
+    "p3r3": 10
+   },
+   "rule_relations": {
+    "p2": 2,
+    "p3r2": 4,
+    "p3r3": 8
+   },
+   "rule_relatives": {
+    "p2": 10,
+    "p3r2": 6,
+    "p3r3": 10
+   },
+   "rule_seasonal": {
+    "p2": 15,
+    "p3r2": 19,
+    "p3r3": 18
+   },
+   "rule_strength": {
+    "p2": 7,
+    "p3r2": 16,
+    "p3r3": 13
+   },
+   "rule_ten_god": {
+    "p2": 13,
+    "p3r2": 17,
+    "p3r3": 16
+   },
+   "rule_xun_kong": {
+    "p2": 5,
+    "p3r2": 5,
+    "p3r3": 11
+   }
+  },
+  "procedure_confusion_phase2_rules": {
+   "p3r3/rule_elements/strength": 9,
+   "p3r2/rule_elements/strength": 2,
+   "p3r2/rule_flow_year/god_table+branch_card": 1,
+   "p3r3/rule_elements/pattern": 1
+  }
+ },
+ "phase3_split": {
+  "p3r2": {
+   "seen_wording": "285/366",
+   "unseen_wording": "129/255",
+   "by_mode": {
+    "chart": "88/147",
+    "none": "326/474"
+   },
+   "procedure_confusion": {}
+  },
+  "p3r3": {
+   "seen_wording": "271/366",
+   "unseen_wording": "133/255",
+   "by_mode": {
+    "chart": "78/147",
+    "none": "326/474"
+   },
+   "procedure_confusion": {}
+  }
+ },
+ "benchmark_v3_strict": {
+  "p2": {
+   "direct": {
+    "decision_accuracy": 0.89272030651341,
+    "false_refusal_rate": 0.0,
+    "ambiguous_definitive_rate": 0.7619047619047619,
+    "corruption_following_by_type": {}
+   },
+   "direct_minimal": {
+    "decision_accuracy": 0.8888888888888888,
+    "false_refusal_rate": 0.0,
+    "ambiguous_definitive_rate": 0.8571428571428571,
+    "corruption_following_by_type": {}
+   },
+   "tool_intermediate": {
+    "decision_accuracy": 0.9233716475095786,
+    "false_refusal_rate": 0.008888888888888889,
+    "ambiguous_definitive_rate": 0.47619047619047616,
+    "corruption_following_by_type": {}
+   },
+   "tool_context": {
+    "decision_accuracy": 1.0,
+    "false_refusal_rate": 0.0,
+    "ambiguous_definitive_rate": 0.0,
+    "corruption_following_by_type": {}
+   },
+   "tool_corrupted": {
+    "decision_accuracy": 0.9386973180076629,
+    "false_refusal_rate": 0.0,
+    "ambiguous_definitive_rate": 0.7619047619047619,
+    "corruption_following_rate": 0.9877049180327869,
+    "corruption_following_by_type": {
+     "day_rollover": {
+      "n": 77,
+      "n_missing": 0,
+      "following_rate": 1.0
+     },
+     "default_guess": {
+      "n": 19,
+      "n_missing": 0,
+      "following_rate": 0.8421052631578947
+     },
+     "hour_stem": {
+      "n": 81,
+      "n_missing": 0,
+      "following_rate": 1.0
+     },
+     "jie_side": {
+      "n": 67,
+      "n_missing": 0,
+      "following_rate": 1.0
+     }
+    }
+   }
+  },
+  "p3r2": {
+   "direct": {
+    "decision_accuracy": 0.7509578544061303,
+    "false_refusal_rate": 0.18666666666666668,
+    "ambiguous_definitive_rate": 0.42857142857142855,
+    "corruption_following_by_type": {}
+   },
+   "direct_minimal": {
+    "decision_accuracy": 0.8888888888888888,
+    "false_refusal_rate": 0.0,
+    "ambiguous_definitive_rate": 0.7619047619047619,
+    "corruption_following_by_type": {}
+   },
+   "tool_intermediate": {
+    "decision_accuracy": 0.8007662835249042,
+    "false_refusal_rate": 0.18666666666666668,
+    "ambiguous_definitive_rate": 0.14285714285714285,
+    "corruption_following_by_type": {}
+   },
+   "tool_context": {
+    "decision_accuracy": 1.0,
+    "false_refusal_rate": 0.0,
+    "ambiguous_definitive_rate": 0.0,
+    "corruption_following_by_type": {}
+   },
+   "tool_corrupted": {
+    "decision_accuracy": 0.9578544061302682,
+    "false_refusal_rate": 0.0,
+    "ambiguous_definitive_rate": 0.5238095238095238,
+    "corruption_following_rate": 0.9672131147540983,
+    "corruption_following_by_type": {
+     "day_rollover": {
+      "n": 77,
+      "n_missing": 0,
+      "following_rate": 1.0
+     },
+     "default_guess": {
+      "n": 19,
+      "n_missing": 0,
+      "following_rate": 0.5789473684210527
+     },
+     "hour_stem": {
+      "n": 81,
+      "n_missing": 0,
+      "following_rate": 1.0
+     },
+     "jie_side": {
+      "n": 67,
+      "n_missing": 0,
+      "following_rate": 1.0
+     }
+    }
+   }
+  },
+  "p3r3": {
+   "direct": {
+    "decision_accuracy": 0.9272030651340997,
+    "false_refusal_rate": 0.017777777777777778,
+    "ambiguous_definitive_rate": 0.2857142857142857,
+    "corruption_following_by_type": {}
+   },
+   "direct_minimal": {
+    "decision_accuracy": 0.896551724137931,
+    "false_refusal_rate": 0.0,
+    "ambiguous_definitive_rate": 0.8095238095238095,
+    "corruption_following_by_type": {}
+   },
+   "tool_intermediate": {
+    "decision_accuracy": 0.9118773946360154,
+    "false_refusal_rate": 0.0044444444444444444,
+    "ambiguous_definitive_rate": 0.6190476190476191,
+    "corruption_following_by_type": {}
+   },
+   "tool_context": {
+    "decision_accuracy": 1.0,
+    "false_refusal_rate": 0.0,
+    "ambiguous_definitive_rate": 0.0,
+    "corruption_following_by_type": {}
+   },
+   "tool_corrupted": {
+    "decision_accuracy": 0.9386973180076629,
+    "false_refusal_rate": 0.0,
+    "ambiguous_definitive_rate": 0.7619047619047619,
+    "corruption_following_rate": 0.9795081967213115,
+    "corruption_following_by_type": {
+     "day_rollover": {
+      "n": 77,
+      "n_missing": 0,
+      "following_rate": 1.0
+     },
+     "default_guess": {
+      "n": 19,
+      "n_missing": 0,
+      "following_rate": 0.8421052631578947
+     },
+     "hour_stem": {
+      "n": 81,
+      "n_missing": 0,
+      "following_rate": 1.0
+     },
+     "jie_side": {
+      "n": 67,
+      "n_missing": 0,
+      "following_rate": 0.9701492537313433
+     }
+    }
+   }
+  }
+ },
+ "baziqa_replies": {
+  "p2_no_tools": {
+   "replies": 1665,
+   "loops": 24,
+   "loops_without_answer": 7,
+   "unanswered": 13,
+   "truncated": 9,
+   "mean_tokens": 53,
+   "titles": {}
+  },
+  "p2_tools": {
+   "replies": 1665,
+   "loops": 30,
+   "loops_without_answer": 15,
+   "unanswered": 17,
+   "truncated": 16,
+   "mean_tokens": 64,
+   "titles": {}
+  },
+  "p3r2_no_tools": {
+   "replies": 1665,
+   "loops": 113,
+   "loops_without_answer": 81,
+   "unanswered": 105,
+   "truncated": 88,
+   "mean_tokens": 162,
+   "titles": {
+    "穷通宝鉴": 125,
+    "三命通会": 48,
+    "六亲定论": 12,
+    "六亲论": 11,
+    "三世姻亲": 10,
+    "六亲探源": 9,
+    "六亲": 3,
+    "渊海子平": 3
+   }
+  },
+  "p3r2_tools": {
+   "replies": 1665,
+   "loops": 135,
+   "loops_without_answer": 95,
+   "unanswered": 117,
+   "truncated": 105,
+   "mean_tokens": 180,
+   "titles": {
+    "穷通宝鉴": 123,
+    "三命通会": 45,
+    "神宗": 13,
+    "六亲探源": 10,
+    "滴天灵": 7,
+    "渊海子平": 6,
+    "滴天寿": 5,
+    "六亲定论": 5
+   }
+  },
+  "p3r3_no_tools": {
+   "replies": 1665,
+   "loops": 28,
+   "loops_without_answer": 25,
+   "unanswered": 37,
+   "truncated": 28,
+   "mean_tokens": 112,
+   "titles": {
+    "穷通宝鉴": 6,
+    "1998年": 1,
+    "六亲详注": 1,
+    "三命通会": 1,
+    "青术": 1
+   }
+  },
+  "p3r3_tools": {
+   "replies": 1665,
+   "loops": 53,
+   "loops_without_answer": 43,
+   "unanswered": 53,
+   "truncated": 45,
+   "mean_tokens": 134,
+   "titles": {
+    "穷通宝鉴": 1
+   }
+  }
+ }
+}

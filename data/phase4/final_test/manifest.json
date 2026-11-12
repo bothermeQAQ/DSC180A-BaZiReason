@@ -1,0 +1,78 @@
+{
+  "split_years": "test",
+  "plan": {
+    "split": "test",
+    "p3": [
+      2026111411,
+      1.0
+    ],
+    "p2": [
+      2026111412,
+      1.0
+    ],
+    "indep": [
+      2026111413,
+      280
+    ]
+  },
+  "files": {
+    "p3.jsonl": {
+      "rows": 788,
+      "sha256": "a9fe88000ce0ebbcd8acbf9b368fa80ff8ae5bf5912df672be5552c1ede3c7de",
+      "families": {
+        "ambig": 54,
+        "claims": 48,
+        "dialog": 30,
+        "domain": 36,
+        "drill": 137,
+        "flow": 50,
+        "gods": 40,
+        "interact": 40,
+        "mcq3": 63,
+        "overview": 20,
+        "pattern": 30,
+        "strength": 30,
+        "strict_shift": 180,
+        "yongshen": 30
+      }
+    },
+    "p2.jsonl": {
+      "rows": 484,
+      "sha256": "291ea14bb5801225d779270d68087efa0e7a523c3f0ee52baaeac15c1118e850",
+      "families": {
+        "chart_facts": 24,
+        "chart_plain": 30,
+        "counterfactual": 24,
+        "dst_fold": 15,
+        "dst_gap": 4,
+        "internal": 24,
+        "invalid": 24,
+        "jie_boundary": 33,
+        "jie_window": 24,
+        "mcq": 24,
+        "missing": 18,
+        "multi_turn": 24,
+        "policy": 12,
+        "rule": 72,
+        "tz_facts": 12,
+        "tz_known": 16,
+        "tz_needs_tool": 8,
+        "verify": 56,
+        "zi_transition": 40
+      }
+    },
+    "indep.jsonl": {
+      "rows": 280,
+      "sha256": "7944ed7c911d8f8ef7a6eef6287538c4c74a8a11df6fb1ac48a9bacd94c680f3",
+      "families": {
+        "indep": 280
+      }
+    }
+  },
+  "inspected_prompts_excluded_from": [
+    "data/phase3/train_v1/test.jsonl",
+    "data/phase2/train_v1/test.jsonl",
+    "data/phase2/train_v2/test.jsonl",
+    "data/phase3/p2check_v1/test.jsonl"
+  ]
+}

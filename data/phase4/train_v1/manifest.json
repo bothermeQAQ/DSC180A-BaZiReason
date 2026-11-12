@@ -1,0 +1,112 @@
+{
+  "dataset_version": "p4_train_v1",
+  "seed": 2026111421,
+  "generator": "bazireason.train_data4.generate_split",
+  "starts_from_adapter": "bazireason-qwen3-4b-lora-p3-r3",
+  "split_years": {
+    "train": [
+      1901,
+      2094,
+      119
+    ],
+    "valid": [
+      1910,
+      2092,
+      30
+    ],
+    "test": [
+      1915,
+      2099,
+      50
+    ]
+  },
+  "contest_material_used": "birth dates only, as an exclusion list",
+  "files": {
+    "train.jsonl": {
+      "rows": 3715,
+      "sha256": "e6dc090ec8a0aea9fb87c6b81252a2989d64bd19f68dfaeb1d0ea19c70d3a84c",
+      "families": {
+        "ambig": 100,
+        "claims": 90,
+        "dialog": 80,
+        "domain": 70,
+        "drill": 250,
+        "flow": 130,
+        "gods": 110,
+        "interact": 130,
+        "mcq3": 140,
+        "overview": 50,
+        "pattern": 70,
+        "replay_chart_facts": 60,
+        "replay_chart_plain": 120,
+        "replay_counterfactual": 160,
+        "replay_dst_fold": 50,
+        "replay_dst_gap": 15,
+        "replay_internal": 100,
+        "replay_invalid": 60,
+        "replay_jie_boundary": 220,
+        "replay_jie_window": 120,
+        "replay_mcq": 80,
+        "replay_missing": 60,
+        "replay_multi_turn": 80,
+        "replay_policy": 40,
+        "replay_rule": 300,
+        "replay_shanghai_dst": 20,
+        "replay_tz_facts": 40,
+        "replay_tz_known": 100,
+        "replay_tz_needs_tool": 120,
+        "replay_v3_strict": 60,
+        "replay_v4_reasoned": 60,
+        "replay_verify": 220,
+        "replay_zi_transition": 160,
+        "strength": 70,
+        "strict_audit": 120,
+        "yongshen": 60
+      },
+      "augmented_questions": 337
+    },
+    "valid.jsonl": {
+      "rows": 179,
+      "sha256": "78913a353eb0ba058f73f9ff40d4a16b3e394c98e1de3622ae5a5d22d73dc804",
+      "families": {
+        "ambig": 6,
+        "claims": 4,
+        "dialog": 4,
+        "domain": 3,
+        "drill": 12,
+        "flow": 6,
+        "gods": 5,
+        "interact": 6,
+        "mcq3": 6,
+        "overview": 2,
+        "pattern": 3,
+        "replay_chart_facts": 3,
+        "replay_chart_plain": 6,
+        "replay_counterfactual": 8,
+        "replay_dst_fold": 3,
+        "replay_dst_gap": 1,
+        "replay_internal": 5,
+        "replay_invalid": 3,
+        "replay_jie_boundary": 10,
+        "replay_jie_window": 6,
+        "replay_mcq": 4,
+        "replay_missing": 3,
+        "replay_multi_turn": 4,
+        "replay_policy": 2,
+        "replay_rule": 14,
+        "replay_shanghai_dst": 1,
+        "replay_tz_facts": 2,
+        "replay_tz_known": 5,
+        "replay_tz_needs_tool": 6,
+        "replay_v3_strict": 3,
+        "replay_v4_reasoned": 3,
+        "replay_verify": 10,
+        "replay_zi_transition": 8,
+        "strength": 3,
+        "strict_audit": 6,
+        "yongshen": 3
+      },
+      "augmented_questions": 13
+    }
+  }
+}

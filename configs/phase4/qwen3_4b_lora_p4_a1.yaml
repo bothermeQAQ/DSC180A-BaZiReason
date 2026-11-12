@@ -1,0 +1,37 @@
+# BaZiReason Phase 4, approach A (continual fine-tuning): warm start from the Phase 3 round-3 adapter on p4_train_v1.
+# Data design from results/phase4/error_analysis.json; see docs/phase4_report.md.
+run_name: bazireason-qwen3-4b-lora-p4-a1
+model: models/qwen3-4b-instruct-2507-mlx-4bit
+base_model:
+  repo: Qwen/Qwen3-4B-Instruct-2507
+  revision: cdbee75f17c01a7cc42f958dc650907174af0554
+  license: Apache-2.0
+  quantization: "mlx_lm convert -q --q-bits 4 --q-group-size 64 (mlx-lm 0.32.2)"
+init_adapter: artifacts/adapters/bazireason-qwen3-4b-lora-p3-r3/adapters.safetensors
+data:
+  train: data/phase4/train_v1/train.jsonl
+  valid: data/phase4/train_v1/valid.jsonl
+  valid_rows: 120
+adapter_dir: artifacts/adapters/bazireason-qwen3-4b-lora-p4-a1
+log_dir: results/phase4/training/bazireason-qwen3-4b-lora-p4-a1
+seed: 20261115
+fine_tune_type: lora
+num_layers: 16
+lora_parameters:
+  rank: 16
+  scale: 2.0
+  dropout: 0.05
+optimizer: adamw
+weight_decay: 0.01
+learning_rate: 5.0e-5      # as round 3: a corrective continuation of a trained adapter
+warmup_updates: 20
+end_learning_rate: 5.0e-6
+batch_size: 2
+grad_accumulation_steps: 2
+epochs: 1.0
+max_seq_length: 1920
+steps_per_report: 20
+steps_per_eval: 500
+steps_per_save: 500
+mask_prompt: true
+enable_thinking: false
