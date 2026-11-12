@@ -533,3 +533,24 @@ def test_demo_checks_pattern_and_spouse_star_claims_in_prose():
     assert A.audit_reply(female_rule, dict(birth, gender="male"))["problems"]
     both = "男命以财为妻星，女命以官杀为夫星。"
     assert not A.audit_reply(both, birth)["problems"]
+
+
+def test_claim_checker_recomputes_fixed_form_claims_without_a_model():
+    from bazireason import claim_check as C
+
+    pillars = {"year": "庚午", "month": "辛巳", "day": "壬午", "hour": "丁未"}
+    text = (
+        "午未六合；丁壬相合；没有五合或相冲。月支巳藏丙、庚、戊。旬空申酉。壬临午为胎。"
+        "桃花在卯。记为偏弱。合计：木0、火3、土1、金2、水1。取格为伤官格。《滴天寿》云。"
+        "子午相害。"
+    )
+    results = {r["said"] or r["kind"]: r["ok"] for r in C.check_claims(text, pillars)}
+    for said in ("午未六合", "丁壬相合", "旬空申酉", "壬临午为胎", "桃花在卯", "记为偏弱"):
+        assert results[said], said
+    assert not results["木0、火3、土1、金2、水1"]  # 火 is 4
+    assert not results["伤官格"] and not results["《滴天寿》"] and not results["子午相害"]
+    assert all(
+        r["kind"] != "stem_relation" or r["said"] == "丁壬相合"
+        for r in C.check_claims(text, pillars)
+    )
+    assert C.check_claims("此命注定大富大贵。", pillars)[-1]["kind"] == "unverifiable"

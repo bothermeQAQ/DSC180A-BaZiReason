@@ -37,7 +37,7 @@ from datetime import datetime, timezone
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 
-from bazireason import deep_rules, demo_deep, rules
+from bazireason import claim_check, deep_rules, demo_deep, rules
 from bazireason import worked as W
 from bazireason.calendar_engine import temporal_facts, tzdata_keys
 from bazireason.charttools import chart_tool_text, pillars_text, verified_chart
@@ -257,12 +257,13 @@ def audit_reply(text: str, birth, message: str = "", first_turn: bool = True) ->
     """Deterministic check of a model reply against the verified chart.
 
     The model is not trusted on facts the engine and rule tables can decide. Only
-    fixed-form statements are checked (a named pillar, the day master, the pillar
-    of a year, the Ten God of a named stem, the direction of the luck cycles).
+    fixed-form statements are checked (``bazireason.claim_check``: pillars, Ten Gods,
+    hidden stems, relations, element counts, 旬空, life stages, stars, strength label,
+    pattern, spouse star against the gender, book titles, loops), plus the direction of
+    the luck cycles and the reply's structured conclusion.
     """
     if not birth:
         return {"checked": 0, "problems": []}
-    from bazireason.baziqa import audit_details, audit_explanation
 
     chart = chart_payload(birth)["chart"]
     if chart["status"] != "ok":
@@ -271,8 +272,10 @@ def audit_reply(text: str, birth, message: str = "", first_turn: bool = True) ->
             ["引擎没有给出四柱，但回答里写出了具体的柱；请以“未给出四柱”为准。"] if claimed else []
         )
         return {"checked": int(claimed), "problems": problems}
-    problems = audit_details(text, chart["pillars"])
-    checked = len(audit_explanation(text, chart["pillars"]))
+    # Every fixed-form chart and rule claim, checked by code with no model involved.
+    claims = claim_check.check_claims(text, chart["pillars"], birth.get("gender"))
+    problems = claim_check.problems(claims)
+    checked = len(claims)
     direction = re.search(r"大运\s*(顺|逆)行", text)
     if direction:
         checked += 1
@@ -281,10 +284,6 @@ def audit_reply(text: str, birth, message: str = "", first_turn: bool = True) ->
         elif (direction.group(1) == "顺") != (chart["luck"]["direction"] == "forward"):
             truth = "顺行" if chart["luck"]["direction"] == "forward" else "逆行"
             problems.append(f"回答说大运{direction.group(1)}行，按规则应为{truth}。")
-    claim = UNVERIFIABLE.search(text)
-    if claim and "不能" not in text[max(0, claim.start() - 12) : claim.start()]:
-        problems.append(f"回答里出现了无法核验的断语“{claim.group(1)}”，这类说法没有可验证的依据。")
-    checked, problems = prose_rule_checks(text, chart, birth, checked, problems)
     planned = demo_deep.plan(message, chart, first_turn=first_turn) if message else None
     if planned is not None:
         structured = demo_deep.check(planned, text)
@@ -296,46 +295,8 @@ def audit_reply(text: str, birth, message: str = "", first_turn: bool = True) ->
             problems.append(
                 f"结构化结论与规则引擎不符：{structured['label']}按规则应为 {structured['engine']}。"
             )
-    return {"checked": checked, "problems": problems, "engine": structured}
-
-
-PATTERN_CLAIM = re.compile(
-    r"(正官|七杀|偏官|正财|偏财|食神|伤官|正印|偏印|枭神|建禄|阳刃|月刃|月劫)格"
-)
-PATTERN_SYNONYMS = {"偏官": "七杀", "枭神": "偏印", "月刃": "阳刃"}
-SPOUSE_RULE = re.compile(r"([男女])命?以(?:正|偏|七|财|官)")
-
-
-def prose_rule_checks(text, chart, birth, checked, problems):
-    """Two fixed-form statements in free prose that the rule code decides.
-
-    A named pattern ("X格") must be the month-order pattern by 透干 or the simplified
-    main-qi label; a spouse star must follow the gender that was entered.
-    """
-    pillars = chart["pillars"]
-    claims = {PATTERN_SYNONYMS.get(c, c) + "格" for c in PATTERN_CLAIM.findall(text)}
-    if claims:
-        checked += 1
-        revealed = deep_rules.revealed_pattern(pillars)["pattern"]
-        simple = rules.month_pattern(pillars)
-        wrong = sorted(claims - {revealed, simple})
-        if wrong:
-            problems.append(
-                f"回答说本盘是{'、'.join(wrong)}；按月令透干取格的约定应为{revealed}"
-                f"（只看本气的简化标签是{simple}）。"
-            )
-    genders = set(SPOUSE_RULE.findall(text))
-    if len(genders) == 1:
-        checked += 1
-        used = genders.pop()
-        entered = {"male": "男", "female": "女"}.get(birth.get("gender"))
-        if entered is None:
-            problems.append(
-                f"没有填写性别，回答却按{used}命取配偶星；男命看财、女命看官杀，性别不同结论不同。"
-            )
-        elif used != entered:
-            problems.append(f"填写的是{entered}命，回答却按{used}命取配偶星。")
-    return checked, problems
+    shown = [c for c in claims if c["kind"] not in ("pillar", "day_master", "flow_year", "ten_god")]
+    return {"checked": checked, "problems": problems, "engine": structured, "claims": shown}
 
 
 def chart_payload(birth: dict, until_year=None):

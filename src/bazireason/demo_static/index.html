@@ -322,7 +322,19 @@ async function send(text) {
           bubble.appendChild(more);
         }
       }
-    } else if (audit && audit.checked) {
+    }
+    if (audit && audit.claims && audit.claims.length) {
+      const list = document.createElement("details");
+      const ok = audit.claims.filter(c => c.ok).length;
+      list.innerHTML = `<summary>逐条核对（规则代码，不经模型）：${ok}/${audit.claims.length} 条一致</summary><ul class="claims"></ul>`;
+      for (const c of audit.claims) {
+        const li = document.createElement("li");
+        li.textContent = (c.ok ? "✓ " : "✗ ") + (c.said || c.kind) + (c.ok ? "" : " → 规则代码：" + (typeof c.engine === "object" ? JSON.stringify(c.engine) : c.engine));
+        list.querySelector("ul").appendChild(li);
+      }
+      bubble.appendChild(list);
+    }
+    if (audit && !audit.problems.length && audit.checked) {
       const box = document.createElement("div"); box.className = "meta";
       box.textContent = `核验：回答中 ${audit.checked} 处可核对的陈述与已核验排盘和规则表一致。`;
       bubble.appendChild(box);
