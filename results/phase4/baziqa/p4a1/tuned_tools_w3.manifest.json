@@ -1,0 +1,23 @@
+{
+  "condition": "tuned_tools_w3",
+  "workflow": "W3 contest guard (verified chart + rule facts, loop guard, citation check)",
+  "benchmark_commit": "3bad3deaa5aa3a191c9c68b4d8b17f46decff45e",
+  "n_persons": 117,
+  "runs": 3,
+  "decoding": {
+    "temperature": 0.7,
+    "top_p": 0.8,
+    "top_k": 20,
+    "max_tokens": 1024,
+    "seed_base": 20261110,
+    "loop_guard": "greedy, 16 tokens"
+  },
+  "model": "p4a1",
+  "adapter_path": "artifacts/adapters/bazireason-qwen3-4b-lora-p4-a1",
+  "adapter_sha256": "89311020680a2d40d52ca4f0d4e0f96f6df3ce94957e991afb994e7170840d91",
+  "contest_data_used_for_training": false,
+  "answer_keys_used": false,
+  "status": "complete",
+  "wall_seconds": 4826.5,
+  "prompt_block_sha256": "905decd5df0554571f59f81dc7dc22b6168b4c3579284181081317b67a847dc2"
+}

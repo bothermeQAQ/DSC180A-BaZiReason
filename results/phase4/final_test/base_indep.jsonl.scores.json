@@ -1,0 +1,28 @@
+{
+  "model": "base",
+  "workflow": "w0",
+  "summary": {
+    "overall": {
+      "n": 280,
+      "k": 64
+    },
+    "by_kind": {
+      "ten_god_stem": 9,
+      "ten_god_branch": 3,
+      "hidden": 31,
+      "life_stage": 2,
+      "xun_kong": 0,
+      "luck_direction": 19,
+      "element_count": 0
+    },
+    "kind_rows": {
+      "ten_god_stem": 40,
+      "ten_god_branch": 40,
+      "hidden": 40,
+      "life_stage": 40,
+      "xun_kong": 40,
+      "luck_direction": 40,
+      "element_count": 40
+    }
+  }
+}

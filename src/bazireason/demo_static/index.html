@@ -226,10 +226,20 @@ function renderChart(target, payload, title, changed = []) {
 function renderNotes(list) {
   $("notes").innerHTML = list.map((n, i) => `<li class="${i === 0 && n.startsWith("未给出") ? "lead" : ""}">${esc(n)}</li>`).join("");
 }
+// A question must use the chart on screen: sending waits for any chart still being computed.
+let chartPending = Promise.resolve();
 async function cast() {
   const b = birth();
-  const payload = await (await api("/api/chart", {birth: b})).json();
-  lastBirth = b; comparePair = null;
+  let done;
+  chartPending = new Promise(resolve => { done = resolve; });
+  lastBirth = null; comparePair = null;
+  try {
+    const payload = await (await api("/api/chart", {birth: b})).json();
+    lastBirth = b;
+    showChart(payload);
+  } finally { done(); }
+}
+function showChart(payload) {
   $("chartB").innerHTML = "";
   renderChart($("chart"), payload, "当前排盘");
   const ok = payload.chart.status === "ok";
@@ -240,8 +250,14 @@ async function cast() {
 }
 async function compare() {
   const a = birth(), b = birth("B");
-  const result = await (await api("/api/compare", {a, b})).json();
-  lastBirth = null; comparePair = {a, b};
+  let done;
+  chartPending = new Promise(resolve => { done = resolve; });
+  lastBirth = null; comparePair = null;
+  let result;
+  try {
+    result = await (await api("/api/compare", {a, b})).json();
+    comparePair = {a, b};
+  } finally { done(); }
   renderChart($("chart"), result.a, "情形 A");
   renderChart($("chartB"), result.b, "情形 B", result.changed || []);
   const notes = [];
@@ -270,6 +286,7 @@ async function send(text) {
   const message = (text || $("input").value).trim();
   if (!message) return;
   $("input").value = ""; $("send").disabled = true; $("busy").textContent = "模型正在本机生成…";
+  await chartPending;
   addMessage("user", message);
   const bubble = addMessage("bot", "");
   let answer = "", speculative = false, format = "", asked = "";

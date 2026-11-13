@@ -93,3 +93,9 @@ Each change below was made before any final-test row was generated or scored.
    - P-1, and P-3 against P2, become P2 against itself. The same calendar non-inferiority comparison is reported for every other adapter as exploratory, on the final test, which has more calendar rows.
    - The chatbot keeps R3 as its default demo model, as the brief asks, and offers P2 and A1 next to it.
 3. **No A2.** The eligibility failure is a power limit, not a measured calendar loss: R3's point estimate is +0.6 points against P2. A1 replayed calendar tasks in 60% of its rows, yet its calendar point estimate moved down (−3.6), not up. The error analysis therefore points to no training change expected to clear a bound that needs a gain over P2. Training another round to clear this threshold would tune against the selection split.
+
+**Changes after the final test was scored.** None changes a model, a prompt or a frozen threshold:
+
+4. **W2 metadata on benchmark_v3.** The runner wrote the plain v3 prompt version into each record, while the manifest named the W2 prompt, so `bazireason evaluate` refused the files. The field was corrected in the three saved files; the outputs are unchanged, and each manifest notes the correction. The runner is fixed.
+5. **The untuned base model was added as a baseline.** It was run once on the final test (W0) after the candidate runs, to give a general-purpose comparison with the same prompts. It is not a selection candidate.
+6. **Two false-alarm classes in the claim checker were fixed:** partial hidden-stem lists, and pattern names inside an explanation of the naming rule. The checker's final-test measurement (report section 10) is exploratory. A sample of 14 final-test flags pointed to the two classes, and the fixes were developed and checked on validation replies.

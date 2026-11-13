@@ -1,0 +1,582 @@
+{
+  "model": "base",
+  "workflow": "w0",
+  "summary": {
+    "overall": {
+      "n": 788,
+      "hits": 68,
+      "rate": 0.08629441624365482
+    },
+    "reasoning_tasks": {
+      "n": 608,
+      "hits": 38,
+      "rate": 0.0625
+    },
+    "parsed": {
+      "n": 788,
+      "hits": 376,
+      "rate": 0.47715736040609136
+    },
+    "by_family": {
+      "ambig": {
+        "n": 54,
+        "hits": 0,
+        "rate": 0.0
+      },
+      "claims": {
+        "n": 48,
+        "hits": 1,
+        "rate": 0.020833333333333332
+      },
+      "dialog": {
+        "n": 30,
+        "hits": 5,
+        "rate": 0.16666666666666666
+      },
+      "domain": {
+        "n": 36,
+        "hits": 0,
+        "rate": 0.0
+      },
+      "drill": {
+        "n": 137,
+        "hits": 14,
+        "rate": 0.10218978102189781
+      },
+      "flow": {
+        "n": 50,
+        "hits": 0,
+        "rate": 0.0
+      },
+      "gods": {
+        "n": 40,
+        "hits": 0,
+        "rate": 0.0
+      },
+      "interact": {
+        "n": 40,
+        "hits": 0,
+        "rate": 0.0
+      },
+      "mcq3": {
+        "n": 63,
+        "hits": 17,
+        "rate": 0.2698412698412698
+      },
+      "overview": {
+        "n": 20,
+        "hits": 0,
+        "rate": 0.0
+      },
+      "pattern": {
+        "n": 30,
+        "hits": 1,
+        "rate": 0.03333333333333333
+      },
+      "strength": {
+        "n": 30,
+        "hits": 0,
+        "rate": 0.0
+      },
+      "strict_shift": {
+        "n": 180,
+        "hits": 30,
+        "rate": 0.16666666666666666
+      },
+      "yongshen": {
+        "n": 30,
+        "hits": 0,
+        "rate": 0.0
+      }
+    },
+    "by_kind": {
+      "ambig/gender_given": {
+        "n": 6,
+        "hits": 0,
+        "rate": 0.0
+      },
+      "ambig/gender_needed": {
+        "n": 6,
+        "hits": 0,
+        "rate": 0.0
+      },
+      "ambig/hour_needed": {
+        "n": 6,
+        "hits": 0,
+        "rate": 0.0
+      },
+      "ambig/hour_not_needed": {
+        "n": 6,
+        "hits": 0,
+        "rate": 0.0
+      },
+      "ambig/hour_strength": {
+        "n": 6,
+        "hits": 0,
+        "rate": 0.0
+      },
+      "ambig/no_rule": {
+        "n": 6,
+        "hits": 0,
+        "rate": 0.0
+      },
+      "ambig/star_basis": {
+        "n": 6,
+        "hits": 0,
+        "rate": 0.0
+      },
+      "ambig/yongshen_named": {
+        "n": 6,
+        "hits": 0,
+        "rate": 0.0
+      },
+      "ambig/yongshen_open": {
+        "n": 6,
+        "hits": 0,
+        "rate": 0.0
+      },
+      "claims/claims": {
+        "n": 48,
+        "hits": 1,
+        "rate": 0.020833333333333332
+      },
+      "dialog/decline": {
+        "n": 7,
+        "hits": 5,
+        "rate": 0.7142857142857143
+      },
+      "dialog/followup": {
+        "n": 7,
+        "hits": 0,
+        "rate": 0.0
+      },
+      "dialog/pushback": {
+        "n": 8,
+        "hits": 0,
+        "rate": 0.0
+      },
+      "dialog/self_correct": {
+        "n": 8,
+        "hits": 0,
+        "rate": 0.0
+      },
+      "domain/career": {
+        "n": 7,
+        "hits": 0,
+        "rate": 0.0
+      },
+      "domain/children": {
+        "n": 7,
+        "hits": 0,
+        "rate": 0.0
+      },
+      "domain/marriage": {
+        "n": 8,
+        "hits": 0,
+        "rate": 0.0
+      },
+      "domain/study": {
+        "n": 7,
+        "hits": 0,
+        "rate": 0.0
+      },
+      "domain/wealth": {
+        "n": 7,
+        "hits": 0,
+        "rate": 0.0
+      },
+      "drill/branch_card": {
+        "n": 7,
+        "hits": 0,
+        "rate": 0.0
+      },
+      "drill/branch_pair": {
+        "n": 10,
+        "hits": 0,
+        "rate": 0.0
+      },
+      "drill/class": {
+        "n": 9,
+        "hits": 0,
+        "rate": 0.0
+      },
+      "drill/cycle": {
+        "n": 10,
+        "hits": 0,
+        "rate": 0.0
+      },
+      "drill/element": {
+        "n": 9,
+        "hits": 0,
+        "rate": 0.0
+      },
+      "drill/hidden": {
+        "n": 7,
+        "hits": 2,
+        "rate": 0.2857142857142857
+      },
+      "drill/hour_stem": {
+        "n": 8,
+        "hits": 2,
+        "rate": 0.25
+      },
+      "drill/luck_dir": {
+        "n": 9,
+        "hits": 0,
+        "rate": 0.0
+      },
+      "drill/month_stem": {
+        "n": 9,
+        "hits": 0,
+        "rate": 0.0
+      },
+      "drill/season": {
+        "n": 10,
+        "hits": 3,
+        "rate": 0.3
+      },
+      "drill/stage": {
+        "n": 10,
+        "hits": 0,
+        "rate": 0.0
+      },
+      "drill/star": {
+        "n": 10,
+        "hits": 1,
+        "rate": 0.1
+      },
+      "drill/stem_pair": {
+        "n": 10,
+        "hits": 0,
+        "rate": 0.0
+      },
+      "drill/ten_god": {
+        "n": 9,
+        "hits": 2,
+        "rate": 0.2222222222222222
+      },
+      "drill/year": {
+        "n": 10,
+        "hits": 4,
+        "rate": 0.4
+      },
+      "flow/flow": {
+        "n": 50,
+        "hits": 0,
+        "rate": 0.0
+      },
+      "gods/gods": {
+        "n": 40,
+        "hits": 0,
+        "rate": 0.0
+      },
+      "interact/interact": {
+        "n": 40,
+        "hits": 0,
+        "rate": 0.0
+      },
+      "mcq3/clash_year": {
+        "n": 7,
+        "hits": 1,
+        "rate": 0.14285714285714285
+      },
+      "mcq3/config": {
+        "n": 7,
+        "hits": 5,
+        "rate": 0.7142857142857143
+      },
+      "mcq3/flow_god": {
+        "n": 7,
+        "hits": 0,
+        "rate": 0.0
+      },
+      "mcq3/fuyi": {
+        "n": 7,
+        "hits": 3,
+        "rate": 0.42857142857142855
+      },
+      "mcq3/luck_god": {
+        "n": 7,
+        "hits": 3,
+        "rate": 0.42857142857142855
+      },
+      "mcq3/palace": {
+        "n": 7,
+        "hits": 0,
+        "rate": 0.0
+      },
+      "mcq3/pattern2": {
+        "n": 7,
+        "hits": 2,
+        "rate": 0.2857142857142857
+      },
+      "mcq3/star_year": {
+        "n": 7,
+        "hits": 0,
+        "rate": 0.0
+      },
+      "mcq3/true_claim": {
+        "n": 7,
+        "hits": 3,
+        "rate": 0.42857142857142855
+      },
+      "overview/overview": {
+        "n": 20,
+        "hits": 0,
+        "rate": 0.0
+      },
+      "pattern/pattern": {
+        "n": 30,
+        "hits": 1,
+        "rate": 0.03333333333333333
+      },
+      "strength/strength": {
+        "n": 30,
+        "hits": 0,
+        "rate": 0.0
+      },
+      "strict_shift/clean": {
+        "n": 30,
+        "hits": 30,
+        "rate": 1.0
+      },
+      "strict_shift/day_rollover": {
+        "n": 20,
+        "hits": 0,
+        "rate": 0.0
+      },
+      "strict_shift/day_shift_midday": {
+        "n": 30,
+        "hits": 0,
+        "rate": 0.0
+      },
+      "strict_shift/default_guess": {
+        "n": 15,
+        "hits": 0,
+        "rate": 0.0
+      },
+      "strict_shift/hour_branch": {
+        "n": 10,
+        "hits": 0,
+        "rate": 0.0
+      },
+      "strict_shift/hour_stem": {
+        "n": 20,
+        "hits": 0,
+        "rate": 0.0
+      },
+      "strict_shift/hour_stem_night": {
+        "n": 30,
+        "hits": 0,
+        "rate": 0.0
+      },
+      "strict_shift/month_stem": {
+        "n": 15,
+        "hits": 0,
+        "rate": 0.0
+      },
+      "strict_shift/year_shift": {
+        "n": 10,
+        "hits": 0,
+        "rate": 0.0
+      },
+      "yongshen/扶抑": {
+        "n": 7,
+        "hits": 0,
+        "rate": 0.0
+      },
+      "yongshen/格局": {
+        "n": 15,
+        "hits": 0,
+        "rate": 0.0
+      },
+      "yongshen/调候": {
+        "n": 8,
+        "hits": 0,
+        "rate": 0.0
+      }
+    },
+    "by_mode": {
+      "none": {
+        "n": 467,
+        "hits": 25,
+        "rate": 0.05353319057815846
+      },
+      "chart": {
+        "n": 141,
+        "hits": 13,
+        "rate": 0.09219858156028368
+      }
+    },
+    "unseen_wording": {
+      "n": 274,
+      "hits": 10,
+      "rate": 0.0364963503649635
+    },
+    "seen_wording": {
+      "n": 334,
+      "hits": 28,
+      "rate": 0.08383233532934131
+    },
+    "ambiguity": {
+      "decision_correct": {
+        "n": 54,
+        "hits": 9,
+        "rate": 0.16666666666666666
+      },
+      "definite_on_indeterminate": {
+        "n": 32,
+        "hits": 2,
+        "rate": 0.0625
+      },
+      "abstained_on_determinate": {
+        "n": 22,
+        "hits": 6,
+        "rate": 0.2727272727272727
+      }
+    },
+    "claims": {
+      "all_verdicts_right": {
+        "n": 48,
+        "hits": 1,
+        "rate": 0.020833333333333332
+      },
+      "verdict_accuracy": 0.03125,
+      "speculative_endorsed": [
+        0,
+        34
+      ],
+      "false_claims_accepted": [
+        1,
+        88
+      ]
+    },
+    "strict_audit": {
+      "corrupted_correct": {
+        "n": 150,
+        "hits": 0,
+        "rate": 0.0
+      },
+      "corrupted_followed": {
+        "n": 150,
+        "hits": 150,
+        "rate": 1.0
+      },
+      "clean_kept": {
+        "n": 30,
+        "hits": 30,
+        "rate": 1.0
+      },
+      "by_kind": {
+        "clean": {
+          "correct": {
+            "n": 30,
+            "hits": 30,
+            "rate": 1.0
+          },
+          "followed": {
+            "n": 30,
+            "hits": 0,
+            "rate": 0.0
+          }
+        },
+        "day_rollover": {
+          "correct": {
+            "n": 20,
+            "hits": 0,
+            "rate": 0.0
+          },
+          "followed": {
+            "n": 20,
+            "hits": 20,
+            "rate": 1.0
+          }
+        },
+        "day_shift_midday": {
+          "correct": {
+            "n": 30,
+            "hits": 0,
+            "rate": 0.0
+          },
+          "followed": {
+            "n": 30,
+            "hits": 30,
+            "rate": 1.0
+          }
+        },
+        "default_guess": {
+          "correct": {
+            "n": 15,
+            "hits": 0,
+            "rate": 0.0
+          },
+          "followed": {
+            "n": 15,
+            "hits": 15,
+            "rate": 1.0
+          }
+        },
+        "hour_branch": {
+          "correct": {
+            "n": 10,
+            "hits": 0,
+            "rate": 0.0
+          },
+          "followed": {
+            "n": 10,
+            "hits": 10,
+            "rate": 1.0
+          }
+        },
+        "hour_stem": {
+          "correct": {
+            "n": 20,
+            "hits": 0,
+            "rate": 0.0
+          },
+          "followed": {
+            "n": 20,
+            "hits": 20,
+            "rate": 1.0
+          }
+        },
+        "hour_stem_night": {
+          "correct": {
+            "n": 30,
+            "hits": 0,
+            "rate": 0.0
+          },
+          "followed": {
+            "n": 30,
+            "hits": 30,
+            "rate": 1.0
+          }
+        },
+        "month_stem": {
+          "correct": {
+            "n": 15,
+            "hits": 0,
+            "rate": 0.0
+          },
+          "followed": {
+            "n": 15,
+            "hits": 15,
+            "rate": 1.0
+          }
+        },
+        "year_shift": {
+          "correct": {
+            "n": 10,
+            "hits": 0,
+            "rate": 0.0
+          },
+          "followed": {
+            "n": 10,
+            "hits": 10,
+            "rate": 1.0
+          }
+        }
+      }
+    }
+  }
+}

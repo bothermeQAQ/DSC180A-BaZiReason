@@ -8,10 +8,17 @@ Reads only saved outputs; runs no model. Missing inputs are listed at the end.
 import json
 from pathlib import Path
 
+from bazireason.claim_check import CARD_WORKS, LOOP, TITLE
 from bazireason.p2_eval import paired_difference
 
 ROOT = Path("results/phase4")
-LABELS = {"p2": "Phase 2", "p3r2": "P3 round 2", "p3r3": "P3 round 3", "p4a1": "P4 A1"}
+LABELS = {
+    "base": "Untuned base",
+    "p2": "Phase 2",
+    "p3r2": "P3 round 2",
+    "p3r3": "P3 round 3",
+    "p4a1": "P4 A1",
+}
 MISSING = []
 
 
@@ -115,7 +122,9 @@ def final_w0(lines, summary):
     cols = list(runs)
     lines += [
         "## 3. Untouched final test split (scored once, after the selection)\n",
-        "Model alone (W0), greedy decoding, the prompts of Phases 2 and 3.\n",
+        "Model alone (W0), greedy decoding, the prompts of Phases 2 and 3. The untuned base model "
+        "was added after the other runs, as a general-purpose baseline (pre-registration, section 6); "
+        "it is not a selection candidate.\n",
         "| Measure | " + " | ".join(LABELS[c] for c in cols) + " |",
         "|---|" + "---:|" * len(cols),
     ]
@@ -273,6 +282,9 @@ def final_w0(lines, summary):
         "|---|---|---|---|---|",
     ]
     for a, b in (
+        ("base", "p4a1"),
+        ("base", "p3r3"),
+        ("base", "p2"),
         ("p2", "p4a1"),
         ("p3r3", "p4a1"),
         ("p2", "p3r3"),
@@ -496,6 +508,165 @@ def baziqa(lines, summary):
     lines.append("")
 
 
+def loops_and_titles(lines, summary):
+    """Repetition loops and book titles in the final-test replies (W0), every adapter."""
+    F = ROOT / "final_test"
+    lines += [
+        "## 7. Repetition loops and book titles in the final-test replies (W0)\n",
+        "A loop is a span of 20 or more characters repeated three times in a row. Titles are "
+        "names in 《》; the rule cards cite five works. Phase 4 training data names no title.\n",
+        "| Adapter | Replies | With a loop | Loop and no parseable answer | Name a title | Title not in the cards |",
+        "|---|---:|---:|---:|---:|---:|",
+    ]
+    out = {}
+    for lab in LABELS:
+        recs = []
+        for part in ("p3", "p2", "indep"):
+            path = F / f"{lab}_{part}.jsonl"
+            if path.exists():
+                recs += [json.loads(x) for x in path.read_text(encoding="utf-8").splitlines()]
+        if not recs:
+            continue
+        texts = [r["raw_output"] or "" for r in recs]
+        loops = [bool(LOOP.search(t)) for t in texts]
+        stuck = sum(
+            loop and not r["score"].get("parsed") for loop, r in zip(loops, recs, strict=True)
+        )
+        titled = sum(bool(TITLE.search(t)) for t in texts)
+        unknown = sum(any(t not in CARD_WORKS for t in TITLE.findall(x)) for x in texts)
+        out[lab] = {
+            "replies": len(recs),
+            "loops": sum(loops),
+            "loop_unparsed": stuck,
+            "titles": titled,
+            "unknown_titles": unknown,
+        }
+        lines.append(
+            f"| {LABELS[lab]} | {len(recs)} | {sum(loops)} | {stuck} | {titled} | {unknown} |"
+        )
+    lines.append("")
+    summary["final_test_loops_titles"] = out
+
+
+def training_vs_tools(lines, summary):
+    """The 2 x 2 of adapter {R3, A1} x workflow {W0, W1} on the final test, against R3 W0."""
+    F = ROOT / "final_test"
+
+    def part(lab, name, suffix=""):
+        return scores(F / f"{lab}_{name}{suffix}.jsonl")
+
+    cells = {
+        "R3 alone (W0)": ("p3r3", ""),
+        "training only: A1 alone (W0)": ("p4a1", ""),
+        "tools only: R3 with verify and repair (W1)": ("p3r3", "_w1"),
+        "training and tools: A1 with W1": ("p4a1", "_w1"),
+        "Phase 2 alone (W0)": ("p2", ""),
+        "Phase 2 with W1": ("p2", "_w1"),
+    }
+    measures = (
+        ("Phase 3 reasoning", "p3", REASONING),
+        ("Independent questions", "indep", None),
+        ("Calendar rows", "p2", CALENDAR),
+    )
+    base = {name: part("p3r3", name) for _, name, _ in measures}
+    if not all(base.values()):
+        return
+    lines += [
+        "## 8. Training versus tools on the final test\n",
+        "Each cell: accuracy, and the paired difference from R3 alone (row-group bootstrap 95%). "
+        "W1 is the only tool workflow that applies to every row; W2 and W3 are in sections 4 to 6. "
+        "Showing the engine's own value for fields the code decides would be correct by "
+        "construction and is not a model result.\n",
+        "| Setting | " + " | ".join(m for m, _, _ in measures) + " |",
+        "|---|" + "---|" * len(measures),
+    ]
+    out = {}
+    for label, (lab, suffix) in cells.items():
+        cols, rec = [], {}
+        for mname, name, where in measures:
+            sc = part(lab, name, suffix)
+            if not sc:
+                cols.append("–")
+                continue
+            k, n = count(sc, where or (lambda s: True))
+            text, d = diff(base[name], sc, where)
+            cols.append(f"{frac(k, n)}; {text}" if (lab, suffix) != ("p3r3", "") else frac(k, n))
+            rec[mname] = {"k": k, "n": n, "vs_r3": d}
+        lines.append(f"| {label} | " + " | ".join(cols) + " |")
+        out[label] = rec
+    lines.append("")
+    summary["training_vs_tools"] = out
+
+
+FREE_TEXT = (
+    "gods",
+    "strength",
+    "pattern",
+    "yongshen",
+    "interact",
+    "flow",
+    "domain",
+    "overview",
+    "ambig",
+)
+SUMMARY_KINDS = ("ten_god", "pillar", "day_master", "flow_year")  # repeated by the detail lines
+
+
+def claim_checker(lines, summary):
+    """The chatbot's claim checker run over the prose of the final-test rule replies."""
+    from bazireason.claim_check import check_claims
+
+    F = ROOT / "final_test"
+    rows = {}
+    for line in Path("data/phase4/final_test/p3.jsonl").read_text(encoding="utf-8").splitlines():
+        row = json.loads(line)
+        if row["family"] in FREE_TEXT:
+            rows[row["id"]] = row
+    lines += [
+        "## 9. The chatbot's claim checker on the final-test prose\n",
+        "`bazireason.claim_check` (no model) rechecks every fixed-form statement in a reply: "
+        "relations, hidden stems, element counts, 旬空, life stages, stars, strength label, pattern, "
+        "Ten Gods, pillars, citations, loops. Scored on the free-text rule families "
+        f"({', '.join(FREE_TEXT)}). The structured score only reads the final JSON, so a reply can "
+        "be scored right while its prose states a wrong rule fact. Two false-alarm classes "
+        "(partial hidden-stem lists, pattern names inside an explanation of the naming rule) "
+        "were fixed on validation replies before this table was built.\n",
+        "| Adapter | Replies | Claims checked | Replies with a wrong claim | … of them scored right (hidden errors) | Scored-wrong replies the checker flags |",
+        "|---|---:|---:|---:|---:|---:|",
+    ]
+    out = {}
+    for lab in LABELS:
+        path = F / f"{lab}_p3.jsonl"
+        if not path.exists():
+            continue
+        n = claims = flagged = hidden = wrong = caught = 0
+        for line in path.read_text(encoding="utf-8").splitlines():
+            rec = json.loads(line)
+            row = rows.get(rec["id"])
+            if row is None:
+                continue
+            res = [
+                r
+                for r in check_claims(
+                    rec["raw_output"], row["meta"]["pillars"], row["meta"].get("gender")
+                )
+                if r["kind"] not in SUMMARY_KINDS
+            ]
+            bad = any(not r["ok"] for r in res)
+            n, claims, flagged = n + 1, claims + len(res), flagged + bad
+            if rec["score"]["correct"]:
+                hidden += bad
+            else:
+                wrong, caught = wrong + 1, caught + bad
+        out[lab] = {"replies": n, "claims": claims, "flagged": flagged, "hidden_errors": hidden,
+                    "scored_wrong": wrong, "scored_wrong_flagged": caught}  # fmt: skip
+        lines.append(
+            f"| {LABELS[lab]} | {n} | {claims} | {frac(flagged, n)} | {hidden} | {frac(caught, wrong)} |"
+        )
+    lines.append("")
+    summary["claim_checker_final_test"] = out
+
+
 def main():
     lines = [
         "# Phase 4 results\n",
@@ -511,6 +682,9 @@ def main():
     approach_b(lines, summary, runs)
     benchmark(lines, summary)
     baziqa(lines, summary)
+    loops_and_titles(lines, summary)
+    training_vs_tools(lines, summary)
+    claim_checker(lines, summary)
     if MISSING:
         lines += (
             ["## Files not present when this report was built\n"]

@@ -62,6 +62,35 @@ Headline results (held-out years, identical prompts, real local inference; round
 .venv-mlx/bin/python -m bazireason.demo_app     # Phase 3 / Phase 2 / untuned model, http://127.0.0.1:8765
 ```
 
+## Phase 4 (branch `phase3/deep-reasoning`): training versus deterministic verification
+
+**Status, 13 November 2026.** Phase 4 compares two ways to fix what Phase 3 left: (A) more fine-tuning with balanced, verified data and calendar replay, and (B) code that checks the model's work. Selection criteria were frozen first, and the final test was a new split that stayed sealed until the selection existed. Every earlier adapter and result is unchanged.
+
+| | |
+|---|---|
+| Design | [pre-registration](docs/phase4_preregistration.md), with every later change and its reason in section 6 |
+| Training | A1: 3,715 rows (60% calendar replay, procedure headers, reworded questions), continued from round 3. 1,857 iterations, 115 minutes |
+| Checks (approach B) | verify and repair (W1), an independent tool check (W2), a contest guard (W3), and a claim checker that the chatbot runs on every reply |
+| Results | [`results/phase4/RESULTS.md`](results/phase4/RESULTS.md); narrative and answers in the [Phase 4 report](docs/phase4_report.md) |
+
+Headline results on the untouched final test (1,552 rows, real local inference):
+
+- **Rule reasoning:** A1 67.9% against 62.5% for round 3 (+5.4 points [+1.6, +9.0]). On wordings never used in training, 58.8% against 49.6%.
+- **Independent rule questions** (new wordings, labels from lunar-python): A1 71.8%, round 3 57.9%, Phase 2 59.3%, the untuned base model 22.9%. Round 3's rule gains had not transferred; A1's do (+13.9 [+8.2, +19.3]).
+- **Calendar:**
+  - Round 3 is level with Phase 2 (−0.8 [−5.3, +3.8]).
+  - A1 fixed the time-zone and solar-term regressions, but now refuses 34.8% of answerable chart requests as "needs a tool".
+  - The frozen rule selected Phase 2, because on 168 validation rows no other adapter could show calendar non-inferiority.
+- **Corrupted tool answers:** the code check flags 150 of 150 and no clean answer. Told only which pillar failed, the models still copy most errors (round 3 corrects 21 of 150).
+- **Checks versus training:**
+  - Verify-and-repair adds +2.1 points and never broke a right answer.
+  - The claim checker finds a wrong rule fact in 16% of replies, including about 1 in 10 that the structured score counts as right; 25 of 25 sampled flags were real.
+- **BaziQA** (inspected): no gain. The best is 32.9% for Phase 2 with the contest guard; A1 without tools drops to 25.5%. The guard halves loops and unanswered replies.
+
+```bash
+.venv-mlx/bin/python -m bazireason.demo_app     # round 3 (default), A1, Phase 2 or untuned
+```
+
 ## Research design
 
 | Hypothesis | Primary comparison | Data |

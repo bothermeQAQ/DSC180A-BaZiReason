@@ -1,0 +1,770 @@
+{
+ "note": [
+  "BaziQA was inspected in Phases 2 and 3: it is an existing benchmark here, not an untouched",
+  "test, and nothing was tuned on its answer keys. Accuracy is agreement with contest keys,",
+  "not evidence that destiny can be predicted. Unanswered replies count as wrong."
+ ],
+ "conditions": {
+  "base_no_tools": {
+   "full": {
+    "accuracy_mean": 0.25585585585585585,
+    "interval95": [
+     0.21794871794871795,
+     0.2961672473867596
+    ],
+    "n_runs": 1
+   },
+   "bazi_only": {
+    "accuracy_mean": 0.2793103448275862,
+    "interval95": [
+     0.2222222222222222,
+     0.3401360544217687
+    ],
+    "n_runs": 1
+   },
+   "official_key": {
+    "accuracy_mean": 0.2602739726027397,
+    "interval95": [
+     0.21351351351351353,
+     0.30939226519337015
+    ],
+    "n_runs": 1
+   },
+   "replies": 555,
+   "unanswered": 84,
+   "loops": 0,
+   "loop_guard_used": 0,
+   "names_a_book": 1,
+   "names_a_book_not_in_cards": 0,
+   "mean_tokens": 501
+  },
+  "base_tools": {
+   "full": {
+    "accuracy_mean": 0.3117117117117117,
+    "interval95": [
+     0.27175843694493784,
+     0.3522935779816514
+    ],
+    "n_runs": 1
+   },
+   "bazi_only": {
+    "accuracy_mean": 0.3137931034482759,
+    "interval95": [
+     0.2604166666666667,
+     0.36713286713286714
+    ],
+    "n_runs": 1
+   },
+   "official_key": {
+    "accuracy_mean": 0.3095890410958904,
+    "interval95": [
+     0.2611111111111111,
+     0.3604336043360434
+    ],
+    "n_runs": 1
+   },
+   "replies": 555,
+   "unanswered": 24,
+   "loops": 0,
+   "loop_guard_used": 0,
+   "names_a_book": 0,
+   "names_a_book_not_in_cards": 0,
+   "mean_tokens": 300
+  },
+  "p2_no_tools": {
+   "full": {
+    "accuracy_mean": 0.3057057057057057,
+    "interval95": [
+     0.27489564698867025,
+     0.33520249221183795
+    ],
+    "n_runs": 3
+   },
+   "bazi_only": {
+    "accuracy_mean": 0.27816091954022987,
+    "interval95": [
+     0.23482245131729665,
+     0.3229885057471264
+    ],
+    "n_runs": 3
+   },
+   "official_key": {
+    "accuracy_mean": 0.3041095890410959,
+    "interval95": [
+     0.2655971479500891,
+     0.34349030470914127
+    ],
+    "n_runs": 3
+   },
+   "replies": 1665,
+   "unanswered": 13,
+   "loops": 24,
+   "loop_guard_used": 0,
+   "names_a_book": 0,
+   "names_a_book_not_in_cards": 0,
+   "mean_tokens": 53
+  },
+  "p2_tools": {
+   "full": {
+    "accuracy_mean": 0.31891891891891894,
+    "interval95": [
+     0.2921083627797409,
+     0.3458333333333333
+    ],
+    "n_runs": 3
+   },
+   "bazi_only": {
+    "accuracy_mean": 0.31264367816091954,
+    "interval95": [
+     0.2768166089965398,
+     0.3489771359807461
+    ],
+    "n_runs": 3
+   },
+   "official_key": {
+    "accuracy_mean": 0.302283105022831,
+    "interval95": [
+     0.27129629629629626,
+     0.3342342342342342
+    ],
+    "n_runs": 3
+   },
+   "replies": 1665,
+   "unanswered": 17,
+   "loops": 30,
+   "loop_guard_used": 0,
+   "names_a_book": 0,
+   "names_a_book_not_in_cards": 0,
+   "mean_tokens": 64
+  },
+  "p3r2_no_tools": {
+   "full": {
+    "accuracy_mean": 0.2756756756756757,
+    "interval95": [
+     0.2495446265938069,
+     0.30324909747292417
+    ],
+    "n_runs": 3
+   },
+   "bazi_only": {
+    "accuracy_mean": 0.2632183908045977,
+    "interval95": [
+     0.22824858757062144,
+     0.30081300813008127
+    ],
+    "n_runs": 3
+   },
+   "official_key": {
+    "accuracy_mean": 0.27123287671232876,
+    "interval95": [
+     0.2387511478420569,
+     0.3053949903660886
+    ],
+    "n_runs": 3
+   },
+   "replies": 1665,
+   "unanswered": 105,
+   "loops": 113,
+   "loop_guard_used": 0,
+   "names_a_book": 87,
+   "names_a_book_not_in_cards": 37,
+   "mean_tokens": 162
+  },
+  "p3r2_tools": {
+   "full": {
+    "accuracy_mean": 0.3009009009009009,
+    "interval95": [
+     0.27230046948356806,
+     0.3309134906231095
+    ],
+    "n_runs": 3
+   },
+   "bazi_only": {
+    "accuracy_mean": 0.27816091954022987,
+    "interval95": [
+     0.2427536231884058,
+     0.3131991051454139
+    ],
+    "n_runs": 3
+   },
+   "official_key": {
+    "accuracy_mean": 0.3095890410958904,
+    "interval95": [
+     0.2717391304347826,
+     0.3485663082437276
+    ],
+    "n_runs": 3
+   },
+   "replies": 1665,
+   "unanswered": 117,
+   "loops": 135,
+   "loop_guard_used": 0,
+   "names_a_book": 92,
+   "names_a_book_not_in_cards": 24,
+   "mean_tokens": 180
+  },
+  "p3r3_no_tools": {
+   "full": {
+    "accuracy_mean": 0.3057057057057057,
+    "interval95": [
+     0.27939393939393936,
+     0.33274231678487
+    ],
+    "n_runs": 3
+   },
+   "bazi_only": {
+    "accuracy_mean": 0.2885057471264368,
+    "interval95": [
+     0.25058275058275054,
+     0.3263888888888889
+    ],
+    "n_runs": 3
+   },
+   "official_key": {
+    "accuracy_mean": 0.3150684931506849,
+    "interval95": [
+     0.28225806451612906,
+     0.34763181411974975
+    ],
+    "n_runs": 3
+   },
+   "replies": 1665,
+   "unanswered": 37,
+   "loops": 28,
+   "loop_guard_used": 0,
+   "names_a_book": 7,
+   "names_a_book_not_in_cards": 3,
+   "mean_tokens": 112
+  },
+  "p3r3_tools": {
+   "full": {
+    "accuracy_mean": 0.3027027027027027,
+    "interval95": [
+     0.27684667908131594,
+     0.32968369829683697
+    ],
+    "n_runs": 3
+   },
+   "bazi_only": {
+    "accuracy_mean": 0.3022988505747127,
+    "interval95": [
+     0.2676056338028169,
+     0.33676975945017185
+    ],
+    "n_runs": 3
+   },
+   "official_key": {
+    "accuracy_mean": 0.3132420091324201,
+    "interval95": [
+     0.2798913043478261,
+     0.34726090993500464
+    ],
+    "n_runs": 3
+   },
+   "replies": 1665,
+   "unanswered": 53,
+   "loops": 53,
+   "loop_guard_used": 0,
+   "names_a_book": 1,
+   "names_a_book_not_in_cards": 0,
+   "mean_tokens": 134
+  },
+  "p2_w3": {
+   "full": {
+    "accuracy_mean": 0.3285285285285285,
+    "interval95": [
+     0.3001230012300123,
+     0.3576945929887106
+    ],
+    "n_runs": 3
+   },
+   "bazi_only": {
+    "accuracy_mean": 0.32298850574712645,
+    "interval95": [
+     0.2855436081242533,
+     0.3614864864864865
+    ],
+    "n_runs": 3
+   },
+   "official_key": {
+    "accuracy_mean": 0.31689497716894977,
+    "interval95": [
+     0.2838468720821662,
+     0.35159817351598177
+    ],
+    "n_runs": 3
+   },
+   "replies": 1665,
+   "unanswered": 20,
+   "loops": 22,
+   "loop_guard_used": 9,
+   "names_a_book": 1,
+   "names_a_book_not_in_cards": 0,
+   "mean_tokens": 64
+  },
+  "p3r3_w3": {
+   "full": {
+    "accuracy_mean": 0.28528528528528524,
+    "interval95": [
+     0.25437010247136826,
+     0.3173431734317343
+    ],
+    "n_runs": 3
+   },
+   "bazi_only": {
+    "accuracy_mean": 0.26896551724137935,
+    "interval95": [
+     0.22783389450056118,
+     0.31141868512110726
+    ],
+    "n_runs": 3
+   },
+   "official_key": {
+    "accuracy_mean": 0.2730593607305936,
+    "interval95": [
+     0.23577235772357724,
+     0.3116531165311653
+    ],
+    "n_runs": 3
+   },
+   "replies": 1665,
+   "unanswered": 45,
+   "loops": 15,
+   "loop_guard_used": 11,
+   "names_a_book": 2,
+   "names_a_book_not_in_cards": 0,
+   "mean_tokens": 89
+  },
+  "p4a1_no_tools": {
+   "full": {
+    "accuracy_mean": 0.25465465465465464,
+    "interval95": [
+     0.23008849557522124,
+     0.2779783393501805
+    ],
+    "n_runs": 3
+   },
+   "bazi_only": {
+    "accuracy_mean": 0.23563218390804597,
+    "interval95": [
+     0.2013888888888889,
+     0.2709030100334448
+    ],
+    "n_runs": 3
+   },
+   "official_key": {
+    "accuracy_mean": 0.2584474885844749,
+    "interval95": [
+     0.23090745732255163,
+     0.2885844748858447
+    ],
+    "n_runs": 3
+   },
+   "replies": 1665,
+   "unanswered": 90,
+   "loops": 73,
+   "loop_guard_used": 0,
+   "names_a_book": 9,
+   "names_a_book_not_in_cards": 4,
+   "mean_tokens": 133
+  },
+  "p4a1_tools": {
+   "full": {
+    "accuracy_mean": 0.2978978978978979,
+    "interval95": [
+     0.2669172932330827,
+     0.3296969696969697
+    ],
+    "n_runs": 3
+   },
+   "bazi_only": {
+    "accuracy_mean": 0.2804597701149425,
+    "interval95": [
+     0.24130190796857465,
+     0.3222222222222222
+    ],
+    "n_runs": 3
+   },
+   "official_key": {
+    "accuracy_mean": 0.302283105022831,
+    "interval95": [
+     0.26541554959785524,
+     0.34065934065934067
+    ],
+    "n_runs": 3
+   },
+   "replies": 1665,
+   "unanswered": 92,
+   "loops": 94,
+   "loop_guard_used": 0,
+   "names_a_book": 10,
+   "names_a_book_not_in_cards": 5,
+   "mean_tokens": 166
+  },
+  "p4a1_w3": {
+   "full": {
+    "accuracy_mean": 0.2888888888888889,
+    "interval95": [
+     0.26194909993792675,
+     0.31566118220597195
+    ],
+    "n_runs": 3
+   },
+   "bazi_only": {
+    "accuracy_mean": 0.2873563218390805,
+    "interval95": [
+     0.2472406181015452,
+     0.3288288288288288
+    ],
+    "n_runs": 3
+   },
+   "official_key": {
+    "accuracy_mean": 0.28493150684931506,
+    "interval95": [
+     0.2502308402585411,
+     0.3202247191011236
+    ],
+    "n_runs": 3
+   },
+   "replies": 1665,
+   "unanswered": 42,
+   "loops": 38,
+   "loop_guard_used": 24,
+   "names_a_book": 0,
+   "names_a_book_not_in_cards": 0,
+   "mean_tokens": 100
+  }
+ },
+ "comparisons": {
+  "p4a1_no_tools_minus_p3r3_no_tools": {
+   "effect_of": "approach A training, no tools",
+   "full": {
+    "n_persons": 117,
+    "n_questions": 555,
+    "difference": -0.05105105105105105,
+    "interval95": [
+     -0.0799045915324985,
+     -0.02230259192284509
+    ],
+    "resampling_unit": "person (chart)"
+   },
+   "bazi_only": {
+    "n_persons": 62,
+    "n_questions": 290,
+    "difference": -0.052873563218390804,
+    "interval95": [
+     -0.09154929577464789,
+     -0.014739229024943307
+    ],
+    "resampling_unit": "person (chart)"
+   },
+   "official_key": {
+    "n_persons": 76,
+    "n_questions": 365,
+    "difference": -0.05662100456621005,
+    "interval95": [
+     -0.09001782531194295,
+     -0.022857142857142857
+    ],
+    "resampling_unit": "person (chart)"
+   }
+  },
+  "p4a1_tools_minus_p3r3_tools": {
+   "effect_of": "approach A training, verified chart",
+   "full": {
+    "n_persons": 117,
+    "n_questions": 555,
+    "difference": -0.004804804804804801,
+    "interval95": [
+     -0.038095238095238085,
+     0.030193236714975848
+    ],
+    "resampling_unit": "person (chart)"
+   },
+   "bazi_only": {
+    "n_persons": 62,
+    "n_questions": 290,
+    "difference": -0.02183908045977011,
+    "interval95": [
+     -0.06666666666666665,
+     0.024608501118568236
+    ],
+    "resampling_unit": "person (chart)"
+   },
+   "official_key": {
+    "n_persons": 76,
+    "n_questions": 365,
+    "difference": -0.010958904109589038,
+    "interval95": [
+     -0.054029304029304025,
+     0.033243486073674756
+    ],
+    "resampling_unit": "person (chart)"
+   }
+  },
+  "p2_w3_minus_p2_tools": {
+   "effect_of": "approach B contest guard on Phase 2 (the selected adapter)",
+   "full": {
+    "n_persons": 117,
+    "n_questions": 555,
+    "difference": 0.009609609609609607,
+    "interval95": [
+     -0.015643802647412757,
+     0.03521554341226472
+    ],
+    "resampling_unit": "person (chart)"
+   },
+   "bazi_only": {
+    "n_persons": 62,
+    "n_questions": 290,
+    "difference": 0.010344827586206896,
+    "interval95": [
+     -0.027777777777777776,
+     0.04728950403690888
+    ],
+    "resampling_unit": "person (chart)"
+   },
+   "official_key": {
+    "n_persons": 76,
+    "n_questions": 365,
+    "difference": 0.014611872146118718,
+    "interval95": [
+     -0.014492753623188408,
+     0.04487179487179487
+    ],
+    "resampling_unit": "person (chart)"
+   }
+  },
+  "p3r3_w3_minus_p3r3_tools": {
+   "effect_of": "approach B contest guard on R3",
+   "full": {
+    "n_persons": 117,
+    "n_questions": 555,
+    "difference": -0.01741741741741742,
+    "interval95": [
+     -0.04838709677419355,
+     0.01303538175046555
+    ],
+    "resampling_unit": "person (chart)"
+   },
+   "bazi_only": {
+    "n_persons": 62,
+    "n_questions": 290,
+    "difference": -0.03333333333333334,
+    "interval95": [
+     -0.07281001137656429,
+     0.005868544600938961
+    ],
+    "resampling_unit": "person (chart)"
+   },
+   "official_key": {
+    "n_persons": 76,
+    "n_questions": 365,
+    "difference": -0.04018264840182648,
+    "interval95": [
+     -0.07417582417582418,
+     -0.004480286738351255
+    ],
+    "resampling_unit": "person (chart)"
+   }
+  },
+  "p4a1_w3_minus_p4a1_tools": {
+   "effect_of": "approach B contest guard on A1",
+   "full": {
+    "n_persons": 117,
+    "n_questions": 555,
+    "difference": -0.00900900900900901,
+    "interval95": [
+     -0.04092526690391459,
+     0.022988505747126436
+    ],
+    "resampling_unit": "person (chart)"
+   },
+   "bazi_only": {
+    "n_persons": 62,
+    "n_questions": 290,
+    "difference": 0.006896551724137925,
+    "interval95": [
+     -0.03678929765886288,
+     0.048780487804878044
+    ],
+    "resampling_unit": "person (chart)"
+   },
+   "official_key": {
+    "n_persons": 76,
+    "n_questions": 365,
+    "difference": -0.017351598173515986,
+    "interval95": [
+     -0.06019766397124887,
+     0.02528089887640449
+    ],
+    "resampling_unit": "person (chart)"
+   }
+  },
+  "p4a1_w3_minus_p3r3_tools": {
+   "effect_of": "A and B together, against R3 with the verified chart",
+   "full": {
+    "n_persons": 117,
+    "n_questions": 555,
+    "difference": -0.013813813813813813,
+    "interval95": [
+     -0.042656916514320534,
+     0.015559545182525438
+    ],
+    "resampling_unit": "person (chart)"
+   },
+   "bazi_only": {
+    "n_persons": 62,
+    "n_questions": 290,
+    "difference": -0.014942528735632184,
+    "interval95": [
+     -0.05555555555555555,
+     0.02527075812274368
+    ],
+    "resampling_unit": "person (chart)"
+   },
+   "official_key": {
+    "n_persons": 76,
+    "n_questions": 365,
+    "difference": -0.02831050228310502,
+    "interval95": [
+     -0.06776556776556776,
+     0.012070566388115133
+    ],
+    "resampling_unit": "person (chart)"
+   }
+  },
+  "p4a1_no_tools_minus_p2_no_tools": {
+   "effect_of": "A1 against Phase 2, no tools",
+   "full": {
+    "n_persons": 117,
+    "n_questions": 555,
+    "difference": -0.05105105105105105,
+    "interval95": [
+     -0.08408953418027829,
+     -0.019607843137254905
+    ],
+    "resampling_unit": "person (chart)"
+   },
+   "bazi_only": {
+    "n_persons": 62,
+    "n_questions": 290,
+    "difference": -0.04252873563218391,
+    "interval95": [
+     -0.08777777777777777,
+     0.001165501165501162
+    ],
+    "resampling_unit": "person (chart)"
+   },
+   "official_key": {
+    "n_persons": 76,
+    "n_questions": 365,
+    "difference": -0.04566210045662101,
+    "interval95": [
+     -0.08828828828828829,
+     -0.002762430939226522
+    ],
+    "resampling_unit": "person (chart)"
+   }
+  },
+  "p4a1_tools_minus_p2_tools": {
+   "effect_of": "A1 against Phase 2, verified chart",
+   "full": {
+    "n_persons": 117,
+    "n_questions": 555,
+    "difference": -0.02102102102102102,
+    "interval95": [
+     -0.05443425076452599,
+     0.012099213551119183
+    ],
+    "resampling_unit": "person (chart)"
+   },
+   "bazi_only": {
+    "n_persons": 62,
+    "n_questions": 290,
+    "difference": -0.032183908045977004,
+    "interval95": [
+     -0.07508532423208192,
+     0.011261261261261268
+    ],
+    "resampling_unit": "person (chart)"
+   },
+   "official_key": {
+    "n_persons": 76,
+    "n_questions": 365,
+    "difference": 1.8250241500687503e-18,
+    "interval95": [
+     -0.042474607571560484,
+     0.04268846503178928
+    ],
+    "resampling_unit": "person (chart)"
+   }
+  },
+  "p4a1_w3_minus_p2_tools": {
+   "effect_of": "A1 with W3 against Phase 2 with the verified chart",
+   "full": {
+    "n_persons": 117,
+    "n_questions": 555,
+    "difference": -0.030030030030030033,
+    "interval95": [
+     -0.05666063893911995,
+     -0.003565062388591796
+    ],
+    "resampling_unit": "person (chart)"
+   },
+   "bazi_only": {
+    "n_persons": 62,
+    "n_questions": 290,
+    "difference": -0.025287356321839084,
+    "interval95": [
+     -0.05869324473975637,
+     0.008073817762399071
+    ],
+    "resampling_unit": "person (chart)"
+   },
+   "official_key": {
+    "n_persons": 76,
+    "n_questions": 365,
+    "difference": -0.017351598173515982,
+    "interval95": [
+     -0.05045045045045044,
+     0.018264840182648394
+    ],
+    "resampling_unit": "person (chart)"
+   }
+  },
+  "p3r3_w3_minus_p2_tools": {
+   "effect_of": "R3 with W3 against Phase 2 with the verified chart",
+   "full": {
+    "n_persons": 117,
+    "n_questions": 555,
+    "difference": -0.033633633633633635,
+    "interval95": [
+     -0.06216696269982238,
+     -0.004744958481613286
+    ],
+    "resampling_unit": "person (chart)"
+   },
+   "bazi_only": {
+    "n_persons": 62,
+    "n_questions": 290,
+    "difference": -0.043678160919540236,
+    "interval95": [
+     -0.08620689655172414,
+     -0.0034482758620689694
+    ],
+    "resampling_unit": "person (chart)"
+   },
+   "official_key": {
+    "n_persons": 76,
+    "n_questions": 365,
+    "difference": -0.029223744292237442,
+    "interval95": [
+     -0.06595365418894832,
+     0.007266121707538598
+    ],
+    "resampling_unit": "person (chart)"
+   }
+  }
+ }
+}

@@ -32,7 +32,12 @@ STAR = re.compile(
     rf"(禄|阳刃|天乙贵人|驿马|桃花|华盖)(?:在|落在|为|位于)((?:{B}[、，, 和]?){{1,3}})"
 )
 STRENGTH = re.compile(r"(?:记为|计为|属于|判为|算作)(偏强|偏弱)")
-PATTERN = re.compile(r"(正官|七杀|偏官|正财|偏财|食神|伤官|正印|偏印|枭神|建禄|阳刃|月刃|月劫)格")
+# A pattern stated as this chart's pattern ("记作建禄格", "取格为偏印格"); names inside an
+# explanation of the naming rule ("劫财在阳干记阳刃格") are not claims about the chart.
+PATTERN = re.compile(
+    r"(?:记作|记为|定为|取为|判为|属于|属|为|是|成)"
+    r"(正官|七杀|偏官|正财|偏财|食神|伤官|正印|偏印|枭神|建禄|阳刃|月刃|月劫)格"
+)
 PATTERN_SYNONYMS = {"偏官": "七杀", "枭神": "偏印", "月刃": "阳刃"}
 SPOUSE_RULE = re.compile(r"([男女])命?以(?:正|偏|七|财|官)")
 TITLE = re.compile(r"《([^》]{1,12})》")
@@ -83,9 +88,11 @@ def check_claims(text: str, pillars: dict, gender: str | None = None) -> list:
         want = "干冲" if word == "相冲" else "干合"
         out.append(_result("stem_relation", m.group(0), want in kinds, kinds or ["无"]))
     for m in HIDDEN.finditer(text):
+        # Wrong only if a named stem is not hidden in the branch: replies often name just
+        # the main qi, or follow each stem with its Ten God, which the pattern stops at.
         branch, stems = m.group(1), re.findall(S, m.group(2))
         truth = list(R.HIDDEN_STEMS[branch])
-        out.append(_result("hidden", m.group(0), sorted(stems) == sorted(truth), "".join(truth)))
+        out.append(_result("hidden", m.group(0), set(stems) <= set(truth), "".join(truth)))
     for m in COUNTS.finditer(text):
         said = dict(zip(R.ELEMENTS, map(int, m.groups()), strict=True))
         truth = R.element_counts(pillars)

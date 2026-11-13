@@ -1,0 +1,224 @@
+{
+  "model": "p4a1",
+  "workflow": "w2",
+  "summary": {
+    "overall": {
+      "n": 180,
+      "hits": 40,
+      "rate": 0.2222222222222222
+    },
+    "reasoning_tasks": {
+      "n": 0,
+      "hits": 0,
+      "rate": null
+    },
+    "parsed": {
+      "n": 180,
+      "hits": 174,
+      "rate": 0.9666666666666667
+    },
+    "by_family": {
+      "strict_shift": {
+        "n": 180,
+        "hits": 40,
+        "rate": 0.2222222222222222
+      }
+    },
+    "by_kind": {
+      "strict_shift/clean": {
+        "n": 30,
+        "hits": 30,
+        "rate": 1.0
+      },
+      "strict_shift/day_rollover": {
+        "n": 20,
+        "hits": 0,
+        "rate": 0.0
+      },
+      "strict_shift/day_shift_midday": {
+        "n": 30,
+        "hits": 0,
+        "rate": 0.0
+      },
+      "strict_shift/default_guess": {
+        "n": 15,
+        "hits": 3,
+        "rate": 0.2
+      },
+      "strict_shift/hour_branch": {
+        "n": 10,
+        "hits": 0,
+        "rate": 0.0
+      },
+      "strict_shift/hour_stem": {
+        "n": 20,
+        "hits": 0,
+        "rate": 0.0
+      },
+      "strict_shift/hour_stem_night": {
+        "n": 30,
+        "hits": 0,
+        "rate": 0.0
+      },
+      "strict_shift/month_stem": {
+        "n": 15,
+        "hits": 0,
+        "rate": 0.0
+      },
+      "strict_shift/year_shift": {
+        "n": 10,
+        "hits": 7,
+        "rate": 0.7
+      }
+    },
+    "by_mode": {
+      "none": {
+        "n": 0,
+        "hits": 0,
+        "rate": null
+      },
+      "chart": {
+        "n": 0,
+        "hits": 0,
+        "rate": null
+      }
+    },
+    "unseen_wording": {
+      "n": 0,
+      "hits": 0,
+      "rate": null
+    },
+    "seen_wording": {
+      "n": 0,
+      "hits": 0,
+      "rate": null
+    },
+    "strict_audit": {
+      "corrupted_correct": {
+        "n": 150,
+        "hits": 10,
+        "rate": 0.06666666666666667
+      },
+      "corrupted_followed": {
+        "n": 150,
+        "hits": 131,
+        "rate": 0.8733333333333333
+      },
+      "clean_kept": {
+        "n": 30,
+        "hits": 30,
+        "rate": 1.0
+      },
+      "by_kind": {
+        "clean": {
+          "correct": {
+            "n": 30,
+            "hits": 30,
+            "rate": 1.0
+          },
+          "followed": {
+            "n": 30,
+            "hits": 0,
+            "rate": 0.0
+          }
+        },
+        "day_rollover": {
+          "correct": {
+            "n": 20,
+            "hits": 0,
+            "rate": 0.0
+          },
+          "followed": {
+            "n": 20,
+            "hits": 20,
+            "rate": 1.0
+          }
+        },
+        "day_shift_midday": {
+          "correct": {
+            "n": 30,
+            "hits": 0,
+            "rate": 0.0
+          },
+          "followed": {
+            "n": 30,
+            "hits": 30,
+            "rate": 1.0
+          }
+        },
+        "default_guess": {
+          "correct": {
+            "n": 15,
+            "hits": 3,
+            "rate": 0.2
+          },
+          "followed": {
+            "n": 15,
+            "hits": 6,
+            "rate": 0.4
+          }
+        },
+        "hour_branch": {
+          "correct": {
+            "n": 10,
+            "hits": 0,
+            "rate": 0.0
+          },
+          "followed": {
+            "n": 10,
+            "hits": 10,
+            "rate": 1.0
+          }
+        },
+        "hour_stem": {
+          "correct": {
+            "n": 20,
+            "hits": 0,
+            "rate": 0.0
+          },
+          "followed": {
+            "n": 20,
+            "hits": 20,
+            "rate": 1.0
+          }
+        },
+        "hour_stem_night": {
+          "correct": {
+            "n": 30,
+            "hits": 0,
+            "rate": 0.0
+          },
+          "followed": {
+            "n": 30,
+            "hits": 30,
+            "rate": 1.0
+          }
+        },
+        "month_stem": {
+          "correct": {
+            "n": 15,
+            "hits": 0,
+            "rate": 0.0
+          },
+          "followed": {
+            "n": 15,
+            "hits": 15,
+            "rate": 1.0
+          }
+        },
+        "year_shift": {
+          "correct": {
+            "n": 10,
+            "hits": 7,
+            "rate": 0.7
+          },
+          "followed": {
+            "n": 10,
+            "hits": 0,
+            "rate": 0.0
+          }
+        }
+      }
+    }
+  }
+}

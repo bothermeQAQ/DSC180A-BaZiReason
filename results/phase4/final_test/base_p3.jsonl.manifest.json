@@ -1,0 +1,22 @@
+{
+  "status": "complete",
+  "split": "final_test",
+  "part": "p3",
+  "workflow": "w0",
+  "dataset": "data/phase4/final_test/p3.jsonl",
+  "dataset_sha256": "a9fe88000ce0ebbcd8acbf9b368fa80ff8ae5bf5912df672be5552c1ede3c7de",
+  "n_rows": 788,
+  "n_generated": 788,
+  "model": "base",
+  "adapter_path": null,
+  "adapter_sha256": null,
+  "temperature": 0,
+  "max_tokens": 800,
+  "wall_seconds": 2883.4,
+  "generation_totals": {
+    "prompt_tokens": 176557,
+    "completion_tokens": 424138,
+    "seconds": 2882.07,
+    "peak_memory_gb": 10.7
+  }
+}

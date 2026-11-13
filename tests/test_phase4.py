@@ -130,3 +130,21 @@ def test_training_data_has_procedure_headers_and_no_book_titles():
             assert row["messages"][-1]["content"].startswith("【规则】"), row["task"]
     augmented = [r for r in train if r.get("augmented")]
     assert augmented and all("结论JSON" in r["messages"][-2]["content"] for r in augmented)
+
+
+def test_claim_checker_flags_errors_but_not_partial_lists_or_rule_explanations():
+    from bazireason.claim_check import check_claims
+
+    pillars = {"year": "壬申", "month": "丁未", "day": "己未", "hour": "甲戌"}
+
+    def verdicts(text, kind):
+        return [r["ok"] for r in check_claims(text, pillars) if r["kind"] == kind]
+
+    # Main qi only, or each stem followed by its Ten God: not wrong.
+    assert verdicts("年支申藏庚伤官、壬正财、戊劫财。", "hidden") == [True]
+    assert verdicts("月支未藏己。", "hidden") == [True]
+    # A stem that is not hidden in the branch: wrong.
+    assert verdicts("月支未藏己、丁、壬。", "hidden") == [False]
+    # Naming rule explained, no claim about this chart.
+    assert verdicts("劫财在阳干记阳刃格、阴干记月劫格。", "pattern") == []
+    assert verdicts("按月令透干取格记作伤官格。", "pattern") == [False]

@@ -1,0 +1,26 @@
+{
+  "condition": "tuned_no_tools",
+  "prompt_version": "p2-mcq-v1",
+  "benchmark": "ChenJiangxi/BaziQA",
+  "benchmark_commit": "3bad3deaa5aa3a191c9c68b4d8b17f46decff45e",
+  "benchmark_data_sha256": "632ab2a82ce48bbe7d6425d4606f255222a3c9e87ff336cc24ccc8657807dea4",
+  "n_persons": 117,
+  "n_questions": 555,
+  "runs": 3,
+  "decoding": {
+    "temperature": 0.7,
+    "top_p": 0.8,
+    "top_k": 20,
+    "max_tokens": 1024,
+    "seed_base": 20261110,
+    "enable_thinking": false
+  },
+  "chart_source": "model's own derivation, unverified",
+  "model": "p4:p4a1",
+  "model_weights_sha256": "2a73c6c248601ab904e035548abd8e6abb65ea27dcb5f342fb0a8910eb44173f",
+  "adapter_path": "artifacts/adapters/bazireason-qwen3-4b-lora-p4-a1",
+  "adapter_sha256": "89311020680a2d40d52ca4f0d4e0f96f6df3ce94957e991afb994e7170840d91",
+  "contest_data_used_for_training": false,
+  "status": "complete",
+  "wall_seconds": 3252.3
+}

@@ -79,6 +79,8 @@ def main():
         record = run_case(case, client, "tool_corrupted", 0, 0, 512)
         record["workflow"] = "w2_tool_check"
         record["w2_note"] = notes[case["case_id"]]
+        # The prompt differs from the v3 ladder by the W2 line; record and manifest say so.
+        record["prompt_version"] = PROMPT_VERSION + "+w2-tool-check-note"
         records.append(record)
     with output.open("x", encoding="utf-8") as stream:
         for record in records:

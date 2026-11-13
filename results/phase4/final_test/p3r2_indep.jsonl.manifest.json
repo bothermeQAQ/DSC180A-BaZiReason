@@ -1,0 +1,22 @@
+{
+  "status": "complete",
+  "split": "final_test",
+  "part": "indep",
+  "workflow": "w0",
+  "dataset": "data/phase4/final_test/indep.jsonl",
+  "dataset_sha256": "7944ed7c911d8f8ef7a6eef6287538c4c74a8a11df6fb1ac48a9bacd94c680f3",
+  "n_rows": 280,
+  "n_generated": 280,
+  "model": "p3r2",
+  "adapter_path": "artifacts/adapters/bazireason-qwen3-4b-lora-p3-r2",
+  "adapter_sha256": "2fa6fb7b94f411c443fbc2b7f081dc84980f95c344fc6de96024151f29747a31",
+  "temperature": 0,
+  "max_tokens": 600,
+  "wall_seconds": 146.1,
+  "generation_totals": {
+    "prompt_tokens": 19619,
+    "completion_tokens": 16469,
+    "seconds": 145.75,
+    "peak_memory_gb": 8.43
+  }
+}

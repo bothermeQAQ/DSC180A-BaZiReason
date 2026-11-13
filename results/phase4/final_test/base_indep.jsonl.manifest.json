@@ -1,0 +1,22 @@
+{
+  "status": "complete",
+  "split": "final_test",
+  "part": "indep",
+  "workflow": "w0",
+  "dataset": "data/phase4/final_test/indep.jsonl",
+  "dataset_sha256": "7944ed7c911d8f8ef7a6eef6287538c4c74a8a11df6fb1ac48a9bacd94c680f3",
+  "n_rows": 280,
+  "n_generated": 280,
+  "model": "base",
+  "adapter_path": null,
+  "adapter_sha256": null,
+  "temperature": 0,
+  "max_tokens": 600,
+  "wall_seconds": 753.8,
+  "generation_totals": {
+    "prompt_tokens": 19619,
+    "completion_tokens": 120017,
+    "seconds": 753.46,
+    "peak_memory_gb": 10.7
+  }
+}
