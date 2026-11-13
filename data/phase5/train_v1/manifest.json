@@ -1,0 +1,31 @@
+{
+  "dataset_version": "p5_train_v1",
+  "seed": 2026111541,
+  "generator": "bazireason.train_data5.generate_split",
+  "starts_from_adapter": "bazireason-qwen3-4b-lora-p4-a1",
+  "prompt_version": 2,
+  "files": {
+    "train.jsonl": {
+      "rows": 2260,
+      "sha256": "eb77541f0d641869d6bbb383f4dac16727407a2df1cb91cc1d4d2b20c01f0d54",
+      "families": {
+        "p5": 800,
+        "p5_followup": 260,
+        "p5_prediction": 100,
+        "p5_routed": 700,
+        "p5_sheet": 400
+      }
+    },
+    "valid.jsonl": {
+      "rows": 100,
+      "sha256": "96c0a651a112946d8d5115a5ff192cc3d8ab58ddf5a7dbc8c735bb91ed3aad57",
+      "families": {
+        "p5": 34,
+        "p5_followup": 12,
+        "p5_prediction": 6,
+        "p5_routed": 30,
+        "p5_sheet": 18
+      }
+    }
+  }
+}

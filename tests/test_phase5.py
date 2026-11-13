@@ -158,3 +158,29 @@ def test_sealed_split_is_closed_without_a_selection(tmp_path, monkeypatch):
     with pytest.raises(SystemExit):
         run5.main()
     assert not (tmp_path / "sealed").exists() and not (tmp_path / "sealed_access.jsonl").exists()
+
+
+def test_g1_training_data_has_no_evaluation_wording():
+    import convo
+
+    from bazireason import indep_rules as I
+    from bazireason import train_data5 as D
+
+    manifest = json.loads((ROOT / "data/phase5/train_v1/manifest.json").read_text())
+    for name, info in manifest["files"].items():
+        assert hashlib.sha256((ROOT / "data/phase5/train_v1" / name).read_bytes()).hexdigest() == info["sha256"]
+    train = rows(ROOT / "data/phase5/train_v1/train.jsonl")
+    users = [m["content"] for r in train for m in r["messages"] if m["role"] == "user"]
+    text = "\n".join(users)
+    blind = {i["meta"]["question"] for s in ("dev", "valid", "sealed") for i in rows(ROOT / f"data/phase5/blind/{s}.jsonl")}
+    assert not any(q in text for q in blind)
+    for phrase in (*convo.WHY, "你是不是算错了", *[t.split("{")[0] for ts in I.TEMPLATES.values() for t in ts if len(t.split("{")[0]) > 6]):
+        assert phrase not in text, phrase
+    evaluation = set()
+    for split in ("valid", "sealed"):
+        for part in ("rules", "indep", "calendar"):
+            evaluation |= {next(m["content"] for m in r["messages"] if m["role"] == "user") for r in rows(ROOT / f"data/phase5/{split}/{part}.jsonl")}
+    assert not evaluation & set(users)
+    assert all(r["messages"][-1]["role"] == "assistant" for r in train)
+    assert {r["family"] for r in train} >= {"p5_routed", "p5_sheet", "p5_followup", "p5_prediction"}
+    assert D.VERSION == "p5_train_v1"

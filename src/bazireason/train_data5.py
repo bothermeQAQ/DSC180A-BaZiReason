@@ -103,7 +103,7 @@ def single(rng, pillars, gender, routed):
         question = None
     plan = N.plan_for(intent, pillars, gender)
     question = question or question_for(intent, plan, pillars, rng)
-    user = G.fact_block(pillars, gender, plan, routed=routed) + "\n" + head_line(pillars, gender) + question + "\n" + plan["hint"]
+    user = G.user_turn(plan, pillars, gender, question, plan["hint"], routed=routed)
     messages = [{"role": "system", "content": P2_SYSTEM}, {"role": "user", "content": user},
                 {"role": "assistant", "content": target(plan)}]  # fmt: skip
     return _row("routed" if routed else "sheet", messages, "", intent), plan, question
@@ -132,7 +132,7 @@ def followup(rng, pillars, gender):
 def prediction(rng, pillars, gender):
     plan = N.prediction_plan()
     question = rng.choice(PREDICT)
-    user = G.fact_block(pillars, gender, plan) + "\n" + head_line(pillars, gender) + question + "\n" + plan["hint"]
+    user = G.user_turn(plan, pillars, gender, question, plan["hint"])
     messages = [{"role": "system", "content": P2_SYSTEM}, {"role": "user", "content": user},
                 {"role": "assistant", "content": target(plan, "这类问题规则无法核验。")}]  # fmt: skip
     return _row("prediction", messages, "", "prediction")
@@ -148,6 +148,7 @@ def replay(split, rng, n):
 
 
 def generate_split(split, seed=SEED):
+    G.PROMPT_VERSION["value"] = 2  # the system's prompt (docs/phase5_log.md)
     blocked = TD.benchmark_exclusions() | TD.contest_exclusions()
     years = sorted(TD.split_years()[split])
     rng = random.Random(f"{VERSION}:{seed}:{split}")

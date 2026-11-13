@@ -116,6 +116,8 @@ def bare_question(row) -> str:
 # ---- scoring -------------------------------------------------------------------------------------
 def _norm_fact(kind, value):
     if kind in LIST_KINDS:
+        if isinstance(value, list) and all(isinstance(v, str) for v in value):
+            value = "".join(value)  # ["申酉"] and ["申", "酉"] and "申酉" are the same answer
         if isinstance(value, str):
             value = re.findall(r"[甲乙丙丁戊己庚辛壬癸子丑寅卯辰巳午未申酉戌亥木火土金水]", value)
         return sorted(value) if isinstance(value, list) else None

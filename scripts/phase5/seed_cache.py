@@ -17,7 +17,11 @@ import sys  # noqa: E402
 sys.path.insert(0, str(sys_path))
 from run5 import ROOT, SAFE, sha  # noqa: E402
 
-PARTS = {"p3": ("data/phase4/final_test/p3.jsonl", 800), "indep": ("data/phase4/final_test/indep.jsonl", 600)}
+PARTS = {
+    "p3": ("data/phase4/final_test/p3.jsonl", 800),
+    "indep": ("data/phase4/final_test/indep.jsonl", 600),
+    "p2": ("data/phase4/final_test/p2.jsonl", 700),
+}
 
 
 def main():

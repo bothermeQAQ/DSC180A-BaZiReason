@@ -45,3 +45,38 @@ Decisions, surprises and negative results, in order. The plan is `docs/phase5_ex
 
   Training (`train_data5.py`, p5_train_v1, ready but not built) only if both fail.
 - **Queue state:** `queue_dev.sh` (A1) hands over to `queue_dev2.sh` (base, then R3) through `switch_after_a1.sh`. The interpolation grid in `queue_dev.sh` is skipped by that switch and has to be run separately.
+
+## 13 November 2026, 15:00: A1 development matrix complete; base partial; scorer fix
+
+A1 (Phase 4 final test as dev, plus 195 dev blind questions):
+
+| Part | Alone (w0) | Full sheet (gf) | Oracle-routed (go) | Routed (gr) | Routed + verified, final |
+|---|---:|---:|---:|---:|---:|
+| Template rule rows (294) | 191 | 165 | 197 | 197 | 294 |
+| Independent (280) | 212 | 219 | 243 | 243 | 280 |
+| Blind (195) | 107 | 122 | 158 | 156 | 190 (= the 190 routed correctly) |
+
+- **Grounding does not help where the model ignores it.** On template rules, interactions fall 25 → 10 and patterns 21 → 13 with the conclusion supplied; strength (24 → 30) and domain (9 → 33) rise. On blind questions the supplied conclusion helps strongly: 107 → 158.
+- **Contradicted statements at first pass:** w0 120/769 replies; go 12/769.
+- **Base, dev rule rows:** w0 1/294, gf 8/294, go 12/294. The base also re-derives at length in Markdown and writes free-form JSON values (`"是"` for true, a sentence for the label). It does not adopt the supplied conclusion either, and cannot serve as the generator. Its remaining dev runs were dropped: validation measures base under gr anyway, as pre-registered.
+- **Scorer fix before validation (dev finding).** A list answer written as one string inside a list (`["申酉"]`) was still marked wrong; the fact scorer now reads list answers by content in every form. `scripts/phase5/rescore5.py` recomputes stored scores from raw replies once the runs are finished.
+- **Queue:** `queue_dev3.sh` runs prompt version 2 for A1, then the interpolation grid (0.15, 0.25, 0.35), then dev calendar rows for P2, R3 and A1 (reused from the Phase 4 cache).
+
+## 13 November 2026, 15:30: prompt version 2 chosen; G1 training justified; design frozen
+
+- **Prompt version 2** puts the routed conclusion after the question, with "请直接采用上面这个已核验的结论作答…". A1 under go, version 1 → 2:
+
+  | Part | Agreement with the supplied conclusion | Contradicted statements |
+  |---|---:|---:|
+  | Rule rows (294) | 197 → 203 | 11 → 4 |
+  | Independent (280) | 243 → 260 | 0 → 0 |
+  | Blind (195) | 158 → 168 | 1 → 6 |
+
+  It is used for every validation and sealed run, the conversations and the chatbot.
+- **Training G1, justified by a measured failure prompting did not fix.** Even with version 2, A1's first pass disagrees with the supplied conclusion on 91/294 rule rows; the base does not adopt it either (go 12/294, mostly free-form output). One continuation from A1 on `p5_train_v1` (2,260 code-written rows, prompt version 2, max 1,990 tokens; no evaluation wording, checked by a test). It runs after the interpolation grid (`queue_train.sh`), then G1's dev runs.
+- **Pre-registration completed and committed before any validation scoring:**
+  - G1 joins the candidates;
+  - conversation guard;
+  - sealed run list;
+  - batch 32 for validation and sealed.
+- **Queues:** `queue_valid5.sh` starts after `QUEUE_TRAIN_DONE`. `queue_sealed5.sh` will be started by hand after the validation outputs have been checked for harness bugs.

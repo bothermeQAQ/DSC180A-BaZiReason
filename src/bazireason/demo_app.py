@@ -39,6 +39,8 @@ from pathlib import Path
 
 from bazireason import claim_check, deep_rules, demo_deep, rules
 from bazireason import grounded as G
+
+G.PROMPT_VERSION["value"] = 2  # the Phase 5 pre-registered prompt
 from bazireason import worked as W
 from bazireason.calendar_engine import temporal_facts, tzdata_keys
 from bazireason.charttools import chart_tool_text, pillars_text, verified_chart

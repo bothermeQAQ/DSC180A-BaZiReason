@@ -52,8 +52,10 @@ def alpha():
 def final():
     m = json.loads((ROOT / "dev_alpha.json").read_text())["label"]
     cal = {lab: records("valid", lab, "calendar", "w0") for lab in ("p2", "p3r3", "p4a1", m)}
+    g1_cal = records("valid", "p5g1", "calendar", "w0")
     diff = paired_difference([r["score"] for r in cal["p2"]], [r["score"] for r in cal[m]])
     bda = {lab: balanced_decision(recs)[0] for lab, recs in cal.items()}
+    bda_g1 = balanced_decision(g1_cal)[0]
     rule_parts = ("rules", "indep", "blind")
     w0 = {lab: sum(correct(records("valid", lab, p, "w0")) for p in rule_parts) for lab in ("p4a1", m)}
     n_items = sum(len(records("valid", "p4a1", p, "w0")) for p in rule_parts)
@@ -63,7 +65,14 @@ def final():
         "c_balanced_decision_above_P2_R3_A1": bda[m] > max(bda["p2"], bda["p3r3"], bda["p4a1"]),
     }
     candidate = all(gates.values())
-    pool = ["base", "p3r3", "p4a1"] + ([m] if candidate else [])
+    pool = ["base", "p3r3", "p4a1", "p5g1"] + ([m] if candidate else [])
+    convo = {}
+    for lab in pool:
+        path = ROOT / "valid" / lab.translate(SAFE) / "convo_grv.jsonl"
+        if path.exists():
+            convo[lab] = sum(json.loads(x)["dialogue_ok"] for x in path.read_text(encoding="utf-8").splitlines())
+    excluded = [lab for lab in pool if lab != "p4a1" and lab in convo and "p4a1" in convo and convo[lab] < convo["p4a1"] - 3]
+    pool = [lab for lab in pool if lab not in excluded]
     gr = {}
     for lab in pool:
         recs = [r for p in rule_parts for r in records("valid", lab, p, "gr")]
@@ -74,11 +83,13 @@ def final():
         "rules": "docs/phase5_preregistration.md section 4 (frozen before validation scoring)",
         "m_star": m,
         "m_star_calendar_minus_p2": diff,
-        "balanced_decision_accuracy": bda,
+        "balanced_decision_accuracy": dict(bda, p5g1=bda_g1),
         "w0_rules_indep_blind_correct": w0,
         "n_items": n_items,
         "m_star_gates": gates,
         "m_star_is_candidate": candidate,
+        "convo_grv_dialogues_ok": convo,
+        "excluded_by_conversation_guard": excluded,
         "gr_first_pass": gr,
         "g_star": g_star,
     }

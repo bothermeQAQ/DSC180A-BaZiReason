@@ -25,6 +25,7 @@ ADAPTERS = {
     "p3r2": "bazireason-qwen3-4b-lora-p3-r2",
     "p3r3": "bazireason-qwen3-4b-lora-p3-r3",
     "p4a1": "bazireason-qwen3-4b-lora-p4-a1",
+    "p5g1": "bazireason-qwen3-4b-lora-p5-g1",
 }
 DEFAULT_MODEL = "models/qwen3-4b-instruct-2507-mlx-4bit"
 

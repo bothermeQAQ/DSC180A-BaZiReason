@@ -187,11 +187,14 @@ def main():
     parser.add_argument("--parts", nargs="+", default=["rules", "indep", "blind"])
     parser.add_argument("--conditions", nargs="+", default=["w0"], choices=G.CONDITIONS)
     parser.add_argument("--batch", type=int, default=16)
-    parser.add_argument("--prompt-version", type=int, default=1, choices=(1, 2))
+    parser.add_argument("--prompt-version", type=int, default=None, choices=(1, 2),
+                        help="default: 2 (pre-registered) for valid and sealed, 1 for dev")  # fmt: skip
     parser.add_argument("--limit", type=int, default=0, help="first N items per part (prompt tests)")
     args = parser.parse_args()
-    G.PROMPT_VERSION["value"] = args.prompt_version
-    tag = "" if args.prompt_version == 1 else f"_p{args.prompt_version}"
+    version = args.prompt_version or (1 if args.split == "dev" else 2)
+    G.PROMPT_VERSION["value"] = version
+    # Development prompt tests are tagged; validation and sealed always use the frozen version.
+    tag = f"_p{version}" if args.split == "dev" and version != 1 else ""
     tag += f"_n{args.limit}" if args.limit else ""
     if args.split == "sealed":
         if not (ROOT / "selection.json").exists():

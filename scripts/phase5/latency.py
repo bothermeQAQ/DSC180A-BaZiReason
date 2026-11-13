@@ -33,6 +33,7 @@ def main():
     parser.add_argument("--labels", nargs="+", default=["p4a1"])
     parser.add_argument("--n", type=int, default=40)
     args = parser.parse_args()
+    G.PROMPT_VERSION["value"] = 2
     items = [json.loads(x) for x in Path(f"data/phase5/blind/{args.split}.jsonl").read_text(encoding="utf-8").splitlines()]
     sample = random.Random(20261113).sample(items, min(args.n, len(items)))
     bank = AdapterBank()

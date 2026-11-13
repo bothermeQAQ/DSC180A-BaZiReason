@@ -28,19 +28,21 @@ The sealed split uses the test-year block and new seeds, and excludes every prom
 
 ## 3. Systems and conditions
 
-The base model is always Qwen3-4B-Instruct-2507 (4-bit, MLX), served with adapters swapped in place on one loaded base (`bazireason.adapter_bank`).
+The base model is always Qwen3-4B-Instruct-2507 (4-bit, MLX), served with adapters swapped in place on one loaded base (`bazireason.adapter_bank`). Greedy decoding throughout. Validation and sealed runs use batch 32; development runs used 16.
 
 - **Adapters:**
   - `base`, untuned;
   - `p2`, `p3r3` and `p4a1`, the existing adapters;
-  - **M\***, an interpolation `(1 − α)·R3 + α·A1`, with α chosen on development data (section 4).
-- **Conditions** (`bazireason.grounded`):
+  - **M\***, an interpolation `(1 − α)·R3 + α·A1`, with α chosen on development data (section 4);
+  - **G1** (`p5g1`), the one Phase 5 training run (section 7).
+- **Conditions** (`bazireason.grounded`, prompt version 2):
   - **w0, model alone:** the four pillars and the question.
   - **gf, full fact sheet:** every verified fact of the chart.
-  - **go, oracle plan:** the fact sheet plus the rule code's conclusion for the true intent.
+  - **go, oracle plan:** the fact sheet, the question, then the rule code's conclusion for the true intent with an instruction to adopt it.
   - **gr, routed:** the same with the intent chosen by the frozen keyword router `bazireason.intent.route`, which was tuned on development data only.
   - **grv, routed and verified:** gr; if the reply's conclusion or any fixed-form statement disagrees with the code, one repair turn that gives the code's values; if the second reply still disagrees, the engine's own derivation is shown.
 - **The system** is grv with generator G\*.
+- **Prompt version 2.** It was chosen on development data: with A1, oracle-routed agreement on rule rows rose from 197 to 203 of 294 and contradicted statements fell from 11 to 4 (`docs/phase5_log.md`).
 
 ## 4. Selection on the validation split (frozen)
 
@@ -51,7 +53,8 @@ The base model is always Qwen3-4B-Instruct-2507 (4-bit, MLX), served with adapte
    - (c) M\*'s balanced decision accuracy on calendar rows is above that of P2, R3 and A1. The balanced accuracy is the mean of the right-status rate on answerable rows and on rows without an answer.
 
    If M\* fails, it is reported on validation only and P-3 is not tested.
-3. **G\*:** among {base, R3, A1, M\* if a candidate}, the one with the most first-pass correct answers under gr on validation (rules + indep + blind). Ties are broken by fewer replies with a contradicted statement, then by A1.
+3. **G\*:** among {base, R3, A1, G1, and M\* if a candidate}, the generator with the most first-pass correct answers under gr on validation (rules + indep + blind). Ties are broken by fewer replies with a contradicted statement, then by A1.
+   - **Conversation guard:** a candidate whose grv dialogue success on the validation conversations is more than 3 dialogues (of 30) below A1's is excluded.
 
 `scripts/phase5/select.py` applies these rules and writes `results/phase5/selection.json`.
 
@@ -62,9 +65,16 @@ The base model is always Qwen3-4B-Instruct-2507 (4-bit, MLX), served with adapte
   - **Success:** the lower bound is above 0.
 - **P-2, what training adds once facts are supplied.** First-pass correct answers under gr: G\* minus base, on the same items. If G\* is base, the comparison is A1 minus base.
   - Reported with its interval, whatever the sign.
+  - If G\* is G1, G1 minus A1 under gr is reported as well (what the Phase 5 training added).
 - **P-3, merged adapter, calendar non-inferiority** (only if M\* is a candidate). M\* minus P2 on sealed calendar rows (w0, 818 rows), with a margin of −5 points.
   - **Success:** the lower bound is at least −5.
   - **Power:** with about 25% discordant pairs and a design effect of 1.2, the half-width is about 3.8 points. If the true difference is 0, power is about 0.75. This is stated in advance.
+
+**Sealed runs (once):**
+- **w0:** A1 on rules, indep and blind; P2, R3, A1, M\* (if a candidate) and G1 on calendar.
+- **gr and grv:** G\* and base, plus A1 if G\* is not A1.
+- **go:** G\* (it differs from gr only on misrouted items).
+- **Conversations:** G\* under w0 and grv, and A1 under grv.
 
 ## 6. Gates and secondary measures (exploratory, no multiplicity correction)
 
@@ -86,11 +96,20 @@ The base model is always Qwen3-4B-Instruct-2507 (4-bit, MLX), served with adapte
 
 ## 7. Training
 
-No training is planned. A training run is added only if development or validation errors show a specific failure that prompts and code cannot fix. It would be:
-- a joint run on a balanced mixture, preferred to another sequential round;
-- built only from code-verified data, with wording families held out.
+Development data showed a specific failure that prompting did not fix. A1 disagrees with a verified conclusion supplied in its prompt on 31–33% of rule questions (97 of 294 with prompt version 1, 91 with version 2), and the untuned base does not adopt it either. The value-supplied repair fixes the final answer, but costs a second generation for about a third of questions.
 
-Any such run is listed in section 8 before its validation scores are read. It enters the selection under the same rules.
+One training run, **G1**, was therefore added before any validation scoring:
+- **Start:** continued from A1, for time and to keep A1's knowledge; a joint run from the base was not attempted.
+- **Data:** `p5_train_v1`, 2,260 rows, all written by the rule code:
+  - 700 routed grounded answers and 400 full-sheet answers;
+  - 260 two-turn follow-ups that keep the verified answer;
+  - 100 declined predictions;
+  - 800 replayed `p4_train_v1` rows.
+
+  Wordings are training-only.
+- **Configuration:** `configs/phase5/qwen3_4b_lora_p5_g1.yaml`.
+- **Selection:** G1 enters the same rules as every other adapter.
+- **Expected effect:** fewer first-pass disagreements and repair turns. It is not expected to change final accuracy, which the repair already secures.
 
 ## 8. Changes after this commit
 

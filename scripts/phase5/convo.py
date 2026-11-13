@@ -110,6 +110,7 @@ def score_turn(dialogue, turn_index, text):
 
 
 def run(split, labels, conditions, batch):
+    G.PROMPT_VERSION["value"] = 2  # the pre-registered prompt
     if split == "sealed":
         if not (ROOT / "selection.json").exists():
             raise SystemExit("The sealed split stays closed until results/phase5/selection.json exists")
