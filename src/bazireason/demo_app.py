@@ -38,6 +38,7 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 
 from bazireason import claim_check, deep_rules, demo_deep, rules
+from bazireason import grounded as G
 from bazireason import worked as W
 from bazireason.calendar_engine import temporal_facts, tzdata_keys
 from bazireason.charttools import chart_tool_text, pillars_text, verified_chart
@@ -409,6 +410,36 @@ def compare_turn_text(first, second, message):
     return "\n".join(lines)
 
 
+INTENT_NAMES = {
+    "fact": "单项事实", "strength": "强弱计数", "pattern": "透干取格", "interact": "合冲刑害",
+    "gods": "十神与组合", "overview": "整体结构", "yongshen": "用神（指定流派）", "ambig": "没有唯一答案",
+    "star": "神煞", "flow": "流年", "domain": "传统看法（某一方面）", "prediction": "个人预测（不作答）",
+    "followup": "追问", "unknown": "未识别（给出全部已核验事实）", "claims": "核对说法",
+}  # fmt: skip
+
+
+def grounded_chat(birth, history, message):
+    """(messages, plan, chart) for the grounded mode, or None when there is no verified chart.
+
+    Every user turn is routed (bazireason.intent); the model receives the chart's verified
+    fact sheet on the first turn and the rule code's conclusion for each routed question.
+    """
+    chart = chart_payload(birth)["chart"] if birth else None
+    if not chart or chart["status"] != "ok":
+        return None
+    pillars, gender = chart["pillars"], chart.get("gender")
+    users = [m["content"] for m in history if m.get("role") == "user" and m.get("content")] + [message]
+    replies = [m["content"] for m in history if m.get("role") == "assistant"]
+    messages, plan = [{"role": "system", "content": P2_SYSTEM}], None
+    for index, question in enumerate(users):
+        plan = G.turn_plan(question, pillars, gender, plan, today=datetime.now().year)
+        user = G.turn_user_text(question, plan, pillars, gender, "gr", index == 0, chart)
+        messages.append({"role": "user", "content": user})
+        if index < len(replies):
+            messages.append({"role": "assistant", "content": replies[index]})
+    return messages, plan, chart
+
+
 def chat_messages(birth, history, message, compare=None):
     """(messages, format name) for the model.
 
@@ -463,7 +494,7 @@ class Models:
     ):
         self.model_path = model_path
         self.adapters = {"p3": adapter_path, "p4": adapter_p4, "p2": adapter_p2, "base": None}
-        self.loaded = {}
+        self.bank = None
         self.jobs = queue.Queue()
         threading.Thread(target=self._work, daemon=True).start()
 
@@ -487,11 +518,15 @@ class Models:
         return next(m["id"] for m in self.available() if m["available"])
 
     def _get(self, which):
-        if which not in self.loaded:
-            from bazireason.mlx_backend import MLXChatModel
+        """One base model in memory; the adapter is swapped in place (bazireason.adapter_bank)."""
+        if self.bank is None:
+            from bazireason.adapter_bank import AdapterBank
 
-            self.loaded[which] = MLXChatModel(self.model_path, self.adapters[which], label=which)
-        return self.loaded[which]
+            first = self.adapters.get(which) or next(p for p in self.adapters.values() if p and Path(p).exists())
+            self.bank = AdapterBank(self.model_path, first)
+        self.bank.use(self.adapters[which] or "base")
+        self.bank.model = which
+        return self.bank
 
     def _work(self):
         while True:
@@ -649,9 +684,16 @@ def make_handler(models, access_code, feedback_path):
                 return self._json({"error": "未找到这个适配器，请先训练或改用其他模型。"}, 409)
             compare = data.get("compare")
             compare = (compare["a"], compare["b"]) if isinstance(compare, dict) else None
-            messages, kind = chat_messages(
-                data.get("birth"), data.get("history") or [], message, compare
-            )
+            grounded = None
+            if data.get("mode", "grounded") == "grounded" and not compare:
+                grounded = grounded_chat(data.get("birth"), data.get("history") or [], message)
+            if grounded:
+                messages, plan, chart = grounded
+                kind = plan["intent"].split(":")[0]
+            else:
+                messages, kind = chat_messages(
+                    data.get("birth"), data.get("history") or [], message, compare
+                )
             self.send_response(200)
             self.send_header("Content-Type", "text/event-stream; charset=utf-8")
             self.send_header("Cache-Control", "no-store")
@@ -679,6 +721,11 @@ def make_handler(models, access_code, feedback_path):
                 ):
                     if "token" in event:
                         reply.append(event["token"])
+                    if event.get("done") and grounded:
+                        event["verification"] = self._verify_grounded(
+                            which, messages, "".join(reply), plan, chart, temperature, send
+                        )
+                        reply = [event["verification"]["final"]]
                     if event.get("done"):
                         event["stats"]["seconds"] = round(time.perf_counter() - started, 1)
                         first_question = next(
@@ -690,6 +737,8 @@ def make_handler(models, access_code, feedback_path):
                             message,
                         )
                         asked = message if kind != "followup" else first_question
+                        if grounded:  # the routed plan is checked above; here the prose claims
+                            asked = ""
                         event["audit"] = audit_reply(
                             "".join(reply),
                             data.get("birth"),
@@ -699,6 +748,42 @@ def make_handler(models, access_code, feedback_path):
                     send(event)
             except (BrokenPipeError, ConnectionResetError):
                 return
+
+        def _verify_grounded(self, which, messages, reply, plan, chart, temperature, send):
+            """Check the reply with code; one value-supplied repair; else the engine's derivation."""
+            pillars, gender = chart["pillars"], chart.get("gender")
+            first = G.verify_turn(plan, reply, pillars, gender)
+            result = {
+                "intent": plan["intent"],
+                "label": INTENT_NAMES.get(plan["intent"].split(":")[0], plan["intent"]),
+                "first_ok": first["ok"],
+                "first_problems": first["problems"],
+                "conclusion_checked": first["conclusion_agrees"] is not None,
+                "repaired": False,
+                "fallback": False,
+                "final": reply,
+                "engine": plan.get("text"),
+            }
+            if first["ok"] or plan.get("reference") is None:
+                return result
+            send({"status": "规则代码发现不一致，正在请模型按核验结果改正…"})
+            second = "".join(
+                e["token"]
+                for e in models.stream(which, G.repair_messages(messages, reply, plan, first), 900, temperature)
+                if "token" in e
+            )
+            check = G.verify_turn(plan, second, pillars, gender)
+            result.update(repaired=True, second_ok=check["ok"])
+            if check["ok"]:
+                result["final"] = second
+            else:
+                result["fallback"] = True
+                result["final"] = (
+                    G.engine_answer(plan)
+                    if plan["intent"] != "followup"
+                    else "（规则代码的结论不变）\n" + (plan.get("text") or "")
+                )
+            return result
 
     return Handler
 

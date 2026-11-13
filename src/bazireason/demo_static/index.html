@@ -145,6 +145,8 @@
       <h2>对话</h2>
       <div class="row">
         <div><label for="model">模型</label><select id="model"></select></div>
+        <div><label for="mode">核验方式</label>
+          <select id="mode"><option value="grounded">规则代码先算、模型解释、代码核对（推荐）</option><option value="alone">只用模型（对照）</option></select></div>
         <div><label for="temp">回答方式</label>
           <select id="temp"><option value="0">确定性（每次相同）</option><option value="0.7">采样（更口语）</option></select></div>
       </div>
@@ -295,10 +297,10 @@ async function send(text) {
     // so the browser only keeps the plain dialogue.
     const response = await api("/api/chat", {model: $("model").value, message, history,
       birth: comparePair ? null : lastBirth, compare: comparePair,
-      temperature: Number($("temp").value)});
+      mode: $("mode").value, temperature: Number($("temp").value)});
     if (!response.ok) { bubble.textContent = (await response.json()).error || "出错了"; return; }
     const reader = response.body.getReader(), decoder = new TextDecoder();
-    let buffer = "", stats = null, audit = null;
+    let buffer = "", stats = null, audit = null, verification = null;
     for (;;) {
       const {value, done} = await reader.read();
       if (done) break;
@@ -310,14 +312,31 @@ async function send(text) {
         if (event.rules) { showRules(event.rules); speculative = event.speculative; format = event.format; asked = event.asked || ""; }
         if (event.error) { answer += event.error; bubble.textContent = answer; }
         if (event.token !== undefined) { answer += event.token; bubble.textContent = answer; $("log").scrollTop = $("log").scrollHeight; }
-        if (event.done) { stats = event.stats; audit = event.audit; }
+        if (event.status) { $("busy").textContent = event.status; }
+        if (event.done) { stats = event.stats; audit = event.audit; verification = event.verification || null; }
       }
     }
+    if (verification) { answer = verification.final; bubble.textContent = answer; }
     const mark = answer.lastIndexOf("结论JSON:");
     if (mark >= 0) {
       bubble.textContent = answer.slice(0, mark).trim();
       const box = document.createElement("div"); box.className = "json";
       box.textContent = "结构化结论 " + answer.slice(mark + 7).trim(); bubble.appendChild(box);
+    }
+    if (verification) {
+      const badge = document.createElement("div");
+      badge.className = verification.fallback ? "flag" : "meta";
+      const what = "问题类型：" + verification.label + "。";
+      if (verification.fallback) {
+        badge.textContent = what + "模型两次回答都与规则代码的结论不一致，上面显示的是规则代码自己的推导。";
+      } else if (verification.repaired) {
+        badge.textContent = what + "第一次回答与规则代码不一致（" + (verification.first_problems.join("；") || "结论不符") + "），已按规则代码的结论改正。";
+      } else if (verification.conclusion_checked) {
+        badge.textContent = what + "✓ 结论由规则代码先算出，模型的回答与它一致。";
+      } else {
+        badge.textContent = what + "这类问题没有单一的可核对结论；模型只拿到已核验的事实，回答中的固定说法已逐条核对。";
+      }
+      bubble.appendChild(badge);
     }
     if (speculative) {
       const flag = document.createElement("div"); flag.className = "flag";

@@ -1,0 +1,78 @@
+{
+ "note": [
+  "    .venv/bin/python scripts/phase5/addendum_indep.py   # writes results/phase5/addenda/indep_rescore.json",
+  "",
+  "Reads saved replies only. The Phase 4 scorer (indep_rules.score_indep) accepted a 旬空 or",
+  "hidden-stem answer only as a JSON list; replies that wrote the same two branches as one"
+ ],
+ "splits": {
+  "valid": {
+   "p2": {
+    "n": 140,
+    "strict_phase4": 82,
+    "content_lenient": 82,
+    "xun_kong_strict": 4,
+    "xun_kong_lenient": 4
+   },
+   "p3r2": {
+    "n": 140,
+    "strict_phase4": 78,
+    "content_lenient": 81,
+    "xun_kong_strict": 0,
+    "xun_kong_lenient": 3
+   },
+   "p3r3": {
+    "n": 140,
+    "strict_phase4": 80,
+    "content_lenient": 82,
+    "xun_kong_strict": 0,
+    "xun_kong_lenient": 2
+   },
+   "p4a1": {
+    "n": 140,
+    "strict_phase4": 98,
+    "content_lenient": 103,
+    "xun_kong_strict": 1,
+    "xun_kong_lenient": 6
+   }
+  },
+  "final_test": {
+   "base": {
+    "n": 280,
+    "strict_phase4": 64,
+    "content_lenient": 64,
+    "xun_kong_strict": 0,
+    "xun_kong_lenient": 0
+   },
+   "p2": {
+    "n": 280,
+    "strict_phase4": 166,
+    "content_lenient": 166,
+    "xun_kong_strict": 8,
+    "xun_kong_lenient": 8
+   },
+   "p3r2": {
+    "n": 280,
+    "strict_phase4": 159,
+    "content_lenient": 166,
+    "xun_kong_strict": 0,
+    "xun_kong_lenient": 7
+   },
+   "p3r3": {
+    "n": 280,
+    "strict_phase4": 162,
+    "content_lenient": 169,
+    "xun_kong_strict": 0,
+    "xun_kong_lenient": 7
+   },
+   "p4a1": {
+    "n": 280,
+    "strict_phase4": 201,
+    "content_lenient": 212,
+    "xun_kong_strict": 3,
+    "xun_kong_lenient": 14
+   }
+  }
+ },
+ "status": "data/phase4/final_test was read during the Phase 4 review (13 November 2026) and is development material in Phase 5; no untouched Phase 4 split remains."
+}

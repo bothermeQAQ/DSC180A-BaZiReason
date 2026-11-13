@@ -1,0 +1,86 @@
+{
+  "split_years": "valid",
+  "plan": {
+    "split": "valid",
+    "rules": [
+      2026111511,
+      2.0
+    ],
+    "calendar": [
+      2026111512,
+      3.6
+    ],
+    "indep": [
+      2026111513,
+      140
+    ]
+  },
+  "excluded_prompts_from": [
+    "data/phase2/train_v1/test.jsonl",
+    "data/phase2/train_v1/train.jsonl",
+    "data/phase2/train_v1/valid.jsonl",
+    "data/phase2/train_v2/test.jsonl",
+    "data/phase2/train_v2/train.jsonl",
+    "data/phase2/train_v2/valid.jsonl",
+    "data/phase3/dev_v1/dev.jsonl",
+    "data/phase3/p2check_v1/test.jsonl",
+    "data/phase3/train_v1/test.jsonl",
+    "data/phase3/train_v1/train.jsonl",
+    "data/phase3/train_v1/valid.jsonl",
+    "data/phase3/train_v2/train.jsonl",
+    "data/phase3/train_v2/valid.jsonl",
+    "data/phase3/train_v3/train.jsonl",
+    "data/phase3/train_v3/valid.jsonl",
+    "data/phase4/final_test/indep.jsonl",
+    "data/phase4/final_test/p2.jsonl",
+    "data/phase4/final_test/p3.jsonl",
+    "data/phase4/train_v1/train.jsonl",
+    "data/phase4/train_v1/valid.jsonl",
+    "data/phase4/valid/indep.jsonl",
+    "data/phase4/valid/p2.jsonl",
+    "data/phase4/valid/p3.jsonl"
+  ],
+  "files": {
+    "rules.jsonl": {
+      "rows": 202,
+      "sha256": "dd941ca9054c0ca91da27553ca38b4cee28636e27c242d1dc4eb9f9acc5d4c36",
+      "families": {
+        "ambig": 12,
+        "domain": 24,
+        "flow": 40,
+        "gods": 28,
+        "interact": 32,
+        "overview": 16,
+        "pattern": 16,
+        "strength": 16,
+        "yongshen": 18
+      }
+    },
+    "calendar.jsonl": {
+      "rows": 388,
+      "sha256": "37f86ce30558c1e5322fd5a00c64ea33fe9c4be57b0db708bb437c4bf8a37128",
+      "families": {
+        "chart_facts": 29,
+        "chart_plain": 50,
+        "dst_fold": 21,
+        "dst_gap": 6,
+        "invalid": 36,
+        "jie_boundary": 43,
+        "jie_window": 36,
+        "missing": 26,
+        "shanghai_dst": 14,
+        "tz_facts": 14,
+        "tz_known": 29,
+        "tz_needs_tool": 14,
+        "zi_transition": 70
+      }
+    },
+    "indep.jsonl": {
+      "rows": 140,
+      "sha256": "ddb1925693ed1e2b6ad8f49a37b8fbd87243e12b1f6c3eac8c14314175bcb487",
+      "families": {
+        "indep": 140
+      }
+    }
+  }
+}
