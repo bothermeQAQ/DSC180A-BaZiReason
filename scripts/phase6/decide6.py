@@ -2,6 +2,7 @@
 
     .venv/bin/python scripts/phase6/decide6.py screen    # dev6: U1 recipe -> results/phase6/screening.json
     .venv/bin/python scripts/phase6/decide6.py select    # valid6: selection -> results/phase6/selection.json
+    .venv/bin/python scripts/phase6/decide6.py flags     # U1 build options implied by screening.json
 
 Reads saved records only. "select" writes results/phase6/selection.json, which opens sealed6.
 """
@@ -98,6 +99,24 @@ def screen():
     )
 
 
+def flags():
+    """The U1 build options that the screening decision implies (read by queue_u1.sh)."""
+    d = json.loads((ROOT / "screening.json").read_text())
+    out = ["--drop", *d["drop"]] if d["drop"] else []
+    if d.get("calendar_share"):
+        out += ["--calendar-share", str(d["calendar_share"])]
+    print(" ".join(out))
+
+
+def best():
+    print(json.loads((ROOT / "screening.json").read_text())["best_s_run_on_dev6"])
+
+
+def small_steps_dropped():
+    d = json.loads((ROOT / "screening.json").read_text())
+    sys.exit(0 if d["steps"][0]["dropped"] else 1)
+
+
 def select():
     screening = json.loads((ROOT / "screening.json").read_text())
     candidates = [
@@ -130,4 +149,10 @@ def select():
 
 
 if __name__ == "__main__":
-    {"screen": screen, "select": select}[sys.argv[1]]()
+    {
+        "screen": screen,
+        "select": select,
+        "flags": flags,
+        "best": best,
+        "small-steps-dropped": small_steps_dropped,
+    }[sys.argv[1]]()

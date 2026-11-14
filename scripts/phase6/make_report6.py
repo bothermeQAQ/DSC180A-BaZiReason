@@ -179,23 +179,20 @@ def statements_section(lines, summary, split):
     labs = [lab for lab in labels_in(split) if rule_records(split, lab)]
     if not labs:
         return
-    items = {it["id"]: it for p in RULE_PARTS for it in run6.load_items(split, p)}
     lines += [f"### Statements in L0 replies (`{split}`, claim checker)\n",
               "Look-ups: day master, hidden stems, pillars, spouse star. Computed: 旬空, element counts, pattern, relations, flow years, Ten Gods, strength, stars, life stages.\n",
               "| Model | Look-up statements wrong | Computed statements wrong | 旬空 | Element counts | Pattern | Relations | Replies with a wrong statement | Loops |",
               "|---|---:|---:|---:|---:|---:|---:|---:|---:|"]  # fmt: skip
     block = {}
     for lab in labs:
-        checked, wrong, replies_bad, loops = Counter(), Counter(), 0, 0
+        cc = claim_counts(split, lab)
+        checked, wrong, replies_bad, loops = (
+            Counter(cc["checked"]),
+            Counter(cc["wrong"]),
+            cc["replies_with_wrong"],
+            cc["loops"],
+        )
         recs = rule_records(split, lab)
-        for r in recs:
-            meta = items[r["id"]]["meta"]
-            claims = check_claims(r["raw_output"], meta["pillars"], meta.get("gender"))
-            for c in claims:
-                checked[c["kind"]] += 1
-                wrong[c["kind"]] += not c["ok"]
-            replies_bad += any(not c["ok"] for c in claims if c["kind"] != "repetition")
-            loops += W.has_loop(r["raw_output"])
 
         def frac(kinds, wrong=wrong, checked=checked):
             return pct(sum(wrong[k] for k in kinds), sum(checked[k] for k in kinds))
@@ -415,6 +412,265 @@ def selfcheck_section(lines, summary, split):
     summary.setdefault("selfcheck", {})[split] = block
 
 
+# ---- training, decisions, sealed primaries, system ---------------------------------------------------
+
+_CLAIMS = {}
+
+
+def claim_counts(split, lab):
+    """Claim-checker counts over a model's L0 rule replies (cached: the checker is slow)."""
+    if (split, lab) in _CLAIMS:
+        return _CLAIMS[(split, lab)]
+    items = {it["id"]: it for p in RULE_PARTS for it in run6.load_items(split, p)}
+    checked, wrong, replies_bad, loops = Counter(), Counter(), 0, 0
+    recs = rule_records(split, lab)
+    for r in recs:
+        meta = items[r["id"]]["meta"]
+        claims = check_claims(r["raw_output"], meta["pillars"], meta.get("gender"))
+        for c in claims:
+            checked[c["kind"]] += 1
+            wrong[c["kind"]] += not c["ok"]
+        replies_bad += any(not c["ok"] for c in claims if c["kind"] != "repetition")
+        loops += W.has_loop(r["raw_output"])
+    out = {
+        "checked": dict(checked),
+        "wrong": dict(wrong),
+        "replies_with_wrong": replies_bad,
+        "n": len(recs),
+        "loops": loops,
+    }
+    _CLAIMS[(split, lab)] = out
+    return out
+
+
+def balanced(recs):
+    sc = [r["score"] for r in recs]
+    ok = [s for s in sc if s.get("expected_status") == "ok"]
+    other = [s for s in sc if s.get("expected_status") not in (None, "ok")]
+    return (sum(bool(s.get("status_correct")) for s in ok) / max(len(ok), 1)
+            + sum(bool(s.get("status_correct")) for s in other) / max(len(other), 1)) / 2  # fmt: skip
+
+
+def training_section(lines, summary):
+    plans = sorted((ROOT / "training").glob("*/training_plan.json"))
+    if not plans:
+        return
+    labels = {v: k for k, v in run6.FOLDERS.items()}
+    lines += ["## Training runs (all from the untuned base)\n",
+              "| Run | Rows | Sequence tokens | Layers / rank | Iterations done | Train loss, last 200 iterations | Validation loss, last | Peak memory | Hours |",
+              "|---|---:|---:|---|---:|---:|---:|---:|---:|"]  # fmt: skip
+    block = {}
+    for path in plans:
+        plan = json.loads(path.read_text())
+        mets = [
+            json.loads(x)
+            for x in (path.parent / "metrics.jsonl").read_text().splitlines()
+            if x.strip()
+        ]
+        train = [m for m in mets if m["kind"] == "train"]
+        valid = [m for m in mets if m["kind"] == "valid"]
+        if not train:
+            continue
+        last = train[-1]["iteration"]
+        tail = [m["train_loss"] for m in train if m["iteration"] > last - 200]
+        cfg = Path(plan["config_file"])
+        layers = rank = "?"
+        if cfg.exists():
+            text = cfg.read_text()
+            for ln in text.splitlines():
+                if ln.strip().startswith("num_layers:"):
+                    layers = ln.split(":")[1].strip()
+                if ln.strip().startswith("rank:"):
+                    rank = ln.split(":")[1].strip()
+        lab = labels.get(plan["run_name"], plan["run_name"])
+        done = f"{last}/{plan['iterations']}" + ("" if last >= plan["iterations"] else " (running)")
+        lines.append(f"| {name(lab)} | {plan['train_rows']:,} | {plan['train_sequence_tokens_per_epoch']:,} | {layers} / {rank} | {done} | "
+                     f"{sum(tail) / len(tail):.4f} | {valid[-1]['val_loss']:.4f} | {max(m['peak_memory_gb'] for m in train):.1f} GB | "
+                     f"{train[-1]['elapsed_seconds'] / 3600:.2f} |")  # fmt: skip
+        block[lab] = {"rows": plan["train_rows"], "tokens": plan["train_sequence_tokens_per_epoch"], "iterations": [last, plan["iterations"]],
+                      "train_loss_tail": round(sum(tail) / len(tail), 5), "val_loss": valid[-1]["val_loss"],
+                      "hours": round(train[-1]["elapsed_seconds"] / 3600, 2)}  # fmt: skip
+    lines += [
+        "",
+        "Average per-token loss is dominated by template text; the fit table above is the measure of what was learned.\n",
+    ]
+    summary["training"] = block
+
+
+def decisions_section(lines, summary):
+    scr, sel = ROOT / "screening.json", ROOT / "selection.json"
+    if scr.exists():
+        d = json.loads(scr.read_text())
+        lines += ["## Screening decisions (dev6, frozen rule: preregistration section 5)\n",
+                  "| Component | Run minus the run before it, all rule items, L0, points [95%] | Correct | Dropped |", "|---|---|---:|---|"]  # fmt: skip
+        for s in d["steps"]:
+            v = s["l0_all_rule_items"]
+            iv = v["interval95"]
+            cell = f"{100 * v['difference']:+.1f}" + (
+                f" [{100 * iv[0]:+.1f}, {100 * iv[1]:+.1f}]" if iv else ""
+            )
+            lines.append(f"| {s['component']} ({name(s['run'])} − {name(s['before'])}) | {cell} | {v['a']} vs {v['b']} of {v['n']} | "
+                         f"{'yes' if s['dropped'] else 'no'} |")  # fmt: skip
+        lines += ["", f"Dropped from U1: {', '.join(d['drop']) or 'nothing'}. Calendar share for U1: {d.get('calendar_share') or 'unchanged (28%)'}. "
+                  f"Best S run on dev6: {name(d['best_s_run_on_dev6'])}.\n"]  # fmt: skip
+        summary["screening"] = d
+    if sel.exists():
+        d = json.loads(sel.read_text())
+        lines += ["## Selection (valid6, frozen rule: preregistration section 6)\n",
+                  "| Candidate | All rule items, L0 | Calendar minus Phase 2 [95%] | Calendar gate (lower bound ≥ −7) |", "|---|---:|---|---|"]  # fmt: skip
+        for lab, v in d["candidates"].items():
+            c = v["calendar_minus_p2"]
+            iv = c["interval95"]
+            cell = f"{100 * c['difference']:+.1f}" + (
+                f" [{100 * iv[0]:+.1f}, {100 * iv[1]:+.1f}]" if iv else ""
+            )
+            lines.append(
+                f"| {name(lab)} | {pct(*v['l0_all_rule_items'])} | {cell} | {'passes' if v['calendar_gate'] else 'fails'} |"
+            )
+        lines += ["", f"**Selected: {name(d['selected'])}.**" + (" No candidate passed the calendar gate; the calendar claim fails." if d["calendar_claim_failed"] else ""), ""]  # fmt: skip
+        summary["selection"] = d
+
+
+def primary_section(lines, summary, split):
+    sel = ROOT / "selection.json"
+    if split != "sealed6" or not sel.exists():
+        return
+    m = json.loads(sel.read_text())["selected"]
+    if not rule_records(split, m):
+        return
+    lines += [f"### Pre-registered comparisons on `{split}` (M = {name(m)}; preregistration section 7)\n",
+              "| | Comparison | Result, points [95%] | Target | Met |", "|---|---|---|---|---|"]  # fmt: skip
+    block = {"M": m}
+
+    def add(code, what, a, b, target, test):
+        if not a or not b:
+            return
+        text, d = diff(a, b)
+        met = test(d) if d and d.get("interval95") else None
+        lines.append(
+            f"| {code} | {what} | {text} | {target} | {'yes' if met else 'no' if met is not None else '–'} |"
+        )
+        block[code] = {
+            "difference": d["difference"] if d else None,
+            "interval95": d["interval95"] if d else None,
+            "met": met,
+        }
+
+    above0 = lambda d: d["interval95"][0] > 0  # noqa: E731
+    add(
+        "P-1",
+        f"{name(m)} − A1, L0, all rule items",
+        rule_records(split, "p4a1"),
+        rule_records(split, m),
+        "lower bound > 0 (aim +10)",
+        above0,
+    )
+    add(
+        "P-2",
+        f"{name(m)} − A1, L0, blind questions",
+        load(split, "p4a1", "blind"),
+        load(split, m, "blind"),
+        "secondary",
+        above0,
+    )
+    add(
+        "P-3",
+        f"{name(m)} − untuned base, L0, all rule items",
+        rule_records(split, "base"),
+        rule_records(split, m),
+        "lower bound > 0",
+        above0,
+    )
+    add("P-4", f"{name(m)} − Phase 2, calendar", load(split, "p2", "calendar"), load(split, m, "calendar"), "lower bound ≥ −5",
+        lambda d: d["interval95"][0] >= -0.05)  # fmt: skip
+    for lab in (m, "p4a1", "p5g1"):
+        add("P-5" if lab == m else "P-5 (ref.)", f"{name(lab)}: L1 − L0, all rule items", rule_records(split, lab), rule_records(split, lab, "L1"),
+            "lower bound > 0" if lab == m else "reference", above0)  # fmt: skip
+    add(
+        "H1",
+        "U0 − A1, L0, all rule items",
+        rule_records(split, "p4a1"),
+        rule_records(split, "p6u0"),
+        "lower bound > 0",
+        above0,
+    )
+    add("H1", "U0 − Phase 2, calendar", load(split, "p2", "calendar"), load(split, "p6u0", "calendar"), "lower bound ≥ −5",
+        lambda d: d["interval95"][0] >= -0.05)  # fmt: skip
+    lines.append("")
+    cal = {lab: load(split, lab, "calendar") for lab in (m, "p2")}
+    if all(cal.values()):
+        lines.append(
+            f"P-4, balanced decision accuracy on twins: {name(m)} {100 * balanced(cal[m]):.1f}%, Phase 2 {100 * balanced(cal['p2']):.1f}%.\n"
+        )
+        block["P-4 balanced"] = {m: balanced(cal[m]), "p2": balanced(cal["p2"])}
+    l4 = {lab: rule_records(split, lab, "L4") for lab in (m, "p4a1")}
+    if all(l4.values()):
+        cells = []
+        for lab in (m, "p4a1"):
+            rs = [r for r in l4[lab] if r["level"] == "L4a"]
+            wrong, right = (
+                [r for r in rs if not r["first_correct"]],
+                [r for r in rs if r["first_correct"]],
+            )
+            fixed, broke = sum(r["fixed"] for r in wrong), sum(r["broke"] for r in right)
+            cells.append(
+                f"{name(lab)} fixes {pct(fixed, len(wrong))} and breaks {pct(broke, len(right))}"
+            )
+            block.setdefault("P-6", {})[lab] = {
+                "fixed": fixed,
+                "wrong": len(wrong),
+                "broke": broke,
+                "right": len(right),
+            }
+        v = block["P-6"][m]
+        met = (
+            v["wrong"]
+            and v["fixed"] / v["wrong"] >= 0.25
+            and v["broke"] / max(v["right"], 1) <= 0.02
+        )
+        lines.append(
+            f"P-6, self-correction (L4a): {'; '.join(cells)}. Target: fix at least 25%, break at most 2%: {'met' if met else 'not met'}.\n"
+        )
+    if rule_records(split, "p4a1"):
+        a, b = claim_counts(split, "p4a1"), claim_counts(split, m)
+        ra, rb = a["replies_with_wrong"] / a["n"], b["replies_with_wrong"] / b["n"]
+        lines.append(f"P-7, L0 replies with a contradicted checkable statement: {name(m)} {pct(b['replies_with_wrong'], b['n'])}, "
+                     f"A1 {pct(a['replies_with_wrong'], a['n'])}. Target: at most half of A1's rate: {'met' if rb <= ra / 2 else 'not met'}.\n")  # fmt: skip
+        block["P-7"] = {
+            m: [b["replies_with_wrong"], b["n"]],
+            "p4a1": [a["replies_with_wrong"], a["n"]],
+            "met": rb <= ra / 2,
+        }
+    summary.setdefault("primary", {})[split] = block
+
+
+def l5_section(lines, summary, split):
+    labs = [lab for lab in labels_in(split) if load(split, lab, "rules", "L5")]
+    if not labs:
+        return
+    lines += [f"### L5: the Phase 5 hybrid system (`{split}`). System accuracy, not model accuracy\n",
+              "Router, conclusion supplied by the rule code, value repair and engine fallback (Phase 5 code, condition grv). "
+              "The generator's own L0 score is shown for contrast.\n",
+              "| Generator | Part | Generator alone (L0) | Generator's reply inside the system | Final system answer | Repaired | Engine fallback | Routed right |",
+              "|---|---|---:|---:|---:|---:|---:|---:|"]  # fmt: skip
+    block = {}
+    for lab in labs:
+        for part in ("rules", "indep", "blind"):
+            recs = load(split, lab, part, "L5")
+            if not recs:
+                continue
+            l0 = load(split, lab, part)
+            n = len(recs)
+            final = sum(bool(r["final_score"]["correct"]) for r in recs)
+            routed = sum(bool(r.get("routed_ok")) for r in recs)
+            lines.append(f"| {name(lab)} | {part} | {pct(correct(l0), len(l0)) if l0 else '–'} | {pct(correct(recs), n)} | **{pct(final, n)}** | "
+                         f"{sum(bool(r['repaired']) for r in recs)} | {sum(bool(r['fallback']) for r in recs)} | {pct(routed, n)} |")  # fmt: skip
+            block.setdefault(lab, {})[part] = {"n": n, "reply": correct(recs), "final": final, "routed": routed,
+                                               "l0": correct(l0) if l0 else None}  # fmt: skip
+    lines.append("")
+    summary.setdefault("l5", {})[split] = block
+
+
 def main():
     lines = ["# Phase 6 results\n",
              "Generated by `scripts/phase6/make_report6.py` from the files in this folder. Real local inference (MLX, Apple M5, 32 GB), "
@@ -422,11 +678,14 @@ def main():
              "`dev6` is read freely, `valid6` is for selection only, `sealed6` is scored once after `selection.json`.\n"]  # fmt: skip
     summary = {}
     fit_section(lines, summary)
+    training_section(lines, summary)
+    decisions_section(lines, summary)
     for split in ("sealed6", "valid6", "dev6"):
         if not (ROOT / split).exists():
             continue
         lines.append(f"## Split `{split}`\n")
         for section in (
+            primary_section,
             l0_section,
             statements_section,
             wording_section,
@@ -435,6 +694,7 @@ def main():
             calendar_section,
             levels_section,
             selfcheck_section,
+            l5_section,
         ):
             section(lines, summary, split)
     (ROOT / "RESULTS.md").write_text("\n".join(lines), encoding="utf-8")
