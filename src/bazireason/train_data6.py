@@ -414,7 +414,15 @@ def selfcheck_rows(replies, rng, limit_tokens):
                 min(len(mine), len(good)),
             )
             if k < len(mine) and k < len(good) and not good[k].startswith("结论JSON"):
-                where = f"第 {k + 1} 行有误：写成了「{mine[k][:80]}」，应为「{good[k][:80]}」。"
+                a, b = mine[k], good[k]
+                c = next(
+                    (i for i, (x, y) in enumerate(zip(a, b, strict=False)) if x != y),
+                    min(len(a), len(b)),
+                )
+                lo = max(0, c - 20)
+                where = (
+                    f"第 {k + 1} 行有误：写成了「…{a[lo : c + 30]}…」，应为「…{b[lo : c + 30]}…」。"
+                )
             else:
                 where = "推导的结构或结论有误。"
             target = f"逐步核对：{where}改正后的完整推导如下：\n{truth}"

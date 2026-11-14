@@ -2,7 +2,7 @@
 
     PYTHONPATH=src .venv-mlx/bin/python scripts/phase6/build_train6.py --recipe u0 --tokens 6000000
     PYTHONPATH=src .venv-mlx/bin/python scripts/phase6/build_train6.py --recipe s3 --tokens 6000000 \
-        --replies results/phase6/selfcheck_replies_p6s1.jsonl
+        --replies results/phase6/own_replies_p6s1.jsonl
     ... --check      # rebuild in memory and compare hashes
 
 Writes data/phase6/train/<recipe>/{train,valid}.jsonl and manifest.json, and
