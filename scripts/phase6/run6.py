@@ -82,15 +82,34 @@ def prompt_of(item, level):
 class Bank:
     """One AdapterBank for every adapter of the shared structure; loaded on first use."""
 
+    SHARED = {"num_layers": 16, "rank": 16}
+
     def __init__(self):
         self.bank = None
+        self.single = None
 
     def get(self, label):
-        from bazireason.adapter_bank import AdapterBank
+        from bazireason.adapter_bank import ADAPTER_ROOT, DEFAULT_MODEL, AdapterBank
+        from bazireason.mlx_backend import MLXChatModel
 
         name = FOLDERS.get(label, label)
+        config = ADAPTER_ROOT / name / "adapter_config.json"
+        if config.exists():
+            c = json.loads(config.read_text())
+            shape = {
+                "num_layers": c.get("num_layers"),
+                "rank": c.get("lora_parameters", {}).get("rank"),
+            }
+            if (
+                shape != self.SHARED
+            ):  # another adapter structure cannot be swapped in: load it alone
+                if self.single is None or self.single.adapter_path != str(ADAPTER_ROOT / name):
+                    self.bank = self.single = None
+                    self.single = MLXChatModel(DEFAULT_MODEL, ADAPTER_ROOT / name, label=label)
+                return self.single
         if self.bank is None:
-            self.bank = AdapterBank(first=name)
+            self.single = None
+            self.bank = AdapterBank(first=name if name != "base" else "p4a1")
         return self.bank.use(name)
 
 

@@ -40,13 +40,18 @@ def main():
         sys.exit(f"{out} exists")
     rng = random.Random(f"own:{SEED}")
     charts = T6.Charts(SEED, build_train6.exclusions())
-    paraphrases = [json.loads(x) for x in Path("data/phase6/blind/train6.jsonl").read_text(encoding="utf-8").splitlines()]
+    paraphrases = [
+        json.loads(x)
+        for x in Path("data/phase6/blind/train6.jsonl").read_text(encoding="utf-8").splitlines()
+    ]
     rows = []
     while len(rows) < args.n:
         rows += T6.procedure_rows(200_000, charts, rng, paraphrases, 0.45, styled=True)
     rows = rows[: args.n]
     cache = run6.Cache6(args.label)
-    texts, stats = cache.generate(run6.Bank().get(args.label), [r["messages"][:2] for r in rows], run6.RULE_TOKENS, 32)
+    texts, stats = cache.generate(
+        run6.Bank().get(args.label), [r["messages"][:2] for r in rows], run6.RULE_TOKENS, 32
+    )
     by, tot = Counter(), Counter()
     with out.open("x", encoding="utf-8") as stream:
         for i, (r, text) in enumerate(zip(rows, texts, strict=True)):
@@ -55,7 +60,9 @@ def main():
             item = make_item(f"own-{i}", "train", meta.get("source", "template"), meta["pillars"], meta["gender"],
                              meta["question"], meta["intent"], plan, f"own-{i}")  # fmt: skip
             ok = bool(score(item, text)["correct"])
-            head = meta["intent"].split(":")[0] + (":" + meta["intent"].split(":")[1] if meta["intent"].startswith("fact") else "")
+            head = meta["intent"].split(":")[0] + (
+                ":" + meta["intent"].split(":")[1] if meta["intent"].startswith("fact") else ""
+            )
             by[head] += ok
             tot[head] += 1
             stream.write(json.dumps({"row": {k: v for k, v in r.items() if k != "_tokens"}, "reply": text, "correct": ok},
