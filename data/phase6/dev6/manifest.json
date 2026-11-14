@@ -1,0 +1,139 @@
+{
+ "block": "dev6",
+ "years": [
+  1910,
+  1930,
+  1950,
+  1970,
+  1990,
+  2010,
+  2030,
+  2050,
+  2070,
+  2090
+ ],
+ "plan": [
+  "valid",
+  [
+   2026111611,
+   1.0
+  ],
+  [
+   2026111612,
+   2.0
+  ],
+  [
+   2026111613,
+   140
+  ],
+  [
+   2026111614,
+   100
+  ],
+  [
+   2026111615,
+   50
+  ]
+ ],
+ "excluded_prompts_from": [
+  "data/phase2/train_v1/test.jsonl",
+  "data/phase2/train_v1/train.jsonl",
+  "data/phase2/train_v1/valid.jsonl",
+  "data/phase2/train_v2/test.jsonl",
+  "data/phase2/train_v2/train.jsonl",
+  "data/phase2/train_v2/valid.jsonl",
+  "data/phase3/dev_v1/dev.jsonl",
+  "data/phase3/p2check_v1/test.jsonl",
+  "data/phase3/train_v1/test.jsonl",
+  "data/phase3/train_v1/train.jsonl",
+  "data/phase3/train_v1/valid.jsonl",
+  "data/phase3/train_v2/train.jsonl",
+  "data/phase3/train_v2/valid.jsonl",
+  "data/phase3/train_v3/train.jsonl",
+  "data/phase3/train_v3/valid.jsonl",
+  "data/phase4/final_test/indep.jsonl",
+  "data/phase4/final_test/p2.jsonl",
+  "data/phase4/final_test/p3.jsonl",
+  "data/phase4/train_v1/train.jsonl",
+  "data/phase4/train_v1/valid.jsonl",
+  "data/phase4/valid/indep.jsonl",
+  "data/phase4/valid/p2.jsonl",
+  "data/phase4/valid/p3.jsonl",
+  "data/phase5/blind/dev.jsonl",
+  "data/phase5/blind/sealed.jsonl",
+  "data/phase5/blind/valid.jsonl",
+  "data/phase5/convo/dev.jsonl",
+  "data/phase5/convo/sealed.jsonl",
+  "data/phase5/convo/valid.jsonl",
+  "data/phase5/sealed/calendar.jsonl",
+  "data/phase5/sealed/indep.jsonl",
+  "data/phase5/sealed/rules.jsonl",
+  "data/phase5/train_v1/train.jsonl",
+  "data/phase5/train_v1/valid.jsonl",
+  "data/phase5/valid/calendar.jsonl",
+  "data/phase5/valid/indep.jsonl",
+  "data/phase5/valid/rules.jsonl"
+ ],
+ "excluded_earlier_eval_charts": 0,
+ "files": {
+  "rules.jsonl": {
+   "rows": 294,
+   "sha256": "6c382066895e18d68b60a2ce7e8fdaebe0ff63b22b2adaf454ac859e3a5d329e",
+   "families": {
+    "ambig": 12,
+    "domain": 36,
+    "flow": 50,
+    "gods": 40,
+    "interact": 40,
+    "overview": 20,
+    "pattern": 30,
+    "star": 6,
+    "strength": 30,
+    "yongshen": 30
+   }
+  },
+  "indep.jsonl": {
+   "rows": 140,
+   "sha256": "53b61b170e385f037a31454d456cb57645a0ed9c8bdd2f629d7c04063799e232",
+   "families": {
+    "indep": 140
+   }
+  },
+  "calendar.jsonl": {
+   "rows": 219,
+   "sha256": "31a9f24f1c27359a7c7f7c5769f1e6267415ce2752c5fed8cef840b615e4d319",
+   "families": {
+    "chart_facts": 16,
+    "chart_plain": 28,
+    "dst_fold": 12,
+    "dst_gap": 4,
+    "invalid": 20,
+    "jie_boundary": 25,
+    "jie_window": 20,
+    "missing": 14,
+    "shanghai_dst": 8,
+    "tz_facts": 8,
+    "tz_known": 16,
+    "tz_needs_tool": 8,
+    "zi_transition": 40
+   }
+  },
+  "combo.jsonl": {
+   "rows": 100,
+   "sha256": "4b42e590d8b681b60b97bf5e835b02aebf0f063a7b914b1f19aee05f592d14e2",
+   "families": {
+    "combo": 100
+   }
+  },
+  "cf.jsonl": {
+   "rows": 100,
+   "sha256": "54bf7ca1c57622a975133431717c266c248aca0efd44d7dfedbf361d688d7ac8",
+   "families": {
+    "fact": 58,
+    "interact": 14,
+    "pattern": 14,
+    "strength": 14
+   }
+  }
+ }
+}

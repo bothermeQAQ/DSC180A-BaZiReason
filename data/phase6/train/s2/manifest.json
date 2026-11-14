@@ -1,0 +1,80 @@
+{
+ "recipe": "s2",
+ "data_recipe": "s2",
+ "seed": 2026111712,
+ "token_budget": 6000000,
+ "replies": null,
+ "excluded_charts": 6277,
+ "files": {
+  "train.jsonl": {
+   "sha256": "32792af681ab7633da092cfb43386af14252142af574e13a0fb0e517312fd162",
+   "rows": 8161
+  },
+  "valid.jsonl": {
+   "sha256": "bec9495714e82e0e28fbdc3f2dfe417a43173a89ac61e70c2e1e861d194ed3ba",
+   "rows": 200
+  }
+ },
+ "train_summary": {
+  "rows": 8161,
+  "tokens_estimate": 6002174,
+  "families": {
+   "procedure": 4471,
+   "contrast": 569,
+   "strict_audit": 323,
+   "mcq3": 271,
+   "verify": 269,
+   "chart_plain": 264,
+   "zi_transition": 249,
+   "claims": 177,
+   "invalid": 174,
+   "jie_boundary": 139,
+   "v3_strict": 130,
+   "jie_window": 128,
+   "internal": 123,
+   "dialog": 108,
+   "v4_reasoned": 103,
+   "tz_known": 103,
+   "multi_turn": 100,
+   "dst_fold": 87,
+   "missing": 75,
+   "chart_facts": 66,
+   "counterfactual": 53,
+   "policy": 38,
+   "replay_mcq": 37,
+   "tz_needs_tool": 37,
+   "tz_facts": 33,
+   "shanghai_dst": 28,
+   "dst_gap": 6
+  },
+  "family_tokens": {
+   "procedure": 3001129,
+   "contrast": 480428,
+   "strict_audit": 326232,
+   "verify": 264987,
+   "chart_plain": 228047,
+   "zi_transition": 212478,
+   "mcq3": 152434,
+   "v4_reasoned": 147348,
+   "claims": 138926,
+   "v3_strict": 127459,
+   "jie_boundary": 117235,
+   "dst_fold": 91048,
+   "tz_known": 89205,
+   "invalid": 88842,
+   "dialog": 83268,
+   "jie_window": 82520,
+   "chart_facts": 69197,
+   "internal": 58771,
+   "multi_turn": 51390,
+   "missing": 42109,
+   "counterfactual": 34890,
+   "tz_facts": 34196,
+   "shanghai_dst": 22675,
+   "replay_mcq": 19493,
+   "policy": 18285,
+   "tz_needs_tool": 16751,
+   "dst_gap": 2831
+  }
+ }
+}

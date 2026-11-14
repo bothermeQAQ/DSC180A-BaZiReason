@@ -1,0 +1,149 @@
+{
+ "block": "valid6",
+ "years": [
+  1911,
+  1912,
+  1931,
+  1932,
+  1951,
+  1952,
+  1971,
+  1972,
+  1991,
+  1992,
+  2011,
+  2012,
+  2031,
+  2032,
+  2051,
+  2052,
+  2071,
+  2072,
+  2091,
+  2092
+ ],
+ "plan": [
+  "valid",
+  [
+   2026111621,
+   1.0
+  ],
+  [
+   2026111622,
+   2.4
+  ],
+  [
+   2026111623,
+   140
+  ],
+  [
+   2026111624,
+   100
+  ],
+  [
+   2026111625,
+   50
+  ]
+ ],
+ "excluded_prompts_from": [
+  "data/phase2/train_v1/test.jsonl",
+  "data/phase2/train_v1/train.jsonl",
+  "data/phase2/train_v1/valid.jsonl",
+  "data/phase2/train_v2/test.jsonl",
+  "data/phase2/train_v2/train.jsonl",
+  "data/phase2/train_v2/valid.jsonl",
+  "data/phase3/dev_v1/dev.jsonl",
+  "data/phase3/p2check_v1/test.jsonl",
+  "data/phase3/train_v1/test.jsonl",
+  "data/phase3/train_v1/train.jsonl",
+  "data/phase3/train_v1/valid.jsonl",
+  "data/phase3/train_v2/train.jsonl",
+  "data/phase3/train_v2/valid.jsonl",
+  "data/phase3/train_v3/train.jsonl",
+  "data/phase3/train_v3/valid.jsonl",
+  "data/phase4/final_test/indep.jsonl",
+  "data/phase4/final_test/p2.jsonl",
+  "data/phase4/final_test/p3.jsonl",
+  "data/phase4/train_v1/train.jsonl",
+  "data/phase4/train_v1/valid.jsonl",
+  "data/phase4/valid/indep.jsonl",
+  "data/phase4/valid/p2.jsonl",
+  "data/phase4/valid/p3.jsonl",
+  "data/phase5/blind/dev.jsonl",
+  "data/phase5/blind/sealed.jsonl",
+  "data/phase5/blind/valid.jsonl",
+  "data/phase5/convo/dev.jsonl",
+  "data/phase5/convo/sealed.jsonl",
+  "data/phase5/convo/valid.jsonl",
+  "data/phase5/sealed/calendar.jsonl",
+  "data/phase5/sealed/indep.jsonl",
+  "data/phase5/sealed/rules.jsonl",
+  "data/phase5/train_v1/train.jsonl",
+  "data/phase5/train_v1/valid.jsonl",
+  "data/phase5/valid/calendar.jsonl",
+  "data/phase5/valid/indep.jsonl",
+  "data/phase5/valid/rules.jsonl"
+ ],
+ "excluded_earlier_eval_charts": 3781,
+ "files": {
+  "rules.jsonl": {
+   "rows": 289,
+   "sha256": "596ce93e0e4b07db1a398d271a1d93e100b76a1b04fda4c6be5ad23da29c4188",
+   "families": {
+    "ambig": 12,
+    "domain": 35,
+    "flow": 49,
+    "gods": 39,
+    "interact": 39,
+    "overview": 20,
+    "pattern": 30,
+    "star": 6,
+    "strength": 29,
+    "yongshen": 30
+   }
+  },
+  "indep.jsonl": {
+   "rows": 140,
+   "sha256": "75e8b96d1b3acbab3eb2711d5275ff7bfd7548d830df541badc4678598f84ae8",
+   "families": {
+    "indep": 140
+   }
+  },
+  "calendar.jsonl": {
+   "rows": 269,
+   "sha256": "9ff752ea240e25fe943ebb5e17bdce6d02344488de16a49c1930ccc304dd394c",
+   "families": {
+    "chart_facts": 19,
+    "chart_plain": 34,
+    "dst_fold": 15,
+    "dst_gap": 5,
+    "invalid": 24,
+    "jie_boundary": 33,
+    "jie_window": 24,
+    "missing": 16,
+    "shanghai_dst": 10,
+    "tz_facts": 10,
+    "tz_known": 19,
+    "tz_needs_tool": 10,
+    "zi_transition": 50
+   }
+  },
+  "combo.jsonl": {
+   "rows": 100,
+   "sha256": "0f1e77e970805bca30b1c7036c2e865136319f8ab0ed88d8aa6a38d779f7ccfc",
+   "families": {
+    "combo": 100
+   }
+  },
+  "cf.jsonl": {
+   "rows": 100,
+   "sha256": "806c603a1a2e116ecb7f2af24bf7145ca6ef1b8d438f522dd8f9ee68d2c4094b",
+   "families": {
+    "fact": 58,
+    "interact": 14,
+    "pattern": 14,
+    "strength": 14
+   }
+  }
+ }
+}

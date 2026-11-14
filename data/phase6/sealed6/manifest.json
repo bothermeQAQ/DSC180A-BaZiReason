@@ -1,0 +1,178 @@
+{
+ "block": "sealed6",
+ "years": [
+  1915,
+  1916,
+  1917,
+  1918,
+  1919,
+  1935,
+  1936,
+  1937,
+  1938,
+  1939,
+  1955,
+  1956,
+  1957,
+  1958,
+  1959,
+  1975,
+  1976,
+  1977,
+  1978,
+  1979,
+  1995,
+  1996,
+  1997,
+  1998,
+  1999,
+  2015,
+  2016,
+  2017,
+  2018,
+  2019,
+  2035,
+  2036,
+  2037,
+  2038,
+  2039,
+  2055,
+  2056,
+  2057,
+  2058,
+  2059,
+  2075,
+  2076,
+  2077,
+  2078,
+  2079,
+  2095,
+  2096,
+  2097,
+  2098,
+  2099
+ ],
+ "plan": [
+  "test",
+  [
+   2026111631,
+   1.6
+  ],
+  [
+   2026111632,
+   3.3
+  ],
+  [
+   2026111633,
+   280
+  ],
+  [
+   2026111634,
+   160
+  ],
+  [
+   2026111635,
+   80
+  ]
+ ],
+ "excluded_prompts_from": [
+  "data/phase2/train_v1/test.jsonl",
+  "data/phase2/train_v1/train.jsonl",
+  "data/phase2/train_v1/valid.jsonl",
+  "data/phase2/train_v2/test.jsonl",
+  "data/phase2/train_v2/train.jsonl",
+  "data/phase2/train_v2/valid.jsonl",
+  "data/phase3/dev_v1/dev.jsonl",
+  "data/phase3/p2check_v1/test.jsonl",
+  "data/phase3/train_v1/test.jsonl",
+  "data/phase3/train_v1/train.jsonl",
+  "data/phase3/train_v1/valid.jsonl",
+  "data/phase3/train_v2/train.jsonl",
+  "data/phase3/train_v2/valid.jsonl",
+  "data/phase3/train_v3/train.jsonl",
+  "data/phase3/train_v3/valid.jsonl",
+  "data/phase4/final_test/indep.jsonl",
+  "data/phase4/final_test/p2.jsonl",
+  "data/phase4/final_test/p3.jsonl",
+  "data/phase4/train_v1/train.jsonl",
+  "data/phase4/train_v1/valid.jsonl",
+  "data/phase4/valid/indep.jsonl",
+  "data/phase4/valid/p2.jsonl",
+  "data/phase4/valid/p3.jsonl",
+  "data/phase5/blind/dev.jsonl",
+  "data/phase5/blind/sealed.jsonl",
+  "data/phase5/blind/valid.jsonl",
+  "data/phase5/convo/dev.jsonl",
+  "data/phase5/convo/sealed.jsonl",
+  "data/phase5/convo/valid.jsonl",
+  "data/phase5/sealed/calendar.jsonl",
+  "data/phase5/sealed/indep.jsonl",
+  "data/phase5/sealed/rules.jsonl",
+  "data/phase5/train_v1/train.jsonl",
+  "data/phase5/train_v1/valid.jsonl",
+  "data/phase5/valid/calendar.jsonl",
+  "data/phase5/valid/indep.jsonl",
+  "data/phase5/valid/rules.jsonl"
+ ],
+ "excluded_earlier_eval_charts": 3781,
+ "files": {
+  "rules.jsonl": {
+   "rows": 462,
+   "sha256": "64eaf6786ba2344a292bc3efabf342b9d850e8604f027bf68f02cf6f7e8afcb6",
+   "families": {
+    "ambig": 19,
+    "domain": 56,
+    "flow": 79,
+    "gods": 62,
+    "interact": 62,
+    "overview": 31,
+    "pattern": 48,
+    "star": 9,
+    "strength": 48,
+    "yongshen": 48
+   }
+  },
+  "indep.jsonl": {
+   "rows": 280,
+   "sha256": "572fa90936db6ddda1bac37d87756ffd7313ceae6126e9b61150b858d52a1046",
+   "families": {
+    "indep": 280
+   }
+  },
+  "calendar.jsonl": {
+   "rows": 816,
+   "sha256": "36293cb3dd95e72ff2c866569a721d5b38bb01ce947334077f9a78a71adda49c",
+   "families": {
+    "chart_facts": 79,
+    "chart_plain": 99,
+    "dst_fold": 48,
+    "dst_gap": 13,
+    "invalid": 79,
+    "jie_boundary": 110,
+    "jie_window": 79,
+    "missing": 60,
+    "tz_facts": 40,
+    "tz_known": 53,
+    "tz_needs_tool": 26,
+    "zi_transition": 130
+   }
+  },
+  "combo.jsonl": {
+   "rows": 160,
+   "sha256": "799e3e1d30481b8f56abb1724e518d90b32b129c071fc5851f4b323ed0ae8e81",
+   "families": {
+    "combo": 160
+   }
+  },
+  "cf.jsonl": {
+   "rows": 160,
+   "sha256": "b301b9f10c1db649378aa7e4eb8995347bde0e2f74b59b115b50d9ddced3606e",
+   "families": {
+    "fact": 94,
+    "interact": 22,
+    "pattern": 22,
+    "strength": 22
+   }
+  }
+ }
+}

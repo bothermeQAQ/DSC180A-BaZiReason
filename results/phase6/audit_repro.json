@@ -1,0 +1,621 @@
+{
+ "ladder": {
+  "valid": {
+   "base/w0": [
+    64,
+    498
+   ],
+   "p4a1/w0": [
+    347,
+    498
+   ],
+   "p5g1/w0": [
+    341,
+    498
+   ],
+   "p5g1/gf": [
+    366,
+    498
+   ],
+   "p5g1/gr": [
+    461,
+    498
+   ],
+   "p5g1/grv/final": [
+    491,
+    498
+   ]
+  },
+  "sealed": {
+   "p4a1/w0": [
+    688,
+    1005
+   ],
+   "p5g1/gr": [
+    918,
+    1005
+   ],
+   "p5g1/grv/final": [
+    991,
+    1005
+   ]
+  },
+  "sealed_g1_repairs": {
+   "repaired": 73,
+   "fallback": 5,
+   "repaired_and_right_without_fallback": 68
+  }
+ },
+ "a1_alone_sealed": {
+  "statement_kinds": {
+   "day_master": [
+    0,
+    956
+   ],
+   "relation": [
+    70,
+    715
+   ],
+   "flow_year": [
+    22,
+    570
+   ],
+   "hidden": [
+    0,
+    558
+   ],
+   "pillar": [
+    0,
+    303
+   ],
+   "star": [
+    26,
+    164
+   ],
+   "pattern": [
+    55,
+    141
+   ],
+   "ten_god": [
+    9,
+    140
+   ],
+   "stem_relation": [
+    9,
+    131
+   ],
+   "strength": [
+    10,
+    101
+   ],
+   "element_count": [
+    24,
+    73
+   ],
+   "spouse_star": [
+    0,
+    67
+   ],
+   "xun_kong": [
+    35,
+    51
+   ],
+   "detail": [
+    30,
+    30
+   ],
+   "repetition": [
+    2,
+    2
+   ],
+   "life_stage": [
+    0,
+    1
+   ],
+   "unverifiable": [
+    1,
+    1
+   ]
+  },
+  "lookups_wrong_of_checked": [
+   0,
+   1884
+  ],
+  "error_kinds": {
+   "wrong_no_wrong_checkable_statement": 195,
+   "wrong_with_a_wrong_statement": 117,
+   "ambig_right_with_a_wrong_statement": 41,
+   "no_readable_conclusion": 5
+  },
+  "family_accuracy": {
+   "fact": [
+    311,
+    418
+   ],
+   "flow": [
+    41,
+    86
+   ],
+   "gods": [
+    51,
+    72
+   ],
+   "interact": [
+    39,
+    72
+   ],
+   "domain": [
+    16,
+    66
+   ],
+   "strength": [
+    47,
+    58
+   ],
+   "pattern": [
+    42,
+    58
+   ],
+   "yongshen": [
+    43,
+    58
+   ],
+   "ambig": [
+    48,
+    49
+   ],
+   "overview": [
+    12,
+    28
+   ],
+   "star": [
+    22,
+    24
+   ],
+   "prediction": [
+    16,
+    16
+   ]
+  },
+  "template_vs_blind": {
+   "gods": [
+    45,
+    56,
+    6,
+    16
+   ],
+   "strength": [
+    38,
+    42,
+    9,
+    16
+   ],
+   "pattern": [
+    37,
+    42,
+    5,
+    16
+   ],
+   "yongshen": [
+    30,
+    42,
+    13,
+    16
+   ],
+   "interact": [
+    30,
+    56,
+    9,
+    16
+   ],
+   "flow": [
+    41,
+    70,
+    0,
+    16
+   ],
+   "domain": [
+    14,
+    50,
+    2,
+    16
+   ],
+   "ambig": [
+    17,
+    17,
+    31,
+    32
+   ],
+   "star": [
+    8,
+    8,
+    14,
+    16
+   ]
+  },
+  "template_rules_seen_unseen": [
+   [
+    158,
+    204
+   ],
+   [
+    114,
+    207
+   ]
+  ]
+ },
+ "evidence": {
+  "g1_valid_by_family": {
+   "gods": {
+    "w0": 29,
+    "n": 36,
+    "gf": 25,
+    "go": 36
+   },
+   "strength": {
+    "w0": 15,
+    "n": 24,
+    "gf": 24,
+    "go": 24
+   },
+   "pattern": {
+    "w0": 20,
+    "n": 24,
+    "gf": 20,
+    "go": 24
+   },
+   "yongshen": {
+    "w0": 17,
+    "n": 26,
+    "gf": 22,
+    "go": 26
+   },
+   "interact": {
+    "w0": 18,
+    "n": 40,
+    "gf": 27,
+    "go": 31
+   },
+   "flow": {
+    "w0": 25,
+    "n": 48,
+    "gf": 16,
+    "go": 31
+   },
+   "domain": {
+    "w0": 12,
+    "n": 32,
+    "gf": 7,
+    "go": 27
+   },
+   "ambig": {
+    "w0": 17,
+    "n": 24,
+    "gf": 4,
+    "go": 24
+   },
+   "star": {
+    "w0": 11,
+    "n": 12,
+    "gf": 5,
+    "go": 12
+   },
+   "overview": {
+    "w0": 13,
+    "n": 16,
+    "gf": 7,
+    "go": 16
+   },
+   "fact": {
+    "w0": 156,
+    "n": 208,
+    "gf": 201,
+    "go": 208
+   },
+   "prediction": {
+    "w0": 8,
+    "n": 8,
+    "gf": 8,
+    "go": 8
+   }
+  },
+  "a1_dev_w0_vs_gf": {
+   "w0": 511,
+   "gf": 506
+  }
+ },
+ "self_correction_phase4_w1": {
+  "files": {
+   "p2_indep_w1.jsonl": {
+    "first_wrong": 114,
+    "fixed": 0,
+    "broke": 0
+   },
+   "p2_p2_w1.jsonl": {
+    "first_wrong": 161,
+    "fixed": 6,
+    "broke": 0
+   },
+   "p2_p3_w1.jsonl": {
+    "first_wrong": 666,
+    "fixed": 5,
+    "broke": 0
+   },
+   "p3r3_indep_w1.jsonl": {
+    "first_wrong": 118,
+    "fixed": 2,
+    "broke": 0
+   },
+   "p3r3_p2_w1.jsonl": {
+    "first_wrong": 144,
+    "fixed": 2,
+    "broke": 0
+   },
+   "p3r3_p3_w1.jsonl": {
+    "first_wrong": 369,
+    "fixed": 13,
+    "broke": 0
+   },
+   "p4a1_indep_w1.jsonl": {
+    "first_wrong": 79,
+    "fixed": 2,
+    "broke": 0
+   },
+   "p4a1_p2_w1.jsonl": {
+    "first_wrong": 142,
+    "fixed": 5,
+    "broke": 0
+   },
+   "p4a1_p3_w1.jsonl": {
+    "first_wrong": 335,
+    "fixed": 12,
+    "broke": 0
+   }
+  },
+  "fixed_of_first_wrong_by_model": {
+   "p2": [
+    11,
+    941
+   ],
+   "p3r3": [
+    17,
+    631
+   ],
+   "p4a1": [
+    19,
+    556
+   ]
+  }
+ },
+ "calendar_sealed": {
+  "decisions": {
+   "p2": {
+    "answerable_refused": [
+     56,
+     532
+    ],
+    "definite_on_nonanswer": [
+     109,
+     286
+    ],
+    "balanced_decision": 0.7446
+   },
+   "p3r3": {
+    "answerable_refused": [
+     15,
+     532
+    ],
+    "definite_on_nonanswer": [
+     144,
+     286
+    ],
+    "balanced_decision": 0.7272
+   },
+   "p4a1": {
+    "answerable_refused": [
+     198,
+     532
+    ],
+    "definite_on_nonanswer": [
+     22,
+     286
+    ],
+    "balanced_decision": 0.7343
+   },
+   "p5g1": {
+    "answerable_refused": [
+     125,
+     532
+    ],
+    "definite_on_nonanswer": [
+     65,
+     286
+    ],
+    "balanced_decision": 0.7339
+   }
+  },
+  "jie_window_twins": {
+   "p2": {
+    "needs_tool": [
+     5,
+     40
+    ],
+    "ok": [
+     28,
+     39
+    ]
+   },
+   "p3r3": {
+    "needs_tool": [
+     1,
+     40
+    ],
+    "ok": [
+     30,
+     39
+    ]
+   },
+   "p4a1": {
+    "needs_tool": [
+     39,
+     40
+    ],
+    "ok": [
+     1,
+     39
+    ]
+   },
+   "p5g1": {
+    "needs_tool": [
+     31,
+     40
+    ],
+    "ok": [
+     6,
+     39
+    ]
+   }
+  }
+ },
+ "training_wordings_phase3_4": {
+  "ambig": {
+   "wordings": 27,
+   "rows": 770
+  },
+  "domain": {
+   "wordings": 10,
+   "rows": 680
+  },
+  "flow": {
+   "wordings": 12,
+   "rows": 1070
+  },
+  "gods": {
+   "wordings": 17,
+   "rows": 840
+  },
+  "interact": {
+   "wordings": 25,
+   "rows": 970
+  },
+  "overview": {
+   "wordings": 2,
+   "rows": 380
+  },
+  "pattern": {
+   "wordings": 10,
+   "rows": 460
+  },
+  "strength": {
+   "wordings": 15,
+   "rows": 410
+  },
+  "yongshen": {
+   "wordings": 15,
+   "rows": 480
+  }
+ },
+ "phase4_final_test": {
+  "base": {
+   "indep": [
+    64,
+    280
+   ],
+   "rule_rows_seen": [
+    58,
+    514
+   ],
+   "rule_rows_unseen": [
+    10,
+    274
+   ],
+   "calendar": [
+    29,
+    484
+   ]
+  },
+  "p2": {
+   "indep": [
+    166,
+    280
+   ],
+   "rule_rows_seen": [
+    93,
+    514
+   ],
+   "rule_rows_unseen": [
+    29,
+    274
+   ],
+   "calendar": [
+    323,
+    484
+   ]
+  },
+  "p3r2": {
+   "indep": [
+    159,
+    280
+   ],
+   "rule_rows_seen": [
+    288,
+    514
+   ],
+   "rule_rows_unseen": [
+    135,
+    274
+   ],
+   "calendar": [
+    318,
+    484
+   ]
+  },
+  "p3r3": {
+   "indep": [
+    162,
+    280
+   ],
+   "rule_rows_seen": [
+    283,
+    514
+   ],
+   "rule_rows_unseen": [
+    136,
+    274
+   ],
+   "calendar": [
+    340,
+    484
+   ]
+  },
+  "p4a1": {
+   "indep": [
+    201,
+    280
+   ],
+   "rule_rows_seen": [
+    292,
+    514
+   ],
+   "rule_rows_unseen": [
+    161,
+    274
+   ],
+   "calendar": [
+    342,
+    484
+   ]
+  }
+ },
+ "audit_quotes": {
+  "valid ladder": "base 64, A1 347, G1 341, G1 gf 366, G1 gr 461, final 491 (of 498)",
+  "sealed": "A1 alone 688, G1 gr 918, final 991 (of 1005); repaired 73, fallback 5",
+  "lookups": "0 of 1,884 wrong",
+  "xun_kong": "35/51",
+  "pattern": "55/141",
+  "element_count": "24/73",
+  "errors": "195 no wrong checkable statement, 117 with one, 5 no conclusion, 0 loops",
+  "self-correction": "A1 19/556, R3 17/631, P2 11/941",
+  "calendar": "refused P2 56, R3 15, A1 198, G1 125 of 532; jie_window twins 5/28, 1/30, 39/1, 31/6"
+ }
+}

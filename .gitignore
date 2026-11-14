@@ -31,3 +31,7 @@ demo_feedback/
 
 # Phase 5 reply cache (every reply is also in its result record)
 results/phase5/cache/
+
+# Phase 6: reply cache, and training sets rebuilt bit for bit by scripts/phase6/build_train6.py --check
+results/phase6/cache/
+data/phase6/train/*/train.jsonl
