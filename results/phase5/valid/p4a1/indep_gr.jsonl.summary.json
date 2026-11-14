@@ -1,0 +1,31 @@
+{
+ "split": "valid",
+ "label": "p4a1",
+ "part": "indep",
+ "condition": "gr",
+ "n_rows": 140,
+ "max_tokens": 600,
+ "temperature": 0,
+ "stats": {
+  "generated": 140,
+  "reused": 0,
+  "seconds": 186.8,
+  "completion_tokens": 7934
+ },
+ "summary": {
+  "n": 140,
+  "correct": 127,
+  "with_contradiction": 1,
+  "conclusion_disagrees": 13,
+  "routed_ok": 140,
+  "by_intent": {
+   "fact:element_count": "15/19",
+   "fact:hidden": "20/20",
+   "fact:life_stage": "16/20",
+   "fact:luck_direction": "20/20",
+   "fact:ten_god_branch": "18/20",
+   "fact:ten_god_stem": "21/21",
+   "fact:xun_kong": "17/20"
+  }
+ }
+}

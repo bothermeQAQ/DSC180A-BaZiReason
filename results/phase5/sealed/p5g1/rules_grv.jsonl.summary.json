@@ -1,0 +1,44 @@
+{
+ "split": "sealed",
+ "label": "p5g1",
+ "part": "rules",
+ "condition": "grv",
+ "n_rows": 411,
+ "max_tokens": 800,
+ "temperature": 0,
+ "stats": {
+  "generated": 0,
+  "reused": 411,
+  "seconds": 0.0,
+  "completion_tokens": null,
+  "repair": {
+   "generated": 53,
+   "reused": 0,
+   "seconds": 184.9,
+   "completion_tokens": 13905
+  }
+ },
+ "summary": {
+  "n": 411,
+  "correct": 355,
+  "with_contradiction": 0,
+  "conclusion_disagrees": 53,
+  "routed_ok": 408,
+  "final_correct": 408,
+  "repaired": 53,
+  "fallback": 2,
+  "final_with_contradiction": 0,
+  "by_intent": {
+   "ambig": "14/17",
+   "domain": "41/50",
+   "flow": "47/70",
+   "gods": "56/56",
+   "interact": "42/56",
+   "overview": "28/28",
+   "pattern": "35/42",
+   "star": "8/8",
+   "strength": "42/42",
+   "yongshen": "42/42"
+  }
+ }
+}

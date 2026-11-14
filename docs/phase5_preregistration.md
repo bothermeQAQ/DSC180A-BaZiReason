@@ -113,4 +113,8 @@ One training run, **G1**, was therefore added before any validation scoring:
 
 ## 8. Changes after this commit
 
-None yet.
+1. **13 November 2026, 23:30: GPU memory budget for long batches (harness only; no selection rule changed).**
+   - **What happened:** during validation, the untuned base ran out of GPU memory at batch 32 on its repair turns. Its first replies run to the 800-token cap, so 32 repair prompts of about 2,000–2,450 tokens each, plus 800 new tokens, did not fit. Every other run had finished.
+   - **Change:** a chunk of a batch now holds at most 32 conversations and at most 80,000 padded tokens (chunk size × (longest prompt + max_tokens); `run5.TOKEN_BUDGET`, `MLXChatModel.generate_batch(token_budget=…)`). Finished chunks are saved to the reply cache at once.
+   - **Effect:** ordinary first-pass chunks are unchanged or split slightly smaller; only long prompts (repairs, late conversation turns) run in smaller chunks. Decoding stays greedy; batch composition can change only last-digit arithmetic.
+   - **Scope:** the base's validation gr/grv runs were rerun with it, reusing its stored first-pass replies. Every validation run after 23:22 and every sealed run use it.

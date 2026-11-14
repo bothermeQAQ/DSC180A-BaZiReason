@@ -1,0 +1,34 @@
+{
+ "split": "valid",
+ "label": "p3r3",
+ "part": "rules",
+ "condition": "gr",
+ "n_rows": 202,
+ "max_tokens": 800,
+ "temperature": 0,
+ "stats": {
+  "generated": 202,
+  "reused": 0,
+  "seconds": 529.0,
+  "completion_tokens": 46423
+ },
+ "summary": {
+  "n": 202,
+  "correct": 150,
+  "with_contradiction": 4,
+  "conclusion_disagrees": 52,
+  "routed_ok": 202,
+  "by_intent": {
+   "ambig": "5/8",
+   "domain": "23/24",
+   "flow": "25/40",
+   "gods": "24/28",
+   "interact": "19/32",
+   "overview": "2/16",
+   "pattern": "16/16",
+   "star": "3/4",
+   "strength": "16/16",
+   "yongshen": "17/18"
+  }
+ }
+}

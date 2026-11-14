@@ -1,0 +1,33 @@
+{
+ "split": "sealed",
+ "label": "p3r3",
+ "part": "calendar",
+ "condition": "w0",
+ "n_rows": 818,
+ "max_tokens": 700,
+ "temperature": 0,
+ "stats": {
+  "generated": 817,
+  "reused": 1,
+  "seconds": 1626.9,
+  "completion_tokens": 336829
+ },
+ "summary": {
+  "n": 818,
+  "correct": 585,
+  "by_intent": {
+   "chart_facts": "78/79",
+   "chart_plain": "88/99",
+   "dst_fold": "37/48",
+   "dst_gap": "13/13",
+   "invalid": "60/79",
+   "jie_boundary": "64/111",
+   "jie_window": "31/79",
+   "missing": "57/61",
+   "tz_facts": "38/40",
+   "tz_known": "40/53",
+   "tz_needs_tool": "3/26",
+   "zi_transition": "76/130"
+  }
+ }
+}

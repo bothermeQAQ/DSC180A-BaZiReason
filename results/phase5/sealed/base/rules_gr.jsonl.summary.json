@@ -1,0 +1,34 @@
+{
+ "split": "sealed",
+ "label": "base",
+ "part": "rules",
+ "condition": "gr",
+ "n_rows": 411,
+ "max_tokens": 800,
+ "temperature": 0,
+ "stats": {
+  "generated": 411,
+  "reused": 0,
+  "seconds": 1769.2,
+  "completion_tokens": 216088
+ },
+ "summary": {
+  "n": 411,
+  "correct": 27,
+  "with_contradiction": 38,
+  "conclusion_disagrees": 382,
+  "routed_ok": 408,
+  "by_intent": {
+   "ambig": "0/17",
+   "domain": "0/50",
+   "flow": "0/70",
+   "gods": "0/56",
+   "interact": "0/56",
+   "overview": "0/28",
+   "pattern": "27/42",
+   "star": "0/8",
+   "strength": "0/42",
+   "yongshen": "0/42"
+  }
+ }
+}

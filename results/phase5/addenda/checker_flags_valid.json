@@ -1,0 +1,221 @@
+{
+ "what": "claim-checker flags on validation replies (all systems, rules + indep + blind); 30 flagged replies drawn with random.Random(20261113), first flag of each read by hand against the rule tables",
+ "flagged_replies": 335,
+ "sample": 30,
+ "real": 29,
+ "borderline": 1,
+ "false_alarm": 0,
+ "false_alarm_rate_upper95": "about 10% (rule of three, 3/30)",
+ "items": [
+  {
+   "file": "p5g1/rules_w0.jsonl",
+   "id": "P5V-rules-00196",
+   "first_flag": "star:驿马在亥",
+   "verdict": "real error",
+   "reason": "驿马/桃花 by 日支卯 or 年支寅 are 巳/申 and 子/卯; 亥 and 午 are wrong"
+  },
+  {
+   "file": "p5g1/rules_w0.jsonl",
+   "id": "P5V-rules-00175",
+   "first_flag": "pattern:正财格",
+   "verdict": "real error",
+   "reason": "申 main qi 庚 is 食神 for 戊; 正财格 is wrong"
+  },
+  {
+   "file": "p5g1/rules_w0.jsonl",
+   "id": "P5V-rules-00082",
+   "first_flag": "relation:申亥相破",
+   "verdict": "real error",
+   "reason": "申亥 is 害, not 破 (the six 破: 子酉 午卯 巳申 寅亥 辰丑 戌未)"
+  },
+  {
+   "file": "p5g1/blind_w0.jsonl",
+   "id": "P5V-blind-00082",
+   "first_flag": "pattern:七杀格",
+   "verdict": "real error",
+   "reason": "卯 main qi 乙 is 偏财 for 辛 (金克木); the reply says 乙 controls 辛"
+  },
+  {
+   "file": "p4a1/rules_w0.jsonl",
+   "id": "P5V-rules-00042",
+   "first_flag": "strength:记为偏弱",
+   "verdict": "real error",
+   "reason": "得令 and 得地 are both true (2 of 3), so 偏强; the reply counts 1"
+  },
+  {
+   "file": "mix-p3r3-p4a1-0.15/indep_w0.jsonl",
+   "id": "P5V-ind-valid-00116",
+   "first_flag": "xun_kong:旬空寅卯",
+   "verdict": "real error",
+   "reason": "己未 is number 55, in the 甲寅 decade; empty branches 子丑"
+  },
+  {
+   "file": "p5g1/blind_w0.jsonl",
+   "id": "P5V-blind-00118",
+   "first_flag": "element_count:木4、火2、土0、金1、水2",
+   "verdict": "real error",
+   "reason": "visible wood is 卯 甲 卯 = 3, not 4"
+  },
+  {
+   "file": "p4a1/indep_w0.jsonl",
+   "id": "P5V-ind-valid-00109",
+   "first_flag": "xun_kong:旬空辰巳",
+   "verdict": "real error",
+   "reason": "乙酉 is number 21, in the 甲申 decade; empty branches 午未"
+  },
+  {
+   "file": "mix-p3r3-p4a1-0.15/rules_w0.jsonl",
+   "id": "P5V-rules-00105",
+   "first_flag": "relation:午辰相破",
+   "verdict": "real error",
+   "reason": "午辰 is not 破 and 未辰 is not 害"
+  },
+  {
+   "file": "mix-p3r3-p4a1-0.15/blind_w0.jsonl",
+   "id": "P5V-blind-00071",
+   "first_flag": "detail:1950 年写作庚午，按规则应为庚寅",
+   "verdict": "real error",
+   "reason": "1950 is 庚寅 and 1951 辛卯, not 庚午/辛未"
+  },
+  {
+   "file": "mix-p3r3-p4a1-0.15/blind_w0.jsonl",
+   "id": "P5V-blind-00090",
+   "first_flag": "detail:年干壬写作正财，按规则应为偏印",
+   "verdict": "real error",
+   "reason": "壬 is 偏印 for 甲, not 正财"
+  },
+  {
+   "file": "p4a1/rules_w0.jsonl",
+   "id": "P5V-rules-00151",
+   "first_flag": "relation:酉午相害",
+   "verdict": "real error",
+   "reason": "酉午 is not 害; 戌酉 is 害, not 六合"
+  },
+  {
+   "file": "mix-p3r3-p4a1-0.15/rules_w0.jsonl",
+   "id": "P5V-rules-00182",
+   "first_flag": "star:华盖在辰",
+   "verdict": "real error",
+   "reason": "寅 belongs to 寅午戌, so 华盖 by the day branch is 戌, not 辰"
+  },
+  {
+   "file": "mix-p3r3-p4a1-0.15/indep_w0.jsonl",
+   "id": "P5V-ind-valid-00005",
+   "first_flag": "xun_kong:旬空申酉",
+   "verdict": "real error",
+   "reason": "丙午 is number 42, in the 甲辰 decade; empty branches 寅卯"
+  },
+  {
+   "file": "p3r3/rules_grv.jsonl",
+   "id": "P5V-rules-00051",
+   "first_flag": "stem_relation:庚辛相冲",
+   "verdict": "real error",
+   "reason": "庚辛 is not a stem clash (甲庚 乙辛 丙壬 丁癸)"
+  },
+  {
+   "file": "mix-p3r3-p4a1-0.15/blind_w0.jsonl",
+   "id": "P5V-blind-00034",
+   "first_flag": "detail:1950 年写作庚午，按规则应为庚寅",
+   "verdict": "real error",
+   "reason": "1950 is 庚寅 and 1951 辛卯"
+  },
+  {
+   "file": "mix-p3r3-p4a1-0.15/indep_grv.jsonl",
+   "id": "P5V-ind-valid-00035",
+   "first_flag": "element_count:木2、火3、土3、金1、水0",
+   "verdict": "real error",
+   "reason": "counted hidden stems; the convention counts the eight visible characters (木2 火1 土2 金2 水1)"
+  },
+  {
+   "file": "mix-p3r3-p4a1-0.15/rules_w0.jsonl",
+   "id": "P5V-rules-00191",
+   "first_flag": "detail:时干癸写作偏财，按规则应为正财",
+   "verdict": "real error",
+   "reason": "for 戊, 癸 is 正财 and 甲 is 七杀"
+  },
+  {
+   "file": "p5g1/blind_w0.jsonl",
+   "id": "P5V-blind-00070",
+   "first_flag": "pattern:正财格",
+   "verdict": "real error",
+   "reason": "亥 main qi 壬 is 食神 for 庚; 正财格 is wrong"
+  },
+  {
+   "file": "p4a1/rules_w0.jsonl",
+   "id": "P5V-rules-00102",
+   "first_flag": "relation:未亥相害",
+   "verdict": "real error",
+   "reason": "未亥 is not 害 (亥卯未 is a trine)"
+  },
+  {
+   "file": "mix-p3r3-p4a1-0.15/rules_w0.jsonl",
+   "id": "P5V-rules-00103",
+   "first_flag": "relation:未戌六合",
+   "verdict": "real error",
+   "reason": "未戌 is 刑 and 破, not 六合"
+  },
+  {
+   "file": "mix-p3r3-p4a1-0.15/rules_w0.jsonl",
+   "id": "P5V-rules-00186",
+   "first_flag": "pattern:伤官格",
+   "verdict": "real error",
+   "reason": "酉 main qi 辛 is 偏印 for 癸"
+  },
+  {
+   "file": "p3r3/blind_gr.jsonl",
+   "id": "P5V-blind-00091",
+   "first_flag": "detail:2028 年写作丙申，按规则应为戊申",
+   "verdict": "real error",
+   "reason": "2028 is 戊申 and 2029 己酉"
+  },
+  {
+   "file": "p4a1/rules_gr.jsonl",
+   "id": "P5V-rules-00111",
+   "first_flag": "detail:2020 年写作庚午，按规则应为庚子",
+   "verdict": "borderline: wrong statement, corrected in the same sentence",
+   "reason": "writes 2020 as 庚午, then adds (应为庚子) in the same sentence"
+  },
+  {
+   "file": "p5g1/rules_w0.jsonl",
+   "id": "P5V-rules-00186",
+   "first_flag": "pattern:正财格",
+   "verdict": "real error",
+   "reason": "酉 main qi 辛 is 偏印 for 癸"
+  },
+  {
+   "file": "p5g1/blind_w0.jsonl",
+   "id": "P5V-blind-00053",
+   "first_flag": "pattern:偏印格",
+   "verdict": "real error",
+   "reason": "亥 main qi 壬 is 劫财 for 癸, so 月劫格"
+  },
+  {
+   "file": "p4a1/rules_w0.jsonl",
+   "id": "P5V-rules-00177",
+   "first_flag": "pattern:正财格",
+   "verdict": "real error",
+   "reason": "酉 main qi 辛 is 劫财 for 庚 (yang), so 阳刃格"
+  },
+  {
+   "file": "p5g1/indep_w0.jsonl",
+   "id": "P5V-ind-valid-00109",
+   "first_flag": "xun_kong:旬空申酉",
+   "verdict": "real error",
+   "reason": "乙酉 is number 21, in the 甲申 decade; empty branches 午未"
+  },
+  {
+   "file": "mix-p3r3-p4a1-0.15/rules_w0.jsonl",
+   "id": "P5V-rules-00160",
+   "first_flag": "relation:卯子半合",
+   "verdict": "real error",
+   "reason": "子卯 is 刑, not 半合"
+  },
+  {
+   "file": "mix-p3r3-p4a1-0.15/rules_w0.jsonl",
+   "id": "P5V-rules-00177",
+   "first_flag": "pattern:建禄格",
+   "verdict": "real error",
+   "reason": "酉 main qi 辛 is 劫财 for 庚 (yang), so 阳刃格"
+  }
+ ]
+}

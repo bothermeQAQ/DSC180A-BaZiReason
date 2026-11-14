@@ -18,7 +18,12 @@ OUT = Path("results/phase5/addenda/indep_rescore.json")
 def main():
     out = {"note": __doc__.strip().splitlines()[2:6], "splits": {}}
     for split in ("valid", "final_test"):
-        rows = {json.loads(x)["id"]: indep_item(json.loads(x)) for x in Path(f"data/phase4/{split}/indep.jsonl").read_text(encoding="utf-8").splitlines()}
+        rows = {
+            json.loads(x)["id"]: indep_item(json.loads(x))
+            for x in Path(f"data/phase4/{split}/indep.jsonl")
+            .read_text(encoding="utf-8")
+            .splitlines()
+        }
         block = {}
         for label in ("base", "p2", "p3r2", "p3r3", "p4a1"):
             path = Path(f"results/phase4/{split}/{label}_indep.jsonl")

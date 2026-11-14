@@ -1,0 +1,42 @@
+{
+ "split": "dev",
+ "label": "p4a1",
+ "part": "indep",
+ "condition": "grv",
+ "n_rows": 280,
+ "max_tokens": 600,
+ "temperature": 0,
+ "stats": {
+  "generated": 0,
+  "reused": 280,
+  "seconds": 0.0,
+  "completion_tokens": null,
+  "repair": {
+   "generated": 20,
+   "reused": 0,
+   "seconds": 27.8,
+   "completion_tokens": 820
+  }
+ },
+ "summary": {
+  "n": 280,
+  "correct": 260,
+  "with_contradiction": 0,
+  "conclusion_disagrees": 20,
+  "routed_ok": 280,
+  "final_correct": 280,
+  "repaired": 20,
+  "fallback": 5,
+  "final_with_contradiction": 0,
+  "by_intent": {
+   "fact:element_count": "31/40",
+   "fact:hidden": "40/40",
+   "fact:life_stage": "35/40",
+   "fact:luck_direction": "40/40",
+   "fact:ten_god_branch": "34/40",
+   "fact:ten_god_stem": "40/40",
+   "fact:xun_kong": "40/40"
+  }
+ },
+ "rescored": true
+}

@@ -29,15 +29,29 @@ from bazireason.p2_eval import score_row
 
 ROOT = Path("results/phase5")
 MAX_TOKENS = {"rules": 800, "indep": 600, "blind": 800, "calendar": 700}
+# Padded tokens per chunk (chunk size x (longest prompt + max_tokens)). Added after the untuned
+# base ran out of GPU memory on 32 long repair prompts during validation (pre-registration, section 8).
+# Ordinary first-pass chunks of 32 stay under it.
+TOKEN_BUDGET = 80_000
 SAFE = str.maketrans({":": "-", "/": "-"})
 
 
 def load_items(split, part):
     if split == "dev" and part == "calendar":
-        rows = [json.loads(x) for x in Path("data/phase4/final_test/p2.jsonl").read_text(encoding="utf-8").splitlines()]
+        rows = [
+            json.loads(x)
+            for x in Path("data/phase4/final_test/p2.jsonl")
+            .read_text(encoding="utf-8")
+            .splitlines()
+        ]
         return [r for r in rows if r["task"] == "chart"]
     if split == "dev" and part in ("rules", "indep"):
-        rows = [json.loads(x) for x in Path(f"data/phase4/final_test/{'p3' if part == 'rules' else 'indep'}.jsonl").read_text(encoding="utf-8").splitlines()]
+        rows = [
+            json.loads(x)
+            for x in Path(f"data/phase4/final_test/{'p3' if part == 'rules' else 'indep'}.jsonl")
+            .read_text(encoding="utf-8")
+            .splitlines()
+        ]
         if part == "rules":
             out = []
             for row in rows:
@@ -48,15 +62,25 @@ def load_items(split, part):
             return out
         return [E.indep_item(r) for r in rows]
     if part == "blind":
-        return [json.loads(x) for x in Path(f"data/phase5/blind/{split}.jsonl").read_text(encoding="utf-8").splitlines()]
-    rows = [json.loads(x) for x in Path(f"data/phase5/{split}/{part}.jsonl").read_text(encoding="utf-8").splitlines()]
+        return [
+            json.loads(x)
+            for x in Path(f"data/phase5/blind/{split}.jsonl")
+            .read_text(encoding="utf-8")
+            .splitlines()
+        ]
+    rows = [
+        json.loads(x)
+        for x in Path(f"data/phase5/{split}/{part}.jsonl").read_text(encoding="utf-8").splitlines()
+    ]
     if part == "indep":
         return [E.indep_item(r) for r in rows]
     return rows
 
 
 def sha(messages):
-    return hashlib.sha256(json.dumps(messages, ensure_ascii=False, sort_keys=True).encode()).hexdigest()
+    return hashlib.sha256(
+        json.dumps(messages, ensure_ascii=False, sort_keys=True).encode()
+    ).hexdigest()
 
 
 class Cache:
@@ -78,11 +102,22 @@ class Cache:
         started = time.perf_counter()
         totals = {}
         if todo:
-            texts, totals = bank.generate_batch(list(todo.values()), max_tokens, batch=batch, share_prefix=True)
-            with self.path.open("a", encoding="utf-8") as stream:
-                for key, text in zip(todo, texts, strict=True):
-                    self.store[(key, max_tokens)] = text
-                    stream.write(json.dumps({"sha": key, "max_tokens": max_tokens, "text": text}, ensure_ascii=False) + "\n")
+            order = list(todo)
+
+            def save(indices, texts):  # after every chunk, so a crash loses at most one chunk
+                with self.path.open("a", encoding="utf-8") as stream:
+                    for i, text in zip(indices, texts, strict=True):
+                        self.store[(order[i], max_tokens)] = text
+                        stream.write(
+                            json.dumps(
+                                {"sha": order[i], "max_tokens": max_tokens, "text": text},
+                                ensure_ascii=False,
+                            )
+                            + "\n"
+                        )
+
+            _, totals = bank.generate_batch(list(todo.values()), max_tokens, batch=batch, share_prefix=True,
+                                            token_budget=TOKEN_BUDGET, on_chunk=save)  # fmt: skip
         return [self.store[(k, max_tokens)] for k in keys], {
             "generated": len(todo), "reused": len(conversations) - len(todo),
             "seconds": round(time.perf_counter() - started, 1),
@@ -102,9 +137,14 @@ def run_condition(bank, cache, label, split, part, condition, rows, batch):
     if condition in ("go", "gr", "grv"):
         for r in rows:
             plans[r["id"]] = G.oracle_plan(r) if condition == "go" else G.router_plan(r)
-    convs = [G.messages_for(r, "w0" if part == "calendar" else condition, plans.get(r["id"])) for r in rows]
+    convs = [
+        G.messages_for(r, "w0" if part == "calendar" else condition, plans.get(r["id"]))
+        for r in rows
+    ]
     if condition == "grv":
-        texts, stats = cache.generate(bank, [G.messages_for(r, "gr", plans[r["id"]]) for r in rows], MAX_TOKENS[part], batch)
+        texts, stats = cache.generate(
+            bank, [G.messages_for(r, "gr", plans[r["id"]]) for r in rows], MAX_TOKENS[part], batch
+        )
     else:
         texts, stats = cache.generate(bank, convs, MAX_TOKENS[part], batch)
     records = []
@@ -126,12 +166,18 @@ def run_condition(bank, cache, label, split, part, condition, rows, batch):
         records.append(rec)
     if repair_jobs:
         ids = list(repair_jobs)
-        second, rstats = cache.generate(bank, [repair_jobs[i] for i in ids], MAX_TOKENS[part], batch)
+        second, rstats = cache.generate(
+            bank, [repair_jobs[i] for i in ids], MAX_TOKENS[part], batch
+        )
         stats["repair"] = rstats
         second = dict(zip(ids, second, strict=True))
         for rec, r in zip(records, rows, strict=True):
             if rec["id"] not in second:
-                rec["final_text"], rec["repaired"], rec["fallback"] = rec["raw_output"], False, False
+                rec["final_text"], rec["repaired"], rec["fallback"] = (
+                    rec["raw_output"],
+                    False,
+                    False,
+                )
                 continue
             m = r["meta"]
             plan = plans[r["id"]]
@@ -151,7 +197,16 @@ def run_condition(bank, cache, label, split, part, condition, rows, batch):
         if condition == "grv":
             rec["final_score"] = score_item(part, r, rec["final_text"])
             m = r["meta"]
-            rec["final_contradictions"] = [] if rec["fallback"] else G.verify({"reference": None, "family": "unknown"}, rec["final_text"], m["pillars"], m.get("gender"))["contradictions"]
+            rec["final_contradictions"] = (
+                []
+                if rec["fallback"]
+                else G.verify(
+                    {"reference": None, "family": "unknown"},
+                    rec["final_text"],
+                    m["pillars"],
+                    m.get("gender"),
+                )["contradictions"]
+            )
     return records, stats
 
 
@@ -189,7 +244,9 @@ def main():
     parser.add_argument("--batch", type=int, default=16)
     parser.add_argument("--prompt-version", type=int, default=None, choices=(1, 2),
                         help="default: 2 (pre-registered) for valid and sealed, 1 for dev")  # fmt: skip
-    parser.add_argument("--limit", type=int, default=0, help="first N items per part (prompt tests)")
+    parser.add_argument(
+        "--limit", type=int, default=0, help="first N items per part (prompt tests)"
+    )
     args = parser.parse_args()
     version = args.prompt_version or (1 if args.split == "dev" else 2)
     G.PROMPT_VERSION["value"] = version
@@ -211,7 +268,7 @@ def main():
             rows = load_items(args.split, part)
             if args.limit:
                 rows = rows[:: max(1, len(rows) // args.limit)][: args.limit]
-            for condition in (["w0"] if part == "calendar" else args.conditions):
+            for condition in ["w0"] if part == "calendar" else args.conditions:
                 out_dir = ROOT / args.split / label.translate(SAFE)
                 out = out_dir / f"{part}_{condition}{tag}.jsonl"
                 if out.exists():
@@ -221,15 +278,31 @@ def main():
                     bank = AdapterBank()
                 bank.use(label)
                 out_dir.mkdir(parents=True, exist_ok=True)
-                records, stats = run_condition(bank, cache, label, args.split, part, condition, rows, args.batch)
+                records, stats = run_condition(
+                    bank, cache, label, args.split, part, condition, rows, args.batch
+                )
                 with out.open("x", encoding="utf-8") as stream:
                     for rec in records:
                         stream.write(json.dumps(rec, ensure_ascii=False) + "\n")
                 info = {"split": args.split, "label": label, "part": part, "condition": condition,
                         "n_rows": len(rows), "max_tokens": MAX_TOKENS[part], "temperature": 0,
                         "stats": stats, "summary": summary(records, condition)}  # fmt: skip
-                Path(str(out) + ".summary.json").write_text(json.dumps(info, ensure_ascii=False, indent=1) + "\n")
-                print(json.dumps({k: info[k] for k in ("label", "part", "condition")} | {"summary": {k: v for k, v in info["summary"].items() if k != "by_intent"}, "stats": stats}, ensure_ascii=False), flush=True)
+                Path(str(out) + ".summary.json").write_text(
+                    json.dumps(info, ensure_ascii=False, indent=1) + "\n"
+                )
+                print(
+                    json.dumps(
+                        {k: info[k] for k in ("label", "part", "condition")}
+                        | {
+                            "summary": {
+                                k: v for k, v in info["summary"].items() if k != "by_intent"
+                            },
+                            "stats": stats,
+                        },
+                        ensure_ascii=False,
+                    ),
+                    flush=True,
+                )
 
 
 if __name__ == "__main__":

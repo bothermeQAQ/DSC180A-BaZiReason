@@ -1,0 +1,48 @@
+{
+  "run_name": "bazireason-qwen3-4b-lora-p5-g1",
+  "config_file": "configs/phase5/qwen3_4b_lora_p5_g1.yaml",
+  "config_sha256": "5492f0f3c5510ae962bbb63c22e979fa8fe3a04d80e5dccb14b6f17907c253f5",
+  "init_adapter": "artifacts/adapters/bazireason-qwen3-4b-lora-p4-a1/adapters.safetensors",
+  "init_adapter_sha256": "89311020680a2d40d52ca4f0d4e0f96f6df3ce94957e991afb994e7170840d91",
+  "train_file_sha256": "eb77541f0d641869d6bbb383f4dac16727407a2df1cb91cc1d4d2b20c01f0d54",
+  "valid_file_sha256": "96c0a651a112946d8d5115a5ff192cc3d8ab58ddf5a7dbc8c735bb91ed3aad57",
+  "train_rows": 2260,
+  "valid_rows_for_selection": 100,
+  "train_sequence_tokens_per_epoch": 2445048,
+  "iterations": 1130,
+  "start_iteration": 0,
+  "batch_size": 2,
+  "grad_accumulation_steps": 2,
+  "optimizer_updates": 565,
+  "trainable_parameters": 14680064,
+  "stored_array_elements": 643356160,
+  "note_parameters": "stored_array_elements counts packed 4-bit arrays, not the 4.02e9 base parameters; trainable_parameters is the exact LoRA size.",
+  "software": {
+    "mlx": "0.32.4",
+    "mlx_lm": "0.32.2"
+  },
+  "duration_seconds": 5491.9,
+  "final_train_loss": 0.003889841213822365,
+  "validation_loss_by_iteration": {
+    "0": 0.2652789056301117,
+    "500": 0.008582625538110733,
+    "1000": 0.0071539017371833324,
+    "1130": 0.006702544633299112
+  },
+  "initial_validation_loss": 0.2652789056301117,
+  "initial_weights": "warm start from init_adapter",
+  "selected_checkpoint_iteration": 1130,
+  "selected_validation_loss": 0.006702544633299112,
+  "selected_adapter": "artifacts/adapters/bazireason-qwen3-4b-lora-p5-g1/adapters.safetensors",
+  "selected_adapter_sha256": "9596da1b1afce6fe4a8dc747043727c2200f7737c047bba8eea887449dae58b8",
+  "peak_memory_gb": 23.591239872,
+  "loss_tokens_total": 378757,
+  "sequence_tokens_processed": 2445048,
+  "checkpoints": [
+    "0000500_adapters.safetensors",
+    "0001000_adapters.safetensors",
+    "0001130_adapters.safetensors"
+  ],
+  "resumed_from_iteration": null,
+  "resume_note": null
+}

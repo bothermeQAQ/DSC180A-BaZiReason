@@ -1,0 +1,38 @@
+{
+ "split": "valid",
+ "n": 40,
+ "systems": {
+  "p4a1/w0": {
+   "median_seconds": 3.24,
+   "p90_seconds": 7.73,
+   "mean_prompt_tokens": 369,
+   "mean_completion_tokens": 163,
+   "peak_memory_gb": 3.33,
+   "repair_turns": 0
+  },
+  "p4a1/grv": {
+   "median_seconds": 3.91,
+   "p90_seconds": 6.93,
+   "mean_prompt_tokens": 1329,
+   "mean_completion_tokens": 127,
+   "peak_memory_gb": 3.55,
+   "repair_turns": 4
+  },
+  "p5g1/w0": {
+   "median_seconds": 3.18,
+   "p90_seconds": 7.53,
+   "mean_prompt_tokens": 369,
+   "mean_completion_tokens": 155,
+   "peak_memory_gb": 3.39,
+   "repair_turns": 0
+  },
+  "p5g1/grv": {
+   "median_seconds": 3.28,
+   "p90_seconds": 8.1,
+   "mean_prompt_tokens": 1272,
+   "mean_completion_tokens": 138,
+   "peak_memory_gb": 3.61,
+   "repair_turns": 2
+  }
+ }
+}

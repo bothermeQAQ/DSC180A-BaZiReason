@@ -137,6 +137,8 @@ class MLXChatModel:
         top_p=0.0,
         top_k=0,
         share_prefix=False,
+        token_budget=None,
+        on_chunk=None,
     ):
         """Completions for many conversations, in order. Returns (texts, stats).
 
@@ -144,7 +146,11 @@ class MLXChatModel:
         temperature 0 the result does not depend on the seed. With
         ``share_prefix`` the tokens common to every conversation that has the
         same system message are processed once and reused; this changes speed,
-        not the prompt.
+        not the prompt. With ``token_budget`` a chunk holds at most ``batch``
+        conversations and at most that many padded tokens (chunk size times the
+        longest prompt plus ``max_tokens``), so long prompts run in smaller
+        chunks instead of exhausting GPU memory. ``on_chunk(indices, texts)``
+        is called after each chunk, so a caller can save finished work.
         """
         if seed is not None:
             mx.random.seed(seed)
@@ -172,8 +178,18 @@ class MLXChatModel:
                 else:
                     length = 0
             order = sorted(members, key=lambda i: len(prompts[i]))
-            for start in range(0, len(order), batch):
-                chunk = order[start : start + batch]
+            chunks, current = [], []
+            for i in order:
+                width = len(prompts[i]) - length + max_tokens  # sorted, so the longest in the chunk
+                full = len(current) >= batch
+                over = bool(token_budget) and (len(current) + 1) * width > token_budget
+                if current and (full or over):
+                    chunks.append(current)
+                    current = []
+                current.append(i)
+            if current:
+                chunks.append(current)
+            for chunk in chunks:
                 tic = time.perf_counter()
                 response = batch_generate(
                     self.net,
@@ -191,6 +207,10 @@ class MLXChatModel:
                 totals["peak_memory_gb"] = max(totals["peak_memory_gb"], response.stats.peak_memory)
                 for index, text in zip(chunk, response.texts, strict=True):
                     texts[index] = text
+                if on_chunk is not None:
+                    on_chunk(chunk, response.texts)
+                if token_budget:
+                    mx.clear_cache()
         return texts, totals
 
     def complete(self, messages, temperature=0, max_tokens=512):

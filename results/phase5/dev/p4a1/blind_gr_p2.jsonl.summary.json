@@ -1,0 +1,44 @@
+{
+ "split": "dev",
+ "label": "p4a1",
+ "part": "blind",
+ "condition": "gr",
+ "n_rows": 195,
+ "max_tokens": 800,
+ "temperature": 0,
+ "stats": {
+  "generated": 5,
+  "reused": 190,
+  "seconds": 23.7,
+  "completion_tokens": 1393
+ },
+ "summary": {
+  "n": 195,
+  "correct": 165,
+  "with_contradiction": 7,
+  "conclusion_disagrees": 29,
+  "routed_ok": 190,
+  "by_intent": {
+   "ambig": "16/20",
+   "domain": "8/10",
+   "fact:day_master": "10/10",
+   "fact:element_count": "10/10",
+   "fact:hidden": "10/10",
+   "fact:life_stage": "6/9",
+   "fact:luck_direction": "6/6",
+   "fact:missing_element": "8/10",
+   "fact:ten_god_branch": "10/10",
+   "fact:ten_god_stem": "9/10",
+   "fact:xun_kong": "9/10",
+   "flow": "4/10",
+   "gods": "9/10",
+   "interact": "8/10",
+   "pattern": "10/10",
+   "prediction": "10/10",
+   "star": "7/10",
+   "strength": "9/10",
+   "yongshen": "6/10"
+  }
+ },
+ "rescored": true
+}

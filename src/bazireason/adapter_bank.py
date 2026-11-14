@@ -73,9 +73,7 @@ class AdapterBank(MLXChatModel):
             return {k: (1 - alpha) * a[k] + alpha * b[k] for k in a}
         if name == "base":
             template = self._load(next(iter(ADAPTERS)))
-            return {
-                k: mx.zeros_like(v) if k.endswith("lora_b") else v for k, v in template.items()
-            }
+            return {k: mx.zeros_like(v) if k.endswith("lora_b") else v for k, v in template.items()}
         return self._load(name)
 
     def use(self, name: str):

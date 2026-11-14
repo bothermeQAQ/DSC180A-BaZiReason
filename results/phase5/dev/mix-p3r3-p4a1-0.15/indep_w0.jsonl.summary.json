@@ -1,0 +1,31 @@
+{
+ "split": "dev",
+ "label": "mix:p3r3:p4a1:0.15",
+ "part": "indep",
+ "condition": "w0",
+ "n_rows": 280,
+ "max_tokens": 600,
+ "temperature": 0,
+ "stats": {
+  "generated": 280,
+  "reused": 0,
+  "seconds": 213.9,
+  "completion_tokens": 27542
+ },
+ "summary": {
+  "n": 280,
+  "correct": 180,
+  "with_contradiction": 46,
+  "conclusion_disagrees": 100,
+  "by_intent": {
+   "fact:element_count": "11/40",
+   "fact:hidden": "39/40",
+   "fact:life_stage": "34/40",
+   "fact:luck_direction": "35/40",
+   "fact:ten_god_branch": "27/40",
+   "fact:ten_god_stem": "24/40",
+   "fact:xun_kong": "10/40"
+  }
+ },
+ "rescored": true
+}

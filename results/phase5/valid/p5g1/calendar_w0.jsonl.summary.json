@@ -1,0 +1,34 @@
+{
+ "split": "valid",
+ "label": "p5g1",
+ "part": "calendar",
+ "condition": "w0",
+ "n_rows": 388,
+ "max_tokens": 700,
+ "temperature": 0,
+ "stats": {
+  "generated": 388,
+  "reused": 0,
+  "seconds": 722.9,
+  "completion_tokens": 126262
+ },
+ "summary": {
+  "n": 388,
+  "correct": 264,
+  "by_intent": {
+   "chart_facts": "28/29",
+   "chart_plain": "25/50",
+   "dst_fold": "19/21",
+   "dst_gap": "6/6",
+   "invalid": "19/36",
+   "jie_boundary": "38/43",
+   "jie_window": "13/36",
+   "missing": "25/26",
+   "shanghai_dst": "13/14",
+   "tz_facts": "14/14",
+   "tz_known": "16/29",
+   "tz_needs_tool": "13/14",
+   "zi_transition": "35/70"
+  }
+ }
+}

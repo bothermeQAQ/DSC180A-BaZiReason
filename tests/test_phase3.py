@@ -512,8 +512,10 @@ def test_demo_routes_questions_to_trained_formats_and_never_predicts():
         "artifacts/adapters/none",
         "artifacts/adapters/none",
         "artifacts/adapters/none",
+        "artifacts/adapters/none",
     )
     assert [m["id"] for m in models.available()] == [
+        "p5",
         "p3",
         "p4",
         "p2",

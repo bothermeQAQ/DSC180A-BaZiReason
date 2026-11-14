@@ -1,0 +1,34 @@
+{
+ "split": "dev",
+ "label": "p4a1",
+ "part": "rules",
+ "condition": "w0",
+ "n_rows": 294,
+ "max_tokens": 800,
+ "temperature": 0,
+ "stats": {
+  "generated": 0,
+  "reused": 294,
+  "seconds": 0.0,
+  "completion_tokens": null
+ },
+ "summary": {
+  "n": 294,
+  "correct": 191,
+  "with_contradiction": 44,
+  "conclusion_disagrees": 103,
+  "by_intent": {
+   "ambig": "12/12",
+   "domain": "9/36",
+   "flow": "32/50",
+   "gods": "33/40",
+   "interact": "25/40",
+   "overview": "9/20",
+   "pattern": "21/30",
+   "star": "6/6",
+   "strength": "24/30",
+   "yongshen": "20/30"
+  }
+ },
+ "rescored": true
+}

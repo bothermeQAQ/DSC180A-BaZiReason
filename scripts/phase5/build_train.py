@@ -1,7 +1,7 @@
 """Write or verify the Phase 5 training data p5_train_v1 (answering from supplied facts).
 
-    python scripts/phase5/build_train.py           # data/phase5/train_v1 (refuses to overwrite)
-    python scripts/phase5/build_train.py --check   # regenerate in memory and compare hashes
+python scripts/phase5/build_train.py           # data/phase5/train_v1 (refuses to overwrite)
+python scripts/phase5/build_train.py --check   # regenerate in memory and compare hashes
 """
 
 import argparse
@@ -39,7 +39,9 @@ def main():
         path.write_bytes(payload)
         print(f"{path}: {len(rows)} rows sha256 {digest[:16]}")
     if not args.check:
-        (FOLDER / "manifest.json").write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "\n")
+        (FOLDER / "manifest.json").write_text(
+            json.dumps(manifest, ensure_ascii=False, indent=2) + "\n"
+        )
     return int(bad)
 
 

@@ -28,3 +28,6 @@ artifacts/logs/
 # External benchmarks are fetched at a pinned commit, never vendored
 external/
 demo_feedback/
+
+# Phase 5 reply cache (every reply is also in its result record)
+results/phase5/cache/

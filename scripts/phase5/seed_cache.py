@@ -30,11 +30,17 @@ def main():
         path.parent.mkdir(parents=True, exist_ok=True)
         have = set()
         if path.exists():
-            have = {(r["sha"], r["max_tokens"]) for r in map(json.loads, path.read_text(encoding="utf-8").splitlines())}
+            have = {
+                (r["sha"], r["max_tokens"])
+                for r in map(json.loads, path.read_text(encoding="utf-8").splitlines())
+            }
         added = 0
         with path.open("a", encoding="utf-8") as stream:
             for part, (data, max_tokens) in PARTS.items():
-                rows = {r["id"]: r for r in map(json.loads, Path(data).read_text(encoding="utf-8").splitlines())}
+                rows = {
+                    r["id"]: r
+                    for r in map(json.loads, Path(data).read_text(encoding="utf-8").splitlines())
+                }
                 out = Path(f"results/phase4/final_test/{label}_{part}.jsonl")
                 for rec in map(json.loads, out.read_text(encoding="utf-8").splitlines()):
                     key = (sha(W.prompt_messages(rows[rec["id"]])), max_tokens)

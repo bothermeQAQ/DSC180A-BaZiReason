@@ -1,0 +1,63 @@
+{
+ "rules": "docs/phase5_preregistration.md section 4 (frozen before validation scoring)",
+ "m_star": "mix:p3r3:p4a1:0.15",
+ "m_star_calendar_minus_p2": {
+  "n": 388,
+  "n_groups": 282,
+  "difference": 0.04639175257731959,
+  "second_only": 40,
+  "first_only": 22,
+  "interval95": [
+   0.0078125,
+   0.08707865168539326
+  ]
+ },
+ "balanced_decision_accuracy": {
+  "p2": 0.6938,
+  "p3r3": 0.6741,
+  "p4a1": 0.7148,
+  "mix:p3r3:p4a1:0.15": 0.727,
+  "p5g1": 0.7268
+ },
+ "w0_rules_indep_blind_correct": {
+  "p4a1": 347,
+  "mix:p3r3:p4a1:0.15": 319
+ },
+ "n_items": 498,
+ "m_star_gates": {
+  "a_calendar_lower_bound_ge_-7": true,
+  "b_rules_within_3_points_of_A1": false,
+  "c_balanced_decision_above_P2_R3_A1": true
+ },
+ "m_star_is_candidate": false,
+ "convo_grv_dialogues_ok": {
+  "base": 29,
+  "p3r3": 29,
+  "p4a1": 29,
+  "p5g1": 29
+ },
+ "excluded_by_conversation_guard": [],
+ "gr_first_pass": {
+  "base": {
+   "first_pass_correct": 203,
+   "with_contradiction": 23,
+   "n": 498
+  },
+  "p3r3": {
+   "first_pass_correct": 386,
+   "with_contradiction": 9,
+   "n": 498
+  },
+  "p4a1": {
+   "first_pass_correct": 408,
+   "with_contradiction": 9,
+   "n": 498
+  },
+  "p5g1": {
+   "first_pass_correct": 461,
+   "with_contradiction": 2,
+   "n": 498
+  }
+ },
+ "g_star": "p5g1"
+}

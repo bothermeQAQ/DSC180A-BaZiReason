@@ -142,7 +142,9 @@ import re  # noqa: E402
 from bazireason.p2_eval import _same  # noqa: E402
 from bazireason.p2_prompts import OUTPUT_HINTS  # noqa: E402
 
-FOLLOWUP = re.compile(r"(为什么|怎么算|怎么来|怎么得|如何得|通俗|简单点|简单些|白话|说错|算错|弄错|搞错|不对|确定吗|真的吗|再核对|再检查)")
+FOLLOWUP = re.compile(
+    r"(为什么|怎么算|怎么来|怎么得|如何得|通俗|简单点|简单些|白话|说错|算错|弄错|搞错|不对|确定吗|真的吗|再核对|再检查)"
+)
 
 
 def value_of(plan):
@@ -187,7 +189,10 @@ def score_followup(expected, text) -> dict:
         parsed
         and answer.get("revised") is False
         and "answer" in answer
-        and (_same(expected["answer"], answer["answer"]) or _norm_value(expected["answer"]) == _norm_value(answer["answer"]))
+        and (
+            _same(expected["answer"], answer["answer"])
+            or _norm_value(expected["answer"]) == _norm_value(answer["answer"])
+        )
     )
     return {"parsed": parsed, "correct": ok}
 
@@ -200,7 +205,18 @@ def turn_user_text(question, plan, pillars, gender, condition, first_turn, chart
     if first_turn:
         return user_turn(plan, pillars, gender, question, hint, chart)
     if plan.get("text") and PROMPT_VERSION["value"] == 2:
-        return "还是这个八字。" + question + "\n" + F.ANSWER_HEAD + "\n" + plan["text"] + "\n" + USE_RULE + "\n" + hint
+        return (
+            "还是这个八字。"
+            + question
+            + "\n"
+            + F.ANSWER_HEAD
+            + "\n"
+            + plan["text"]
+            + "\n"
+            + USE_RULE
+            + "\n"
+            + hint
+        )
     extra = ""
     if plan.get("text"):
         extra = F.ANSWER_HEAD + "\n" + plan["text"] + "\n" + F.GROUNDING_RULE + "\n"

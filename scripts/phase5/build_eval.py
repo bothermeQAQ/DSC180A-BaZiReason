@@ -86,7 +86,12 @@ def main():
     for name in args.splits:
         parts = build(name, seen)
         folder = OUT / name
-        manifest = {"split_years": PLAN[name]["split"], "plan": PLAN[name], "excluded_prompts_from": USED, "files": {}}
+        manifest = {
+            "split_years": PLAN[name]["split"],
+            "plan": PLAN[name],
+            "excluded_prompts_from": USED,
+            "files": {},
+        }
         for part, rows in parts.items():
             payload = TD.dataset_bytes(rows) if part != "indep" else I.dumps(rows).encode()
             digest = hashlib.sha256(payload).hexdigest()
@@ -108,7 +113,9 @@ def main():
             path.write_bytes(payload)
             print(f"{path}: {len(rows)} rows sha256 {digest[:16]}")
         if not args.check:
-            (folder / "manifest.json").write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "\n")
+            (folder / "manifest.json").write_text(
+                json.dumps(manifest, ensure_ascii=False, indent=2) + "\n"
+            )
     return int(bad)
 
 

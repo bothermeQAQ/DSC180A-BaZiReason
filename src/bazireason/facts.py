@@ -52,16 +52,21 @@ def sheet_lines(pillars: dict, gender: str | None = None, chart: dict | None = N
     day = pillars["day"][0]
     hidden = "；".join(
         f"{POS[n]}支{pillars[n][1]}藏"
-        + "、".join(f"{s}({g})" for s, g in zip(f["hidden_stems"][n], f["hidden_ten_gods"][n], strict=True))
+        + "、".join(
+            f"{s}({g})" for s, g in zip(f["hidden_stems"][n], f["hidden_ten_gods"][n], strict=True)
+        )
         for n in PILLARS
     )
     counts = f["element_counts"]
     missing = [e for e in ELEMENTS if counts[e] == 0]
     lines = [
-        f"四柱（确定）：{pillar_line(pillars)}" + (f"；{'男' if gender == 'male' else '女'}命" if gender else ""),
+        f"四柱（确定）：{pillar_line(pillars)}"
+        + (f"；{'男' if gender == 'male' else '女'}命" if gender else ""),
         f"日主（确定）：{day}（{f['day_master_element']}，{f['day_master_polarity']}）",
         "天干十神（确定）："
-        + "；".join(f"{POS[n]}干{pillars[n][0]}为{f['stem_ten_gods'][n]}" for n in ("year", "month", "hour")),
+        + "；".join(
+            f"{POS[n]}干{pillars[n][0]}为{f['stem_ten_gods'][n]}" for n in ("year", "month", "hour")
+        ),
         f"地支藏干与十神（确定，本气在前）：{hidden}",
         "五行个数（约定：只数八个字，不算藏干）："
         + "、".join(f"{e}{counts[e]}" for e in ELEMENTS)
@@ -133,7 +138,10 @@ def fact_answer(kind: str, pillars: dict, position: str | None = None, gender: s
         branch = pillars[position][1]
         stage = R.life_stage(day, branch)
         way = "顺" if R.is_yang(day) else "逆"
-        return stage, f"日主{day}为{'阳' if way == '顺' else '阴'}干，十二长生{way}行；在{POS[position]}支{branch}为{stage}。"
+        return (
+            stage,
+            f"日主{day}为{'阳' if way == '顺' else '阴'}干，十二长生{way}行；在{POS[position]}支{branch}为{stage}。",
+        )
     if kind == "xun_kong":
         pair = R.xun_kong(pillars["day"])
         return list(pair), f"日柱{pillars['day']}所在的旬，旬空为{pair[0]}、{pair[1]}。"
@@ -143,10 +151,15 @@ def fact_answer(kind: str, pillars: dict, position: str | None = None, gender: s
         way = "顺" if R.luck_direction(pillars["year"][0], gender) == "forward" else "逆"
         polarity = "阳" if R.is_yang(pillars["year"][0]) else "阴"
         sex = "男" if gender == "male" else "女"
-        return way, f"年干{pillars['year'][0]}为{polarity}干，{sex}命：阳男阴女顺排，阴男阳女逆排，所以大运{way}排。"
+        return (
+            way,
+            f"年干{pillars['year'][0]}为{polarity}干，{sex}命：阳男阴女顺排，阴男阳女逆排，所以大运{way}排。",
+        )
     if kind == "element_count":
         counts = R.element_counts(pillars)
-        return counts, "只数八个字（不算藏干）：" + "、".join(f"{e}{counts[e]}" for e in ELEMENTS) + "。"
+        return counts, "只数八个字（不算藏干）：" + "、".join(
+            f"{e}{counts[e]}" for e in ELEMENTS
+        ) + "。"
     if kind == "missing_element":
         counts = R.element_counts(pillars)
         missing = [e for e in ELEMENTS if counts[e] == 0]

@@ -1,0 +1,43 @@
+{
+ "split": "sealed",
+ "label": "base",
+ "part": "blind",
+ "condition": "gr",
+ "n_rows": 314,
+ "max_tokens": 800,
+ "temperature": 0,
+ "stats": {
+  "generated": 314,
+  "reused": 0,
+  "seconds": 1030.4,
+  "completion_tokens": 107813
+ },
+ "summary": {
+  "n": 314,
+  "correct": 132,
+  "with_contradiction": 10,
+  "conclusion_disagrees": 176,
+  "routed_ok": 302,
+  "by_intent": {
+   "ambig": "0/32",
+   "domain": "1/16",
+   "fact:day_master": "16/16",
+   "fact:element_count": "0/16",
+   "fact:hidden": "15/16",
+   "fact:life_stage": "13/16",
+   "fact:luck_direction": "9/10",
+   "fact:missing_element": "11/16",
+   "fact:ten_god_branch": "16/16",
+   "fact:ten_god_stem": "16/16",
+   "fact:xun_kong": "14/16",
+   "flow": "0/16",
+   "gods": "0/16",
+   "interact": "0/16",
+   "pattern": "15/16",
+   "prediction": "5/16",
+   "star": "1/16",
+   "strength": "0/16",
+   "yongshen": "0/16"
+  }
+ }
+}

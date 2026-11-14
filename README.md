@@ -62,6 +62,30 @@ Headline results (held-out years, identical prompts, real local inference; round
 .venv-mlx/bin/python -m bazireason.demo_app     # Phase 3 / Phase 2 / untuned model, http://127.0.0.1:8765
 ```
 
+## Phase 5 (branch `phase5/grounded-system`): an engine-first grounded system
+
+**Status, 14 November 2026.** Phase 5 asks whether a system in which the rule code computes every fact, the model explains it and the code checks the reply beats every fine-tuned model used alone. The design was frozen first; the sealed split was scored once, after the selection existed. Every earlier adapter and result is unchanged.
+
+| | |
+|---|---|
+| Design | [pre-registration](docs/phase5_preregistration.md); the one later change is in its section 8 |
+| Built | one base model serving every adapter (`adapter_bank`), a fact sheet per chart (`facts`), an intent router (`intent`), grounded prompts with verification, value-supplied repair and engine fallback (`grounded`), evaluation suite v2 (`data/phase5/`) |
+| Training | G1: 2,260 code-written rows (answer from a supplied conclusion, follow-ups, declined predictions, replay), continued from A1. 1,130 iterations, 92 minutes |
+| Results | [`results/phase5/RESULTS.md`](results/phase5/RESULTS.md); narrative in the [Phase 5 report](docs/phase5_report.md) |
+
+Headline results on the sealed split (1,005 rule questions: template, independent and blind wording; real local inference):
+
+- **System versus the best model alone:** 98.6% correct against 68.5% for A1 alone (+30.1 points [+27.2, +33.1]).
+- **Faithfulness:** 0 of 1,005 final replies state a wrong rule fact, against 18.1% for A1 alone. The checker had no false alarm in 30 sampled flags.
+- **Training still matters with the facts supplied:** G1 minus the untuned base, both routed, +52.1 [+49.1, +55.1]; G1 minus A1 +10.4 [+8.1, +12.8]. After verification every generator ends at 98.5–98.6%; training decides how often a repair is needed (base 60.0%, A1 18.5%, G1 7.3% of questions) and whether a dialogue holds at first pass (G1 50/60, A1 23/60).
+- **Merging and adapter routing:** the R3↔A1 interpolation failed its rule-accuracy gate (−5.6 points against A1); per-intent adapter routing adds under one point.
+- **Router:** 96.2% on the blind questions; all 14 remaining errors of the system are routing errors.
+- **Cost:** median reply 3.28 s against 3.24 s for A1 alone; adapter swap about 4 ms.
+
+```bash
+.venv-mlx/bin/python -m bazireason.demo_app     # grounded mode with G1 (default); R3, A1, Phase 2 or untuned
+```
+
 ## Phase 4 (branch `phase3/deep-reasoning`): training versus deterministic verification
 
 **Status, 13 November 2026.** Phase 4 compares two ways to fix what Phase 3 left: (A) more fine-tuning with balanced, verified data and calendar replay, and (B) code that checks the model's work. Selection criteria were frozen first, and the final test was a new split that stayed sealed until the selection existed. Every earlier adapter and result is unchanged.

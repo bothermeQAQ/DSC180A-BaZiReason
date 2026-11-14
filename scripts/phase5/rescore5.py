@@ -41,16 +41,24 @@ def main():
                 if "final_text" in rec:
                     rec["final_score"] = run5.score_item(part, row, rec["final_text"])
                 if "check" in rec and part != "calendar":
-                    plan = G.router_plan(row) if rec["condition"] in ("gr", "grv") else G.oracle_plan(row)
+                    plan = (
+                        G.router_plan(row)
+                        if rec["condition"] in ("gr", "grv")
+                        else G.oracle_plan(row)
+                    )
                     if rec["condition"] in ("go",) or rec["condition"].startswith("go"):
                         plan = G.oracle_plan(row)
                     m = row["meta"]
                     rec["check"] = G.verify(plan, rec["raw_output"], m["pillars"], m.get("gender"))
-            path.write_text("".join(json.dumps(r, ensure_ascii=False) + "\n" for r in records), encoding="utf-8")
+            path.write_text(
+                "".join(json.dumps(r, ensure_ascii=False) + "\n" for r in records), encoding="utf-8"
+            )
             info_path = Path(str(path) + ".summary.json")
             if info_path.exists():
                 info = json.loads(info_path.read_text())
-                info["summary"] = run5.summary(records, records[0]["condition"] if records else "w0")
+                info["summary"] = run5.summary(
+                    records, records[0]["condition"] if records else "w0"
+                )
                 info["rescored"] = True
                 info_path.write_text(json.dumps(info, ensure_ascii=False, indent=1) + "\n")
             if changed:

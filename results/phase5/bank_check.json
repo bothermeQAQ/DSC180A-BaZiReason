@@ -1,0 +1,30 @@
+{
+ "same_as_fresh_load": {
+  "base": true,
+  "p2": true,
+  "p3r2": true,
+  "p3r3": true,
+  "p4a1": true,
+  "p5g1": true
+ },
+ "swap_ms": [
+  4.68,
+  8.74,
+  9.07,
+  18.98,
+  1.32,
+  3.48,
+  3.59,
+  0.78
+ ],
+ "bank_active_memory_gb": 2.56,
+ "fresh_load_seconds": {
+  "base": 0.39,
+  "p2": 0.39,
+  "p3r2": 0.38,
+  "p3r3": 0.38,
+  "p4a1": 0.39,
+  "p5g1": 0.39
+ },
+ "single_model_active_memory_gb": 2.32
+}

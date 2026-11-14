@@ -33,14 +33,20 @@ def balanced_decision(recs):
     ok = [r["score"] for r in recs if r["score"].get("expected_status") == "ok"]
     other = [r["score"] for r in recs if r["score"].get("expected_status") not in (None, "ok")]
     rate = lambda xs: sum(bool(s.get("status_correct")) for s in xs) / len(xs) if xs else 0.0  # noqa: E731
-    return round((rate(ok) + rate(other)) / 2, 4), {"answerable": len(ok), "without_answer": len(other)}
+    return round((rate(ok) + rate(other)) / 2, 4), {
+        "answerable": len(ok),
+        "without_answer": len(other),
+    }
 
 
 def alpha():
     table = {}
     for a in ALPHAS:
         label = f"mix:p3r3:p4a1:{a}"
-        parts = {p: correct(records("dev", label, p, "w0")) for p in ("calendar", "rules", "indep", "blind")}
+        parts = {
+            p: correct(records("dev", label, p, "w0"))
+            for p in ("calendar", "rules", "indep", "blind")
+        }
         table[a] = {"parts": parts, "total": sum(parts.values())}
     best = max(ALPHAS, key=lambda a: (table[a]["total"], -a))
     out = {"rule": "most correct development answers (w0: calendar, rules, indep, blind); ties to the smaller alpha",
@@ -57,10 +63,13 @@ def final():
     bda = {lab: balanced_decision(recs)[0] for lab, recs in cal.items()}
     bda_g1 = balanced_decision(g1_cal)[0]
     rule_parts = ("rules", "indep", "blind")
-    w0 = {lab: sum(correct(records("valid", lab, p, "w0")) for p in rule_parts) for lab in ("p4a1", m)}
+    w0 = {
+        lab: sum(correct(records("valid", lab, p, "w0")) for p in rule_parts) for lab in ("p4a1", m)
+    }
     n_items = sum(len(records("valid", "p4a1", p, "w0")) for p in rule_parts)
     gates = {
-        "a_calendar_lower_bound_ge_-7": diff["interval95"] is not None and diff["interval95"][0] >= -0.07,
+        "a_calendar_lower_bound_ge_-7": diff["interval95"] is not None
+        and diff["interval95"][0] >= -0.07,
         "b_rules_within_3_points_of_A1": (w0[m] - w0["p4a1"]) / n_items >= -0.03,
         "c_balanced_decision_above_P2_R3_A1": bda[m] > max(bda["p2"], bda["p3r3"], bda["p4a1"]),
     }
@@ -70,15 +79,32 @@ def final():
     for lab in pool:
         path = ROOT / "valid" / lab.translate(SAFE) / "convo_grv.jsonl"
         if path.exists():
-            convo[lab] = sum(json.loads(x)["dialogue_ok"] for x in path.read_text(encoding="utf-8").splitlines())
-    excluded = [lab for lab in pool if lab != "p4a1" and lab in convo and "p4a1" in convo and convo[lab] < convo["p4a1"] - 3]
+            convo[lab] = sum(
+                json.loads(x)["dialogue_ok"] for x in path.read_text(encoding="utf-8").splitlines()
+            )
+    excluded = [
+        lab
+        for lab in pool
+        if lab != "p4a1" and lab in convo and "p4a1" in convo and convo[lab] < convo["p4a1"] - 3
+    ]
     pool = [lab for lab in pool if lab not in excluded]
     gr = {}
     for lab in pool:
         recs = [r for p in rule_parts for r in records("valid", lab, p, "gr")]
-        gr[lab] = {"first_pass_correct": correct(recs), "with_contradiction": sum(bool(r["check"]["contradictions"]) for r in recs), "n": len(recs)}
+        gr[lab] = {
+            "first_pass_correct": correct(recs),
+            "with_contradiction": sum(bool(r["check"]["contradictions"]) for r in recs),
+            "n": len(recs),
+        }
     order = {"p4a1": 0}
-    g_star = max(pool, key=lambda lab: (gr[lab]["first_pass_correct"], -gr[lab]["with_contradiction"], -order.get(lab, 1)))
+    g_star = max(
+        pool,
+        key=lambda lab: (
+            gr[lab]["first_pass_correct"],
+            -gr[lab]["with_contradiction"],
+            -order.get(lab, 1),
+        ),
+    )
     out = {
         "rules": "docs/phase5_preregistration.md section 4 (frozen before validation scoring)",
         "m_star": m,

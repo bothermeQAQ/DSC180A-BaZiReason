@@ -1,0 +1,30 @@
+{
+ "split": "valid",
+ "label": "p3r3",
+ "part": "indep",
+ "condition": "w0",
+ "n_rows": 140,
+ "max_tokens": 600,
+ "temperature": 0,
+ "stats": {
+  "generated": 140,
+  "reused": 0,
+  "seconds": 93.8,
+  "completion_tokens": 13457
+ },
+ "summary": {
+  "n": 140,
+  "correct": 84,
+  "with_contradiction": 19,
+  "conclusion_disagrees": 56,
+  "by_intent": {
+   "fact:element_count": "5/19",
+   "fact:hidden": "20/20",
+   "fact:life_stage": "17/20",
+   "fact:luck_direction": "10/20",
+   "fact:ten_god_branch": "11/20",
+   "fact:ten_god_stem": "14/21",
+   "fact:xun_kong": "7/20"
+  }
+ }
+}

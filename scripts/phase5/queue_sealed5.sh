@@ -3,7 +3,7 @@
 cd "$(dirname "$0")/../.." || exit 1
 PY=.venv-mlx/bin/python
 run() { echo "=== $(date '+%H:%M:%S') $*"; "$@" || echo "STEP_FAILED $*"; }
-until grep -q "QUEUE_VALID5_DONE" artifacts/logs/p5_queue_valid5.log; do sleep 30; done
+until grep -q "QUEUE_VALID5B_DONE" artifacts/logs/p5_queue_valid5b.log; do sleep 30; done
 [ -f results/phase5/selection.json ] || { echo "QUEUE_ABORT no selection"; exit 1; }
 G=$(.venv/bin/python -c "import json;print(json.load(open('results/phase5/selection.json'))['g_star'])")
 M=$(.venv/bin/python -c "import json;s=json.load(open('results/phase5/selection.json'));print(s['m_star'] if s['m_star_is_candidate'] else '')")

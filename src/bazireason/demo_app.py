@@ -9,8 +9,14 @@ What it does
   the language model. A request the engine cannot answer shows its status and
   what is missing instead of a guessed chart.
 * Questions are answered by a real local MLX model. The interface switches
-  between the untuned base model, the Phase 2 adapter and the Phase 3 adapter;
-  all three receive the same prompt.
+  between the untuned base model and the Phase 2, 3, 4 and 5 adapters, all
+  served by one loaded base with the adapter swapped in place. The default is
+  Phase 5 G1, the generator selected on validation (results/phase5/selection.json).
+* Grounded mode (the default; Phase 5): every turn is routed (bazireason.intent),
+  the rule code's fact sheet and conclusion are supplied, and the reply is checked
+  by code: one repair turn that gives the code's values, then the engine's own
+  derivation if the model still disagrees. "Model alone" keeps the Phase 4 path
+  as a comparison.
 * A question is phrased in the closest format the adapters were trained on
   (``bazireason.demo_deep.plan`` for the Phase 3 reasoning formats), and the
   reply's structured conclusion is compared with the rule code.
@@ -39,14 +45,14 @@ from pathlib import Path
 
 from bazireason import claim_check, deep_rules, demo_deep, rules
 from bazireason import grounded as G
-
-G.PROMPT_VERSION["value"] = 2  # the Phase 5 pre-registered prompt
 from bazireason import worked as W
 from bazireason.calendar_engine import temporal_facts, tzdata_keys
 from bazireason.charttools import chart_tool_text, pillars_text, verified_chart
 from bazireason.conventions import PILLARS, Convention
 from bazireason.p2_prompts import FINAL_MARK, OUTPUT_HINTS, P2_SYSTEM, facts_block
 from bazireason.train_tasks import chart_line, compare_charts
+
+G.PROMPT_VERSION["value"] = 2  # the Phase 5 pre-registered prompt
 
 STATIC = Path(__file__).parent / "demo_static"
 DEFAULT_MODEL = "models/qwen3-4b-instruct-2507-mlx-4bit"
@@ -55,9 +61,11 @@ DEFAULT_MODEL = "models/qwen3-4b-instruct-2507-mlx-4bit"
 # loads with --adapter; Phase 4 adapters likewise.
 DEFAULT_ADAPTER = "artifacts/adapters/bazireason-qwen3-4b-lora-p3-r3"
 DEFAULT_ADAPTER_P2 = "artifacts/adapters/bazireason-qwen3-4b-lora-v2"
-# Phase 4 approach-A adapter, offered next to the demo model (not the default).
+# Phase 4 approach-A adapter, offered next to the demo model.
 DEFAULT_ADAPTER_P4 = "artifacts/adapters/bazireason-qwen3-4b-lora-p4-a1"
-MODEL_IDS = ("p3", "p4", "p2", "base")
+# Phase 5 G1, the generator selected on validation for the grounded system: the default.
+DEFAULT_ADAPTER_P5 = "artifacts/adapters/bazireason-qwen3-4b-lora-p5-g1"
+MODEL_IDS = ("p5", "p3", "p4", "p2", "base")
 COMMON_ZONES = (
     "Asia/Shanghai",
     "Asia/Hong_Kong",
@@ -430,7 +438,9 @@ def grounded_chat(birth, history, message):
     if not chart or chart["status"] != "ok":
         return None
     pillars, gender = chart["pillars"], chart.get("gender")
-    users = [m["content"] for m in history if m.get("role") == "user" and m.get("content")] + [message]
+    users = [m["content"] for m in history if m.get("role") == "user" and m.get("content")] + [
+        message
+    ]
     replies = [m["content"] for m in history if m.get("role") == "assistant"]
     messages, plan = [{"role": "system", "content": P2_SYSTEM}], None
     for index, question in enumerate(users):
@@ -492,10 +502,21 @@ class Models:
     """
 
     def __init__(
-        self, model_path, adapter_path, adapter_p2=DEFAULT_ADAPTER_P2, adapter_p4=DEFAULT_ADAPTER_P4
+        self,
+        model_path,
+        adapter_path,
+        adapter_p2=DEFAULT_ADAPTER_P2,
+        adapter_p4=DEFAULT_ADAPTER_P4,
+        adapter_p5=DEFAULT_ADAPTER_P5,
     ):
         self.model_path = model_path
-        self.adapters = {"p3": adapter_path, "p4": adapter_p4, "p2": adapter_p2, "base": None}
+        self.adapters = {
+            "p5": adapter_p5,
+            "p3": adapter_path,
+            "p4": adapter_p4,
+            "p2": adapter_p2,
+            "base": None,
+        }
         self.bank = None
         self.jobs = queue.Queue()
         threading.Thread(target=self._work, daemon=True).start()
@@ -507,10 +528,11 @@ class Models:
     def available(self):
         return [
             {
-                "id": "p3",
-                "name": "BaZiReason 第三阶段（规则推理，演示默认）",
-                "available": self.has("p3"),
+                "id": "p5",
+                "name": "BaZiReason 第五阶段 G1（核验系统，默认）",
+                "available": self.has("p5"),
             },
+            {"id": "p3", "name": "BaZiReason 第三阶段（规则推理）", "available": self.has("p3")},
             {"id": "p4", "name": "BaZiReason 第四阶段 A1（实验）", "available": self.has("p4")},
             {"id": "p2", "name": "BaZiReason 第二阶段（历法）", "available": self.has("p2")},
             {"id": "base", "name": "未微调的基础模型", "available": True},
@@ -524,7 +546,9 @@ class Models:
         if self.bank is None:
             from bazireason.adapter_bank import AdapterBank
 
-            first = self.adapters.get(which) or next(p for p in self.adapters.values() if p and Path(p).exists())
+            first = self.adapters.get(which) or next(
+                p for p in self.adapters.values() if p and Path(p).exists()
+            )
             self.bank = AdapterBank(self.model_path, first)
         self.bank.use(self.adapters[which] or "base")
         self.bank.model = which
@@ -710,7 +734,7 @@ def make_handler(models, access_code, feedback_path):
                 send(
                     {
                         "rules": relevant_rules(message),
-                        "speculative": any(word in message for word in SPECULATIVE),
+                        "speculative": speculative(message, plan if grounded else None),
                         "format": kind,
                         # What the model was actually asked, so the rewording is visible.
                         "asked": messages[-1]["content"],
@@ -766,12 +790,18 @@ def make_handler(models, access_code, feedback_path):
                 "final": reply,
                 "engine": plan.get("text"),
             }
+            if first["conclusion_agrees"] is None:
+                # G1 learnt to open with "answered from the verified conclusion"; with no
+                # checkable conclusion (unknown intent) that line would be a false claim.
+                result["final"] = drop_unverified_lead(reply)
             if first["ok"] or plan.get("reference") is None:
                 return result
             send({"status": "规则代码发现不一致，正在请模型按核验结果改正…"})
             second = "".join(
                 e["token"]
-                for e in models.stream(which, G.repair_messages(messages, reply, plan, first), 900, temperature)
+                for e in models.stream(
+                    which, G.repair_messages(messages, reply, plan, first), 900, temperature
+                )
                 if "token" in e
             )
             check = G.verify_turn(plan, second, pillars, gender)
@@ -790,6 +820,28 @@ def make_handler(models, access_code, feedback_path):
     return Handler
 
 
+def speculative(message: str, plan=None) -> bool:
+    """Show the "personal fate cannot be verified" note? In grounded mode the routed intent
+    decides, so a pushback such as "你是不是算错了" is not mistaken for a fate question."""
+    if plan is None:
+        return any(word in message for word in SPECULATIVE)
+    intent = plan["intent"]
+    if intent == "followup":
+        return False
+    if intent == "prediction" or intent.startswith("domain"):
+        return True
+    return intent == "unknown" and any(word in message for word in SPECULATIVE)
+
+
+VERIFIED_LEAD = "依据规则代码已核验的结论作答。"
+
+
+def drop_unverified_lead(text: str) -> str:
+    """Remove the trained "verified conclusion" opening from a reply nothing was checked against."""
+    stripped = text.lstrip()
+    return stripped[len(VERIFIED_LEAD) :].lstrip() if stripped.startswith(VERIFIED_LEAD) else text
+
+
 def split_answer(text: str):
     """(explanation, structured conclusion or None) of a reply in the trained format."""
     if FINAL_MARK in text:
@@ -806,6 +858,7 @@ def main():
     parser.add_argument("--adapter", default=DEFAULT_ADAPTER, help="Phase 3 adapter folder")
     parser.add_argument("--adapter-p2", default=DEFAULT_ADAPTER_P2, help="Phase 2 adapter folder")
     parser.add_argument("--adapter-p4", default=DEFAULT_ADAPTER_P4, help="Phase 4 adapter folder")
+    parser.add_argument("--adapter-p5", default=DEFAULT_ADAPTER_P5, help="Phase 5 adapter folder")
     parser.add_argument("--port", type=int, default=8765)
     parser.add_argument(
         "--share-lan",
@@ -816,7 +869,7 @@ def main():
     parser.add_argument("--preload", choices=("none", *MODEL_IDS, "all"), default="none")
     args = parser.parse_args()
     code = secrets.token_urlsafe(6) if args.share_lan else None
-    models = Models(args.model, args.adapter, args.adapter_p2, args.adapter_p4)
+    models = Models(args.model, args.adapter, args.adapter_p2, args.adapter_p4, args.adapter_p5)
     wanted = (
         MODEL_IDS if args.preload == "all" else () if args.preload == "none" else (args.preload,)
     )

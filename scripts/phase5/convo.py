@@ -34,7 +34,15 @@ from run5 import ROOT, SAFE, Cache  # noqa: E402
 
 OUT = Path("data/phase5/convo")
 SIZES = {"dev": (20, 2026111531), "valid": (30, 2026111532), "sealed": (60, 2026111533)}
-FIRST = ("fact:ten_god_stem", "fact:ten_god_branch", "fact:life_stage", "fact:day_master", "fact:xun_kong", "strength", "pattern")
+FIRST = (
+    "fact:ten_god_stem",
+    "fact:ten_god_branch",
+    "fact:life_stage",
+    "fact:day_master",
+    "fact:xun_kong",
+    "strength",
+    "pattern",
+)
 WHY = ("为什么？", "这是怎么算出来的？", "能说得通俗一点吗？")
 EVENTS = ("哪一年会结婚", "什么时候能发财", "多少岁会升职", "哪一年运气会变好")
 SWITCH = (
@@ -61,7 +69,22 @@ def wrong_value(intent, value, rng):
     if intent == "strength":
         return "偏弱" if value["summary"] == "偏强" else "偏强"
     if intent == "pattern":
-        return rng.choice([p for p in ("正官格", "七杀格", "正财格", "偏财格", "食神格", "伤官格", "正印格", "偏印格") if p != value])
+        return rng.choice(
+            [
+                p
+                for p in (
+                    "正官格",
+                    "七杀格",
+                    "正财格",
+                    "偏财格",
+                    "食神格",
+                    "伤官格",
+                    "正印格",
+                    "偏印格",
+                )
+                if p != value
+            ]
+        )
     raise ValueError(intent)
 
 
@@ -73,7 +96,12 @@ def build():
             print(f"skip {path} (exists)")
             continue
         rng = random.Random(f"convo:{seed}")
-        pool = [json.loads(x) for x in Path(f"data/phase5/blind/{split}.jsonl").read_text(encoding="utf-8").splitlines()]
+        pool = [
+            json.loads(x)
+            for x in Path(f"data/phase5/blind/{split}.jsonl")
+            .read_text(encoding="utf-8")
+            .splitlines()
+        ]
         pool = [i for i in pool if any(i["meta"]["intent"].startswith(f) for f in FIRST)]
         rng.shuffle(pool)
         dialogues = []
@@ -82,7 +110,16 @@ def build():
             first = meta["intent"]
             plan = N.plan_for(first, meta["pillars"], meta["gender"])
             value = G.value_of(plan)
-            switch = rng.choice([s for s in SWITCH if not s[1].startswith(first.split(":")[0] + (":" + first.split(":")[1] if first.startswith("fact") else ""))])
+            switch = rng.choice(
+                [
+                    s
+                    for s in SWITCH
+                    if not s[1].startswith(
+                        first.split(":")[0]
+                        + (":" + first.split(":")[1] if first.startswith("fact") else "")
+                    )
+                ]
+            )
             turns = [
                 {"question": meta["question"], "intent": first, "check": "answer"},
                 {"question": rng.choice(WHY), "intent": "followup", "check": "kept"},
@@ -93,7 +130,9 @@ def build():
             ]  # fmt: skip
             dialogues.append({"id": f"P5{split[0].upper()}-convo-{len(dialogues) + 1:04d}", "split": split,
                               "pillars": meta["pillars"], "gender": meta["gender"], "first_intent": first, "turns": turns})  # fmt: skip
-        path.write_text("".join(json.dumps(d, ensure_ascii=False) + "\n" for d in dialogues), encoding="utf-8")
+        path.write_text(
+            "".join(json.dumps(d, ensure_ascii=False) + "\n" for d in dialogues), encoding="utf-8"
+        )
         print(f"{path}: {len(dialogues)} dialogues")
 
 
@@ -101,10 +140,22 @@ def score_turn(dialogue, turn_index, text):
     turn = dialogue["turns"][turn_index]
     pillars, gender = dialogue["pillars"], dialogue["gender"]
     if turn["check"] == "kept":
-        expected = {"answer": G.value_of(N.plan_for(dialogue["turns"][0]["intent"], pillars, gender))}
+        expected = {
+            "answer": G.value_of(N.plan_for(dialogue["turns"][0]["intent"], pillars, gender))
+        }
         return G.score_followup(expected, text)
     plan = N.plan_for(turn["intent"], pillars, gender)
-    item = make_item("t", dialogue["split"], "convo", pillars, gender, turn["question"], turn["intent"], plan, "t")
+    item = make_item(
+        "t",
+        dialogue["split"],
+        "convo",
+        pillars,
+        gender,
+        turn["question"],
+        turn["intent"],
+        plan,
+        "t",
+    )
     scored = score5(item, text)
     return {"parsed": scored.get("parsed"), "correct": bool(scored["correct"])}
 
@@ -113,13 +164,17 @@ def run(split, labels, conditions, batch):
     G.PROMPT_VERSION["value"] = 2  # the pre-registered prompt
     if split == "sealed":
         if not (ROOT / "selection.json").exists():
-            raise SystemExit("The sealed split stays closed until results/phase5/selection.json exists")
+            raise SystemExit(
+                "The sealed split stays closed until results/phase5/selection.json exists"
+            )
         with (ROOT / "sealed_access.jsonl").open("a", encoding="utf-8") as stream:
             stream.write(json.dumps({"utc": datetime.now(UTC).isoformat(timespec="seconds"), "labels": labels,
                                      "parts": ["convo"], "conditions": conditions}) + "\n")  # fmt: skip
     from bazireason.adapter_bank import AdapterBank
 
-    dialogues = [json.loads(x) for x in (OUT / f"{split}.jsonl").read_text(encoding="utf-8").splitlines()]
+    dialogues = [
+        json.loads(x) for x in (OUT / f"{split}.jsonl").read_text(encoding="utf-8").splitlines()
+    ]
     bank = None
     for label in labels:
         cache = Cache(label)
@@ -139,8 +194,19 @@ def run(split, labels, conditions, batch):
                 for d, s in zip(dialogues, state, strict=True):
                     q = d["turns"][k]["question"]
                     plan = G.turn_plan(q, d["pillars"], d["gender"], s["plan"])
-                    user = G.turn_user_text(q, plan, d["pillars"], d["gender"], "w0" if condition == "w0" else "gr", k == 0)
-                    messages = [{"role": "system", "content": P2_SYSTEM}, *s["history"], {"role": "user", "content": user}]
+                    user = G.turn_user_text(
+                        q,
+                        plan,
+                        d["pillars"],
+                        d["gender"],
+                        "w0" if condition == "w0" else "gr",
+                        k == 0,
+                    )
+                    messages = [
+                        {"role": "system", "content": P2_SYSTEM},
+                        *s["history"],
+                        {"role": "user", "content": user},
+                    ]
                     jobs.append((plan, messages))
                 texts, _ = cache.generate(bank, [m for _, m in jobs], 800, batch)
                 repairs = {}
@@ -174,21 +240,37 @@ def run(split, labels, conditions, batch):
                     d = dialogues[i]
                     rec["score"] = score_turn(d, k, rec["raw_output"])
                     rec["final_score"] = score_turn(d, k, rec["final_text"])
-                    rec["final_contradictions"] = [] if rec["fallback"] else G.claim_failures(rec["final_text"], d["pillars"], d["gender"]) and [
-                        f"{r['kind']}:{r['said']}" for r in G.claim_failures(rec["final_text"], d["pillars"], d["gender"])]
+                    rec["final_contradictions"] = (
+                        []
+                        if rec["fallback"]
+                        else G.claim_failures(rec["final_text"], d["pillars"], d["gender"])
+                        and [
+                            f"{r['kind']}:{r['said']}"
+                            for r in G.claim_failures(rec["final_text"], d["pillars"], d["gender"])
+                        ]
+                    )
                     state[i]["turns"].append(rec)
-                    state[i]["history"] += [jobs[i][1][-1], {"role": "assistant", "content": rec["final_text"]}]
+                    state[i]["history"] += [
+                        jobs[i][1][-1],
+                        {"role": "assistant", "content": rec["final_text"]},
+                    ]
                     state[i]["plan"] = jobs[i][0]
             with out.open("x", encoding="utf-8") as stream:
                 for d, s in zip(dialogues, state, strict=True):
                     turns = s["turns"]
-                    ok = all(t["final_score"]["correct"] and not t["final_contradictions"] for t in turns)
-                    first_pass = all(t["score"]["correct"] and not t["check"]["contradictions"] for t in turns)
+                    ok = all(
+                        t["final_score"]["correct"] and not t["final_contradictions"] for t in turns
+                    )
+                    first_pass = all(
+                        t["score"]["correct"] and not t["check"]["contradictions"] for t in turns
+                    )
                     stream.write(json.dumps({"id": d["id"], "label": label, "condition": condition,
                                              "dialogue_ok": ok, "dialogue_ok_first_pass": first_pass, "turns": turns},
                                             ensure_ascii=False) + "\n")  # fmt: skip
             rows = [json.loads(x) for x in out.read_text(encoding="utf-8").splitlines()]
-            per_turn = [sum(r["turns"][k]["final_score"]["correct"] for r in rows) for k in range(5)]
+            per_turn = [
+                sum(r["turns"][k]["final_score"]["correct"] for r in rows) for k in range(5)
+            ]
             print(json.dumps({"label": label, "condition": condition, "dialogues": len(rows),
                               "dialogue_ok": sum(r["dialogue_ok"] for r in rows),
                               "first_pass_ok": sum(r["dialogue_ok_first_pass"] for r in rows),

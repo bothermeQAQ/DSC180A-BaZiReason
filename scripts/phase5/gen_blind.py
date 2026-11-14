@@ -30,12 +30,23 @@ from bazireason.p5_eval import make_item
 
 OUT = Path("data/phase5/blind")
 WRITER = "models/qwen3.5-4b-mlx-4bit"
-PLAN = {"dev": ("valid", 2026111501, 10), "valid": ("valid", 2026111502, 8), "sealed": ("test", 2026111503, 16)}
+PLAN = {
+    "dev": ("valid", 2026111501, 10),
+    "valid": ("valid", 2026111502, 8),
+    "sealed": ("test", 2026111503, 16),
+}
 POS_ZH = {"year": "年", "month": "月", "day": "日", "hour": "时"}
 SCHOOLS = ("扶抑", "调候", "格局")
 STARS = ("桃花", "驿马", "华盖")
 DOMAINS = {"marriage": "婚姻感情", "career": "事业工作", "wealth": "财运"}
-EVENTS = ("哪一年会结婚", "什么时候能发财", "这辈子会不会离婚", "多少岁能升职", "什么时候会生病", "哪一年运气会转好")
+EVENTS = (
+    "哪一年会结婚",
+    "什么时候能发财",
+    "这辈子会不会离婚",
+    "多少岁能升职",
+    "什么时候会生病",
+    "哪一年运气会转好",
+)
 CLASSES = (
     "ten_god_stem", "ten_god_branch", "hidden", "life_stage", "xun_kong", "luck_direction",
     "element_count", "missing_element", "day_master", "strength", "pattern", "yongshen",
@@ -46,7 +57,9 @@ ASK = (
     "你的八字是：{chart}，{sex}。请你用自己的话，像平时聊天一样，向助手提一个问题。"
     "你想知道的是：{desc}。只写出你要问的那一句话，不要解释，也不要回答。"
 )
-QUESTION_WORDS = re.compile(r"[？?吗呢]|什么|哪|几|怎么|怎样|多少|是否|如何|何|有没有|是不是|能不能|会不会|好不好")
+QUESTION_WORDS = re.compile(
+    r"[？?吗呢]|什么|哪|几|怎么|怎样|多少|是否|如何|何|有没有|是不是|能不能|会不会|好不好"
+)
 ECHO = ("结论JSON", "只写出", "不要解释", "不要回答", "向助手提")
 DOMAIN_MARKS = {"marriage": ("婚", "感情", "配偶", "姻缘", "另一半", "伴侣"), "career": ("事业", "工作", "职业"),
                 "wealth": ("财", "钱")}  # fmt: skip
@@ -56,7 +69,9 @@ def describe(cls, pillars, rng):
     """(intent, plain-language description, required mention or None)."""
     dm = pillars["day"][0]
     if cls in ("ten_god_stem", "ten_god_branch", "hidden", "life_stage"):
-        pos = rng.choice(("year", "month", "hour") if cls == "ten_god_stem" else ("year", "month", "day", "hour"))
+        pos = rng.choice(
+            ("year", "month", "hour") if cls == "ten_god_stem" else ("year", "month", "day", "hour")
+        )
         stem, branch = pillars[pos][0], pillars[pos][1]
         p = POS_ZH[pos]
         desc = {
@@ -65,7 +80,11 @@ def describe(cls, pillars, rng):
             "hidden": f"{p}柱的地支{branch}里面藏着哪些天干",
             "life_stage": f"你的日主{dm}在{p}柱的地支{branch}上，处在十二长生的哪个阶段",
         }[cls]
-        return f"fact:{cls}:{pos}", desc, ("position", pos, stem if cls == "ten_god_stem" else branch)
+        return (
+            f"fact:{cls}:{pos}",
+            desc,
+            ("position", pos, stem if cls == "ten_god_stem" else branch),
+        )
     simple = {
         "xun_kong": ("fact:xun_kong", "你的八字里哪两个地支是空亡（旬空）"),
         "luck_direction": ("fact:luck_direction", "你的大运是顺着排还是倒着排"),
@@ -142,8 +161,15 @@ def charts(split_years, seed, count):
         day = date(rng.choice(years), 1, 1) + timedelta(days=rng.randrange(365))
         if day in blocked or day.year not in years:
             continue
-        chart = eight_char(datetime(day.year, day.month, day.day, rng.randrange(24), rng.randrange(60)))
-        pillars = {"year": chart.getYear(), "month": chart.getMonth(), "day": chart.getDay(), "hour": chart.getTime()}
+        chart = eight_char(
+            datetime(day.year, day.month, day.day, rng.randrange(24), rng.randrange(60))
+        )
+        pillars = {
+            "year": chart.getYear(),
+            "month": chart.getMonth(),
+            "day": chart.getDay(),
+            "hour": chart.getTime(),
+        }
         out.append((pillars, rng.choice(("male", "female"))))
     return out
 
@@ -181,11 +207,15 @@ def generate(split):
             break
         convs = []
         for s in todo:
-            chart = " ".join(f"{POS_ZH[n]}柱{s['pillars'][n]}" for n in ("year", "month", "day", "hour"))
+            chart = " ".join(
+                f"{POS_ZH[n]}柱{s['pillars'][n]}" for n in ("year", "month", "day", "hour")
+            )
             sex = "男" if s["gender"] == "male" else "女"
             convs.append([{"role": "system", "content": SYSTEM},
                           {"role": "user", "content": ASK.format(chart=chart, sex=sex, desc=s["desc"])}])  # fmt: skip
-        texts, _ = writer.generate_batch(convs, 80, temperature=0.8, top_p=0.9, seed=seed + attempt, batch=16)
+        texts, _ = writer.generate_batch(
+            convs, 80, temperature=0.8, top_p=0.9, seed=seed + attempt, batch=16
+        )
         for s, raw in zip(todo, texts, strict=True):
             question = clean(raw)
             plan = N.plan_for(s["intent"], s["pillars"], s["gender"])
@@ -208,13 +238,18 @@ def main():
         if args.check:
             log = [json.loads(x) for x in log_path.read_text(encoding="utf-8").splitlines()]
             payload = "".join(json.dumps(i, ensure_ascii=False) + "\n" for i in build(split, log))
-            same = hashlib.sha256(payload.encode()).hexdigest() == hashlib.sha256(items_path.read_bytes()).hexdigest()
+            same = (
+                hashlib.sha256(payload.encode()).hexdigest()
+                == hashlib.sha256(items_path.read_bytes()).hexdigest()
+            )
             print(f"{items_path}: {'ok' if same else 'MISMATCH'}")
             continue
         if items_path.exists():
             parser.error(f"{items_path} exists; blind splits are never rewritten")
         log = generate(split)
-        log_path.write_text("".join(json.dumps(r, ensure_ascii=False) + "\n" for r in log), encoding="utf-8")
+        log_path.write_text(
+            "".join(json.dumps(r, ensure_ascii=False) + "\n" for r in log), encoding="utf-8"
+        )
         items = build(split, log)
         payload = "".join(json.dumps(i, ensure_ascii=False) + "\n" for i in items)
         items_path.write_text(payload, encoding="utf-8")

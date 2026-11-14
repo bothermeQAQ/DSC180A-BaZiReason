@@ -25,7 +25,7 @@ from bazireason.p2_prompts import OUTPUT_HINTS
 FACT_HINTS = dict(
     FACT_HINTS,
     day_master="结论JSON 需含 answer（日主的天干，如 甲）。",
-    missing_element='结论JSON 需含 answer（八字中没有的五行列表，都有时为 []）。',
+    missing_element="结论JSON 需含 answer（八字中没有的五行列表，都有时为 []）。",
 )
 POSITION = re.compile(r"(年|月|日|时)(?:柱)?(?:的)?(干|支|天干|地支)")
 POS_KEY = {"年": "year", "月": "month", "日": "day", "时": "hour"}
@@ -40,8 +40,34 @@ LIFE_EVENTS = (
     "成功", "财运", "转运", "好运", "运气", "桃花运",
 )  # fmt: skip
 COMPUTED_TIMING = ("换大运", "起运", "交运", "大运从", "大运什么时候")
-TEN_GODS = ("比肩", "劫财", "食神", "伤官", "偏财", "正财", "七杀", "偏官", "正官", "偏印", "正印", "枭神")
-JUDGEMENT = ("好命", "命好", "好不好", "算不算好", "好的命", "吉凶", "是吉是凶", "富贵", "上等", "下等", "幸福", "长寿")
+TEN_GODS = (
+    "比肩",
+    "劫财",
+    "食神",
+    "伤官",
+    "偏财",
+    "正财",
+    "七杀",
+    "偏官",
+    "正官",
+    "偏印",
+    "正印",
+    "枭神",
+)
+JUDGEMENT = (
+    "好命",
+    "命好",
+    "好不好",
+    "算不算好",
+    "好的命",
+    "吉凶",
+    "是吉是凶",
+    "富贵",
+    "上等",
+    "下等",
+    "幸福",
+    "长寿",
+)
 DOMAINS = {
     "marriage": ("婚", "感情", "配偶", "恋爱", "夫妻", "姻缘", "另一半", "伴侣"),
     "career": ("事业", "工作", "职业", "官运", "升职", "仕途"),
@@ -59,7 +85,10 @@ def _position(question: str, part: str | None = None):
         if part is None or found == part:
             return POS_KEY[match.group(1)], found
     # "月柱的甲木", "日柱的酉": the pillar named by its character
-    for match in re.finditer(r"(年|月|日|时)柱(?:的|里的|上的)?(?:那个)?(?:天干|地支)?[“\"「]?([甲乙丙丁戊己庚辛壬癸子丑寅卯辰巳午未申酉戌亥])(?![甲乙丙丁戊己庚辛壬癸子丑寅卯辰巳午未申酉戌亥])", question):
+    for match in re.finditer(
+        r"(年|月|日|时)柱(?:的|里的|上的)?(?:那个)?(?:天干|地支)?[“\"「]?([甲乙丙丁戊己庚辛壬癸子丑寅卯辰巳午未申酉戌亥])(?![甲乙丙丁戊己庚辛壬癸子丑寅卯辰巳午未申酉戌亥])",
+        question,
+    ):
         found = "stem" if match.group(2) in "甲乙丙丁戊己庚辛壬癸" else "branch"
         if part is None or found == part:
             return POS_KEY[match.group(1)], found
@@ -95,7 +124,9 @@ def fact_intent(question: str, pillars: dict, gender):
     if "藏" in q and "十神" not in q and not re.search(r"(不算|不看|不计|不含|不包括)藏", q):
         position, _ = _position(q, "branch")
         if position is None:
-            match = re.search(r"([子丑寅卯辰巳午未申酉戌亥])[^子丑寅卯辰巳午未申酉戌亥藏]{0,12}藏", q)
+            match = re.search(
+                r"([子丑寅卯辰巳午未申酉戌亥])[^子丑寅卯辰巳午未申酉戌亥藏]{0,12}藏", q
+            )
             if match:
                 position = next((n for n in F.PILLARS if pillars[n][1] == match.group(1)), None)
         if position:
@@ -110,7 +141,11 @@ def fact_intent(question: str, pillars: dict, gender):
             return _fact("missing_element", pillars, gender)
         if re.search(r"(几个|多少|数量|个数|统计|分布|各有|数一数|数数|几次|出现)", q):
             return _fact("element_count", pillars, gender)
-    asks_god = "十神" in q or any(g in q for g in TEN_GODS) or re.search(r"(是我|对我|算我|对日主|对日元)的?.{0,6}(什么|哪)", q)
+    asks_god = (
+        "十神" in q
+        or any(g in q for g in TEN_GODS)
+        or re.search(r"(是我|对我|算我|对日主|对日元)的?.{0,6}(什么|哪)", q)
+    )
     if asks_god:
         position, _ = _position(q, "branch")
         if position and not _position(q, "stem")[0] and any(g in q for g in TEN_GODS):
@@ -118,8 +153,10 @@ def fact_intent(question: str, pillars: dict, gender):
         position, _ = _position(q, "stem")
         if position and position != "day":
             return _fact("ten_god_stem", pillars, gender, position)
-    if re.search(r"(日主|日元|日干)", q) and re.search(r"(是什么|是哪个|是啥|是哪一个|是哪)", q) and not re.search(
-        r"(强|弱|格|用神|喜|十神|长生)", q
+    if (
+        re.search(r"(日主|日元|日干)", q)
+        and re.search(r"(是什么|是哪个|是啥|是哪一个|是哪)", q)
+        and not re.search(r"(强|弱|格|用神|喜|十神|长生)", q)
     ):
         return _fact("day_master", pillars, gender)
     return None
@@ -179,11 +216,23 @@ def _from_demo(planned: dict, question: str, today: int) -> dict:
     }
 
 
-INTERACT = re.compile(r"(合.{0,2}冲|冲.{0,2}合|冲.{0,2}刑|刑.{0,2}害|干支关系|六合|三合|相冲|相刑|相害|相破|半合)")
+INTERACT = re.compile(
+    r"(合.{0,2}冲|冲.{0,2}合|冲.{0,2}刑|刑.{0,2}害|干支关系|六合|三合|相冲|相刑|相害|相破|半合)"
+)
 SCHOOL_WORDS = {
     "扶抑": ("扶抑",),
     "调候": ("调候",),
-    "格局": ("格局一派", "格局派", "以月令格局", "格局取用", "格局之神", "顺用", "逆用", "格局法", "按格局"),
+    "格局": (
+        "格局一派",
+        "格局派",
+        "以月令格局",
+        "格局取用",
+        "格局之神",
+        "顺用",
+        "逆用",
+        "格局法",
+        "按格局",
+    ),
 }
 YONGSHEN_WORDS = ("用神", "喜用", "喜忌", "喜什么", "调候", "扶抑")
 
@@ -208,7 +257,9 @@ def route(question: str, pillars: dict, gender=None, today: int = 2026, first_tu
         if any(word in q for word in demo_deep.OVERVIEW_WORDS):
             return plan_for("overview", pillars, gender)
         year = demo_deep._year(q, today)
-        if year is not None and ("流年" in q or re.search(r"[0-9]{4}\s*年", q) or "今年" in q or "明年" in q):
+        if year is not None and (
+            "流年" in q or re.search(r"[0-9]{4}\s*年", q) or "今年" in q or "明年" in q
+        ):
             if not any(w for words in demo_deep.DOMAIN_WORDS.values() for w in words if w in q):
                 return plan_for(f"flow:{year}", pillars, gender)
         if STRENGTH_ASK.search(q) and not any(w in q for w in YONGSHEN_WORDS):
@@ -218,7 +269,9 @@ def route(question: str, pillars: dict, gender=None, today: int = 2026, first_tu
             return plan_for("gods", pillars, gender)
         domain = next((d for d, words in DOMAINS.items() if any(w in q for w in words)), None)
         if domain and (gender or domain != "marriage"):
-            return plan_for(f"domain:{domain}:{demo_deep._year(q, today) or today}", pillars, gender)
+            return plan_for(
+                f"domain:{domain}:{demo_deep._year(q, today) or today}", pillars, gender
+            )
         school = _school(q)
         if school and (any(w in q for w in YONGSHEN_WORDS) or school == "格局"):
             return plan_for(f"yongshen:{school}", pillars, gender)

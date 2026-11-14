@@ -70,7 +70,11 @@ def template_intent(row):
         if kind not in AMBIG_KINDS:
             return None
         if kind == "star_basis":
-            user = row["messages"][-2]["content"] if row["messages"][-1]["role"] == "assistant" else row["messages"][-1]["content"]
+            user = (
+                row["messages"][-2]["content"]
+                if row["messages"][-1]["role"] == "assistant"
+                else row["messages"][-1]["content"]
+            )
             star = next((s for s in STARS if s in user), None)
             return f"star:{star}" if star else None
         return f"ambig:{kind}"
@@ -89,11 +93,21 @@ def indep_item(row):
     found = FOUR.findall(user.split("\n")[0])
     pillars = dict(zip(("year", "month", "day", "hour"), found[:4], strict=True))
     if row["meta"]["kind"] == "xun_kong" and "日柱为" in user:
-        pillars = dict(zip(("year", "month", "day", "hour"), FOUR.findall(user.split("全盘")[1])[:4], strict=True))
+        pillars = dict(
+            zip(
+                ("year", "month", "day", "hour"),
+                FOUR.findall(user.split("全盘")[1])[:4],
+                strict=True,
+            )
+        )
     gender = "male" if "男" in user else ("female" if "女" in user else None)
     kind = row["meta"]["kind"]
     position = row["meta"].get("pillar")
-    intent = f"fact:{kind}" + (f":{'hour' if position == 'time' else position}" if kind in ("ten_god_stem", "ten_god_branch", "hidden", "life_stage") else "")
+    intent = f"fact:{kind}" + (
+        f":{'hour' if position == 'time' else position}"
+        if kind in ("ten_god_stem", "ten_god_branch", "hidden", "life_stage")
+        else ""
+    )
     meta = dict(row["meta"], pillars=pillars, gender=gender, intent=intent,
                 question=user.split("\n")[0], expected=row["meta"]["expected"])  # fmt: skip
     return dict(row, family="fact", meta=meta)
@@ -122,7 +136,13 @@ def _norm_fact(kind, value):
             value = re.findall(r"[甲乙丙丁戊己庚辛壬癸子丑寅卯辰巳午未申酉戌亥木火土金水]", value)
         return sorted(value) if isinstance(value, list) else None
     if kind == "luck_direction" and isinstance(value, str):
-        value = value.strip().replace("顺行", "顺").replace("逆行", "逆").replace("forward", "顺").replace("backward", "逆")
+        value = (
+            value.strip()
+            .replace("顺行", "顺")
+            .replace("逆行", "逆")
+            .replace("forward", "顺")
+            .replace("backward", "逆")
+        )
         return value[:1]
     if kind == "element_count" and isinstance(value, dict):
         try:
@@ -158,4 +178,12 @@ def score5(row, text):
 
 
 HINT_OF_FAMILY = dict(K.HINTS, fact=None, policy=None)
-__all__ = ["FACT_HINTS", "make_item", "template_intent", "indep_item", "bare_question", "score5", "head_line"]
+__all__ = [
+    "FACT_HINTS",
+    "make_item",
+    "template_intent",
+    "indep_item",
+    "bare_question",
+    "score5",
+    "head_line",
+]

@@ -1,0 +1,44 @@
+{
+ "split": "valid",
+ "label": "base",
+ "part": "rules",
+ "condition": "grv",
+ "n_rows": 202,
+ "max_tokens": 800,
+ "temperature": 0,
+ "stats": {
+  "generated": 0,
+  "reused": 202,
+  "seconds": 0.0,
+  "completion_tokens": null,
+  "repair": {
+   "generated": 185,
+   "reused": 0,
+   "seconds": 770.5,
+   "completion_tokens": 54820
+  }
+ },
+ "summary": {
+  "n": 202,
+  "correct": 17,
+  "with_contradiction": 11,
+  "conclusion_disagrees": 185,
+  "routed_ok": 202,
+  "final_correct": 202,
+  "repaired": 185,
+  "fallback": 19,
+  "final_with_contradiction": 0,
+  "by_intent": {
+   "ambig": "0/8",
+   "domain": "0/24",
+   "flow": "0/40",
+   "gods": "0/28",
+   "interact": "0/32",
+   "overview": "0/16",
+   "pattern": "16/16",
+   "star": "1/4",
+   "strength": "0/16",
+   "yongshen": "0/18"
+  }
+ }
+}

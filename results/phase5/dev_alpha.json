@@ -1,0 +1,34 @@
+{
+ "rule": "most correct development answers (w0: calendar, rules, indep, blind); ties to the smaller alpha",
+ "table": {
+  "0.15": {
+   "parts": {
+    "calendar": 184,
+    "rules": 167,
+    "indep": 180,
+    "blind": 108
+   },
+   "total": 639
+  },
+  "0.25": {
+   "parts": {
+    "calendar": 181,
+    "rules": 169,
+    "indep": 177,
+    "blind": 110
+   },
+   "total": 637
+  },
+  "0.35": {
+   "parts": {
+    "calendar": 177,
+    "rules": 165,
+    "indep": 174,
+    "blind": 110
+   },
+   "total": 626
+  }
+ },
+ "alpha": 0.15,
+ "label": "mix:p3r3:p4a1:0.15"
+}

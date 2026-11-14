@@ -1,0 +1,53 @@
+{
+ "split": "sealed",
+ "label": "p4a1",
+ "part": "blind",
+ "condition": "grv",
+ "n_rows": 314,
+ "max_tokens": 800,
+ "temperature": 0,
+ "stats": {
+  "generated": 0,
+  "reused": 314,
+  "seconds": 0.0,
+  "completion_tokens": null,
+  "repair": {
+   "generated": 41,
+   "reused": 0,
+   "seconds": 82.8,
+   "completion_tokens": 2847
+  }
+ },
+ "summary": {
+  "n": 314,
+  "correct": 269,
+  "with_contradiction": 7,
+  "conclusion_disagrees": 37,
+  "routed_ok": 302,
+  "final_correct": 303,
+  "repaired": 41,
+  "fallback": 9,
+  "final_with_contradiction": 0,
+  "by_intent": {
+   "ambig": "29/32",
+   "domain": "13/16",
+   "fact:day_master": "16/16",
+   "fact:element_count": "15/16",
+   "fact:hidden": "15/16",
+   "fact:life_stage": "13/16",
+   "fact:luck_direction": "9/10",
+   "fact:missing_element": "14/16",
+   "fact:ten_god_branch": "15/16",
+   "fact:ten_god_stem": "16/16",
+   "fact:xun_kong": "13/16",
+   "flow": "7/16",
+   "gods": "15/16",
+   "interact": "12/16",
+   "pattern": "15/16",
+   "prediction": "11/16",
+   "star": "12/16",
+   "strength": "16/16",
+   "yongshen": "13/16"
+  }
+ }
+}
