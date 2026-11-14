@@ -40,6 +40,7 @@ PLAN = {
     "valid6": (2026111642, 10),
     "sealed6": (2026111643, 21),
     "train6": (2026111649, 180),
+    "train6b": (2026111650, 220),  # more training wordings for the full-budget run
 }
 PERSONAS = (
     "你是一位刚开始了解八字的年轻人，正在向一个八字助手请教。",
@@ -125,7 +126,7 @@ def describe_train(cls, pillars, rng):
 
 
 def charts_for(split, seed, count):
-    if split == "train6":
+    if split.startswith("train"):
         years = sorted(TD.split_years()["train"])
         blocked = TD.benchmark_exclusions() | TD.contest_exclusions()
         rng = random.Random(f"p6-train-charts:{seed}")
@@ -152,7 +153,7 @@ def generate(split):
 
     seed, per_class = PLAN[split]
     rng = random.Random(f"blind6:{seed}")
-    train = split == "train6"
+    train = split.startswith("train")
     slots = []
     for index, (pillars, gender) in enumerate(charts_for(split, seed, per_class * len(CLASSES))):
         cls = CLASSES[index % len(CLASSES)]
@@ -195,8 +196,8 @@ def generate(split):
 
 
 def build(split, log):
-    tag = {"dev6": "D", "valid6": "V", "sealed6": "S", "train6": "T"}[split]
-    writer = Path(TRAIN_WRITER if split == "train6" else TEST_WRITER).name
+    tag = {"dev6": "D", "valid6": "V", "sealed6": "S", "train6": "T", "train6b": "B"}[split]
+    writer = Path(TRAIN_WRITER if split.startswith("train") else TEST_WRITER).name
     items = []
     for record in log:
         if not record["accepted"]:

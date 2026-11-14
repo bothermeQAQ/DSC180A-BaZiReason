@@ -113,6 +113,13 @@ def main():
     parser.add_argument("--replies", help="model replies on training charts, for self-check rows")
     parser.add_argument("--layers", type=int, default=16)
     parser.add_argument("--rank", type=int, default=16)
+    parser.add_argument(
+        "--calendar-share", type=float, help="screening decision: calendar share of U1"
+    )
+    parser.add_argument(
+        "--drop", nargs="*", default=[], help="screening decision: components left out of U1"
+    )
+    parser.add_argument("--extra-paraphrases", help="a second file of training-writer paraphrases")
     parser.add_argument("--check", action="store_true")
     args = parser.parse_args()
     recipe = args.recipe
@@ -123,9 +130,15 @@ def main():
         json.loads(x)
         for x in Path("data/phase6/blind/train6.jsonl").read_text(encoding="utf-8").splitlines()
     ]
+    if args.extra_paraphrases:
+        paraphrases += [
+            json.loads(x)
+            for x in Path(args.extra_paraphrases).read_text(encoding="utf-8").splitlines()
+        ]
     replies = load_replies(args.replies)
-    train = T6.build(data_recipe, args.tokens, seed, exclude, paraphrases, replies)
-    valid = T6.build(data_recipe, 150_000, seed + 500, exclude, paraphrases, replies)
+    options = {"calendar_share": args.calendar_share, "drop": tuple(args.drop)}
+    train = T6.build(data_recipe, args.tokens, seed, exclude, paraphrases, replies, **options)
+    valid = T6.build(data_recipe, 150_000, seed + 500, exclude, paraphrases, replies, **options)
     limit = MAX_TOKENS - 8 if T6._tokenizer() else int(MAX_TOKENS * 0.95)
     train = [r for r in train if T6.tokens(r) <= limit]
     valid = [r for r in valid if T6.tokens(r) <= limit]
@@ -154,6 +167,7 @@ def main():
     for name, data in files.items():
         (folder / name).write_bytes(data)
     manifest = {"recipe": recipe, "data_recipe": data_recipe, "seed": seed, "token_budget": args.tokens,
+                "calendar_share": args.calendar_share, "drop": args.drop, "extra_paraphrases": args.extra_paraphrases,
                 "replies": args.replies, "excluded_charts": len(exclude),
                 "files": {name: {"sha256": hashlib.sha256(d).hexdigest(), "rows": len(train if name == 'train.jsonl' else valid)} for name, d in files.items()},
                 "train_summary": T6.summary(train)}  # fmt: skip

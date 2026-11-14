@@ -515,24 +515,48 @@ SHARES = {
 }  # fmt: skip
 
 
-def build(recipe, total_tokens, seed, exclude=frozenset(), paraphrases=None, replies=None):
+def build(
+    recipe,
+    total_tokens,
+    seed,
+    exclude=frozenset(),
+    paraphrases=None,
+    replies=None,
+    calendar_share=None,
+    drop=(),
+):
+    """Rows of one recipe. ``calendar_share`` and ``drop`` (component names) apply the
+    pre-registered screening decisions (docs/phase6_preregistration.md, section 5) to U1."""
     rng = random.Random(f"{VERSION}:{recipe}:{seed}")
     if recipe == "u0":
         rows = union_rows(total_tokens, rng)
     else:
         base = recipe if recipe in SHARES else "s3"
-        shares = SHARES[base]
+        shares = dict(SHARES[base])
+        if calendar_share is not None:
+            scale = (1 - calendar_share) / (1 - shares["calendar"])
+            shares = {
+                k: (calendar_share if k == "calendar" else v * scale) for k, v in shares.items()
+            }
+        for part in drop:  # a dropped component's share goes to the procedure rows
+            shares["procedure"] += shares.pop(part, 0.0)
         charts = Charts(seed, exclude)
         rows = []
-        rows += calendar_rows(total_tokens * shares["calendar"], seed + 1, balanced=base == "s3")
-        styled = base in ("s2", "s3")
+        rows += calendar_rows(
+            total_tokens * shares["calendar"],
+            seed + 1,
+            balanced=base == "s3" and "twins" not in drop,
+        )
+        styled = base in ("s2", "s3") and "wording" not in drop
         rows += procedure_rows(total_tokens * shares["procedure"], charts, rng, paraphrases if styled else None,
                                0.45 if styled else 0.0, styled)  # fmt: skip
         if "contrast" in shares:
             rows += contrast_rows(total_tokens * shares["contrast"], charts, rng)
         if "evidence" in shares:
             rows += evidence_rows(total_tokens * shares["evidence"], charts, rng)
+        if "verify" in shares:
             rows += verify_rows(total_tokens * shares["verify"], charts, rng)
+        if "selfcheck" in shares:
             rows += selfcheck_rows(replies or [], rng, total_tokens * shares["selfcheck"])
         rows += other_rows(total_tokens * shares["other"], rng)
     rng.shuffle(rows)

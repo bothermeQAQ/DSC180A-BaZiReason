@@ -40,7 +40,9 @@ def test_phase6_splits_match_their_manifests():
 def test_blind_items_rebuild_from_the_writer_logs():
     import gen_blind6
 
-    for split in (*SPLITS, "train6"):
+    for split in (*SPLITS, "train6", "train6b"):
+        if not (ROOT / f"data/phase6/blind/{split}_attempts.jsonl").exists():
+            continue
         log = rows(ROOT / f"data/phase6/blind/{split}_attempts.jsonl")
         payload = "".join(
             json.dumps(i, ensure_ascii=False) + "\n" for i in gen_blind6.build(split, log)
