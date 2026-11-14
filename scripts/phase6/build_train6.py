@@ -114,6 +114,9 @@ def main():
     parser.add_argument("--layers", type=int, default=16)
     parser.add_argument("--rank", type=int, default=16)
     parser.add_argument(
+        "--grad-checkpoint", action="store_true", help="recompute activations (memory, not math)"
+    )
+    parser.add_argument(
         "--calendar-share", type=float, help="screening decision: calendar share of U1"
     )
     parser.add_argument(
@@ -175,8 +178,11 @@ def main():
     name = {"u1hi": "u1-hi"}.get(recipe, recipe)
     config = CONFIG / f"qwen3_4b_lora_p6_{recipe}.yaml"
     if not config.exists():
-        config.write_text(TEMPLATE.format(recipe=recipe, purpose=PURPOSE[recipe], name=name, seed=seed,
-                                          layers=args.layers, rank=args.rank, max_tokens=MAX_TOKENS))  # fmt: skip
+        text = TEMPLATE.format(recipe=recipe, purpose=PURPOSE[recipe], name=name, seed=seed,
+                               layers=args.layers, rank=args.rank, max_tokens=MAX_TOKENS)  # fmt: skip
+        if args.grad_checkpoint:
+            text += "grad_checkpoint: true    # same gradients, activations recomputed (memory)\n"
+        config.write_text(text)
     print(
         json.dumps(
             {"recipe": recipe, "rows": len(train), "valid": len(valid), **T6.summary(train)},

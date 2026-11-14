@@ -120,5 +120,9 @@ Each entry was written before the result it could affect existed.
   - **Script name.** The screening and selection rules are applied by `scripts/phase6/decide6.py screen` and `decide6.py select` (not `select6.py`). The rules are those of sections 5 and 6, unchanged.
   - **More training wordings for U1.** At 15 M tokens, U1 would reuse each of the 3,286 training-writer questions about 2.5 times. U1 adds `data/phase6/blind/train6b.jsonl`: the same writer (untuned Qwen3-4B), descriptions and personas as `train6`, a different seed, 220 per class. No other recipe changes.
   - **Self-check input for U1.** As for S3, U1's self-check rows are built from S1's own replies (`results/phase6/own_replies_p6s1.jsonl`, 2,400 replies); its 6% share needs about 600 of them.
-  - **U1-hi memory fallback.** If a short probe shows that all 36 layers at rank 16 do not fit in the 32 GB machine at batch 2, U1-hi uses rank 64 on the last 16 layers instead and is reported under that description.
+  - **U1-hi memory fallback.** A probe (`scripts/phase6/probe_memory.py`: 8 real steps on the 16 longest U1 rows; fits when it ends normally with a peak of at most 25 GB) decides the set-up, in this order:
+    1. all 36 layers at rank 16, batch 2, as planned;
+    2. the same with gradient checkpointing (`grad_checkpoint` in the training config: activations are recomputed in the backward pass, so the gradients are the same and only time and memory change);
+    3. rank 64 on the last 16 layers, reported under that description.
+  - U1-hi uses exactly U1's data (same recipe, seed and options); the queue checks that the two training files are identical.
   - **valid6 runs.** Only what the selection rule reads: the candidates at L0 (rule items and calendar) and Phase 2 on calendar. The existing models' L1-L4 run on sealed6 (section 8), and on dev6 for A1 and U0.

@@ -224,6 +224,8 @@ def main():
         max_seq_length=config["max_seq_length"],
         adapter_file=str(work_dir / "last_adapters.safetensors"),
         grad_accumulation_steps=accumulate,
+        # Recomputes layer activations in the backward pass: same gradients, less memory.
+        grad_checkpoint=bool(config.get("grad_checkpoint", False)),
     )
     mx.reset_peak_memory()
     train(model, optimizer, train_set, valid_set, training_args, training_callback=recorder)
