@@ -1,0 +1,154 @@
+{
+ "literal": {
+  "n": 240,
+  "correct": 194,
+  "by_family": {
+   "ambig": [
+    6,
+    6
+   ],
+   "domain": [
+    8,
+    25
+   ],
+   "flow": [
+    36,
+    43
+   ],
+   "gods": [
+    35,
+    36
+   ],
+   "interact": [
+    33,
+    48
+   ],
+   "overview": [
+    17,
+    18
+   ],
+   "pattern": [
+    18,
+    19
+   ],
+   "star": [
+    4,
+    5
+   ],
+   "strength": [
+    11,
+    13
+   ],
+   "yongshen": [
+    26,
+    27
+   ]
+  },
+  "stats": {
+   "generated": 240,
+   "reused": 0,
+   "seconds": 661.6,
+   "completion_tokens": 99517
+  }
+ },
+ "fresh": {
+  "n": 240,
+  "correct": 183,
+  "by_family": {
+   "ambig": [
+    10,
+    10
+   ],
+   "domain": [
+    10,
+    23
+   ],
+   "flow": [
+    24,
+    40
+   ],
+   "gods": [
+    33,
+    33
+   ],
+   "interact": [
+    29,
+    50
+   ],
+   "overview": [
+    13,
+    14
+   ],
+   "pattern": [
+    25,
+    27
+   ],
+   "strength": [
+    19,
+    22
+   ],
+   "yongshen": [
+    20,
+    21
+   ]
+  },
+  "stats": {
+   "generated": 240,
+   "reused": 0,
+   "seconds": 636.2,
+   "completion_tokens": 96609
+  }
+ },
+ "dev6": {
+  "n": 294,
+  "correct": 157,
+  "by_family": {
+   "ambig": [
+    12,
+    12
+   ],
+   "domain": [
+    5,
+    36
+   ],
+   "flow": [
+    28,
+    50
+   ],
+   "gods": [
+    21,
+    40
+   ],
+   "interact": [
+    19,
+    40
+   ],
+   "overview": [
+    0,
+    20
+   ],
+   "pattern": [
+    23,
+    30
+   ],
+   "star": [
+    6,
+    6
+   ],
+   "strength": [
+    22,
+    30
+   ],
+   "yongshen": [
+    21,
+    30
+   ]
+  },
+  "stats": {
+   "generated": 294,
+   "reused": 0,
+   "seconds": 576.0,
+   "completion_tokens": 102619
+  }
+ }
+}

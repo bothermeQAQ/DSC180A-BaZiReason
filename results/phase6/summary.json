@@ -1,0 +1,978 @@
+{
+ "fit": {
+  "a1": {
+   "literal": {
+    "n": 240,
+    "correct": 194,
+    "by_family": {
+     "ambig": [
+      6,
+      6
+     ],
+     "domain": [
+      8,
+      25
+     ],
+     "flow": [
+      36,
+      43
+     ],
+     "gods": [
+      35,
+      36
+     ],
+     "interact": [
+      33,
+      48
+     ],
+     "overview": [
+      17,
+      18
+     ],
+     "pattern": [
+      18,
+      19
+     ],
+     "star": [
+      4,
+      5
+     ],
+     "strength": [
+      11,
+      13
+     ],
+     "yongshen": [
+      26,
+      27
+     ]
+    },
+    "stats": {
+     "generated": 240,
+     "reused": 0,
+     "seconds": 661.6,
+     "completion_tokens": 99517
+    }
+   },
+   "fresh": {
+    "n": 240,
+    "correct": 183,
+    "by_family": {
+     "ambig": [
+      10,
+      10
+     ],
+     "domain": [
+      10,
+      23
+     ],
+     "flow": [
+      24,
+      40
+     ],
+     "gods": [
+      33,
+      33
+     ],
+     "interact": [
+      29,
+      50
+     ],
+     "overview": [
+      13,
+      14
+     ],
+     "pattern": [
+      25,
+      27
+     ],
+     "strength": [
+      19,
+      22
+     ],
+     "yongshen": [
+      20,
+      21
+     ]
+    },
+    "stats": {
+     "generated": 240,
+     "reused": 0,
+     "seconds": 636.2,
+     "completion_tokens": 96609
+    }
+   },
+   "dev6": {
+    "n": 294,
+    "correct": 157,
+    "by_family": {
+     "ambig": [
+      12,
+      12
+     ],
+     "domain": [
+      5,
+      36
+     ],
+     "flow": [
+      28,
+      50
+     ],
+     "gods": [
+      21,
+      40
+     ],
+     "interact": [
+      19,
+      40
+     ],
+     "overview": [
+      0,
+      20
+     ],
+     "pattern": [
+      23,
+      30
+     ],
+     "star": [
+      6,
+      6
+     ],
+     "strength": [
+      22,
+      30
+     ],
+     "yongshen": [
+      21,
+      30
+     ]
+    },
+    "stats": {
+     "generated": 294,
+     "reused": 0,
+     "seconds": 576.0,
+     "completion_tokens": 102619
+    }
+   }
+  }
+ },
+ "l0": {
+  "dev6": {
+   "base": {
+    "rules": [
+     0,
+     294
+    ],
+    "indep": [
+     42,
+     140
+    ],
+    "blind": [
+     31,
+     188
+    ],
+    "combo": [
+     38,
+     100
+    ],
+    "cf": [
+     5,
+     100
+    ],
+    "all": [
+     116,
+     822
+    ],
+    "calendar": [
+     4,
+     219
+    ]
+   },
+   "p2": {
+    "rules": [
+     8,
+     294
+    ],
+    "indep": [
+     83,
+     140
+    ],
+    "blind": [
+     53,
+     188
+    ],
+    "combo": [
+     23,
+     100
+    ],
+    "cf": [
+     27,
+     100
+    ],
+    "all": [
+     194,
+     822
+    ],
+    "calendar": [
+     162,
+     219
+    ]
+   },
+   "p4a1": {
+    "rules": [
+     157,
+     294
+    ],
+    "indep": [
+     112,
+     140
+    ],
+    "blind": [
+     114,
+     188
+    ],
+    "combo": [
+     48,
+     100
+    ],
+    "cf": [
+     66,
+     100
+    ],
+    "all": [
+     497,
+     822
+    ],
+    "calendar": [
+     136,
+     219
+    ]
+   },
+   "p5g1": {
+    "rules": [
+     152,
+     294
+    ],
+    "indep": [
+     108,
+     140
+    ],
+    "blind": [
+     98,
+     188
+    ],
+    "combo": [
+     33,
+     100
+    ],
+    "cf": [
+     60,
+     100
+    ],
+    "all": [
+     451,
+     822
+    ],
+    "calendar": [
+     143,
+     219
+    ]
+   }
+  }
+ },
+ "statements": {
+  "dev6": {
+   "base": {
+    "checked": {
+     "pillar": 2857,
+     "day_master": 2445,
+     "hidden": 933,
+     "repetition": 21,
+     "citation": 154,
+     "pattern": 5,
+     "relation": 801,
+     "detail": 93,
+     "stem_relation": 9,
+     "flow_year": 182,
+     "star": 23,
+     "ten_god": 10,
+     "xun_kong": 17,
+     "spouse_star": 2
+    },
+    "wrong": {
+     "pillar": 22,
+     "day_master": 13,
+     "hidden": 66,
+     "repetition": 21,
+     "citation": 2,
+     "pattern": 5,
+     "relation": 442,
+     "detail": 93,
+     "stem_relation": 5,
+     "flow_year": 85,
+     "star": 14,
+     "ten_god": 7,
+     "xun_kong": 17,
+     "spouse_star": 0
+    },
+    "replies_with_wrong": 187,
+    "n": 822,
+    "loops": 21
+   },
+   "p2": {
+    "checked": {
+     "day_master": 727,
+     "stem_relation": 17,
+     "relation": 263,
+     "hidden": 117,
+     "repetition": 15,
+     "ten_god": 308,
+     "detail": 252,
+     "pillar": 787,
+     "strength": 28,
+     "pattern": 49,
+     "flow_year": 140,
+     "spouse_star": 77,
+     "star": 1,
+     "element_count": 51,
+     "citation": 2,
+     "xun_kong": 1
+    },
+    "wrong": {
+     "day_master": 4,
+     "stem_relation": 11,
+     "relation": 142,
+     "hidden": 10,
+     "repetition": 15,
+     "ten_god": 227,
+     "detail": 252,
+     "pillar": 1,
+     "strength": 6,
+     "pattern": 31,
+     "flow_year": 86,
+     "spouse_star": 2,
+     "star": 1,
+     "element_count": 16,
+     "citation": 2,
+     "xun_kong": 1
+    },
+    "replies_with_wrong": 253,
+    "n": 822,
+    "loops": 15
+   },
+   "p4a1": {
+    "checked": {
+     "day_master": 792,
+     "ten_god": 187,
+     "stem_relation": 114,
+     "hidden": 466,
+     "repetition": 7,
+     "strength": 65,
+     "pattern": 93,
+     "pillar": 377,
+     "relation": 529,
+     "flow_year": 395,
+     "spouse_star": 55,
+     "star": 89,
+     "detail": 26,
+     "xun_kong": 80,
+     "element_count": 54
+    },
+    "wrong": {
+     "day_master": 0,
+     "ten_god": 4,
+     "stem_relation": 9,
+     "hidden": 1,
+     "repetition": 7,
+     "strength": 11,
+     "pattern": 45,
+     "pillar": 0,
+     "relation": 54,
+     "flow_year": 23,
+     "spouse_star": 0,
+     "star": 28,
+     "detail": 26,
+     "xun_kong": 59,
+     "element_count": 9
+    },
+    "replies_with_wrong": 154,
+    "n": 822,
+    "loops": 7
+   },
+   "p5g1": {
+    "checked": {
+     "day_master": 719,
+     "hidden": 491,
+     "ten_god": 96,
+     "strength": 62,
+     "pattern": 91,
+     "citation": 15,
+     "relation": 468,
+     "stem_relation": 87,
+     "pillar": 304,
+     "flow_year": 416,
+     "repetition": 7,
+     "detail": 42,
+     "spouse_star": 53,
+     "star": 71,
+     "xun_kong": 66,
+     "element_count": 54
+    },
+    "wrong": {
+     "day_master": 1,
+     "hidden": 0,
+     "ten_god": 12,
+     "strength": 9,
+     "pattern": 45,
+     "citation": 4,
+     "relation": 17,
+     "stem_relation": 6,
+     "pillar": 0,
+     "flow_year": 49,
+     "repetition": 7,
+     "detail": 42,
+     "spouse_star": 0,
+     "star": 15,
+     "xun_kong": 51,
+     "element_count": 13
+    },
+    "replies_with_wrong": 150,
+    "n": 822,
+    "loops": 7
+   }
+  }
+ },
+ "wording": {
+  "dev6": {
+   "base": {
+    "seen": [
+     0,
+     144
+    ],
+    "held_out": [
+     0,
+     150
+    ],
+    "blind": [
+     31,
+     188
+    ]
+   },
+   "p2": {
+    "seen": [
+     7,
+     144
+    ],
+    "held_out": [
+     1,
+     150
+    ],
+    "blind": [
+     53,
+     188
+    ]
+   },
+   "p4a1": {
+    "seen": [
+     89,
+     144
+    ],
+    "held_out": [
+     68,
+     150
+    ],
+    "blind": [
+     114,
+     188
+    ]
+   },
+   "p5g1": {
+    "seen": [
+     89,
+     144
+    ],
+    "held_out": [
+     63,
+     150
+    ],
+    "blind": [
+     98,
+     188
+    ]
+   }
+  }
+ },
+ "cf": {
+  "dev6": {
+   "base": {
+    "both": 0,
+    "pairs": 50,
+    "same_answer": 15
+   },
+   "p2": {
+    "both": 6,
+    "pairs": 50,
+    "same_answer": 18
+   },
+   "p4a1": {
+    "both": 25,
+    "pairs": 50,
+    "same_answer": 4
+   },
+   "p5g1": {
+    "both": 23,
+    "pairs": 50,
+    "same_answer": 4
+   }
+  }
+ },
+ "by_type": {
+  "dev6": {
+   "gods": {
+    "base": [
+     0,
+     50
+    ],
+    "p2": [
+     0,
+     50
+    ],
+    "p4a1": [
+     27,
+     50
+    ],
+    "p5g1": [
+     26,
+     50
+    ]
+   },
+   "strength": {
+    "base": [
+     0,
+     54
+    ],
+    "p2": [
+     2,
+     54
+    ],
+    "p4a1": [
+     41,
+     54
+    ],
+    "p5g1": [
+     42,
+     54
+    ]
+   },
+   "pattern": {
+    "base": [
+     0,
+     54
+    ],
+    "p2": [
+     11,
+     54
+    ],
+    "p4a1": [
+     39,
+     54
+    ],
+    "p5g1": [
+     37,
+     54
+    ]
+   },
+   "yongshen": {
+    "base": [
+     0,
+     40
+    ],
+    "p2": [
+     0,
+     40
+    ],
+    "p4a1": [
+     26,
+     40
+    ],
+    "p5g1": [
+     27,
+     40
+    ]
+   },
+   "interact": {
+    "base": [
+     0,
+     64
+    ],
+    "p2": [
+     1,
+     64
+    ],
+    "p4a1": [
+     32,
+     64
+    ],
+    "p5g1": [
+     25,
+     64
+    ]
+   },
+   "flow": {
+    "base": [
+     0,
+     60
+    ],
+    "p2": [
+     0,
+     60
+    ],
+    "p4a1": [
+     28,
+     60
+    ],
+    "p5g1": [
+     21,
+     60
+    ]
+   },
+   "domain": {
+    "base": [
+     0,
+     46
+    ],
+    "p2": [
+     0,
+     46
+    ],
+    "p4a1": [
+     7,
+     46
+    ],
+    "p5g1": [
+     4,
+     46
+    ]
+   },
+   "ambig": {
+    "base": [
+     0,
+     32
+    ],
+    "p2": [
+     0,
+     32
+    ],
+    "p4a1": [
+     30,
+     32
+    ],
+    "p5g1": [
+     20,
+     32
+    ]
+   },
+   "star": {
+    "base": [
+     0,
+     16
+    ],
+    "p2": [
+     1,
+     16
+    ],
+    "p4a1": [
+     16,
+     16
+    ],
+    "p5g1": [
+     14,
+     16
+    ]
+   },
+   "overview": {
+    "base": [
+     0,
+     20
+    ],
+    "p2": [
+     0,
+     20
+    ],
+    "p4a1": [
+     0,
+     20
+    ],
+    "p5g1": [
+     0,
+     20
+    ]
+   },
+   "fact:ten_god_stem": {
+    "base": [
+     9,
+     44
+    ],
+    "p2": [
+     22,
+     44
+    ],
+    "p4a1": [
+     36,
+     44
+    ],
+    "p5g1": [
+     41,
+     44
+    ]
+   },
+   "fact:ten_god_branch": {
+    "base": [
+     8,
+     30
+    ],
+    "p2": [
+     12,
+     30
+    ],
+    "p4a1": [
+     19,
+     30
+    ],
+    "p5g1": [
+     24,
+     30
+    ]
+   },
+   "fact:hidden": {
+    "base": [
+     23,
+     30
+    ],
+    "p2": [
+     28,
+     30
+    ],
+    "p4a1": [
+     30,
+     30
+    ],
+    "p5g1": [
+     29,
+     30
+    ]
+   },
+   "fact:life_stage": {
+    "base": [
+     4,
+     43
+    ],
+    "p2": [
+     31,
+     43
+    ],
+    "p4a1": [
+     31,
+     43
+    ],
+    "p5g1": [
+     30,
+     43
+    ]
+   },
+   "fact:xun_kong": {
+    "base": [
+     0,
+     46
+    ],
+    "p2": [
+     6,
+     46
+    ],
+    "p4a1": [
+     13,
+     46
+    ],
+    "p5g1": [
+     10,
+     46
+    ]
+   },
+   "fact:luck_direction": {
+    "base": [
+     20,
+     29
+    ],
+    "p2": [
+     10,
+     29
+    ],
+    "p4a1": [
+     22,
+     29
+    ],
+    "p5g1": [
+     18,
+     29
+    ]
+   },
+   "fact:element_count": {
+    "base": [
+     7,
+     44
+    ],
+    "p2": [
+     31,
+     44
+    ],
+    "p4a1": [
+     38,
+     44
+    ],
+    "p5g1": [
+     34,
+     44
+    ]
+   },
+   "fact:missing_element": {
+    "base": [
+     5,
+     10
+    ],
+    "p2": [
+     6,
+     10
+    ],
+    "p4a1": [
+     4,
+     10
+    ],
+    "p5g1": [
+     6,
+     10
+    ]
+   },
+   "prediction": {
+    "base": [
+     2,
+     10
+    ],
+    "p2": [
+     10,
+     10
+    ],
+    "p4a1": [
+     10,
+     10
+    ],
+    "p5g1": [
+     10,
+     10
+    ]
+   },
+   "combo:flow_stage": {
+    "base": [
+     1,
+     25
+    ],
+    "p2": [
+     5,
+     25
+    ],
+    "p4a1": [
+     11,
+     25
+    ],
+    "p5g1": [
+     2,
+     25
+    ]
+   },
+   "combo:kong_positions": {
+    "base": [
+     7,
+     25
+    ],
+    "p2": [
+     6,
+     25
+    ],
+    "p4a1": [
+     9,
+     25
+    ],
+    "p5g1": [
+     5,
+     25
+    ]
+   },
+   "combo:revealed": {
+    "base": [
+     20,
+     25
+    ],
+    "p2": [
+     4,
+     25
+    ],
+    "p4a1": [
+     9,
+     25
+    ],
+    "p5g1": [
+     9,
+     25
+    ]
+   },
+   "combo:god_count": {
+    "base": [
+     10,
+     25
+    ],
+    "p2": [
+     8,
+     25
+    ],
+    "p4a1": [
+     19,
+     25
+    ],
+    "p5g1": [
+     17,
+     25
+    ]
+   }
+  }
+ },
+ "calendar": {
+  "dev6": {
+   "base": {
+    "k": 4,
+    "n": 219,
+    "balanced_decision": 0.027,
+    "refused": 1,
+    "definite": 0
+   },
+   "p2": {
+    "k": 162,
+    "n": 219,
+    "balanced_decision": 0.7489,
+    "refused": 16,
+    "definite": 26
+   },
+   "p4a1": {
+    "k": 136,
+    "n": 219,
+    "balanced_decision": 0.6984,
+    "refused": 62,
+    "definite": 4
+   },
+   "p5g1": {
+    "k": 143,
+    "n": 219,
+    "balanced_decision": 0.6998,
+    "refused": 42,
+    "definite": 14
+   }
+  }
+ }
+}
