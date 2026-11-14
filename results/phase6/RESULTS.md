@@ -12,6 +12,14 @@ Near-perfect on the training distribution with a low test score means a coverage
 | P4 A1 | fresh rows, A1's generator, training years | 183/240 (76.2%) |
 | P4 A1 | dev6 rule rows (validation years) | 157/294 (53.4%) |
 
+## Training runs (all from the untuned base)
+
+| Run | Rows | Sequence tokens | Layers / rank | Iterations done | Train loss, last 200 iterations | Validation loss, last | Peak memory | Hours |
+|---|---:|---:|---|---:|---:|---:|---:|---:|
+| U0 joint, earlier data | 7,810 | 5,992,270 | 16 / 16 | 300/3905 (running) | 0.4023 | 2.3589 | 21.2 GB | 0.32 |
+
+Average per-token loss is dominated by template text; the fit table above is the measure of what was learned.
+
 ## Split `dev6`
 
 ### Model alone (L0) on `dev6`
@@ -42,6 +50,17 @@ Look-ups: day master, hidden stems, pillars, spouse star. Computed: 旬空, elem
 | Phase 2 | 17/1708 (1.0%) | 521/858 (60.7%) | 1/1 (100.0%) | 16/51 (31.4%) | 31/49 (63.3%) | 153/280 (54.6%) | 253/822 (30.8%) | 15 |
 | P4 A1 | 1/1690 (0.1%) | 242/1606 (15.1%) | 59/80 (73.8%) | 9/54 (16.7%) | 45/93 (48.4%) | 63/643 (9.8%) | 154/822 (18.7%) | 7 |
 | P5 G1 | 1/1567 (0.1%) | 217/1411 (15.4%) | 51/66 (77.3%) | 13/54 (24.1%) | 45/91 (49.5%) | 23/555 (4.1%) | 150/822 (18.2%) | 7 |
+
+### Replies cut off at the token cap (`dev6`; scripts/phase6/truncation6.py)
+
+Caps: 1,100 tokens for rule items, 700 for calendar rows. A cut-off reply usually has no final JSON and scores wrong.
+
+| Model | Level | Rule items cut off | of which wrong | Mean reply tokens | Calendar cut off |
+|---|---|---:|---:|---:|---:|
+| Untuned base | L0 | 412/822 (50.1%) | 412 | 858 | 214/219 (97.7%) |
+| Phase 2 | L0 | 9/822 (1.1%) | 9 | 126 | 0/219 (0.0%) |
+| P4 A1 | L0 | 5/822 (0.6%) | 5 | 245 | 0/219 (0.0%) |
+| P5 G1 | L0 | 6/822 (0.7%) | 6 | 227 | 0/219 (0.0%) |
 
 ### Wording (`dev6`, L0)
 

@@ -210,6 +210,43 @@ def statements_section(lines, summary, split):
     summary.setdefault("statements", {})[split] = block
 
 
+def truncation_section(lines, summary, split):
+    path = ROOT / "truncation.json"
+    if not path.exists():
+        return
+    data = json.loads(path.read_text()).get(split, {})
+    labs = [lab for lab in labels_in(split) if lab in data]
+    if not labs:
+        return
+    lines += [f"### Replies cut off at the token cap (`{split}`; scripts/phase6/truncation6.py)\n",
+              "Caps: 1,100 tokens for rule items, 700 for calendar rows. A cut-off reply usually has no final JSON and scores wrong.\n",
+              "| Model | Level | Rule items cut off | of which wrong | Mean reply tokens | Calendar cut off |",
+              "|---|---|---:|---:|---:|---:|"]  # fmt: skip
+    block = {}
+    for lab in labs:
+        d = data[lab]
+        levels = sorted({k.rsplit("_", 1)[1] for k in d})
+        for lv in levels:
+            rule = [d[f"{p}_{lv}"] for p in RULE_PARTS if f"{p}_{lv}" in d]
+            if not rule:
+                continue
+            n, cut = sum(v["n"] for v in rule), sum(v["cut_off"] for v in rule)
+            wrong = sum(v["cut_off_and_wrong"] for v in rule)
+            mean = sum(v["mean_tokens"] * v["n"] for v in rule) / n
+            cal = d.get(f"calendar_{lv}")
+            lines.append(
+                f"| {name(lab)} | {lv} | {pct(cut, n)} | {wrong} | {mean:.0f} | {pct(cal['cut_off'], cal['n']) if cal else '–'} |"
+            )
+            block.setdefault(lab, {})[lv] = {
+                "cut": cut,
+                "n": n,
+                "wrong": wrong,
+                "mean_tokens": round(mean, 1),
+            }
+    lines.append("")
+    summary.setdefault("truncation", {})[split] = block
+
+
 def wording_section(lines, summary, split):
     labs = [lab for lab in labels_in(split) if load(split, lab, "rules")]
     if not labs:
@@ -688,6 +725,7 @@ def main():
             primary_section,
             l0_section,
             statements_section,
+            truncation_section,
             wording_section,
             cf_section,
             intent_section,
