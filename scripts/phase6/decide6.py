@@ -223,6 +223,8 @@ def sealed_extra():
     the fork and every ancestor of M)."""
     m = json.loads((ROOT / "selection.json").read_text())["selected"]
     labels = ["p6u1", "p6u2", "p6u3", "p6u3v", *("p6" + r for r in P6.lineage(m[2:])[1:])]
+    if M.rule_records("dev6", "p8s1"):  # section 11: the base-size pilot and its 4B twin
+        labels += ["p6s1", "p8s1"]
     keep = [lab for lab in dict.fromkeys(labels) if lab != m and M.rule_records("dev6", lab)]
     print(" ".join(keep))
 

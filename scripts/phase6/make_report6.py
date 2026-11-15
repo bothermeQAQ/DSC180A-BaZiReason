@@ -28,6 +28,7 @@ NAMES = {
     "p6u1": "U1", "p6u1hi": "U1-hi",
     "p6u2": "U2 short prompt", "p6u3": "U3 continuation", "p6u3v": "U3v continuation, steps v2",
     **{f"p6u{k}": f"U{k} continuation" for k in range(4, 11)},
+    "p8s1": "S1-8B (S1's data on Qwen3-8B)",
 }  # fmt: skip
 ORDER = list(NAMES)
 CONTINUATIONS = tuple(k for k in NAMES if k[:4] == "p6u3" or k[3:].isdigit() and int(k[3:]) >= 4)
@@ -666,6 +667,7 @@ def round2_compare_section(lines, summary, split):
                     lab,
                 )
             )
+    pairs.append(("H10: base size (Qwen3-8B against Qwen3-4B, S1's data)", "p6s1", "p8s1"))
     pairs.append(("H9: derivation version 2", "p6u3", "p6u3v"))
     pairs.append(("H9, only the items whose derivation changed", "p6u3", "p6u3v"))
     rows = []

@@ -8,6 +8,8 @@ export PYTHONPATH=src
 run() { echo "=== $(date "+%H:%M:%S") $*"; "$@" || { echo "STEP_FAILED $*"; return 1; }; }
 ALL="rules indep blind combo cf"
 until grep -q "QUEUE_SCREEN6_DONE" artifacts/logs/p6_queue_screen6.log; do sleep 60; done
+# The larger-base pilot (preregistration section 11) runs between the screening queue and U1.
+until grep -q "QUEUE_P8_DONE" artifacts/logs/p6_queue_p8.log 2>/dev/null; do sleep 60; done
 run .venv/bin/python scripts/phase6/decide6.py screen || exit 1
 D=".venv/bin/python scripts/phase6/decide6.py"
 if $D small-steps-dropped; then

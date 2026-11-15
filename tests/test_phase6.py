@@ -442,3 +442,80 @@ def test_clean_fit_leaves_out_questions_whose_chart_was_trained_on(tmp_path, mon
     assert (out["n"], out["correct"], out["share"]) == (4, 3, 0.75)
     assert out["left_out_chart_in_training"] == 6
     assert out["by_type"] == {"fact:xun_kong": [0, 1], "pattern": [3, 3]}
+
+
+# ---- the larger-base pilot (pre-registration, section 11) ---------------------------------------------
+
+
+def test_the_pilot_config_is_s1s_with_only_the_base_and_batch_changed():
+    import p8_config as P
+
+    def keys(text):  # "key: value" lines (top level and nested); comments count as "#"
+        out = {}
+        for line in text.splitlines():
+            if line.strip().startswith("#"):
+                out.setdefault("#", []).append(line)
+            elif ":" in line:
+                key, _, value = line.strip().partition(":")
+                out[key] = value.split("#")[0].strip()
+        return out
+
+    s1 = keys(P.SOURCE.read_text())
+    for batch, checkpoint in ((2, False), (1, False), (1, True)):
+        pilot = keys(P.build(batch, checkpoint))
+        changed = {k for k in s1.keys() | pilot.keys() if s1.get(k) != pilot.get(k)}
+        expected = {
+            "#",
+            "run_name",
+            "model",
+            "repo",
+            "revision",
+            "quantization",
+            "adapter_dir",
+            "log_dir",
+        }
+        if batch == 1:
+            expected |= {"batch_size", "grad_accumulation_steps"}
+        if checkpoint:
+            expected.add("grad_checkpoint")
+        assert changed == expected, (batch, checkpoint, changed)
+        assert pilot["model"] == "models/qwen3-8b-mlx-4bit"
+        assert int(pilot["batch_size"]) * int(pilot["grad_accumulation_steps"]) == 4  # S1's updates
+        assert pilot["train"] == s1["train"] and pilot["seed"] == s1["seed"]
+        assert pilot["enable_thinking"] == "false" and pilot["mask_prompt"] == "true"
+
+
+def test_an_adapter_is_loaded_on_the_base_it_was_trained_on(tmp_path, monkeypatch):
+    import types
+
+    import run6
+
+    default = "models/qwen3-4b-instruct-2507-mlx-4bit"
+    for name, model, layers in (("bazireason-qwen3-8b-lora-p6-s1", "models/qwen3-8b-mlx-4bit", 16),
+                                ("bazireason-qwen3-4b-lora-p6-u1-hi", default, 36)):  # fmt: skip
+        (tmp_path / name).mkdir()
+        config = {"model": model, "num_layers": layers, "lora_parameters": {"rank": 16}}
+        (tmp_path / name / "adapter_config.json").write_text(json.dumps(config))
+    loaded = []
+
+    class Stub:
+        def __init__(self, model_path, adapter_path=None, label=None, enable_thinking=False):
+            self.adapter_path = str(adapter_path)
+            loaded.append((model_path, Path(adapter_path).name, enable_thinking))
+
+    # The real modules need mlx; the test environment has none, so stand-ins are used.
+    bank_module = types.SimpleNamespace(
+        ADAPTER_ROOT=tmp_path, DEFAULT_MODEL=default, AdapterBank=None
+    )
+    monkeypatch.setitem(sys.modules, "bazireason.adapter_bank", bank_module)
+    monkeypatch.setitem(
+        sys.modules, "bazireason.mlx_backend", types.SimpleNamespace(MLXChatModel=Stub)
+    )
+    bank = run6.Bank()
+    bank.get("p8s1")
+    bank.get("p8s1")  # reused, not loaded twice
+    bank.get("p6u1hi")
+    assert loaded == [
+        ("models/qwen3-8b-mlx-4bit", "bazireason-qwen3-8b-lora-p6-s1", False),
+        (default, "bazireason-qwen3-4b-lora-p6-u1-hi", False),
+    ]

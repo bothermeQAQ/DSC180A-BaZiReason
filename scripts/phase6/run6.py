@@ -49,6 +49,7 @@ FOLDERS = {
         f"p6{r}": f"bazireason-qwen3-4b-lora-p6-{r}"
         for r in ("u3", "u3v", "u4", "u5", "u6", "u7", "u8", "u9", "u10")
     },
+    "p8s1": "bazireason-qwen3-8b-lora-p6-s1",  # section 11: S1's data on Qwen3-8B
 }
 
 
@@ -113,12 +114,12 @@ class Bank:
                 "num_layers": c.get("num_layers"),
                 "rank": c.get("lora_parameters", {}).get("rank"),
             }
-            if (
-                shape != self.SHARED
-            ):  # another adapter structure cannot be swapped in: load it alone
+            base = c.get("model") or DEFAULT_MODEL
+            if shape != self.SHARED or base != DEFAULT_MODEL:
+                # another adapter structure or base model cannot be swapped in: load it alone
                 if self.single is None or self.single.adapter_path != str(ADAPTER_ROOT / name):
                     self.bank = self.single = None
-                    self.single = MLXChatModel(DEFAULT_MODEL, ADAPTER_ROOT / name, label=label)
+                    self.single = MLXChatModel(base, ADAPTER_ROOT / name, label=label)
                 return self.single
         if self.bank is None:
             self.single = None

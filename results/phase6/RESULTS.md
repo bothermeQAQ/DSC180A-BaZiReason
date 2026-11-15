@@ -11,12 +11,15 @@ Near-perfect on the training distribution with a low test score means a coverage
 | P4 A1 | A1's own training rows (literal) | 194/240 (80.8%) |
 | P4 A1 | fresh rows, A1's generator, training years | 183/240 (76.2%) |
 | P4 A1 | dev6 rule rows (validation years) | 157/294 (53.4%) |
+| S1 small steps | sample A: Phase 6 procedure questions, training years (for S2, S3 and the U runs it includes questions they train on) | 1818/2400 (75.8%) |
 
 ## Training runs
 
 | Run | Starts from | Rows | Sequence tokens | Layers / rank | Iterations done | Train loss, last 200 iterations | Validation loss, last | Peak memory | Hours |
 |---|---|---:|---:|---|---:|---:|---:|---:|---:|
 | S1 small steps | untuned base | 7,922 | 5,992,693 | 16 / 16 | 3961/3961 | 0.0141 | 0.0095 | 22.3 GB | 3.98 |
+| S2 + wording | untuned base | 8,161 | 5,994,013 | 16 / 16 | 4080/4080 | 0.0096 | 0.0097 | 21.0 GB | 3.99 |
+| S3 + evidence, self-check | untuned base | 7,893 | 5,978,033 | 16 / 16 | 3946/3946 | 0.0148 | 0.0135 | 23.6 GB | 3.93 |
 | U0 joint, earlier data | untuned base | 7,810 | 5,992,270 | 16 / 16 | 3905/3905 | 0.0239 | 0.0157 | 23.3 GB | 4.02 |
 
 Average per-token loss is dominated by template text; the fit table above is the measure of what was learned.
@@ -45,6 +48,7 @@ Tokenization: 0 of 60 stem-branch pairs are merged into one token, and 0 stems o
 | P5 G1 | 152/294 (51.7%) | 108/140 (77.1%) | 98/188 (52.1%) | 33/100 (33.0%) | 60/100 (60.0%) | **451/822 (54.9%)** | 143/219 (65.3%) |
 | U0 joint, earlier data | 77/294 (26.2%) | 81/140 (57.9%) | 86/188 (45.7%) | 40/100 (40.0%) | 47/100 (47.0%) | **331/822 (40.3%)** | 136/219 (62.1%) |
 | S1 small steps | 171/294 (58.2%) | 125/140 (89.3%) | 129/188 (68.6%) | 36/100 (36.0%) | 88/100 (88.0%) | **549/822 (66.8%)** | 128/219 (58.4%) |
+| S2 + wording | 217/294 (73.8%) | 133/140 (95.0%) | 167/188 (88.8%) | 50/100 (50.0%) | 90/100 (90.0%) | **657/822 (79.9%)** | 139/219 (63.5%) |
 
 Paired differences on all rule items (`dev6`, L0), points [95%]:
 
@@ -56,6 +60,7 @@ Paired differences on all rule items (`dev6`, L0), points [95%]:
 | P5 G1 | -5.6 [-8.8, -2.3] | +14.6 [+10.8, +18.4] | +40.8 [+36.8, +44.7] |
 | U0 joint, earlier data | -20.2 [-23.9, -16.7] | – | +26.2 [+22.4, +30.0] |
 | S1 small steps | +6.3 [+2.2, +10.5] | +26.5 [+22.2, +30.5] | +52.7 [+48.8, +56.4] |
+| S2 + wording | +19.5 [+15.8, +23.4] | +39.7 [+35.7, +43.3] | +65.8 [+62.2, +69.3] |
 
 ### Statements in L0 replies (`dev6`, claim checker)
 
@@ -69,6 +74,7 @@ Look-ups: day master, hidden stems, pillars, spouse star. Computed: 旬空, elem
 | P5 G1 | 1/1567 (0.1%) | 217/1411 (15.4%) | 51/66 (77.3%) | 13/54 (24.1%) | 45/91 (49.5%) | 23/555 (4.1%) | 150/822 (18.2%) | 7 |
 | U0 joint, earlier data | 11/1591 (0.7%) | 326/1562 (20.9%) | 35/43 (81.4%) | 20/47 (42.6%) | 59/107 (55.1%) | 112/692 (16.2%) | 201/822 (24.5%) | 7 |
 | S1 small steps | 17/1970 (0.9%) | 1156/3151 (36.7%) | 2/54 (3.7%) | – | 41/103 (39.8%) | 1037/2374 (43.7%) | 135/822 (16.4%) | 23 |
+| S2 + wording | 20/2074 (1.0%) | 226/2077 (10.9%) | 3/94 (3.2%) | – | 28/100 (28.0%) | 174/1171 (14.9%) | 86/822 (10.5%) | 6 |
 
 ### Replies cut off at the token cap (`dev6`; scripts/phase6/truncation6.py)
 
@@ -82,6 +88,12 @@ Caps: 1,100 tokens for rule items, 700 for calendar rows. A cut-off reply usuall
 | P5 G1 | L0 | 6/822 (0.7%) | 6 | 227 | 0/219 (0.0%) |
 | U0 joint, earlier data | L0 | 5/822 (0.6%) | 5 | 200 | 0/219 (0.0%) |
 | S1 small steps | L0 | 30/822 (3.6%) | 30 | 307 | 0/219 (0.0%) |
+| S2 + wording | L0 | 11/822 (1.3%) | 11 | 305 | 0/219 (0.0%) |
+| S2 + wording | L1 | 14/822 (1.7%) | 14 | 298 | – |
+| S2 + wording | L4 | 52/1365 (3.8%) | 52 | 267 | – |
+| S3 + evidence, self-check | L0 | 3/622 (0.5%) | 2 | 327 | – |
+| S3 + evidence, self-check | L1 | 2/434 (0.5%) | 2 | 360 | – |
+| S3 + evidence, self-check | L4 | 6/606 (1.0%) | 6 | 127 | – |
 
 ### Wording (`dev6`, L0)
 
@@ -93,6 +105,8 @@ Caps: 1,100 tokens for rule items, 700 for calendar rows. A cut-off reply usuall
 | P5 G1 | 89/144 (61.8%) | 63/150 (42.0%) | 98/188 (52.1%) |
 | U0 joint, earlier data | 42/144 (29.2%) | 35/150 (23.3%) | 86/188 (45.7%) |
 | S1 small steps | 115/144 (79.9%) | 56/150 (37.3%) | 129/188 (68.6%) |
+| S2 + wording | 110/144 (76.4%) | 107/150 (71.3%) | 167/188 (88.8%) |
+| S3 + evidence, self-check | 115/144 (79.9%) | 100/150 (66.7%) | 167/188 (88.8%) |
 
 ### Counterfactual pairs (`dev6`, L0): one character changed, the answer changes
 
@@ -104,34 +118,35 @@ Caps: 1,100 tokens for rule items, 700 for calendar rows. A cut-off reply usuall
 | P5 G1 | 60/100 (60.0%) | 23/50 (46.0%) | 4/50 (8.0%) |
 | U0 joint, earlier data | 47/100 (47.0%) | 12/50 (24.0%) | 15/50 (30.0%) |
 | S1 small steps | 88/100 (88.0%) | 42/50 (84.0%) | 2/50 (4.0%) |
+| S2 + wording | 90/100 (90.0%) | 41/50 (82.0%) | 0/50 (0.0%) |
 
 ### By question type (`dev6`, L0, all rule items)
 
-| Type | n | Untuned base | Phase 2 | P4 A1 | P5 G1 | U0 joint, earlier data | S1 small steps |
-|---|---:|---:|---:|---:|---:|---:|---:|
-| interact | 64 | 0% | 2% | 50% | 39% | 25% | 30% |
-| flow | 60 | 0% | 0% | 47% | 35% | 10% | 40% |
-| strength | 54 | 0% | 4% | 76% | 78% | 59% | 65% |
-| pattern | 54 | 0% | 20% | 72% | 69% | 31% | 80% |
-| gods | 50 | 0% | 0% | 54% | 52% | 12% | 58% |
-| domain | 46 | 0% | 0% | 15% | 9% | 4% | 52% |
-| fact:xun_kong | 46 | 0% | 13% | 28% | 22% | 22% | 96% |
-| fact:ten_god_stem | 44 | 20% | 50% | 82% | 93% | 25% | 93% |
-| fact:element_count | 44 | 16% | 70% | 86% | 77% | 55% | 98% |
-| fact:life_stage | 43 | 9% | 72% | 72% | 70% | 72% | 95% |
-| yongshen | 40 | 0% | 0% | 65% | 68% | 42% | 60% |
-| ambig | 32 | 0% | 0% | 94% | 62% | 81% | 100% |
-| fact:ten_god_branch | 30 | 27% | 40% | 63% | 80% | 60% | 57% |
-| fact:hidden | 30 | 77% | 93% | 100% | 97% | 97% | 90% |
-| fact:luck_direction | 29 | 69% | 34% | 76% | 62% | 59% | 100% |
-| combo:flow_stage | 25 | 4% | 20% | 44% | 8% | 36% | 12% |
-| combo:kong_positions | 25 | 28% | 24% | 36% | 20% | 20% | 28% |
-| combo:revealed | 25 | 80% | 16% | 36% | 36% | 64% | 52% |
-| combo:god_count | 25 | 40% | 32% | 76% | 68% | 40% | 52% |
-| overview | 20 | 0% | 0% | 0% | 0% | 5% | 55% |
-| star | 16 | 0% | 6% | 100% | 88% | 94% | 62% |
-| fact:missing_element | 10 | 50% | 60% | 40% | 60% | 40% | 100% |
-| prediction | 10 | 20% | 100% | 100% | 100% | 90% | 100% |
+| Type | n | Untuned base | Phase 2 | P4 A1 | P5 G1 | U0 joint, earlier data | S1 small steps | S2 + wording |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| interact | 64 | 0% | 2% | 50% | 39% | 25% | 30% | 72% |
+| flow | 60 | 0% | 0% | 47% | 35% | 10% | 40% | 70% |
+| strength | 54 | 0% | 4% | 76% | 78% | 59% | 65% | 83% |
+| pattern | 54 | 0% | 20% | 72% | 69% | 31% | 80% | 89% |
+| gods | 50 | 0% | 0% | 54% | 52% | 12% | 58% | 96% |
+| domain | 46 | 0% | 0% | 15% | 9% | 4% | 52% | 54% |
+| fact:xun_kong | 46 | 0% | 13% | 28% | 22% | 22% | 96% | 100% |
+| fact:ten_god_stem | 44 | 20% | 50% | 82% | 93% | 25% | 93% | 98% |
+| fact:element_count | 44 | 16% | 70% | 86% | 77% | 55% | 98% | 95% |
+| fact:life_stage | 43 | 9% | 72% | 72% | 70% | 72% | 95% | 70% |
+| yongshen | 40 | 0% | 0% | 65% | 68% | 42% | 60% | 72% |
+| ambig | 32 | 0% | 0% | 94% | 62% | 81% | 100% | 100% |
+| fact:ten_god_branch | 30 | 27% | 40% | 63% | 80% | 60% | 57% | 100% |
+| fact:hidden | 30 | 77% | 93% | 100% | 97% | 97% | 90% | 97% |
+| fact:luck_direction | 29 | 69% | 34% | 76% | 62% | 59% | 100% | 100% |
+| combo:flow_stage | 25 | 4% | 20% | 44% | 8% | 36% | 12% | 24% |
+| combo:kong_positions | 25 | 28% | 24% | 36% | 20% | 20% | 28% | 52% |
+| combo:revealed | 25 | 80% | 16% | 36% | 36% | 64% | 52% | 36% |
+| combo:god_count | 25 | 40% | 32% | 76% | 68% | 40% | 52% | 88% |
+| overview | 20 | 0% | 0% | 0% | 0% | 5% | 55% | 40% |
+| star | 16 | 0% | 6% | 100% | 88% | 94% | 62% | 94% |
+| fact:missing_element | 10 | 50% | 60% | 40% | 60% | 40% | 100% | 100% |
+| prediction | 10 | 20% | 100% | 100% | 100% | 90% | 100% | 100% |
 
 ### Calendar requests (`dev6`, L0)
 
@@ -143,3 +158,26 @@ Caps: 1,100 tokens for rule items, 700 for calendar rows. A cut-off reply usuall
 | P5 G1 | 143/219 (65.3%) | -8.7 [-15.9, -1.4] | 70.0% | 42/145 | 14/74 |
 | U0 joint, earlier data | 136/219 (62.1%) | -11.9 [-18.7, -4.7] | 62.9% | 43/145 | 21/74 |
 | S1 small steps | 128/219 (58.4%) | -15.5 [-24.1, -6.4] | 60.5% | 48/145 | 23/74 |
+| S2 + wording | 139/219 (63.5%) | -10.5 [-16.6, -3.7] | 62.4% | 9/145 | 50/74 |
+
+### Levels of help (`dev6`, all rule items; each level its own row of prompts)
+
+| Model | L0 alone | L1 raw facts | L2 rule text | L3 right conclusion | L3w wrong conclusion: right / follows the wrong one |
+|---|---:|---:|---:|---:|---:|
+| S2 + wording | 657/822 (79.9%) | 594/822 (72.3%) | – | – | – |
+
+L1 minus L0 (does the model use raw facts?), points [95%]:
+
+| Model | L1 − L0 |
+|---|---|
+| S2 + wording | -7.7 [-10.5, -4.9] |
+
+### Self-correction (`dev6`, L4: the model's own L0 reply, no value given)
+
+Fix rate: wrong first answers made right. Break rate: right first answers made wrong (60 sampled per part).
+
+| Model | Check | Fixed | Broke |
+|---|---|---:|---:|
+| S2 + wording | a: re-check | 8/165 (4.8%) | 21/290 (7.2%) |
+| S2 + wording | b: told there is an error | 8/165 (4.8%) | 38/290 (13.1%) |
+| S2 + wording | c: told which field is wrong | 10/165 (6.1%) | 25/290 (8.6%) |

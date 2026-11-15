@@ -1,7 +1,7 @@
 """Memory probe for a training set-up: a few real steps on the longest training rows.
 
     .venv-mlx/bin/python scripts/phase6/probe_memory.py --config configs/phase6/qwen3_4b_lora_p6_u1.yaml \
-        --layers 36 [--rank 16] [--grad-checkpoint]
+        --layers 36 [--rank 16] [--grad-checkpoint] [--model models/... --batch 1]
 
 Writes a probe config and data under artifacts/probe/, runs scripts/phase2/train_lora.py for
 8 iterations on the 16 longest training rows (batch as in the config), and appends the peak
@@ -30,9 +30,20 @@ def main():
     parser.add_argument("--layers", type=int, required=True)
     parser.add_argument("--rank", type=int, default=16)
     parser.add_argument("--grad-checkpoint", action="store_true")
+    parser.add_argument("--model", help="another base model (section 11: the larger base)")
+    parser.add_argument(
+        "--batch", type=int, choices=(1, 2), help="batch size; updates stay at 4 rows each"
+    )
     args = parser.parse_args()
     config = yaml.safe_load(Path(args.config).read_text())
     tag = f"l{args.layers}-r{args.rank}" + ("-ckpt" if args.grad_checkpoint else "")
+    if args.model:
+        config["model"] = args.model
+        tag = Path(args.model).name + "-" + tag
+    if args.batch:
+        config["batch_size"] = args.batch
+        config["grad_accumulation_steps"] = 4 // args.batch
+        tag += f"-b{args.batch}"
     folder = Path("artifacts/probe") / tag
     shutil.rmtree(folder, ignore_errors=True)
     folder.mkdir(parents=True)
@@ -79,7 +90,7 @@ def main():
     )
     peak = max((m["peak_memory_gb"] for m in train), default=None)
     fits = proc.returncode == 0 and peak is not None and peak <= LIMIT_GB
-    result = {"utc": datetime.now(UTC).isoformat(timespec="seconds"), "config": args.config, "layers": args.layers,
+    result = {"utc": datetime.now(UTC).isoformat(timespec="seconds"), "config": args.config, "model": config["model"], "layers": args.layers,
               "rank": args.rank, "grad_checkpoint": args.grad_checkpoint, "batch_size": config["batch_size"],
               "longest_row_chars": len(longest[0]), "exit_code": proc.returncode, "peak_memory_gb": peak,
               "seconds_per_iteration": round((train[-1]["elapsed_seconds"] / train[-1]["iteration"]) if train else 0, 2),

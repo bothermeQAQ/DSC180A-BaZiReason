@@ -87,3 +87,23 @@ Decisions, surprises and negative results, in order. Plan: [`phase6_execution_pr
   - **Derivation version 2** writes the three failing steps out further (element positions before 得令 and 得势; all hidden stems with their Ten Gods before the relevant ones; the palace card and the 相克 order before the look-ups). Every answer is unchanged and the claim checker finds no wrong statement in 9,000 version-2 derivations (`scripts/phase6/steps_check.py`, `results/phase6/steps_v2_check.json`). Replies stay under the 1,100-token cap: the longest overview has 1,063 tokens (1,000 in version 1).
   - **Fork:** U3 and U3v differ only in the derivation version (H9); the chain continues from the better one.
   - **Longer loop:** up to eight levels, ending after two levels in a row without a new best on dev6.
+
+## 15 November 2026
+
+- **S2 finished** (00:04-04:03; 4,080 iterations in 3.99 hours; peak memory 21.0 GB) and was scored on dev6.
+  - **Model alone (L0), all rule items:** 657/822 (79.9%), 19.5 points above A1 [15.8, 23.4] and 13.1 above S1 [9.7, 16.6].
+  - **Wording, the gap S2 targets:** held-out template wording 107/150 (71.3%; S1 37.3%), natural wordings 167/188 (88.8%; S1 68.6%, +20.2 [12.8, 27.1]). On training wordings S2 is level with S1 (76.4% against 79.9%).
+  - **Combinations of trained rules:** 50/100 (S1 36/100, A1 48/100). Counterfactual pairs right on both charts: 41/50.
+  - **Computed statements wrong:** 10.9% (S1 36.7%, A1 15.1%). Cut-off replies: 11 of 822 (1.3%).
+  - **Calendar:** 139/219 (63.5%), 10.5 points below Phase 2 [3.7, 16.6]. S2 almost never refuses an answerable request (9/145), but gives a definite chart in 50 of 74 requests where none exists.
+  - **Raw facts hurt S2:** L1 minus L0 is −7.7 points [−10.5, −4.9].
+  - **Self-check hurts S2:** asked to re-check (L4a), it fixes 8 of 165 wrong answers and breaks 21 of 290 right ones.
+  - S3 adds the evidence rows, self-check rows and calendar twins aimed at these three weaknesses.
+- **Where S2's wrong answers start** (`first_error.py`): on training wordings, mostly at the hidden-stem step of area-of-life questions (7) and the 天克地冲 step of flow years (6). Both are written out in derivation version 2, which was recorded before this result. Life-stage counting on training wordings fell from 13/14 (S1) to 9/14.
+- **Qwen3-8B downloaded** (04:00-04:13, approved by the user; `Qwen/Qwen3-8B-MLX-4bit` at revision 383413e9, 4.4 GB, Apache-2.0) into `models/qwen3-8b-mlx-4bit` (not in Git). It has the same architecture family, 36 layers and the same tokenizer as the 4B base: every stem and branch is the same single token.
+  - **Prompt rendering:** this is the hybrid-thinking Qwen3 release, so with thinking off its chat template ends the prompt with an empty `<think></think>` block. Training (`bazireason.finetune`) and evaluation (`MLXChatModel.prompt_ids`) render prompts with the same call and options, so the model sees the same prompt in both.
+  - **Smoke test:** load, LoRA on the last 16 layers (19.4 M trainable parameters), one training step at 6.4 GB peak. It ran for five seconds on the GPU while S2 was being scored. Greedy replies do not depend on timing, so no result is affected.
+- **Larger-base pilot pre-registered** (04:13; pre-registration section 11) and queued: S1's training file and settings on Qwen3-8B ("S1-8B", H10), after the screening queue and before U1.
+  - **Batch size:** set by a memory probe, in this order: batch 2; batch 1 with gradient accumulation 4 (the same updates); the same with gradient checkpointing.
+  - **Code:** `scripts/phase6/p8_config.py`, `queue_p8.sh`, `probe_memory.py --model --batch`. `run6.Bank` loads an adapter on the base named in its configuration. `queue_u1.sh` was restarted (it was only waiting) so that it waits for the pilot.
+  - If the pilot stops for a technical reason, the queue goes on to U1.

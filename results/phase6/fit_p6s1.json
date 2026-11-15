@@ -1,0 +1,90 @@
+{
+ "label": "p6s1",
+ "n": 2400,
+ "correct": 1818,
+ "share": 0.7575,
+ "by_type": {
+  "ambig": [
+   162,
+   174
+  ],
+  "domain": [
+   72,
+   147
+  ],
+  "fact:element_count": [
+   83,
+   106
+  ],
+  "fact:hidden": [
+   92,
+   97
+  ],
+  "fact:life_stage": [
+   85,
+   105
+  ],
+  "fact:luck_direction": [
+   58,
+   61
+  ],
+  "fact:missing_element": [
+   76,
+   83
+  ],
+  "fact:ten_god_branch": [
+   83,
+   98
+  ],
+  "fact:ten_god_stem": [
+   100,
+   107
+  ],
+  "fact:xun_kong": [
+   132,
+   137
+  ],
+  "flow": [
+   132,
+   226
+  ],
+  "gods": [
+   118,
+   157
+  ],
+  "interact": [
+   116,
+   209
+  ],
+  "overview": [
+   32,
+   46
+  ],
+  "pattern": [
+   127,
+   163
+  ],
+  "prediction": [
+   88,
+   91
+  ],
+  "star": [
+   85,
+   94
+  ],
+  "strength": [
+   82,
+   146
+  ],
+  "yongshen": [
+   95,
+   153
+  ]
+ },
+ "stats": {
+  "generated": 2334,
+  "reused": 66,
+  "seconds": 4483.5,
+  "completion_tokens": 723767
+ }
+}

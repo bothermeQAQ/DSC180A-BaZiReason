@@ -38,8 +38,9 @@ All numbers come from files under `results/phase6/`. The full tables are in [`re
 | H7: at equal compute, a short system prompt gives a better model | U2 (U1's recipe with a 36-token system prompt) against U1 |
 | H8: continuing with the failing question types weighted up improves the model further | each continuation (U3-U10) against its parent |
 | H9: writing the steps S1 gets wrong out further fixes them | U3v (derivation version 2) against U3: the same parent, weights, seed and budget |
+| H10: the base model's size limits the result | S1-8B (S1's training file and settings on Qwen3-8B) against S1 |
 
-H7 and H8 belong to a second round that was added on 14 November, while S1 was training and before any screening or validation result existed (pre-registration, section 10). H9 was added the same evening after S1's error analysis, before any other screening result and before any round-2 run (section 10.5).
+H7 and H8 belong to a second round that was added on 14 November, while S1 was training and before any screening or validation result existed (pre-registration, section 10). H9 was added the same evening after S1's error analysis, before any other screening result and before any round-2 run (section 10.5). H10 was added on 15 November, after the user approved downloading Qwen3-8B and before any run on it (section 11).
 
 ### 3.2 Data
 

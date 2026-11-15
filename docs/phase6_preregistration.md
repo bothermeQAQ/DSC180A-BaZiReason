@@ -198,7 +198,7 @@ Written after S1's dev6 result and before any other screening result, any valid6
   - The loop ends when two levels in a row fail to exceed the best dev6 accuracy on all rule items reached so far in the chain (the first parent included), or when a run could not start by 27 November.
 - **Selection and sealed runs:** every run of the chain is a candidate, as before. On sealed6, L0 is also run for U3 and U3v (H9).
 
-## 11. A larger base model (added 15 November, 04:20)
+## 11. A larger base model (added 15 November, 04:13)
 
 Written while S2 was being scored on dev6 (no S2 result had been read) and before any run on the larger model. The user approved the download on 14 November.
 
