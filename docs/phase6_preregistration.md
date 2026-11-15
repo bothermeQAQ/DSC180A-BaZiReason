@@ -126,11 +126,11 @@ Each entry was written before the result it could affect existed.
     3. rank 64 on the last 16 layers, reported under that description.
   - U1-hi uses exactly U1's data (same recipe, seed and options); the queue checks that the two training files are identical.
   - **valid6 runs.** Only what the selection rule reads: the candidates at L0 (rule items and calendar) and Phase 2 on calendar. The existing models' L1-L4 run on sealed6 (section 8), and on dev6 for A1 and U0.
-- **14 November, 20:50, while S1 was training (no screening result, no valid6 or sealed6 score):**
+- **14 November, 20:47, while S1 was training (no screening result, no valid6 or sealed6 score):**
   - **Fit share for the U1-hi rule.** The 2,400 fit questions (`scripts/phase6/own_replies.py`, sample A) are not all fresh for S2, S3 and U1. About 45% are training-writer questions on their original charts, which these runs train on, and S1's replies to the first part of the sample are the input of the self-check rows. The U1-hi rule of section 5 therefore reads the share over the sample-A questions whose chart is not in U1's training file (`scripts/phase6/fit_clean.py`). The full-sample share is still reported.
   - **A second round of training is added** at the user's request: section 10. It changes the candidates of section 6 and adds sealed runs to section 8; no other rule changes. The sealed split stays closed until the second round has ended.
 
-## 10. Round 2 (added 14 November, 20:50)
+## 10. Round 2 (added 14 November, 20:47)
 
 Written while S1 was training. The dev6 results of the base, Phase 2, A1, G1 and U0 existed; no S result, no valid6 score and no sealed6 score existed. The user asked for improvements to the training and approved this round; it replaces the stopping rule of section 5 for the runs listed here, and no training run follows it.
 

@@ -26,6 +26,7 @@ NAMES = {
     "base": "Untuned base", "p2": "Phase 2", "p4a1": "P4 A1", "p5g1": "P5 G1",
     "p6u0": "U0 joint, earlier data", "p6s1": "S1 small steps", "p6s2": "S2 + wording", "p6s3": "S3 + evidence, self-check",
     "p6u1": "U1", "p6u1hi": "U1-hi",
+    "p6u2": "U2 short prompt", "p6u3": "U3 continuation", "p6u4": "U4 continuation", "p6u5": "U5 continuation",
 }  # fmt: skip
 ORDER = list(NAMES)
 LOOKUP_KINDS = ("day_master", "hidden", "pillar", "spouse_star")
@@ -125,13 +126,25 @@ def fit_section(lines, summary):
         for k, v in d.items():
             lines.append(f"| P4 A1 | {labels[k]} | {pct(v['correct'], v['n'])} |")
         out["a1"] = d
+    samples = {"": "sample A: Phase 6 procedure questions, training years (for S2, S3 and the U runs it "
+                   "includes questions they train on)",
+               "_clean": "sample A, only the charts the model never trained on",
+               "_b": "sample B: 100 per question type, template wordings, charts never trained on"}  # fmt: skip
     for f in fits:
         d = json.loads(f.read_text())
-        lines.append(
-            f"| {name(d['label'])} | fresh Phase 6 procedure questions, training years | {pct(d['correct'], d['n'])} |"
-        )
-        out[d["label"]] = d
+        kind = next(k for k in ("_clean", "_b", "") if f.stem.endswith(k))
+        lines.append(f"| {name(d['label'])} | {samples[kind]} | {pct(d['correct'], d['n'])} |")
+        out[f.stem[4:]] = d
     lines.append("")
+    by_b = {k[:-2]: v for k, v in out.items() if k.endswith("_b")}
+    if by_b:
+        labs = sorted(by_b, key=lambda x: ORDER.index(x) if x in ORDER else 99)
+        lines += ["Sample B by question type (right answers of the scored questions):\n",
+                  "| Type | " + " | ".join(name(x) for x in labs) + " |", "|---|" + "---:|" * len(labs)]  # fmt: skip
+        for t in sorted({t for v in by_b.values() for t in v["by_type"]}):
+            cells = [pct(*by_b[x]["by_type"][t]) if t in by_b[x]["by_type"] else "–" for x in labs]
+            lines.append(f"| {t} | " + " | ".join(cells) + " |")
+        lines.append("")
     summary["fit"] = out
 
 
@@ -493,9 +506,9 @@ def training_section(lines, summary):
     if not plans:
         return
     labels = {v: k for k, v in run6.FOLDERS.items()}
-    lines += ["## Training runs (all from the untuned base)\n",
-              "| Run | Rows | Sequence tokens | Layers / rank | Iterations done | Train loss, last 200 iterations | Validation loss, last | Peak memory | Hours |",
-              "|---|---:|---:|---|---:|---:|---:|---:|---:|"]  # fmt: skip
+    lines += ["## Training runs\n",
+              "| Run | Starts from | Rows | Sequence tokens | Layers / rank | Iterations done | Train loss, last 200 iterations | Validation loss, last | Peak memory | Hours |",
+              "|---|---|---:|---:|---|---:|---:|---:|---:|---:|"]  # fmt: skip
     block = {}
     for path in plans:
         plan = json.loads(path.read_text())
@@ -523,7 +536,11 @@ def training_section(lines, summary):
                     rank = ln.split(":")[1].strip()
         lab = labels.get(plan["run_name"], plan["run_name"])
         done = f"{last}/{plan['iterations']}" + ("" if last >= plan["iterations"] else " (running)")
-        lines.append(f"| {name(lab)} | {plan['train_rows']:,} | {plan['train_sequence_tokens_per_epoch']:,} | {layers} / {rank} | {done} | "
+        origin = "untuned base"
+        if plan.get("init_adapter"):
+            parent = Path(plan["init_adapter"]).parent.name
+            origin = name(labels.get(parent, parent))
+        lines.append(f"| {name(lab)} | {origin} | {plan['train_rows']:,} | {plan['train_sequence_tokens_per_epoch']:,} | {layers} / {rank} | {done} | "
                      f"{sum(tail) / len(tail):.4f} | {valid[-1]['val_loss']:.4f} | {max(m['peak_memory_gb'] for m in train):.1f} GB | "
                      f"{train[-1]['elapsed_seconds'] / 3600:.2f} |")  # fmt: skip
         block[lab] = {"rows": plan["train_rows"], "tokens": plan["train_sequence_tokens_per_epoch"], "iterations": [last, plan["iterations"]],
@@ -555,7 +572,7 @@ def decisions_section(lines, summary):
         summary["screening"] = d
     if sel.exists():
         d = json.loads(sel.read_text())
-        lines += ["## Selection (valid6, frozen rule: preregistration section 6)\n",
+        lines += ["## Selection (valid6, frozen rule: preregistration sections 6 and 10.4)\n",
                   "| Candidate | All rule items, L0 | Calendar minus Phase 2 [95%] | Calendar gate (lower bound ≥ −7) |", "|---|---:|---|---|"]  # fmt: skip
         for lab, v in d["candidates"].items():
             c = v["calendar_minus_p2"]
@@ -568,6 +585,103 @@ def decisions_section(lines, summary):
             )
         lines += ["", f"**Selected: {name(d['selected'])}.**" + (" No candidate passed the calendar gate; the calendar claim fails." if d["calendar_claim_failed"] else ""), ""]  # fmt: skip
         summary["selection"] = d
+
+
+def round2_section(lines, summary):
+    """Round 2 (preregistration section 10): the measurement behind it and its decisions."""
+    share, log = ROOT / "token_share.json", ROOT / "round2.json"
+    block = {}
+    if share.exists():
+        d = json.loads(share.read_text())
+        lines += ["## Where the training tokens go (`token_share.json`)\n",
+                  f"The loss is computed on the final reply only. The main system prompt has {d['main_system_prompt_tokens']} tokens; "
+                  f"the short one of round 2 has {d['short_system_prompt_tokens']}.\n",
+                  "| Training file | Rows | System prompts | of which the main prompt | User turns | Earlier replies | Final reply |",
+                  "|---|---:|---:|---:|---:|---:|---:|"]  # fmt: skip
+        for k, v in d["files"].items():
+            sh = v["share"]
+            lines.append(f"| {k} | {v['rows']:,} | {100 * sh['system']:.1f}% | {100 * v['main_system_prompt_share']:.1f}% | "
+                         f"{100 * sh['user']:.1f}% | {100 * sh['earlier_replies']:.1f}% | {100 * sh['final_reply']:.1f}% |")  # fmt: skip
+        t = d["tokenization"]
+        lines += ["", f"Tokenization: {len(t['pairs_merged_into_one_token'])} of {t['pairs_checked']} stem-branch pairs are merged into "
+                  f"one token, and {len(t['single_characters_not_one_token'])} stems or branches need more than one token.\n"]  # fmt: skip
+        block["token_share"] = d
+    if log.exists():
+        entries = json.loads(log.read_text())
+        lines += ["## Round-2 decisions (dev6, frozen rules: preregistration section 10)\n"]
+        for e in entries:
+            if e["decision"] == "structure":
+                d = e["u1hi_minus_u1"]
+                why = "U1-hi was not trained" if d is None else (
+                    f"U1-hi minus U1 {100 * d['difference']:+.1f} [{100 * d['interval95'][0]:+.1f}, {100 * d['interval95'][1]:+.1f}]")  # fmt: skip
+                lines.append(
+                    f"- **Adapter structure:** {e['options'] or 'rank 16 on the last 16 layers'} ({why})."
+                )
+            else:
+                counts = ", ".join(f"{name(k)} {v}" for k, v in e["dev6_correct"].items())
+                what = (
+                    f"{name('p6' + e['next'])} continues {name('p6' + e['parent'])}"
+                    if e["next"]
+                    else "the loop ends"
+                )
+                lines.append(
+                    f"- **Loop:** {what} (dev6 right answers on all rule items: {counts})."
+                )
+        lines.append("")
+        block["decisions"] = entries
+    weights = {}
+    for lab in ("p6u3", "p6u4", "p6u5"):
+        manifest = Path("data/phase6/train") / lab[2:] / "manifest.json"
+        if manifest.exists():
+            weights[lab] = json.loads(manifest.read_text())["weighting"]
+    if weights:
+        lines += ["Question-type weights of the continuations (parent's error on fit sample B; weight = max(error, 0.05)):\n",
+                  "| Type | " + " | ".join(f"{name(x)}: wrong of scored | weight" for x in weights) + " |",
+                  "|---|" + "---:|---:|" * len(weights)]  # fmt: skip
+        for t in next(iter(weights.values()))["weights"]:
+            cells = [
+                f"{w['scored_wrong'][t][1]}/{w['scored_wrong'][t][0]} | {w['weights'][t]:.2f}"
+                for w in weights.values()
+            ]
+            lines.append(f"| {t} | " + " | ".join(cells) + " |")
+        lines.append("")
+        block["weights"] = weights
+    if block:
+        summary["round2"] = block
+
+
+def round2_compare_section(lines, summary, split):
+    """H7 (U2 against U1) and H8 (each continuation against its parent) at L0."""
+    pairs = [("H7: short system prompt at equal compute", "p6u1", "p6u2")]
+    for lab in ("p6u3", "p6u4", "p6u5"):
+        manifest = Path("data/phase6/train") / lab[2:] / "manifest.json"
+        if manifest.exists():
+            pairs.append(
+                (
+                    "H8: weighted continuation",
+                    "p6" + json.loads(manifest.read_text())["parent"],
+                    lab,
+                )
+            )
+    rows = []
+    for title, a, b in pairs:
+        ra, rb = rule_records(split, a), rule_records(split, b)
+        if not ra or not rb:
+            continue
+        cell, d = diff(ra, rb)
+        ca, cb = load(split, a, "calendar"), load(split, b, "calendar")
+        cal = diff(ca, cb)[0] if ca and cb else "–"
+        rows.append((title, a, b, cell, cal, d))
+    if not rows:
+        return
+    lines += [f"### Round 2 (`{split}`, L0): paired differences, points [95%]\n",
+              "| Hypothesis | Comparison | All rule items | Calendar |", "|---|---|---|---|"]  # fmt: skip
+    for title, a, b, cell, cal, _ in rows:
+        lines.append(f"| {title} | {name(b)} minus {name(a)} | {cell} | {cal} |")
+    lines.append("")
+    summary.setdefault("round2_compare", {})[split] = [
+        {"hypothesis": t, "a": a, "b": b, "difference": d} for t, a, b, _, _, d in rows
+    ]
 
 
 def primary_section(lines, summary, split):
@@ -718,6 +832,7 @@ def main():
     summary = {}
     fit_section(lines, summary)
     training_section(lines, summary)
+    round2_section(lines, summary)
     decisions_section(lines, summary)
     for split in ("sealed6", "valid6", "dev6"):
         if not (ROOT / split).exists():
@@ -726,6 +841,7 @@ def main():
         for section in (
             primary_section,
             l0_section,
+            round2_compare_section,
             statements_section,
             truncation_section,
             wording_section,

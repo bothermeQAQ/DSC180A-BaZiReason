@@ -51,3 +51,18 @@ Decisions, surprises and negative results, in order. Plan: [`phase6_execution_pr
   - **Computed statements:** wrong in 20.9% of the checked statements (A1 15.1%), including 旬空 in 35 of 43.
 - **S1 started** (18:17; 7,922 rows, 5,992,693 sequence tokens, 3,961 iterations).
 - **Report script:** the training table now skips a run until its first validation loss exists.
+- **Round 2 added at the user's request** (20:47; pre-registration section 10), recorded while S1 was training: no screening result and no valid6 or sealed6 score existed.
+  - **Why:**
+    - the main system prompt (279 tokens, in 89% of the rows) is 34% of S1's training tokens, and the final reply, the only part with a loss, is 43% (`results/phase6/token_share.json`);
+    - the models under-fit: A1 answers 80.8% of its own training rows, and U0 with 6.0 M tokens is 20 points below A1.
+  - **U2:** U1's recipe with a 36-token system prompt at the same 15 M-token budget, which holds about 1.4 times as many rows (1.45 in a dry run at a small budget).
+  - **Continuations U3-U5:** from the best parent on dev6, with the question types reweighted by the parent's errors on a new fit sample B (100 questions per type on fresh charts, never training input). Each has 6.0 M tokens at half the learning rate; the loop ends when a continuation does not beat its parent on dev6.
+  - **Selection and sealed runs:** the candidates now include U2 and the continuations. sealed6 stays closed until the round ends; L0 runs are added for U1, U2 and the ancestors of the selected model.
+  - **Corrected figure:** a first quick check on 1,500 rows counted every system prompt together and gave 42% and a 1.6-times gain. Over the whole file the main prompt is 34% and the gain about 1.4 times. The other 7.5% are the long prompts of the strict-format calendar tasks, which define their output format and stay.
+- **Fit sample A is not all fresh for S2, S3 and U1** (found while designing round 2). About 45% of it are training-writer questions that these runs train on, and S1's replies to its first part are the input of the self-check rows. The U1-hi rule now reads the share on the questions whose chart is not in U1's training file (`scripts/phase6/fit_clean.py`; pre-registration section 9). The U1-hi queue had only been waiting and was restarted with this change.
+- **Tokenization checked:** each stem and branch is one token, and none of the 60 stem-branch pairs is merged.
+- **Round-2 code:**
+  - `bazireason.prompts6`: a model always receives the system prompt it was trained with. The swap happens in the reply cache, so it covers every level, the calendar rows and L5.
+  - `train_data6` and `build_train6.py`: the short prompt, type weights, sample-B charts blocked, continuation configurations.
+  - `own_replies.py --sample b`, `decide6.py structure / next / sealed-extra`, `queue_r2.sh`.
+  - The earlier training sets still rebuild bit for bit and every cached reply still matches its prompt (checked). Five new tests.

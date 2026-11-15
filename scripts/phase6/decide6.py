@@ -4,6 +4,11 @@
     .venv/bin/python scripts/phase6/decide6.py select    # valid6: selection -> results/phase6/selection.json
     .venv/bin/python scripts/phase6/decide6.py flags     # U1 build options implied by screening.json
 
+Round 2 (section 10; every decision is appended to results/phase6/round2.json):
+
+    .venv/bin/python scripts/phase6/decide6.py structure # adapter options of round 2
+    .venv/bin/python scripts/phase6/decide6.py next      # "<recipe> <parent>" of the next continuation, or "stop"
+
 Reads saved records only. "select" writes results/phase6/selection.json, which opens sealed6.
 """
 
@@ -13,8 +18,11 @@ from pathlib import Path
 
 sys.path.insert(0, "scripts/phase5")
 sys.path.insert(0, "scripts/phase6")
+import build_train6  # noqa: E402
 import make_report6 as M  # noqa: E402
+import run6  # noqa: E402
 
+from bazireason import prompts6 as P6  # noqa: E402
 from bazireason.p2_eval import paired_difference  # noqa: E402
 
 ROOT = Path("results/phase6")
@@ -23,6 +31,8 @@ STEPS = (
     ("p6s2", "p6s1", "wording"),
     ("p6s3", "p6s2", "evidence and self-check"),
 )
+CONTINUATIONS = ("p6u3", "p6u4", "p6u5")
+ORDER = ("p6s1", "p6s2", "p6s3", "p6u1", "p6u1hi", "p6u2", *CONTINUATIONS)  # earlier runs first
 DROP_NAMES = {
     "wording": ["wording", "contrast"],
     "evidence and self-check": ["evidence", "verify", "selfcheck", "twins"],
@@ -108,7 +118,7 @@ def flags():
     print(" ".join(out))
 
 
-def best():
+def best_s():
     print(json.loads((ROOT / "screening.json").read_text())["best_s_run_on_dev6"])
 
 
@@ -117,13 +127,88 @@ def small_steps_dropped():
     sys.exit(0 if d["steps"][0]["dropped"] else 1)
 
 
+def parameters(lab):
+    """Trainable parameters of a run, from its training plan ("smaller adapter" in a tie)."""
+    plan = ROOT / "training" / run6.FOLDERS[lab] / "training_plan.json"
+    return json.loads(plan.read_text())["trainable_parameters"]
+
+
+def best(labels, split):
+    """Highest L0 accuracy on all rule items; ties: the smaller adapter, then the earlier run."""
+    return max(
+        labels,
+        key=lambda lab: (
+            M.correct(M.rule_records(split, lab)),
+            -parameters(lab),
+            -ORDER.index(lab),
+        ),
+    )
+
+
+def record(entry):
+    path = ROOT / "round2.json"
+    log = json.loads(path.read_text()) if path.exists() else []
+    log.append(entry)
+    path.write_text(json.dumps(log, ensure_ascii=False, indent=1) + "\n")
+
+
+def structure():
+    """Round 2 (section 10.2): rank 16 on the last 16 layers, or U1-hi's structure if U1-hi
+    was trained and beats U1 on dev6 L0 with a paired lower bound above 0. Prints the build
+    options."""
+    entry = {"decision": "structure", "options": "", "u1hi_minus_u1": None}
+    if M.rule_records("dev6", "p6u1hi"):
+        d = paired("dev6", "p6u1", "p6u1hi")
+        entry["u1hi_minus_u1"] = d
+        if d["interval95"] and d["interval95"][0] > 0:
+            shape = build_train6.structure_of("u1hi")
+            entry["options"] = f"--layers {shape['layers']} --rank {shape['rank']}" + (
+                " --grad-checkpoint" if shape["grad_checkpoint"] else ""
+            )
+    record(entry)
+    print(entry["options"])
+
+
+def nxt():
+    """Round-2 loop (section 10.2). The first continuation starts from the best of U1, U1-hi
+    and U2 on dev6; a continuation that beats its parent on dev6 becomes the next parent;
+    at most three continuations. Prints "<recipe> <parent recipe>" or "stop"."""
+    done = [lab for lab in CONTINUATIONS if M.rule_records("dev6", lab)]
+    score = lambda lab: M.correct(M.rule_records("dev6", lab))  # noqa: E731
+    if not done:
+        if not M.rule_records("dev6", "p6u2"):
+            sys.exit("U2 has no dev6 result yet")
+        pool = [lab for lab in ("p6u1", "p6u1hi", "p6u2") if M.rule_records("dev6", lab)]
+        parent = best(pool, "dev6")
+        entry = {"decision": "next", "next": "u3", "parent": parent[2:],
+                 "dev6_correct": {lab: score(lab) for lab in pool}}  # fmt: skip
+    else:
+        last = done[-1]
+        parent = "p6" + P6.manifest(last[2:])["parent"]
+        better = score(last) > score(parent)
+        following = CONTINUATIONS[len(done)] if len(done) < len(CONTINUATIONS) else None
+        entry = {"decision": "next", "next": following[2:] if better and following else None,
+                 "parent": last[2:] if better and following else None,
+                 "dev6_correct": {last: score(last), parent: score(parent)},
+                 "child_minus_parent": paired("dev6", parent, last)}  # fmt: skip
+    record(entry)
+    print(f"{entry['next']} {entry['parent']}" if entry["next"] else "stop")
+
+
+def sealed_extra():
+    """Section 10.4: the sealed L0 runs added by round 2 (U1, U2 and every ancestor of M)."""
+    m = json.loads((ROOT / "selection.json").read_text())["selected"]
+    labels = ["p6u1", "p6u2", *("p6" + r for r in P6.lineage(m[2:])[1:])]
+    keep = [lab for lab in dict.fromkeys(labels) if lab != m and M.rule_records("dev6", lab)]
+    print(" ".join(keep))
+
+
 def select():
     screening = json.loads((ROOT / "screening.json").read_text())
-    candidates = [
-        lab
-        for lab in ("p6u1", "p6u1hi", screening["best_s_run_on_dev6"])
-        if M.rule_records("valid6", lab)
-    ]
+    pool = dict.fromkeys(
+        (screening["best_s_run_on_dev6"], "p6u1", "p6u1hi", "p6u2", *CONTINUATIONS)
+    )  # section 10.4
+    candidates = [lab for lab in pool if M.rule_records("valid6", lab)]
     p2 = M.load("valid6", "p2", "calendar")
     table = {}
     for lab in candidates:
@@ -134,15 +219,10 @@ def select():
         recs = M.rule_records("valid6", lab)
         table[lab] = {"l0_all_rule_items": [M.correct(recs), len(recs)], "calendar_minus_p2": d,
                       "calendar_gate": d["interval95"] is not None and d["interval95"][0] >= -0.07,
-                      "layers": 36 if lab == "p6u1hi" else 16}  # fmt: skip
+                      "trainable_parameters": parameters(lab)}  # fmt: skip
     passing = [lab for lab in candidates if table[lab]["calendar_gate"]]
-    pool = passing or candidates
-    order = {lab: i for i, lab in enumerate(("p6s1", "p6s2", "p6s3", "p6u1", "p6u1hi"))}
-    chosen = max(
-        pool,
-        key=lambda lab: (table[lab]["l0_all_rule_items"][0], -table[lab]["layers"], -order[lab]),
-    )
-    out = {"rule": "docs/phase6_preregistration.md section 6 (frozen before validation scoring)", "candidates": table,
+    chosen = best(passing or candidates, "valid6")
+    out = {"rule": "docs/phase6_preregistration.md sections 6 and 10.4 (frozen before validation scoring)", "candidates": table,
            "passing_calendar_gate": passing, "calendar_claim_failed": not passing, "selected": chosen}  # fmt: skip
     (ROOT / "selection.json").write_text(json.dumps(out, ensure_ascii=False, indent=1) + "\n")
     print(json.dumps(out, ensure_ascii=False)[:1500])
@@ -153,6 +233,9 @@ if __name__ == "__main__":
         "screen": screen,
         "select": select,
         "flags": flags,
-        "best": best,
+        "best": best_s,
         "small-steps-dropped": small_steps_dropped,
+        "structure": structure,
+        "next": nxt,
+        "sealed-extra": sealed_extra,
     }[sys.argv[1]]()

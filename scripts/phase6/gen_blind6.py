@@ -41,6 +41,7 @@ PLAN = {
     "sealed6": (2026111643, 21),
     "train6": (2026111649, 180),
     "train6b": (2026111650, 220),  # more training wordings for the full-budget run
+    "train6c": (2026111651, 220),  # round 2: U2 holds about 1.4 times as many rows as U1
 }
 PERSONAS = (
     "你是一位刚开始了解八字的年轻人，正在向一个八字助手请教。",
@@ -196,7 +197,7 @@ def generate(split):
 
 
 def build(split, log):
-    tag = {"dev6": "D", "valid6": "V", "sealed6": "S", "train6": "T", "train6b": "B"}[split]
+    tag = {"dev6": "D", "valid6": "V", "sealed6": "S", "train6": "T", "train6b": "B", "train6c": "C"}[split]  # fmt: skip
     writer = Path(TRAIN_WRITER if split.startswith("train") else TEST_WRITER).name
     items = []
     for record in log:

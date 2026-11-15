@@ -28,6 +28,7 @@ import run5  # noqa: E402
 
 from bazireason import ladder as L  # noqa: E402
 from bazireason import p5_eval as E  # noqa: E402
+from bazireason import prompts6 as P6  # noqa: E402
 from bazireason import workflow as W  # noqa: E402
 
 ROOT = Path("results/phase6")
@@ -43,11 +44,19 @@ FOLDERS = {
     "p6s3": "bazireason-qwen3-4b-lora-p6-s3",
     "p6u1": "bazireason-qwen3-4b-lora-p6-u1",
     "p6u1hi": "bazireason-qwen3-4b-lora-p6-u1-hi",
+    "p6u2": "bazireason-qwen3-4b-lora-p6-u2",
+    "p6u3": "bazireason-qwen3-4b-lora-p6-u3",
+    "p6u4": "bazireason-qwen3-4b-lora-p6-u4",
+    "p6u5": "bazireason-qwen3-4b-lora-p6-u5",
 }
 
 
 class Cache6(run5.Cache):
+    """Replies cached by prompt hash. Every prompt gets the system prompt its model was
+    trained with (round 2 trains some models with a short one; bazireason.prompts6)."""
+
     def __init__(self, label):
+        self.label = label
         self.path = ROOT / "cache" / f"{label.translate(SAFE)}.jsonl"
         self.path.parent.mkdir(parents=True, exist_ok=True)
         self.store = {}
@@ -55,6 +64,9 @@ class Cache6(run5.Cache):
             for line in self.path.read_text(encoding="utf-8").splitlines():
                 r = json.loads(line)
                 self.store[(r["sha"], r["max_tokens"])] = r["text"]
+
+    def generate(self, bank, conversations, max_tokens, batch):
+        return super().generate(bank, P6.apply(self.label, conversations), max_tokens, batch)
 
 
 def rows(path):

@@ -1,5 +1,6 @@
 {
  "main_system_prompt_tokens": 279,
+ "short_system_prompt_tokens": 36,
  "files": {
   "s1": {
    "rows": 7922,

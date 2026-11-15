@@ -8,12 +8,13 @@
   - **Splits:** `dev6` (read freely), `valid6` (selection only), `sealed6` (scored once, after `selection.json`).
   - **Parts:** `rules`, `indep`, `blind`, `combo` (held-out combinations of trained rules), `cf` (counterfactual pairs), `calendar`.
   - **Levels:** `L0` alone; `L1` raw facts; `L2` rule text; `L3` / `L3w` right / wrong conclusion; `L4a`, `L4b`, `L4c` self-check; `L5` the Phase 5 system (`scripts/phase6/run_l5.py`).
-  - **Labels:** `base`, `p2`, `p4a1`, `p5g1`, and the Phase 6 runs `p6u0`, `p6s1`, `p6s2`, `p6s3`, `p6u1`, `p6u1hi`.
-- **Decisions:** `screening.json` (dev6, the U1 recipe) and `selection.json` (valid6, the selected model), from `scripts/phase6/decide6.py`. `sealed_access.jsonl` logs every sealed run.
+  - **Labels:** `base`, `p2`, `p4a1`, `p5g1`, the Phase 6 runs `p6u0`, `p6s1`, `p6s2`, `p6s3`, `p6u1`, `p6u1hi`, and the round-2 runs `p6u2` (short system prompt) and `p6u3`-`p6u5` (weighted continuations).
+- **Decisions:** `screening.json` (dev6, the U1 recipe), `round2.json` (dev6: the adapter structure and each step of the continuation loop) and `selection.json` (valid6, the selected model), from `scripts/phase6/decide6.py`. `sealed_access.jsonl` logs every sealed run.
 - **Diagnostics:**
   - `audit_repro.json`: the capability audit's numbers recomputed from saved records;
-  - `diag_fit.json`, `fit_<label>.json`: accuracy on training rows and on fresh training-distribution questions (under-fitting check);
-  - `own_replies_<label>.jsonl`: a model's own replies on fresh training-distribution questions (S1's are the input of the self-check rows);
+  - `diag_fit.json`, `fit_<label>.json`: accuracy on training rows and on training-distribution questions (under-fitting check). `fit_<label>_clean.json` counts only the questions whose chart the model never trained on, and `fit_<label>_b.json` is fit sample B (100 questions per question type, never training input);
+  - `own_replies_<label>.jsonl`, `own_replies_<label>_b.jsonl`: a model's own replies to fit samples A and B (S1's replies to sample A are the input of the self-check rows);
+  - `token_share.json`: how the training tokens split between system prompts, user turns and replies, and the tokenization check of the stems and branches;
   - `truncation.json`: replies cut off at the token cap;
   - `panel/<label>.jsonl`: a fixed panel scored at saved checkpoints;
   - `memory_probe.jsonl`: the U1-hi memory probe.

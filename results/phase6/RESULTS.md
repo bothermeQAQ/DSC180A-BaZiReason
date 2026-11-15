@@ -12,13 +12,26 @@ Near-perfect on the training distribution with a low test score means a coverage
 | P4 A1 | fresh rows, A1's generator, training years | 183/240 (76.2%) |
 | P4 A1 | dev6 rule rows (validation years) | 157/294 (53.4%) |
 
-## Training runs (all from the untuned base)
+## Training runs
 
-| Run | Rows | Sequence tokens | Layers / rank | Iterations done | Train loss, last 200 iterations | Validation loss, last | Peak memory | Hours |
-|---|---:|---:|---|---:|---:|---:|---:|---:|
-| U0 joint, earlier data | 7,810 | 5,992,270 | 16 / 16 | 3905/3905 | 0.0239 | 0.0157 | 23.3 GB | 4.02 |
+| Run | Starts from | Rows | Sequence tokens | Layers / rank | Iterations done | Train loss, last 200 iterations | Validation loss, last | Peak memory | Hours |
+|---|---|---:|---:|---|---:|---:|---:|---:|---:|
+| S1 small steps | untuned base | 7,922 | 5,992,693 | 16 / 16 | 2720/3961 (running) | 0.0140 | 0.0133 | 19.9 GB | 2.74 |
+| U0 joint, earlier data | untuned base | 7,810 | 5,992,270 | 16 / 16 | 3905/3905 | 0.0239 | 0.0157 | 23.3 GB | 4.02 |
 
 Average per-token loss is dominated by template text; the fit table above is the measure of what was learned.
+
+## Where the training tokens go (`token_share.json`)
+
+The loss is computed on the final reply only. The main system prompt has 279 tokens; the short one of round 2 has 36.
+
+| Training file | Rows | System prompts | of which the main prompt | User turns | Earlier replies | Final reply |
+|---|---:|---:|---:|---:|---:|---:|
+| s1 | 7,922 | 41.0% | 33.5% | 15.4% | 0.5% | 43.1% |
+| s2 | 8,161 | 41.9% | 34.6% | 15.8% | 1.7% | 40.6% |
+| u0 | 7,810 | 41.2% | 31.1% | 28.7% | 0.6% | 29.5% |
+
+Tokenization: 0 of 60 stem-branch pairs are merged into one token, and 0 stems or branches need more than one token.
 
 ## Split `dev6`
 

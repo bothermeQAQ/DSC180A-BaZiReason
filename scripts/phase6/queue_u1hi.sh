@@ -11,7 +11,9 @@ ALL="rules indep blind combo cf"
 until grep -q "QUEUE_U1_DONE" artifacts/logs/p6_queue_u1.log; do sleep 60; done
 D=".venv/bin/python scripts/phase6/decide6.py"
 FLAGS=$($D flags)
-if ! .venv/bin/python -c 'import json,sys; sys.exit(0 if json.load(open("results/phase6/fit_p6u1.json"))["share"] < 0.95 else 1)'; then
+# The rule reads the fit share on the questions U1 never trained on (section 9, 14 November 20:47).
+run .venv/bin/python scripts/phase6/fit_clean.py --label p6u1 || exit 1
+if ! .venv/bin/python -c 'import json,sys; sys.exit(0 if json.load(open("results/phase6/fit_p6u1_clean.json"))["share"] < 0.95 else 1)'; then
   echo "U1-hi not trained: U1 fit is at least 95%"; echo "QUEUE_U1HI_DONE $(date '+%H:%M:%S')"; exit 0
 fi
 if [ "$(date '+%Y%m%d')" -gt 20261127 ]; then
@@ -28,6 +30,7 @@ if cmp -s data/phase6/train/u1/train.jsonl data/phase6/train/u1hi/train.jsonl; t
 else echo "STEP_FAILED U1-hi data differs from U1"; exit 1; fi
 run $PY scripts/phase2/train_lora.py --config configs/phase6/qwen3_4b_lora_p6_u1hi.yaml
 run $PY scripts/phase6/own_replies.py --label p6u1hi --n 2400
+run .venv/bin/python scripts/phase6/fit_clean.py --label p6u1hi
 run $PY scripts/phase6/run6.py --split dev6 --labels p6u1hi --parts $ALL calendar --levels L0
 run $PY scripts/phase6/run6.py --split valid6 --labels p6u1hi --parts $ALL calendar --levels L0
 echo "QUEUE_U1HI_DONE $(date '+%H:%M:%S')"

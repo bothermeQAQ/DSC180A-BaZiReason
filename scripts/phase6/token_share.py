@@ -15,6 +15,7 @@ from pathlib import Path
 from bazireason import train_data6 as T6
 from bazireason.conventions import CYCLE
 from bazireason.p2_prompts import P2_SYSTEM
+from bazireason.prompts6 import SHORT_SYSTEM
 
 OUT = Path("results/phase6/token_share.json")
 
@@ -27,7 +28,11 @@ def main():
     def n(text):
         return len(tok.encode(text, add_special_tokens=False).ids)
 
-    out = {"main_system_prompt_tokens": n(P2_SYSTEM), "files": {}}
+    out = {
+        "main_system_prompt_tokens": n(P2_SYSTEM),
+        "short_system_prompt_tokens": n(SHORT_SYSTEM),
+        "files": {},
+    }
     for path in sorted(Path("data/phase6/train").glob("*/train.jsonl")):
         parts = {"system": 0, "user": 0, "earlier_replies": 0, "final_reply": 0}
         rows = main_rows = main_tokens = 0

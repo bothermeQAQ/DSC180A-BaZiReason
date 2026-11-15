@@ -35,6 +35,10 @@ All numbers come from files under `results/phase6/`. The full tables are in [`re
 | H4: the model can learn to use evidence and check itself | S3 (S2 plus evidence and self-check rows) against S2 |
 | H5: adapter capacity limits the result | U1-hi against U1, only if U1 under-fits |
 | H6: the base model limits the result | accuracy on fresh training-distribution questions |
+| H7: at equal compute, a short system prompt gives a better model | U2 (U1's recipe with a 36-token system prompt) against U1 |
+| H8: continuing with the failing question types weighted up improves the model further | each continuation (U3-U5) against its parent |
+
+H7 and H8 belong to a second round that was added on 14 November, while S1 was training and before any screening or validation result existed (pre-registration, section 10).
 
 ### 3.2 Data
 
@@ -66,7 +70,7 @@ No repair, fallback, loop guard or routing touches L0-L4. Decoding is greedy, wi
 
 ### 3.4 Training runs
 
-All runs start from the untuned base with the earlier adapter settings (LoRA rank 16, scale 2, last 16 of 36 layers), learning rate 2e-4 with cosine decay to 2e-5, batch 2 with gradient accumulation 2, one pass, sequences of at most 2,048 tokens.
+The runs of the first round start from the untuned base with the earlier adapter settings (LoRA rank 16, scale 2, last 16 of 36 layers), learning rate 2e-4 with cosine decay to 2e-5, batch 2 with gradient accumulation 2, one pass, sequences of at most 2,048 tokens.
 
 | Run | Budget | Data |
 |---|---:|---|
@@ -76,7 +80,16 @@ All runs start from the untuned base with the earlier adapter settings (LoRA ran
 | S3 | 6.0 M | S2 plus evidence rows, reference checking, self-check rows from S1's own replies, matched calendar twins |
 | U1 | 15 M | the recipe chosen by the frozen screening rule |
 | U1-hi | 15 M | U1's data with all 36 layers, only if U1 under-fits |
+| U2 | 15 M | U1's recipe with the short system prompt: about 1.4 times as many rows in the same budget |
+| U3-U5 | 6.0 M each | continuations of the best run so far, with the question types reweighted by its measured errors; learning rate 1e-4 |
 
 **The screening is additive:** each S run adds one component to the previous run. A component's effect is measured in the presence of the earlier ones, so interactions are confounded with the order in which the components were added.
+
+**Round 2** rests on two measurements made before it was designed.
+
+- **Compute went to a fixed prompt.** The main system prompt (279 tokens) is 34% of the tokens of the S1 training file, and the final reply, the only part with a training loss, is 43% (`results/phase6/token_share.json`). U2 replaces it with a 36-token prompt; the prompts of the strict-format calendar tasks and of the multiple-choice task stay, because they define another output format. A model is always evaluated with the system prompt it was trained with.
+- **The models under-fit.** A1 answers 80.8% of its own training rows, and U0 with 6.0 M tokens is 20 points below A1. The continuations therefore add training where the parent measurably fails: the parent answers fit sample B (100 template questions per question type on fresh charts, never training input), and each type's weight is its recipe weight times max(error, 0.05).
+
+The loop ends when a continuation does not beat its parent on dev6, after at most three continuations. Every round-2 run is a selection candidate, and the sealed split stayed closed until the round ended.
 
 <!-- RESULTS: sections 4 onwards are written from results/phase6/RESULTS.md once the runs exist -->

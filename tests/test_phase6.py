@@ -205,3 +205,186 @@ def test_combinations_and_counterfactual_pairs_are_what_they_claim():
     assert S.combo_reference(
         "flow_stage", {"year": "甲子", "month": "丙寅", "day": "甲子", "hour": "甲子"}, 2026
     ) == R.life_stage("甲", "午")
+
+
+# ---- round 2 (pre-registration, section 10) -----------------------------------------------------------
+
+
+def test_only_the_main_system_prompt_is_swapped_and_only_for_short_prompt_models(monkeypatch):
+    from bazireason import prompts6 as P6
+    from bazireason.p2_prompts import P2_SYSTEM
+
+    conv = [{"role": "system", "content": P2_SYSTEM}, {"role": "user", "content": "q"}]
+    other = [{"role": "system", "content": "Return only JSON."}, {"role": "user", "content": "q"}]
+    for label in ("base", "p2", "p4a1", "p5g1", "p6u0", "p6s1", "p6u1hi", "panel-p6u0-500"):
+        assert P6.system_for(label) == P2_SYSTEM
+        assert P6.apply(label, [conv]) == [conv]
+    short = P6.swap(conv, P6.SHORT_SYSTEM)
+    assert short[0]["content"] == P6.SHORT_SYSTEM and short[1] is conv[1]
+    assert conv[0]["content"] == P2_SYSTEM  # the input is not modified
+    assert P6.swap(other, P6.SHORT_SYSTEM) == other  # task prompts define another format
+    assert len(P6.SHORT_SYSTEM) < len(P2_SYSTEM) / 5 and "结论JSON:" in P6.SHORT_SYSTEM
+    parents = {"u2": {"system": "short"}, "u3": {"system": "short", "parent": "u2"}}
+    monkeypatch.setattr(P6, "manifest", lambda recipe: parents.get(recipe, {}))
+    assert P6.system_for("p6u3") == P6.SHORT_SYSTEM == P6.system_for("panel-p6u2-1000")
+    assert P6.apply("p6u2", [conv, other]) == [short, other]
+    assert P6.lineage("u3") == ["u3", "u2"] and P6.lineage("u1") == ["u1"]
+
+
+def test_round2_builds_swap_the_prompt_block_sample_b_and_follow_the_weights():
+    import build_train6 as B
+
+    from bazireason import prompts6 as P6
+    from bazireason import train_data6 as T6
+    from bazireason.p2_prompts import P2_SYSTEM
+
+    exclude = B.exclusions()
+    sample = T6.fit_sample_b(B.FIT_B_SEED, 3, exclude)
+    assert [r["meta"]["head"] for r in sample] == [h for h in T6.WEIGHTS for _ in range(3)]
+    assert all(T6.head_of(r["meta"]["intent"]) == r["meta"]["head"] for r in sample)
+    assert all(r["messages"][0]["content"] == P2_SYSTEM for r in sample)
+    assert not {T6.chart_of(r) for r in sample} & exclude
+    paraphrases = [
+        json.loads(x)
+        for x in (ROOT / "data/phase6/blind/train6.jsonl").read_text(encoding="utf-8").splitlines()
+    ]
+    block = frozenset(T6.chart_of(r) for r in sample + paraphrases[:5])
+    kwargs = {"exclude": exclude, "paraphrases": paraphrases, "drop": ("selfcheck",)}
+    long_rows = T6.build("s3", 120_000, 7, **kwargs)
+    short_rows = T6.build("s3", 120_000, 7, system=P6.SHORT_SYSTEM, block=block, **kwargs)
+    # A round-2 build leaves the default path as it was: the earlier sets still rebuild bit for bit.
+    assert T6.digest(long_rows) == T6.digest(T6.build("s3", 120_000, 7, **kwargs))
+    systems = {r["messages"][0]["content"] for r in short_rows}
+    assert P2_SYSTEM not in systems and P6.SHORT_SYSTEM in systems and len(systems) > 1
+    assert all(r["messages"][0]["content"] != P6.SHORT_SYSTEM for r in long_rows)
+    assert len(short_rows) > 1.2 * len(long_rows)  # the same token budget holds more rows
+    assert not any(T6.chart_of(r) in block for r in short_rows)
+    weights = dict.fromkeys(T6.WEIGHTS, 0.05) | {"flow": 0.9}
+    options = {"system": P6.SHORT_SYSTEM, "weights": weights, "block": block}
+    weighted = T6.build("s3", 120_000, 8, **options, **kwargs)
+    assert T6.digest(weighted) == T6.digest(T6.build("s3", 120_000, 8, **options, **kwargs))
+    procedures = [r for r in weighted if r["family"] == "procedure"]
+    heads = [T6.head_of(r["meta"]["intent"]) for r in procedures]
+    assert heads.count("flow") > len(heads) / 2
+    assert {r["meta"]["source"] for r in procedures} == {"template", "paraphrase"}
+    assert not any(T6.chart_of(r) in block for r in weighted)
+
+
+def test_error_weights_score_only_charts_the_parent_never_trained_on(tmp_path, monkeypatch):
+    import build_train6 as B
+
+    from bazireason import train_data6 as T6
+
+    heads = list(T6.WEIGHTS)
+    seen, fresh = ("甲子", "乙丑", "丙寅", "丁卯"), ("戊辰", "己巳", "庚午", "辛未")
+
+    def reply(head, chart, ok):
+        pillars = dict(zip(("year", "month", "day", "hour"), chart, strict=True))
+        return {"row": {"meta": {"head": head, "pillars": pillars}}, "reply": "", "correct": ok}
+
+    rows = [reply(heads[0], fresh, False)] * 8 + [reply(heads[0], fresh, True)] * 2
+    rows += [reply(heads[1], fresh, True)] * 100 + [reply(heads[1], seen, False)] * 5
+    path = tmp_path / "replies.jsonl"
+    path.write_text("".join(json.dumps(r, ensure_ascii=False) + "\n" for r in rows), "utf-8")
+    monkeypatch.setattr(B, "training_charts", lambda recipe: {"".join(seen)})
+    out = B.error_weights(path, "u2")
+    assert out["left_out"] == 5
+    assert out["scored_wrong"][heads[0]] == [10, 8] and out["scored_wrong"][heads[1]] == [100, 0]
+    assert out["weights"][heads[0]] == 0.75  # (8 + 1) / (10 + 2)
+    assert out["weights"][heads[1]] == B.ERROR_FLOOR  # (0 + 1) / (100 + 2) is under the floor
+    assert set(out["weights"]) == set(T6.WEIGHTS)
+
+
+def test_round2_loop_structure_and_selection_follow_the_preregistered_rules(
+    tmp_path, monkeypatch, capsys
+):
+    import decide6 as D
+
+    right = {}  # (split, label) -> number of right answers out of 100
+
+    def records(split, label, level="L0"):
+        k = right.get((split, label))
+        if k is None:
+            return None
+        return [{"id": i, "lab": label, "score": {"correct": i < k}} for i in range(100)]
+
+    size = {"p6u1hi": 33_000_000}
+    log = []
+    parents = {"u3": {"parent": "u2"}, "u4": {"parent": "u3"}, "u5": {"parent": "u4"}}
+    monkeypatch.setattr(D.M, "rule_records", records)
+    monkeypatch.setattr(D, "parameters", lambda lab: size.get(lab, 14_680_064))
+    monkeypatch.setattr(D, "record", log.append)
+    monkeypatch.setattr(D.P6, "manifest", lambda recipe: parents.get(recipe, {}))
+    monkeypatch.setattr(
+        D, "paired", lambda split, a, b, **kw: {"difference": 0.0, "interval95": gap}
+    )
+
+    def said():
+        return capsys.readouterr().out.strip()
+
+    # The first continuation starts from the best of U1, U1-hi and U2 on dev6.
+    right.update({("dev6", "p6u1"): 60, ("dev6", "p6u2"): 62})
+    gap = [0.01, 0.05]
+    D.nxt()
+    assert said() == "u3 u2"
+    right[("dev6", "p6u1hi")] = 62  # a tie goes to the smaller adapter
+    D.nxt()
+    assert said() == "u3 u2"
+    right[("dev6", "p6u1")] = 62  # then to the earlier run
+    D.nxt()
+    assert said() == "u3 u1"
+    # A continuation that beats its parent becomes the next parent; otherwise the loop ends.
+    right[("dev6", "p6u3")] = 64
+    D.nxt()
+    assert said() == "u4 u3"
+    right[("dev6", "p6u4")] = 64
+    D.nxt()
+    assert said() == "stop"
+    right.update({("dev6", "p6u4"): 66, ("dev6", "p6u5"): 70})  # at most three continuations
+    D.nxt()
+    assert said() == "stop"
+    # Structure: U1-hi's only when it beats U1 with a lower bound above 0.
+    shape = {"layers": 36, "rank": 16, "grad_checkpoint": True}
+    monkeypatch.setattr(D.build_train6, "structure_of", lambda recipe: shape)
+    D.structure()
+    assert said() == "--layers 36 --rank 16 --grad-checkpoint"
+    gap = [-0.01, 0.05]
+    D.structure()
+    assert said() == ""
+    # Selection: every round-2 run is a candidate; the calendar gate, then the highest valid6
+    # accuracy, then the smaller adapter, then the earlier run.
+    monkeypatch.setattr(D, "ROOT", tmp_path)
+    (tmp_path / "screening.json").write_text(json.dumps({"best_s_run_on_dev6": "p6s2"}))
+    valid = {"p6s2": 55, "p6u1": 63, "p6u1hi": 66, "p6u2": 66, "p6u3": 70, "p6u4": 66}
+    right.update({("valid6", lab): k for lab, k in valid.items()})
+    lower = {"p6u3": -0.09}  # U3 fails the calendar gate (lower bound under -7 points)
+    monkeypatch.setattr(D.M, "load", lambda split, lab, part, level="L0": records("valid6", lab) or records("dev6", "p6u1"))  # fmt: skip
+    monkeypatch.setattr(D.M, "scores", lambda recs: recs)
+    monkeypatch.setattr(D, "paired_difference", lambda a, b: {"difference": 0.0, "interval95": [lower.get(b[0]["lab"], -0.03), 0.03]})  # fmt: skip
+    D.select()
+    chosen = json.loads((tmp_path / "selection.json").read_text())
+    assert list(chosen["candidates"]) == ["p6s2", "p6u1", "p6u1hi", "p6u2", "p6u3", "p6u4"]
+    assert chosen["passing_calendar_gate"] == ["p6s2", "p6u1", "p6u1hi", "p6u2", "p6u4"]
+    assert chosen["selected"] == "p6u2"  # 66 three times: smaller than U1-hi, earlier than U4
+    assert log and all(e["decision"] in ("next", "structure") for e in log)
+
+
+def test_clean_fit_leaves_out_questions_whose_chart_was_trained_on(tmp_path, monkeypatch):
+    import fit_clean as F
+
+    def reply(chart, intent, ok):
+        pillars = dict(zip(("year", "month", "day", "hour"), chart, strict=True))
+        return {"row": {"meta": {"intent": intent, "pillars": pillars}}, "correct": ok}
+
+    seen, fresh = ("甲子", "乙丑", "丙寅", "丁卯"), ("戊辰", "己巳", "庚午", "辛未")
+    rows = [reply(seen, "pattern", True)] * 6 + [reply(fresh, "pattern", True)] * 3
+    rows += [reply(fresh, "fact:xun_kong:day", False)]
+    (tmp_path / "own_replies_p6u1.jsonl").write_text(
+        "".join(json.dumps(r, ensure_ascii=False) + "\n" for r in rows), "utf-8"
+    )
+    monkeypatch.setattr(F, "ROOT", tmp_path)
+    monkeypatch.setattr(F.build_train6, "training_charts", lambda recipe: {"".join(seen)})
+    out = F.clean("p6u1")
+    assert (out["n"], out["correct"], out["share"]) == (4, 3, 0.75)
+    assert out["left_out_chart_in_training"] == 6
+    assert out["by_type"] == {"fact:xun_kong": [0, 1], "pattern": [3, 3]}

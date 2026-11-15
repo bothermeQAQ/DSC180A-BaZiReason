@@ -36,6 +36,7 @@ from bazireason.indep_rules import eight_char
 from bazireason.intent import plan_for
 from bazireason.p2_prompts import P2_SYSTEM
 from bazireason.p5_eval import head_line
+from bazireason.prompts6 import swap
 from bazireason.splits6 import POS_ZH, neighbours
 
 VERSION = "p6_train_v1"
@@ -80,6 +81,33 @@ CHECK_REQUESTS = ("帮我把上面每一步再核对一遍，有错就改。", "
 CONTRAST = (("strength", "yongshen:扶抑"), ("pattern", "gods"), ("fact:life_stage:day", "fact:life_stage:month"),
             ("fact:ten_god_stem:month", "fact:ten_god_branch:month"), ("flow", "fact:xun_kong"), ("interact", "flow"),
             ("fact:element_count", "strength"), ("pattern", "yongshen:格局"))  # fmt: skip
+
+
+# The main system prompt of the rows being built (round 2 builds with the short one).
+_SYSTEM = [P2_SYSTEM]
+
+
+def _sys(r):
+    r["messages"] = swap(r["messages"], _SYSTEM[0])
+    return r
+
+
+def chart_of(r):
+    """Chart key of a row with a four-pillar chart in its meta, else None."""
+    pillars = (r.get("meta") or {}).get("pillars")
+    if isinstance(pillars, dict) and len(pillars) == 4:
+        return "".join(pillars[k] for k in ("year", "month", "day", "hour"))
+    return None
+
+
+def head_of(intent):
+    """The WEIGHTS key (question type) of a concrete intent, or None."""
+    parts = intent.split(":")
+    for k in (2, 1):
+        key = ":".join(parts[:k])
+        if key in WEIGHTS:
+            return key
+    return None
 
 
 def rows_of(path):
@@ -198,7 +226,7 @@ def chart_head(pillars, gender, rng, styled):
 
 
 def row(family, messages, meta):
-    return {"family": family, "task": f"p6_{family}", "messages": messages, "meta": meta}
+    return _sys({"family": family, "task": f"p6_{family}", "messages": messages, "meta": meta})
 
 
 def procedure(pillars, gender, intent, question, rng, styled=False, prefix=""):
@@ -218,7 +246,70 @@ def weighted_heads(rng, n):
     return rng.choices(heads, weights=[WEIGHTS[h] for h in heads], k=n)
 
 
-def procedure_rows(target_tokens, charts, rng, paraphrases=None, para_share=0.0, styled=False):
+def weighted_procedure_rows(target_tokens, charts, rng, paraphrases, para_share, styled, weights):
+    """Round 2 (pre-registration 10.2): the question type is drawn first, by its recipe weight
+    times ``weights[type]``, for template and natural wordings alike. When a type's unused
+    natural questions run out, template questions on fresh charts replace them."""
+    pools = {}
+    for item in paraphrases or []:
+        pools.setdefault(head_of(item["meta"]["intent"]), []).append(item)
+    for pool in pools.values():
+        rng.shuffle(pool)
+    heads = list(WEIGHTS)
+    w = [WEIGHTS[h] * weights[h] for h in heads]
+    out, used = [], 0
+    while used < target_tokens:
+        head = rng.choices(heads, weights=w, k=1)[0]
+        pool = pools.get(head)
+        if pool and rng.random() < para_share:
+            meta = pool.pop()["meta"]
+            r = procedure(
+                meta["pillars"], meta["gender"], meta["intent"], meta["question"], rng, styled
+            )
+            source = "paraphrase"
+        else:
+            pillars, gender = charts.draw()
+            intent = concrete_intent(head, pillars, rng)
+            question = template_question(intent, pillars, gender, rng)
+            r = procedure(pillars, gender, intent, question, rng, styled)
+            source = "template"
+        if r:
+            r["meta"]["source"] = source
+            out.append(r)
+            used += tokens(r)
+    return out
+
+
+def fit_sample_b(seed, per_type, exclude):
+    """Round 2 fit sample: ``per_type`` questions for each question type, in training template
+    wordings on fresh training-year charts. Never training input (its charts are excluded
+    from every round-2 training set)."""
+    rng = random.Random(f"fit-b:{seed}")
+    charts = Charts(seed, exclude)
+    out = []
+    for head in WEIGHTS:
+        got = 0
+        while got < per_type:
+            pillars, gender = charts.draw()
+            intent = concrete_intent(head, pillars, rng)
+            r = procedure(
+                pillars, gender, intent, template_question(intent, pillars, gender, rng), rng
+            )
+            if r:
+                r["meta"]["source"] = "template"
+                r["meta"]["head"] = head
+                out.append(r)
+                got += 1
+    return out
+
+
+def procedure_rows(
+    target_tokens, charts, rng, paraphrases=None, para_share=0.0, styled=False, weights=None
+):
+    if weights is not None:
+        return weighted_procedure_rows(
+            target_tokens, charts, rng, paraphrases, para_share, styled, weights
+        )
     out, used = [], 0
     pool = list(paraphrases or [])
     rng.shuffle(pool)
@@ -439,7 +530,7 @@ def selfcheck_rows(replies, rng, limit_tokens):
 def calendar_rows(target_tokens, seed, balanced):
     blocked = TD.benchmark_exclusions() | TD.contest_exclusions()
     pool = [
-        r
+        _sys(r)
         for r in TD.generate_split("train", seed, blocked, 2.0, 2)
         if r["family"] not in CALENDAR_DROP
     ]
@@ -477,12 +568,12 @@ def calendar_rows(target_tokens, seed, balanced):
     return out
 
 
-def other_rows(target_tokens, rng):
+def other_rows(target_tokens, rng, block=frozenset()):
     pool = [
-        r
+        _sys(r)
         for path in OLD_FILES[2:6]
         for r in rows_of(f"{path}/train.jsonl")
-        if r["family"] in OTHER_FAMILIES
+        if r["family"] in OTHER_FAMILIES and chart_of(r) not in block
     ]
     rng.shuffle(pool)
     out, used = [], 0
@@ -524,10 +615,33 @@ def build(
     replies=None,
     calendar_share=None,
     drop=(),
+    system=None,
+    weights=None,
+    block=frozenset(),
 ):
     """Rows of one recipe. ``calendar_share`` and ``drop`` (component names) apply the
-    pre-registered screening decisions (docs/phase6_preregistration.md, section 5) to U1."""
+    pre-registered screening decisions (docs/phase6_preregistration.md, section 5) to U1.
+
+    Round 2 (section 10): ``system`` replaces the main system prompt, ``weights`` reweights the
+    question types of the procedure rows, and no row has a chart in ``block`` (fit sample B)."""
+    _SYSTEM[0] = system or P2_SYSTEM
+    try:
+        return _build(
+            recipe, total_tokens, seed, exclude, paraphrases, replies, calendar_share, drop,
+            weights, frozenset(block),
+        )  # fmt: skip
+    finally:
+        _SYSTEM[0] = P2_SYSTEM
+
+
+def _build(
+    recipe, total_tokens, seed, exclude, paraphrases, replies, calendar_share, drop, weights, block
+):
     rng = random.Random(f"{VERSION}:{recipe}:{seed}")
+    if block:
+        exclude = frozenset(exclude) | block
+        paraphrases = [p for p in paraphrases or [] if chart_of(p) not in block]
+        replies = [x for x in replies or [] if chart_of(x[0]) not in block]
     if recipe == "u0":
         rows = union_rows(total_tokens, rng)
     else:
@@ -549,7 +663,7 @@ def build(
         )
         styled = base in ("s2", "s3") and "wording" not in drop
         rows += procedure_rows(total_tokens * shares["procedure"], charts, rng, paraphrases if styled else None,
-                               0.45 if styled else 0.0, styled)  # fmt: skip
+                               0.45 if styled else 0.0, styled, weights)  # fmt: skip
         if "contrast" in shares:
             rows += contrast_rows(total_tokens * shares["contrast"], charts, rng)
         if "evidence" in shares:
@@ -558,7 +672,7 @@ def build(
             rows += verify_rows(total_tokens * shares["verify"], charts, rng)
         if "selfcheck" in shares:
             rows += selfcheck_rows(replies or [], rng, total_tokens * shares["selfcheck"])
-        rows += other_rows(total_tokens * shares["other"], rng)
+        rows += other_rows(total_tokens * shares["other"], rng, block)
     rng.shuffle(rows)
     for i, r in enumerate(rows, 1):
         r["id"] = f"P6{recipe.upper()}-{i:05d}"

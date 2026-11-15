@@ -7,6 +7,13 @@
 The questions come from the Phase 6 procedure generator (template wordings and the training
 writer's paraphrases) on new training-year charts, with a seed no training set uses. A
 reply is right when its final JSON matches the rule code (the Phase 5 scorer).
+
+    .venv-mlx/bin/python scripts/phase6/own_replies.py --label p6u2 --sample b
+        -> results/phase6/own_replies_p6u2_b.jsonl, fit_p6u2_b.json
+
+Sample b (round 2, pre-registration 10.2): 100 questions for each question type, in training
+template wordings on fresh charts; never training input. Its fit file leaves out a question
+whose chart is in the model's own training files (scripts/phase6/fit_clean.py).
 """
 
 import argparse
@@ -19,6 +26,7 @@ from pathlib import Path
 sys.path.insert(0, "scripts/phase5")
 sys.path.insert(0, "scripts/phase6")
 import build_train6  # noqa: E402
+import fit_clean  # noqa: E402
 import run6  # noqa: E402
 
 from bazireason import train_data6 as T6  # noqa: E402
@@ -33,11 +41,15 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--label", required=True)
     parser.add_argument("--n", type=int, default=2400)
+    parser.add_argument("--sample", choices=("a", "b"), default="a")
     args = parser.parse_args()
-    out = Path("results/phase6") / f"own_replies_{args.label}.jsonl"
-    fit = Path("results/phase6") / f"fit_{args.label}.json"
+    suffix = "" if args.sample == "a" else "_b"
+    out = Path("results/phase6") / f"own_replies_{args.label}{suffix}.jsonl"
+    fit = Path("results/phase6") / f"fit_{args.label}{suffix}.json"
     if out.exists():
         sys.exit(f"{out} exists")
+    if args.sample == "b":
+        return sample_b(args.label, out, fit)
     rng = random.Random(f"own:{SEED}")
     charts = T6.Charts(SEED, build_train6.exclusions())
     paraphrases = [
@@ -69,6 +81,25 @@ def main():
                                     ensure_ascii=False) + "\n")  # fmt: skip
     result = {"label": args.label, "n": len(rows), "correct": sum(by.values()), "share": round(sum(by.values()) / len(rows), 4),
               "by_type": {k: [by[k], tot[k]] for k in sorted(tot)}, "stats": stats}  # fmt: skip
+    fit.write_text(json.dumps(result, ensure_ascii=False, indent=1) + "\n")
+    print(json.dumps(result, ensure_ascii=False))
+
+
+def sample_b(label, out, fit):
+    rows = build_train6.fit_b_rows()
+    texts, stats = run6.Cache6(label).generate(
+        run6.Bank().get(label), [r["messages"][:2] for r in rows], run6.RULE_TOKENS, 32
+    )
+    with out.open("x", encoding="utf-8") as stream:
+        for i, (r, text) in enumerate(zip(rows, texts, strict=True)):
+            meta = r["meta"]
+            plan = plan_for(meta["intent"], meta["pillars"], meta["gender"])
+            item = make_item(f"fitb-{i}", "train", "template", meta["pillars"], meta["gender"],
+                             meta["question"], meta["intent"], plan, f"fitb-{i}")  # fmt: skip
+            ok = bool(score(item, text)["correct"])
+            stream.write(json.dumps({"row": {k: v for k, v in r.items() if k != "_tokens"}, "reply": text, "correct": ok},
+                                    ensure_ascii=False) + "\n")  # fmt: skip
+    result = dict(fit_clean.clean(label, "b"), stats=stats)
     fit.write_text(json.dumps(result, ensure_ascii=False, indent=1) + "\n")
     print(json.dumps(result, ensure_ascii=False))
 
