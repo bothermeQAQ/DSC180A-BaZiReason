@@ -178,3 +178,22 @@ Both are read on dev6 during the round and confirmed on sealed6 (supported when 
 - **Candidates (replaces the list in section 6):** the best S run on dev6, U1, U1-hi if trained, U2 and every continuation. The calendar gate and the rule are unchanged. "Smaller adapter" means fewer trainable parameters.
 - **Sealed runs (added to section 8):** L0 on rule items and calendar rows for U1, U2 and every ancestor of M. On sealed6, H7 is U2 minus U1, and H8 is M minus the parent of the first continuation in its chain, if M is a continuation.
 - `selection.json` is written once, after round 2 has ended, and the sealed split is opened only after it.
+
+### 10.5 Changes to round 2 (14 November, 23:40)
+
+Written after S1's dev6 result and before any other screening result, any valid6 score and any round-2 run. The user asked for every justified improvement, including more training.
+
+- **What was known:** S1 answers 66.8% of the dev6 rule items alone (A1 60.5%).
+  - On the template rule items it answers 79.9% of the training wordings and 37.3% of the held-out wording.
+  - `scripts/phase6/first_error.py` compares each reply with the rule code's derivation. On training wordings the wrong answers start at four kinds of step: the season and support steps of strength (得令, 得势), the hidden-stem step of area-of-life questions, the clash step of flow years (天克地冲), and the pair and trio steps of relations.
+- **Derivation version 2** (`bazireason.steps6`). Three steps are written out further; the rule code and every answer are unchanged.
+  - **Strength:** the positions of the five elements seen from the day master are written first (as in the Ten-God table), and 得令 and 得势 are read from them.
+  - **Areas of life:** the hidden stems of all four branches are listed with their Ten Gods before the relevant ones are picked; the palace branch's card is written before the yearly look-ups.
+  - **Flow years:** the pillars whose branch clashes with the flow branch are named, and the 相克 order is written, before 天克地冲 is judged.
+- **Fork at the first continuation:** U3 as in 10.2, and U3v with the same parent, weights, seed and budget but derivation version 2.
+  - **H9:** U3v minus U3 at L0 on the strength, 扶抑, area-of-life, flow-year and overview items (the items whose derivation changed), on dev6 and then on sealed6.
+  - The chain continues from whichever of the two has the higher dev6 accuracy on all rule items (a tie goes to U3) and keeps that run's derivation version.
+- **Longer loop:** up to eight levels (U3 to U10; seeds 2026111716 to …723) instead of three.
+  - Each continuation starts from the latest one (at the fork, from the better arm), with weights from that run's replies to fit sample B.
+  - The loop ends when two levels in a row fail to exceed the best dev6 accuracy on all rule items reached so far in the chain (the first parent included), or when a run could not start by 27 November.
+- **Selection and sealed runs:** every run of the chain is a candidate, as before. On sealed6, L0 is also run for U3 and U3v (H9).
