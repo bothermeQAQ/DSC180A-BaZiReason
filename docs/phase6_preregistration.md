@@ -197,3 +197,16 @@ Written after S1's dev6 result and before any other screening result, any valid6
   - Each continuation starts from the latest one (at the fork, from the better arm), with weights from that run's replies to fit sample B.
   - The loop ends when two levels in a row fail to exceed the best dev6 accuracy on all rule items reached so far in the chain (the first parent included), or when a run could not start by 27 November.
 - **Selection and sealed runs:** every run of the chain is a candidate, as before. On sealed6, L0 is also run for U3 and U3v (H9).
+
+## 11. A larger base model (added 15 November, 04:20)
+
+Written while S2 was being scored on dev6 (no S2 result had been read) and before any run on the larger model. The user approved the download on 14 November.
+
+- **Model:** Qwen3-8B in the 4-bit MLX weights published by Qwen (`Qwen/Qwen3-8B-MLX-4bit`, 4.4 GB): the family and architecture of the 4B base, with 36 layers. It wrote no question of any set.
+- **Pilot (H10, base size):** S1's training file, seed and settings on Qwen3-8B ("S1-8B"), against S1.
+  - **Same:** rank 16 on the last 16 layers, the learning rate and schedule, one pass, the long system prompt, thinking mode off. The evaluation prompt is rendered exactly as the training prompt.
+  - **Batch:** set by the memory probe, in this order: 2 as for S1; 1 with gradient accumulation 4 (the same number of updates); the same with gradient checkpointing.
+  - **H10:** S1-8B minus S1 at L0 on all dev6 rule items (paired). It is supported when the 95% lower bound is above 0. Calendar is reported next to it.
+- **Decision:** if H10 is supported, further runs on the larger model use the best 4B recipe of round 2; they are recorded here before they start. If it is not supported, no further run uses the larger model.
+- **Selection and claims:** runs on the larger model are selected separately, by the rule of section 6 (M8). P-1 to P-7 stay with the 4B selection M, whose base is A1's. On sealed6 the base-size comparisons are S1-8B minus S1 and, if M8 exists, M8 minus M, at L0.
+- **Order:** the GPU runs one job at a time. The pilot runs after the screening queue and before U1. If it stops for a technical reason, the queue goes on to U1.
