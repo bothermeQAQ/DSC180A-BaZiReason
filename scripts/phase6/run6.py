@@ -45,9 +45,10 @@ FOLDERS = {
     "p6u1": "bazireason-qwen3-4b-lora-p6-u1",
     "p6u1hi": "bazireason-qwen3-4b-lora-p6-u1-hi",
     "p6u2": "bazireason-qwen3-4b-lora-p6-u2",
-    "p6u3": "bazireason-qwen3-4b-lora-p6-u3",
-    "p6u4": "bazireason-qwen3-4b-lora-p6-u4",
-    "p6u5": "bazireason-qwen3-4b-lora-p6-u5",
+    **{
+        f"p6{r}": f"bazireason-qwen3-4b-lora-p6-{r}"
+        for r in ("u3", "u3v", "u4", "u5", "u6", "u7", "u8", "u9", "u10")
+    },
 }
 
 

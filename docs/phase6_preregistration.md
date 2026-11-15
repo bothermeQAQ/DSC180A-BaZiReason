@@ -179,7 +179,7 @@ Both are read on dev6 during the round and confirmed on sealed6 (supported when 
 - **Sealed runs (added to section 8):** L0 on rule items and calendar rows for U1, U2 and every ancestor of M. On sealed6, H7 is U2 minus U1, and H8 is M minus the parent of the first continuation in its chain, if M is a continuation.
 - `selection.json` is written once, after round 2 has ended, and the sealed split is opened only after it.
 
-### 10.5 Changes to round 2 (14 November, 23:40)
+### 10.5 Changes to round 2 (14 November, 23:19)
 
 Written after S1's dev6 result and before any other screening result, any valid6 score and any round-2 run. The user asked for every justified improvement, including more training.
 

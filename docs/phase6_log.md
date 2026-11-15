@@ -66,3 +66,24 @@ Decisions, surprises and negative results, in order. Plan: [`phase6_execution_pr
   - `train_data6` and `build_train6.py`: the short prompt, type weights, sample-B charts blocked, continuation configurations.
   - `own_replies.py --sample b`, `decide6.py structure / next / sealed-extra`, `queue_r2.sh`.
   - The earlier training sets still rebuild bit for bit and every cached reply still matches its prompt (checked). Five new tests.
+- **S1 finished** (22:15; 3,961 iterations in 3.98 hours; peak memory 22.3 GB) and was scored on dev6, model alone (L0):
+  - **Rule items:** 549/822 (66.8%), 6.3 points above A1 [2.2, 10.5] and 26.5 above U0 [22.2, 30.5]. Four hours of training from the base on small steps beat the end of the earlier chain.
+  - **Where it gained:** 旬空 96% (A1 28%), element counts 98%, life stages 95%, areas of life 52% (A1 15%), overview 55% (A1 0%), counterfactual pairs right on both charts 42/50 (A1 25/50).
+  - **Where it lost against A1:** relations 30% (A1 50%), flow years 40% (47%), strength 65% (76%), held-out combinations 36% (48%).
+  - **Calendar:** 128/219 (58.4%), 15.5 points below Phase 2 [6.4, 24.1].
+  - **Cut-off replies:** 30 of 822 (3.6%; mean reply 307 tokens). They are loops, not long derivations: the longest reference derivation on dev6 has 951 tokens.
+- **Where S1's wrong answers start** (`scripts/phase6/first_error.py`, which compares each reply with the rule code's derivation step by step; `results/phase6/first_error/dev6_p6s1.json`):
+
+  | Wording of the question | Right |
+  |---|---:|
+  | training template wordings | 203/244 (83.2%) |
+  | held-out template wording | 56/150 (37.3%) |
+  | natural (blind) wordings | 129/188 (68.6%) |
+
+  - **Wording is the largest cause.** With a wording it has not seen, S1 often starts another procedure or improvises one (relations 1/25 on the held-out wording and 0/10 on blind wordings; pattern 1/10 on blind wordings, answered as strength questions). Most loops start there. S1 was trained on template wordings only; S2 tests the remedy.
+  - **On training wordings the errors are few and specific** (41 of 244): the season and support steps of strength (得令 7, 得势 3), the hidden-stem step of area-of-life questions (4), the clash step of flow years (天克地冲 4), and the pair, trio and summary steps of relations (11). Each of these asks for a relation between two elements, or a filtered list, without writing the table first.
+  - **Held-out combinations:** S1 starts the right sub-procedures and fails at the step that joins them, often in a loop.
+- **Changes to round 2 after this analysis** (23:19; pre-registration 10.5, before any other screening result, any valid6 score and any round-2 run):
+  - **Derivation version 2** writes the three failing steps out further (element positions before 得令 and 得势; all hidden stems with their Ten Gods before the relevant ones; the palace card and the 相克 order before the look-ups). Every answer is unchanged and the claim checker finds no wrong statement in 9,000 version-2 derivations (`scripts/phase6/steps_check.py`, `results/phase6/steps_v2_check.json`). Replies stay under the 1,100-token cap: the longest overview has 1,063 tokens (1,000 in version 1).
+  - **Fork:** U3 and U3v differ only in the derivation version (H9); the chain continues from the better one.
+  - **Longer loop:** up to eight levels, ending after two levels in a row without a new best on dev6.

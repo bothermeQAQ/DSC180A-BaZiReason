@@ -176,6 +176,50 @@
     "n": 294
    }
   },
+  "p6s1": {
+   "blind_L0": {
+    "cap": 1100,
+    "cut_off": 9,
+    "cut_off_and_wrong": 9,
+    "mean_tokens": 245.3,
+    "n": 188
+   },
+   "calendar_L0": {
+    "cap": 700,
+    "cut_off": 0,
+    "cut_off_and_wrong": 0,
+    "mean_tokens": 306.4,
+    "n": 219
+   },
+   "cf_L0": {
+    "cap": 1100,
+    "cut_off": 1,
+    "cut_off_and_wrong": 1,
+    "mean_tokens": 232.1,
+    "n": 100
+   },
+   "combo_L0": {
+    "cap": 1100,
+    "cut_off": 7,
+    "cut_off_and_wrong": 7,
+    "mean_tokens": 260.0,
+    "n": 100
+   },
+   "indep_L0": {
+    "cap": 1100,
+    "cut_off": 0,
+    "cut_off_and_wrong": 0,
+    "mean_tokens": 96.6,
+    "n": 140
+   },
+   "rules_L0": {
+    "cap": 1100,
+    "cut_off": 13,
+    "cut_off_and_wrong": 13,
+    "mean_tokens": 488.0,
+    "n": 294
+   }
+  },
   "p6u0": {
    "blind_L0": {
     "cap": 1100,

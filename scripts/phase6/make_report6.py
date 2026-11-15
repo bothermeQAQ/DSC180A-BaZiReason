@@ -26,9 +26,12 @@ NAMES = {
     "base": "Untuned base", "p2": "Phase 2", "p4a1": "P4 A1", "p5g1": "P5 G1",
     "p6u0": "U0 joint, earlier data", "p6s1": "S1 small steps", "p6s2": "S2 + wording", "p6s3": "S3 + evidence, self-check",
     "p6u1": "U1", "p6u1hi": "U1-hi",
-    "p6u2": "U2 short prompt", "p6u3": "U3 continuation", "p6u4": "U4 continuation", "p6u5": "U5 continuation",
+    "p6u2": "U2 short prompt", "p6u3": "U3 continuation", "p6u3v": "U3v continuation, steps v2",
+    **{f"p6u{k}": f"U{k} continuation" for k in range(4, 11)},
 }  # fmt: skip
 ORDER = list(NAMES)
+CONTINUATIONS = tuple(k for k in NAMES if k[:4] == "p6u3" or k[3:].isdigit() and int(k[3:]) >= 4)
+H9_TARGETS = ("strength", "yongshen:扶抑", "domain", "flow", "overview")  # changed in version 2
 LOOKUP_KINDS = ("day_master", "hidden", "pillar", "spouse_star")
 COMPUTED_KINDS = (
     "xun_kong",
@@ -630,7 +633,7 @@ def round2_section(lines, summary):
         lines.append("")
         block["decisions"] = entries
     weights = {}
-    for lab in ("p6u3", "p6u4", "p6u5"):
+    for lab in CONTINUATIONS:
         manifest = Path("data/phase6/train") / lab[2:] / "manifest.json"
         if manifest.exists():
             weights[lab] = json.loads(manifest.read_text())["weighting"]
@@ -651,9 +654,9 @@ def round2_section(lines, summary):
 
 
 def round2_compare_section(lines, summary, split):
-    """H7 (U2 against U1) and H8 (each continuation against its parent) at L0."""
+    """H7 (U2 against U1), H8 (each continuation against its parent) and H9 (the fork) at L0."""
     pairs = [("H7: short system prompt at equal compute", "p6u1", "p6u2")]
-    for lab in ("p6u3", "p6u4", "p6u5"):
+    for lab in CONTINUATIONS:
         manifest = Path("data/phase6/train") / lab[2:] / "manifest.json"
         if manifest.exists():
             pairs.append(
@@ -663,11 +666,16 @@ def round2_compare_section(lines, summary, split):
                     lab,
                 )
             )
+    pairs.append(("H9: derivation version 2", "p6u3", "p6u3v"))
+    pairs.append(("H9, only the items whose derivation changed", "p6u3", "p6u3v"))
     rows = []
     for title, a, b in pairs:
         ra, rb = rule_records(split, a), rule_records(split, b)
         if not ra or not rb:
             continue
+        if "changed" in title:
+            ra = [r for r in ra if str(r["intent"]).startswith(H9_TARGETS)]
+            rb = [r for r in rb if str(r["intent"]).startswith(H9_TARGETS)]
         cell, d = diff(ra, rb)
         ca, cb = load(split, a, "calendar"), load(split, b, "calendar")
         cal = diff(ca, cb)[0] if ca and cb else "–"

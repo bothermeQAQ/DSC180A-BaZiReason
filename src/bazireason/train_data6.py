@@ -618,13 +618,16 @@ def build(
     system=None,
     weights=None,
     block=frozenset(),
+    steps=1,
 ):
     """Rows of one recipe. ``calendar_share`` and ``drop`` (component names) apply the
     pre-registered screening decisions (docs/phase6_preregistration.md, section 5) to U1.
 
     Round 2 (section 10): ``system`` replaces the main system prompt, ``weights`` reweights the
-    question types of the procedure rows, and no row has a chart in ``block`` (fit sample B)."""
+    question types of the procedure rows, no row has a chart in ``block`` (fit sample B), and
+    ``steps`` is the derivation version (bazireason.steps6)."""
     _SYSTEM[0] = system or P2_SYSTEM
+    S6.set_steps(steps)
     try:
         return _build(
             recipe, total_tokens, seed, exclude, paraphrases, replies, calendar_share, drop,
@@ -632,6 +635,7 @@ def build(
         )  # fmt: skip
     finally:
         _SYSTEM[0] = P2_SYSTEM
+        S6.set_steps(1)
 
 
 def _build(

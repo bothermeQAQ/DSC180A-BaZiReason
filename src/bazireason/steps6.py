@@ -25,6 +25,23 @@ from bazireason import textstyle
 from bazireason.conventions import BRANCHES, CYCLE, STEMS
 
 PILLARS = ("year", "month", "day", "hour")
+# Derivation version. 1: the screening runs and U1. 2 (preregistration 10.5): three steps that
+# S1 got wrong on training wordings are written out further; answers are unchanged.
+_STEPS = [1]
+STATE_OF_POSITION = {"比劫": "旺", "印": "相", "食伤": "休", "财": "囚", "官杀": "死"}
+CONTROL_ORDER = "相克次序：木克土、土克水、水克火、火克金、金克木"
+
+
+def set_steps(version: int) -> None:
+    if version not in (1, 2):
+        raise ValueError(version)
+    _STEPS[0] = version
+
+
+def steps_version() -> int:
+    return _STEPS[0]
+
+
 POS = R.POSITION_ZH
 RANK = ("本气", "中气", "余气")
 CLASS_OF_RELATION = {"same": "比劫", "out": "食伤", "wealth": "财", "power": "官杀", "seal": "印"}
@@ -216,6 +233,14 @@ def strength_lines(pillars: dict) -> tuple:
         f"日主{attr(day)}；月支{mb}属{season}。",
         f"得令：{seasonal_sentence(mine, mb)}；旺或相才得令 → {'是' if info['得令'] else '否'}。",
     ]
+    if _STEPS[0] >= 2:  # the positions are written first; 得令 and 得势 are read from them
+        position = D.element_class(day, season)
+        lines[1:] = [
+            f"五行位次：从{mine}起按相生次序，{K.class_chain(day)}；"
+            "比劫位旺、印位相、食伤位休、财位囚、官杀位死。",
+            f"得令：月令{season}在{position}位 → {STATE_OF_POSITION[position]}；"
+            f"旺或相才得令 → {'是' if info['得令'] else '否'}。",
+        ]
     roots = []
     for p in PILLARS:
         b = pillars[p][1]
@@ -235,10 +260,15 @@ def strength_lines(pillars: dict) -> tuple:
         s = pillars[p][0]
         _, cls = relation_step(day, s)
         ok = cls in ("比劫", "印")
-        helpers.append(f"{POS[p]}干{s}（{R.STEM_ELEMENT[s]}）是{cls}{'，算' if ok else '，不算'}")
+        how = "在" + cls + "位" if _STEPS[0] >= 2 else "是" + cls
+        helpers.append(f"{POS[p]}干{s}（{R.STEM_ELEMENT[s]}）{how}{'，算' if ok else '，不算'}")
     n = len(info["supporting_stem_pillars"])
     lines.append(
-        "得势（其余三干中比劫或印的个数）："
+        (
+            "得势（其余三干中在比劫位或印位的个数）："
+            if _STEPS[0] >= 2
+            else "得势（其余三干中比劫或印的个数）："
+        )
         + "；".join(helpers)
         + f"。共 {n} 个，至少两个才算 → {'是' if info['得势'] else '否'}。"
     )
@@ -410,7 +440,25 @@ def flow_lines(pillars: dict, year: int) -> list:
         for p in PILLARS
         if "".join(sorted((fb, pillars[p][1]), key=BRANCHES.index)) in R.BRANCH_CLASHES
     ]
-    if clash:
+    if _STEPS[0] >= 2:  # name the clashing pillars, write the 相克 order, then judge
+        parts = []
+        for p in clash:
+            e1, e2 = R.STEM_ELEMENT[fs], R.STEM_ELEMENT[pillars[p][0]]
+            if e1 == e2:
+                how = f"同为{e1}，不相克 → 不算"
+            elif R.CONTROLS[e1] == e2 or R.CONTROLS[e2] == e1:
+                a, b = (e1, e2) if R.CONTROLS[e1] == e2 else (e2, e1)
+                how = f"{a}克{b}在次序里，相克 → 天克地冲"
+            else:
+                how = f"{e1}、{e2}不在次序里，不相克 → 不算"
+            assert ("天克地冲" in how) == D.clash_with_control(pillars[p], flow)
+            parts.append(f"{R.PILLAR_ZH[p]}{pillars[p]}：天干{fs}{e1}与{pillars[p][0]}{e2}，{how}")
+        named = "、".join(R.PILLAR_ZH[p] for p in clash) or "没有"
+        lines.append(
+            f"天克地冲（地支相冲且天干相克）：上面与流年支{fb}相冲的柱：{named}"
+            + ("。" + CONTROL_ORDER + "。" + "；".join(parts) + "。" if clash else " → 无。")
+        )
+    elif clash:
         parts = []
         for p in clash:
             e1, e2 = R.STEM_ELEMENT[fs], R.STEM_ELEMENT[pillars[p][0]]
@@ -463,8 +511,30 @@ def domain_lines(pillars: dict, gender: str, domain: str, first: int) -> list:
         ]
         if inside:
             hidden.append(f"{POS[p]}支{pillars[p][1]}藏{'、'.join(inside)}")
-    lines.append("藏干里：" + ("；".join(hidden) if hidden else "不见") + "。")
-    if palace:
+    if _STEPS[0] >= 2:  # every hidden stem with its Ten God first, then the relevant ones
+        every, picked = [], []
+        for p in PILLARS:
+            b = pillars[p][1]
+            every.append(
+                f"{POS[p]}支{b}藏" + "、".join(h + R.ten_god(day, h) for h in R.HIDDEN_STEMS[b])
+            )
+            picked += [
+                f"{POS[p]}支{b}的{h}" for h in R.HIDDEN_STEMS[b] if R.ten_god(day, h) in gods
+            ]
+        lines.append(
+            "四支藏干逐一查表："
+            + "；".join(every)
+            + f"。其中是{'或'.join(gods)}的：{'、'.join(picked) or '没有'}。"
+        )
+    else:
+        lines.append("藏干里：" + ("；".join(hidden) if hidden else "不见") + "。")
+    if palace and _STEPS[0] >= 2:  # the palace branch's card before the yearly look-ups
+        pb = pillars[palace][1]
+        lines.append(
+            f"{palace_name}为{pb}。宫位卡片：{D.branch_card_text(pb)}。"
+            f"约定：流年天干是{'或'.join(gods)}为星现，流年支在{pb}卡的冲或六合里为宫动。"
+        )
+    elif palace:
         pb = pillars[palace][1]
         lines.append(
             f"{palace_name}为{pb}；约定：流年天干是{'或'.join(gods)}为星现，流年支与{pb}相冲或六合为宫动。"
@@ -484,6 +554,19 @@ def domain_lines(pillars: dict, gender: str, domain: str, first: int) -> list:
         god = R.ten_god(day, flow[0])
         reasons = ["星现"] if god in gods else []
         row = f"{year}：{step}；{flow[0]}为{god}{'，在' + '、'.join(gods) + '中' if god in gods else ''}"
+        if _STEPS[0] >= 2:  # each conclusion directly after the check it rests on
+            if god in gods:
+                row += " → 星现"
+            if palace:
+                keys = R.branch_pair_relations(flow[1], pillars[palace][1])
+                row += f"；{lookup(pillars[palace][1], flow[1])}"
+                if any(k.startswith(("冲:", "六合:")) for k in keys):
+                    row += " → 宫动"
+                    reasons.append("宫动")
+            if reasons:
+                hits.append(year)
+            rows.append(row)
+            continue
         if palace:
             keys = R.branch_pair_relations(flow[1], pillars[palace][1])
             moved = any(k.startswith(("冲:", "六合:")) for k in keys)

@@ -31,7 +31,10 @@ STEPS = (
     ("p6s2", "p6s1", "wording"),
     ("p6s3", "p6s2", "evidence and self-check"),
 )
-CONTINUATIONS = ("p6u3", "p6u4", "p6u5")
+# Round-2 chain (sections 10.2 and 10.5): the first level is a fork with two arms.
+LEVELS = (("p6u3", "p6u3v"), ("p6u4",), ("p6u5",), ("p6u6",), ("p6u7",), ("p6u8",), ("p6u9",), ("p6u10",))  # fmt: skip
+ARM_OPTIONS = {"p6u3v": "--steps 2"}
+CONTINUATIONS = tuple(lab for level in LEVELS for lab in level)
 ORDER = ("p6s1", "p6s2", "p6s3", "p6u1", "p6u1hi", "p6u2", *CONTINUATIONS)  # earlier runs first
 DROP_NAMES = {
     "wording": ["wording", "contrast"],
@@ -170,35 +173,56 @@ def structure():
 
 
 def nxt():
-    """Round-2 loop (section 10.2). The first continuation starts from the best of U1, U1-hi
-    and U2 on dev6; a continuation that beats its parent on dev6 becomes the next parent;
-    at most three continuations. Prints "<recipe> <parent recipe>" or "stop"."""
-    done = [lab for lab in CONTINUATIONS if M.rule_records("dev6", lab)]
+    """Round-2 loop (sections 10.2 and 10.5).
+
+    The first level starts from the best of U1, U1-hi and U2 on dev6. Each later level starts
+    from the best arm of the level before it. The loop ends when two levels in a row fail to
+    exceed the best dev6 accuracy reached so far in the chain (the first parent included), or
+    after the last level. Prints one line per arm, "<recipe> <parent recipe> [options]", or
+    "stop"."""
     score = lambda lab: M.correct(M.rule_records("dev6", lab))  # noqa: E731
+    done = [[lab for lab in level if M.rule_records("dev6", lab)] for level in LEVELS]
+    done = done[: next((i for i, arms in enumerate(done) if not arms), len(done))]
+    entry = {"decision": "next", "level": len(done) + 3, "runs": [], "parent": None}
     if not done:
         if not M.rule_records("dev6", "p6u2"):
             sys.exit("U2 has no dev6 result yet")
         pool = [lab for lab in ("p6u1", "p6u1hi", "p6u2") if M.rule_records("dev6", lab)]
         parent = best(pool, "dev6")
-        entry = {"decision": "next", "next": "u3", "parent": parent[2:],
-                 "dev6_correct": {lab: score(lab) for lab in pool}}  # fmt: skip
+        entry["dev6_correct"] = {lab: score(lab) for lab in pool}
     else:
-        last = done[-1]
-        parent = "p6" + P6.manifest(last[2:])["parent"]
-        better = score(last) > score(parent)
-        following = CONTINUATIONS[len(done)] if len(done) < len(CONTINUATIONS) else None
-        entry = {"decision": "next", "next": following[2:] if better and following else None,
-                 "parent": last[2:] if better and following else None,
-                 "dev6_correct": {last: score(last), parent: score(parent)},
-                 "child_minus_parent": paired("dev6", parent, last)}  # fmt: skip
+        first = "p6" + P6.manifest(done[0][0][2:])["parent"]
+        top, strikes, tops = score(first), 0, []
+        for arms in done:
+            parent = best(arms, "dev6")
+            tops.append(parent)
+            if score(parent) > top:
+                top, strikes = score(parent), 0
+            else:
+                strikes += 1
+        entry["dev6_correct"] = {
+            first: score(first),
+            **{a: score(a) for arms in done for a in arms},
+        }
+        entry["levels_without_a_new_best"] = strikes
+        if strikes >= 2 or len(done) == len(LEVELS):
+            parent = None
+    if parent:
+        entry["parent"] = parent[2:]
+        entry["runs"] = [lab[2:] for lab in LEVELS[len(done)]]
     record(entry)
-    print(f"{entry['next']} {entry['parent']}" if entry["next"] else "stop")
+    lines = [
+        f"{run} {entry['parent']} {ARM_OPTIONS.get('p6' + run, '')}".strip()
+        for run in entry["runs"]
+    ]
+    print("\n".join(lines) if lines else "stop")
 
 
 def sealed_extra():
-    """Section 10.4: the sealed L0 runs added by round 2 (U1, U2 and every ancestor of M)."""
+    """Sections 10.4 and 10.5: the sealed L0 runs added by round 2 (U1, U2, the two arms of
+    the fork and every ancestor of M)."""
     m = json.loads((ROOT / "selection.json").read_text())["selected"]
-    labels = ["p6u1", "p6u2", *("p6" + r for r in P6.lineage(m[2:])[1:])]
+    labels = ["p6u1", "p6u2", "p6u3", "p6u3v", *("p6" + r for r in P6.lineage(m[2:])[1:])]
     keep = [lab for lab in dict.fromkeys(labels) if lab != m and M.rule_records("dev6", lab)]
     print(" ".join(keep))
 
@@ -207,7 +231,7 @@ def select():
     screening = json.loads((ROOT / "screening.json").read_text())
     pool = dict.fromkeys(
         (screening["best_s_run_on_dev6"], "p6u1", "p6u1hi", "p6u2", *CONTINUATIONS)
-    )  # section 10.4
+    )  # sections 10.4 and 10.5
     candidates = [lab for lab in pool if M.rule_records("valid6", lab)]
     p2 = M.load("valid6", "p2", "calendar")
     table = {}

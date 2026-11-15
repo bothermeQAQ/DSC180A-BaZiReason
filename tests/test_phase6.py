@@ -266,6 +266,11 @@ def test_round2_builds_swap_the_prompt_block_sample_b_and_follow_the_weights():
     procedures = [r for r in weighted if r["family"] == "procedure"]
     heads = [T6.head_of(r["meta"]["intent"]) for r in procedures]
     assert heads.count("flow") > len(heads) / 2
+    # Derivation version 2 is used only when asked for, and the default is restored afterwards.
+    second = T6.build("s3", 120_000, 8, steps=2, **options, **kwargs)
+    assert any("相克次序" in r["messages"][-1]["content"] for r in second)
+    assert not any("相克次序" in r["messages"][-1]["content"] for r in weighted)
+    assert T6.digest(long_rows) == T6.digest(T6.build("s3", 120_000, 7, **kwargs))
     assert {r["meta"]["source"] for r in procedures} == {"template", "paraphrase"}
     assert not any(T6.chart_of(r) in block for r in weighted)
 
@@ -310,7 +315,7 @@ def test_round2_loop_structure_and_selection_follow_the_preregistered_rules(
 
     size = {"p6u1hi": 33_000_000}
     log = []
-    parents = {"u3": {"parent": "u2"}, "u4": {"parent": "u3"}, "u5": {"parent": "u4"}}
+    parents = {"u3": {"parent": "u2"}, "u3v": {"parent": "u2"}}
     monkeypatch.setattr(D.M, "rule_records", records)
     monkeypatch.setattr(D, "parameters", lambda lab: size.get(lab, 14_680_064))
     monkeypatch.setattr(D, "record", log.append)
@@ -322,27 +327,42 @@ def test_round2_loop_structure_and_selection_follow_the_preregistered_rules(
     def said():
         return capsys.readouterr().out.strip()
 
-    # The first continuation starts from the best of U1, U1-hi and U2 on dev6.
+    # The first level is a fork from the best of U1, U1-hi and U2 on dev6.
     right.update({("dev6", "p6u1"): 60, ("dev6", "p6u2"): 62})
     gap = [0.01, 0.05]
     D.nxt()
-    assert said() == "u3 u2"
+    assert said() == "u3 u2\nu3v u2 --steps 2"
     right[("dev6", "p6u1hi")] = 62  # a tie goes to the smaller adapter
     D.nxt()
-    assert said() == "u3 u2"
+    assert said().splitlines()[0] == "u3 u2"
     right[("dev6", "p6u1")] = 62  # then to the earlier run
     D.nxt()
-    assert said() == "u3 u1"
-    # A continuation that beats its parent becomes the next parent; otherwise the loop ends.
-    right[("dev6", "p6u3")] = 64
+    assert said().splitlines()[0] == "u3 u1"
+    right[("dev6", "p6u1")] = 60
+    # The chain continues from the better arm of the fork (a tie goes to U3).
+    right.update({("dev6", "p6u3"): 64, ("dev6", "p6u3v"): 65})
+    D.nxt()
+    assert said() == "u4 u3v"
+    right[("dev6", "p6u3v")] = 64
     D.nxt()
     assert said() == "u4 u3"
-    right[("dev6", "p6u4")] = 64
+    right[("dev6", "p6u3v")] = 65
+    # It goes on from the latest level, and ends after two levels in a row without a new best.
+    right[("dev6", "p6u4")] = 64  # not above 65: first level without a new best
+    D.nxt()
+    assert said() == "u5 u4"
+    right[("dev6", "p6u5")] = 65  # equal is not a new best: second in a row
     D.nxt()
     assert said() == "stop"
-    right.update({("dev6", "p6u4"): 66, ("dev6", "p6u5"): 70})  # at most three continuations
+    right[("dev6", "p6u5")] = 66  # a new best resets the count
     D.nxt()
-    assert said() == "stop"
+    assert said() == "u6 u5"
+    for k, lab in enumerate(("p6u6", "p6u7", "p6u8", "p6u9", "p6u10")):
+        right[("dev6", lab)] = 67 + k
+    D.nxt()
+    assert said() == "stop"  # at most eight levels
+    for lab in ("p6u5", "p6u6", "p6u7", "p6u8", "p6u9", "p6u10"):
+        del right[("dev6", lab)]
     # Structure: U1-hi's only when it beats U1 with a lower bound above 0.
     shape = {"layers": 36, "rank": 16, "grad_checkpoint": True}
     monkeypatch.setattr(D.build_train6, "structure_of", lambda recipe: shape)
@@ -367,6 +387,40 @@ def test_round2_loop_structure_and_selection_follow_the_preregistered_rules(
     assert chosen["passing_calendar_gate"] == ["p6s2", "p6u1", "p6u1hi", "p6u2", "p6u4"]
     assert chosen["selected"] == "p6u2"  # 66 three times: smaller than U1-hi, earlier than U4
     assert log and all(e["decision"] in ("next", "structure") for e in log)
+
+
+def test_derivation_version_2_keeps_every_answer_and_passes_the_claim_checker():
+    from bazireason import deep_rules as D
+    from bazireason import rules as R
+    from bazireason import splits6 as S
+    from bazireason import steps6 as S6
+    from bazireason.conventions import BRANCHES, STEMS
+    from bazireason.grounded import claim_failures
+    from bazireason.p2_prompts import extract_final_json
+
+    for day in STEMS:  # the position of the month's element gives the rule code's state
+        for branch in BRANCHES:
+            position = D.element_class(day, R.BRANCH_ELEMENT[branch])
+            assert S6.STATE_OF_POSITION[position] == R.seasonal_state(R.STEM_ELEMENT[day], branch)
+    rng = random.Random(20261117)
+    intents = ("strength", "flow:2037", "domain:marriage:2031", "domain:wealth:2029", "overview",
+               "yongshen:扶抑", "interact", "pattern", "gods", "fact:xun_kong")  # fmt: skip
+    changed = set()
+    for _ in range(40):
+        pillars, gender = S.random_pillars(rng), rng.choice(("male", "female"))
+        for intent in intents:
+            first, reference = S6.derive(intent, pillars, gender)
+            S6.set_steps(2)
+            try:
+                second, same = S6.derive(intent, pillars, gender)
+            finally:
+                S6.set_steps(1)
+            assert same == reference == extract_final_json(second), (intent, pillars)
+            assert claim_failures(second, pillars, gender) == [], (intent, pillars)
+            if first != second:
+                changed.add(intent.split(":")[0])
+    assert changed == {"strength", "flow", "domain", "overview", "yongshen"}
+    assert S6.steps_version() == 1
 
 
 def test_clean_fit_leaves_out_questions_whose_chart_was_trained_on(tmp_path, monkeypatch):

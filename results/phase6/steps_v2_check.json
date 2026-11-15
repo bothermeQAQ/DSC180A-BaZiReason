@@ -1,0 +1,43 @@
+{
+ "charts": 1000,
+ "derivations": 9000,
+ "answers_differ": 0,
+ "claim_failures": 0,
+ "tokens": {
+  "strength": {
+   "v1_max": 250,
+   "v2_max": 315,
+   "n": 1000,
+   "v1_mean": 243,
+   "v2_mean": 307
+  },
+  "yongshen": {
+   "v1_max": 304,
+   "v2_max": 368,
+   "n": 1000,
+   "v1_mean": 291,
+   "v2_mean": 355
+  },
+  "flow": {
+   "v1_max": 749,
+   "v2_max": 795,
+   "n": 2000,
+   "v1_mean": 646,
+   "v2_mean": 669
+  },
+  "domain": {
+   "v1_max": 819,
+   "v2_max": 936,
+   "n": 4000,
+   "v1_mean": 695,
+   "v2_mean": 782
+  },
+  "overview": {
+   "v1_max": 1000,
+   "v2_max": 1063,
+   "n": 1000,
+   "v1_mean": 899,
+   "v2_mean": 962
+  }
+ }
+}
