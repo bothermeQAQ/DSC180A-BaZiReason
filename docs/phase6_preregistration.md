@@ -126,3 +126,55 @@ Each entry was written before the result it could affect existed.
     3. rank 64 on the last 16 layers, reported under that description.
   - U1-hi uses exactly U1's data (same recipe, seed and options); the queue checks that the two training files are identical.
   - **valid6 runs.** Only what the selection rule reads: the candidates at L0 (rule items and calendar) and Phase 2 on calendar. The existing models' L1-L4 run on sealed6 (section 8), and on dev6 for A1 and U0.
+- **14 November, 20:50, while S1 was training (no screening result, no valid6 or sealed6 score):**
+  - **Fit share for the U1-hi rule.** The 2,400 fit questions (`scripts/phase6/own_replies.py`, sample A) are not all fresh for S2, S3 and U1. About 45% are training-writer questions on their original charts, which these runs train on, and S1's replies to the first part of the sample are the input of the self-check rows. The U1-hi rule of section 5 therefore reads the share over the sample-A questions whose chart is not in U1's training file (`scripts/phase6/fit_clean.py`). The full-sample share is still reported.
+  - **A second round of training is added** at the user's request: section 10. It changes the candidates of section 6 and adds sealed runs to section 8; no other rule changes. The sealed split stays closed until the second round has ended.
+
+## 10. Round 2 (added 14 November, 20:50)
+
+Written while S1 was training. The dev6 results of the base, Phase 2, A1, G1 and U0 existed; no S result, no valid6 score and no sealed6 score existed. The user asked for improvements to the training and approved this round; it replaces the stopping rule of section 5 for the runs listed here, and no training run follows it.
+
+### 10.1 Measurements behind it
+
+- **Compute goes to a fixed prompt.** In the S1 training file, 41% of the content tokens are system prompts and 43% are the final reply, the only part with a training loss (`results/phase6/token_share.json`). The main system prompt (279 tokens, the same in 89% of the rows) is 34% of the tokens.
+- **The models under-fit.** A1 answers 80.8% of its own training rows (`results/phase6/diag_fit.json`). U0, with 6.0 M tokens, is 20.2 points below A1 on dev6, and A1 is the end of six sequential rounds (the seven rounds up to G1 used about 21.7 M tokens).
+- **Tokenization is not a cause:** each stem and branch is one token and no stem-branch pair is merged (`token_share.json`).
+
+### 10.2 Runs
+
+| Run | Starts from | Data | Budget |
+|---|---|---|---:|
+| U2 | the untuned base | U1's recipe and options with the short system prompt | 15 M sequence tokens, as U1 |
+| U3, U4, U5 | the parent's adapter | the parent's recipe, question types reweighted by the parent's measured errors | 6.0 M each |
+
+- **Short system prompt:** `你是 BaZiReason，可核验的八字历法与规则推理助手。先写依据，最后一行以“结论JSON:”开头给出 JSON 对象。` (36 tokens).
+  - It replaces the main system prompt in every training row that has it. The system prompts of the strict-format calendar tasks and of the multiple-choice task are unchanged, because they define another output format.
+  - It contains no chart-specific information. At every level, in calendar rows and inside L5, a model receives the system prompt it was trained with; nothing else in a prompt changes.
+- **U2:** seed 2026111715; U1's settings.
+  - At the same token budget it holds about 1.4 times as many rows as U1.
+  - To keep U1's 45% share of natural wordings, it adds a third set of training-writer questions, `train6c` (same writer, descriptions and personas; another seed; 220 per class).
+- **Adapter structure of round 2:** rank 16 on the last 16 layers. If U1-hi was trained and U1-hi minus U1 on dev6 L0 (all rule items) has a paired 95% lower bound above 0, round 2 uses U1-hi's structure instead.
+- **Fit sample B** (`own_replies.py --sample b`): 2,000 questions, 100 for each of the generator's 20 question types, in training template wordings on fresh training-year charts (seed 2026111791).
+  - No row of it is ever training input. Its charts are excluded from every round-2 training set; for runs built earlier, a question whose chart is in the run's training file is left out of the score.
+- **Continuations (U3, U4, U5):**
+  - **Parent of U3:** the run with the highest dev6 L0 accuracy on all rule items among U1, U1-hi and U2. Ties go to the smaller adapter, then to the earlier run.
+  - **Weights:** the parent answers sample B. For question type *h* with *n* scored questions and *w* wrong, the error is (*w* + 1) / (*n* + 2). The type's weight in the procedure rows is its recipe weight times max(error, 0.05), for template and natural wordings alike. When the unused natural questions of a type run out, template questions on fresh charts replace them.
+  - **Unchanged:** every other component keeps the parent recipe's share; a continuation keeps its parent's options, system prompt and adapter structure; the parent's files are not modified.
+  - **Settings:** learning rate 1e-4 with cosine decay to 1e-5 and 40 warm-up updates; seeds 2026111716, …717 and …718; otherwise as U1.
+  - **Loop:** a continuation whose dev6 L0 accuracy on all rule items is higher than its parent's becomes the next parent; otherwise the loop ends. At most three continuations. No run starts after 27 November.
+- **Runs after each training run:** dev6 L0 and valid6 L0 on rule items and calendar rows, and sample B for a parent.
+
+### 10.3 Hypotheses (secondary)
+
+| | Hypothesis | Tested by |
+|---|---|---|
+| H7 | At equal compute, a short system prompt gives a better model, because more of the budget is training examples | U2 against U1 at L0 (rule items; calendar reported next to it) |
+| H8 | Continuing with the failing question types weighted up improves the model further | each continuation against its parent at L0 |
+
+Both are read on dev6 during the round and confirmed on sealed6 (supported when the paired 95% lower bound is above 0). P-1 remains the one success criterion.
+
+### 10.4 Selection and sealed runs
+
+- **Candidates (replaces the list in section 6):** the best S run on dev6, U1, U1-hi if trained, U2 and every continuation. The calendar gate and the rule are unchanged. "Smaller adapter" means fewer trainable parameters.
+- **Sealed runs (added to section 8):** L0 on rule items and calendar rows for U1, U2 and every ancestor of M. On sealed6, H7 is U2 minus U1, and H8 is M minus the parent of the first continuation in its chain, if M is a continuation.
+- `selection.json` is written once, after round 2 has ended, and the sealed split is opened only after it.

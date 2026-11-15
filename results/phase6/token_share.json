@@ -1,0 +1,64 @@
+{
+ "main_system_prompt_tokens": 279,
+ "files": {
+  "s1": {
+   "rows": 7922,
+   "content_tokens": 5879815,
+   "tokens": {
+    "system": 2410641,
+    "user": 907253,
+    "earlier_replies": 26908,
+    "final_reply": 2535013
+   },
+   "share": {
+    "system": 0.41,
+    "user": 0.1543,
+    "earlier_replies": 0.0046,
+    "final_reply": 0.4311
+   },
+   "rows_with_main_system_prompt": 7069,
+   "main_system_prompt_share": 0.3354
+  },
+  "s2": {
+   "rows": 8161,
+   "content_tokens": 5875149,
+   "tokens": {
+    "system": 2463440,
+    "user": 926799,
+    "earlier_replies": 102506,
+    "final_reply": 2382404
+   },
+   "share": {
+    "system": 0.4193,
+    "user": 0.1577,
+    "earlier_replies": 0.0174,
+    "final_reply": 0.4055
+   },
+   "rows_with_main_system_prompt": 7297,
+   "main_system_prompt_share": 0.3465
+  },
+  "u0": {
+   "rows": 7810,
+   "content_tokens": 5879670,
+   "tokens": {
+    "system": 2422798,
+    "user": 1685564,
+    "earlier_replies": 37459,
+    "final_reply": 1733849
+   },
+   "share": {
+    "system": 0.4121,
+    "user": 0.2867,
+    "earlier_replies": 0.0064,
+    "final_reply": 0.2949
+   },
+   "rows_with_main_system_prompt": 6552,
+   "main_system_prompt_share": 0.3109
+  }
+ },
+ "tokenization": {
+  "single_characters_not_one_token": [],
+  "pairs_merged_into_one_token": [],
+  "pairs_checked": 60
+ }
+}
