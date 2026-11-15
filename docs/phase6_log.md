@@ -42,3 +42,12 @@ Decisions, surprises and negative results, in order. Plan: [`phase6_execution_pr
 - **Queues:** `queue_u1.sh` waits for the screening queue, applies the frozen screening rule (`decide6.py screen`), writes `train6b`, builds and trains U1, runs its fit check, dev6 L0 and the valid6 runs the selection rule reads. It stops if small steps lose to U0, since the rule then leaves U1's recipe undefined.
 - **Truncation** (`scripts/phase6/truncation6.py`): on dev6 the untuned base reaches the 1,100-token cap on 412 of 822 rule items and the 700-token cap on 214 of 219 calendar rows; every cut-off reply scores wrong. The base's low L0 score is partly a format and length failure. The tuned models are cut off on under 1.1%.
 - **Retention panel** (`scripts/phase6/panel6.py`): 80 dev6 rule items (4 per question type) and 40 calendar rows, scored at saved checkpoints. Diagnostic only.
+- **U0 finished** (17:51; 3,905 iterations in 4.0 hours; peak memory 23.3 GB; validation loss 0.0157 at the last checkpoint, which the trainer selected).
+- **U0 on dev6, model alone (L0)** — a development result; the pre-registered H1 test is on sealed6:
+  - **Rule items:** 331/822 (40.3%), 20.2 points below A1 [16.7, 23.9] and 26.2 above the base.
+  - **Calendar:** 136/219 (62.1%), 11.9 points below Phase 2 [4.7, 18.7], level with A1.
+  - **So one joint run on the earlier data reproduces neither specialist** at this budget. The budgets differ: U0 saw 6.0 M tokens sampled from the earlier files, while A1 is the end of six sequential rounds (the seven rounds up to G1 used about 21.7 M tokens). The comparison that the screening uses, S1 against U0, has equal budgets.
+  - **Where U0 falls short of A1:** the multi-step types (flow years 10% against 47%, Ten Gods 12% against 54%, pattern 31% against 72%) and the template wordings (29.2% against 61.8%).
+  - **Computed statements:** wrong in 20.9% of the checked statements (A1 15.1%), including 旬空 in 35 of 43.
+- **S1 started** (18:17; 7,922 rows, 5,992,693 sequence tokens, 3,961 iterations).
+- **Report script:** the training table now skips a run until its first validation loss exists.

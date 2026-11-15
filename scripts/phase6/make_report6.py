@@ -499,6 +499,8 @@ def training_section(lines, summary):
     block = {}
     for path in plans:
         plan = json.loads(path.read_text())
+        if not (path.parent / "metrics.jsonl").exists():
+            continue
         mets = [
             json.loads(x)
             for x in (path.parent / "metrics.jsonl").read_text().splitlines()
@@ -506,7 +508,7 @@ def training_section(lines, summary):
         ]
         train = [m for m in mets if m["kind"] == "train"]
         valid = [m for m in mets if m["kind"] == "valid"]
-        if not train:
+        if not train or not valid:
             continue
         last = train[-1]["iteration"]
         tail = [m["train_loss"] for m in train if m["iteration"] > last - 200]
