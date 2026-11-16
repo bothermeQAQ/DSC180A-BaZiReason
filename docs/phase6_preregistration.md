@@ -250,3 +250,13 @@ Written after the screening queue and the larger-base pilot had finished, and be
 - **U1 as registered** (S3's recipe, 15 M tokens, long prompt) is trained after the chain. **U1-hi** is not queued; it may be started by hand under the condition of section 5, and if it is not run H5 is reported as untested.
 - **Candidates for selection (replaces 10.4):** the best S run on dev6, S2s, U1, U1-hi and U2 if trained, and every run of the chain. The gate and the rule are unchanged.
 - **Sealed L0 runs (replaces the additions of 10.4, 10.5 and 11):** S2 and S2s (H7), U3 and U3v (H9), S1 and S1-8B (H10), U1, U2 and every ancestor of M.
+
+### 12.5 Calendar decisions weighted by measured error (15 November, 23:03)
+
+Written while S2s was training (no result of it read) and before any continuation existed.
+
+- **Why:** every Phase 6 model is about 10 points below Phase 2 on the dev6 calendar rows, and the errors sit in a few kinds of request. S2 answers 13 of 40 day-boundary requests (Phase 2: 24), 9 of 20 invalid requests (16) and none of 8 requests that need a time-zone tool (7), and it gives a definite chart in 50 of the 74 requests where none exists.
+- **Fit sample C** (`own_replies.py --sample c`): fresh calendar requests from the training generator (seed 2026111792), up to 40 for each cell, a cell being a request family with its expected status (for example day boundary with status ambiguous). It is never training input: a training request with the same text is left out.
+- **Weights:** the parent answers sample C. For a cell with *n* scored requests and *w* wrong, the error is (*w* + 1) / (*n* + 2); the cell's weight is max(error, 0.05) divided by the mean of that value over the cells. In a continuation the calendar rows are drawn from a pool twice as large as before, with these weights; rows of other calendar tasks keep weight 1. The calendar share of the mixture does not change.
+- **Scope:** every continuation of the chain, both arms of the fork included (they get the same weights). If the sample cannot be scored for a technical reason, the continuation is built without calendar weights and the manifest says so.
+- **Reading:** H8 (each continuation against its parent) now covers both kinds of weights; the calendar difference is reported next to the rule items.
