@@ -301,3 +301,16 @@ Written while U2 was training (iteration 9,220 of 14,887), before any result of 
   - **U2 minus S2:** the best screening run; it also differs in the system prompt.
 - **Why no hypothesis:** the budget is not varied alone, and no target was set before the run was built.
 - **valid6 is not shown before the selection.** The queue scores every candidate on valid6 after dev6. From now on `run6.py` prints the valid6 line without the count of right answers, and `make_report6.py` writes the valid6 tables only when `results/phase6/selection.json` exists. The records on disk, the gate and the selection rule are unchanged.
+
+### 12.9 After U2: a second reading for H9 (16 November, 15:20)
+
+Written after U2's dev6 result and before the fork existed: no data, weights or run of U3 or U3v, and no fit sample of U2.
+
+- **U2 on dev6, model alone:** 733 of 822 rule items (89.2%) and 182 of 219 calendar rows (83.1%). U2 minus S2s: +9.1 points [+6.1, +12.2] on the rule items and +20.5 [+12.7, +27.8] on the calendar rows. Of its 89 wrong answers, 50 are held-out combinations and 15 are area-of-life items.
+- **What the replies show:** in 35 of U2's 46 area-of-life replies, the step that names the hidden stems carrying the wanted Ten Gods names a stem that the branch does not hide (S1 14, S2 14, S2s 22 of 46). The answer is still right in 24 of the 35, because the final JSON does not carry that step. With more training on version 1 this step got worse; version 2 (10.5) writes the hidden stems of all four branches before it selects.
+- **Second reading for H9, on dev6 and sealed6 at L0:** U3v minus U3 in
+  - the share of rule-item replies with at least one wrong statement by the claim checker (`bazireason.claim_check`; repetitions are not statements), and
+  - the share of area-of-life replies with a wrong hidden-stem statement,
+  paired by item with the same bootstrap as the accuracy differences (`make_report6.statement_pair`).
+- **The test of H9 is unchanged:** answer accuracy on the items whose derivation changed (12.6). The second reading is reported next to it and decides nothing in the chain.
+- **Nothing else changes:** the fork, its weights, seeds and budgets, and the chain's rules are as registered.

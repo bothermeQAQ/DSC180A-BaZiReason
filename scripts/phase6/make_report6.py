@@ -486,6 +486,7 @@ def claim_counts(split, lab):
         return _CLAIMS[(split, lab)]
     items = {it["id"]: it for p in RULE_PARTS for it in run6.load_items(split, p)}
     checked, wrong, replies_bad, loops = Counter(), Counter(), 0, 0
+    bad_ids, bad_hidden_ids = [], []
     recs = rule_records(split, lab)
     for r in recs:
         meta = items[r["id"]]["meta"]
@@ -493,7 +494,11 @@ def claim_counts(split, lab):
         for c in claims:
             checked[c["kind"]] += 1
             wrong[c["kind"]] += not c["ok"]
-        replies_bad += any(not c["ok"] for c in claims if c["kind"] != "repetition")
+        if any(not c["ok"] for c in claims if c["kind"] != "repetition"):
+            replies_bad += 1
+            bad_ids.append(r["id"])
+        if any(not c["ok"] for c in claims if c["kind"] == "hidden"):
+            bad_hidden_ids.append(r["id"])
         loops += W.has_loop(r["raw_output"])
     out = {
         "checked": dict(checked),
@@ -501,6 +506,8 @@ def claim_counts(split, lab):
         "replies_with_wrong": replies_bad,
         "n": len(recs),
         "loops": loops,
+        "wrong_reply_ids": bad_ids,
+        "wrong_hidden_ids": bad_hidden_ids,
     }
     _CLAIMS[(split, lab)] = out
     return out
@@ -731,6 +738,48 @@ def round2_compare_section(lines, summary, split):
     ]
 
 
+def statement_pair(split, a, b):
+    """Paired differences b − a in the share of replies with a wrong statement (lower is better):
+    all rule items, and area-of-life replies with a wrong hidden-stem statement."""
+    ra, rb = rule_records(split, a), rule_records(split, b)
+    if not ra or not rb or {r["id"] for r in ra} != {r["id"] for r in rb}:
+        return None
+    ca, cb = claim_counts(split, a), claim_counts(split, b)
+    out = {}
+    for title, key, keep in (
+        ("all rule items: replies with a wrong statement", "wrong_reply_ids", lambda r: True),
+        ("area-of-life items: replies with a wrong hidden-stem statement", "wrong_hidden_ids",
+         lambda r: str(r["intent"]).startswith("domain")),
+    ):  # fmt: skip
+        fa, fb = set(ca[key]), set(cb[key])
+        sa = [{"id": r["id"], "group": r["id"], "correct": r["id"] in fa} for r in ra if keep(r)]
+        sb = [{"id": r["id"], "group": r["id"], "correct": r["id"] in fb} for r in rb if keep(r)]
+        d = paired_difference(sa, sb)
+        out[title] = {"a": sum(s["correct"] for s in sa), "b": sum(s["correct"] for s in sb), "n": len(sa), "difference": d}  # fmt: skip
+    return out
+
+
+def fork_statements_section(lines, summary, split):
+    """Second reading of H9 (preregistration 12.9): wrong statements in the replies of the fork's arms."""
+    a, b = "p6u3", "p6u3v"
+    pair = statement_pair(split, a, b)
+    if not pair:
+        return
+    lines += [f"### H9, second reading (`{split}`, L0): replies with a wrong statement (claim checker; lower is better)\n",
+              f"| | {name(a)} | {name(b)} | {name(b)} minus {name(a)}, points [95%] |", "|---|---:|---:|---|"]  # fmt: skip
+    for title, v in pair.items():
+        d = v["difference"]
+        iv = d["interval95"]
+        cell = f"{100 * d['difference']:+.1f}" + (
+            f" [{100 * iv[0]:+.1f}, {100 * iv[1]:+.1f}]" if iv else ""
+        )
+        lines.append(
+            f"| {title[0].upper() + title[1:]} | {pct(v['a'], v['n'])} | {pct(v['b'], v['n'])} | {cell} |"
+        )
+    lines.append("")
+    summary.setdefault("h9_statements", {})[split] = pair
+
+
 def primary_section(lines, summary, split):
     sel = ROOT / "selection.json"
     if split != "sealed6" or not sel.exists():
@@ -901,6 +950,7 @@ def main():
             primary_section,
             l0_section,
             round2_compare_section,
+            fork_statements_section,
             statements_section,
             truncation_section,
             wording_section,

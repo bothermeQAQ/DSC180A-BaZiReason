@@ -724,3 +724,29 @@ def test_selection_split_counts_stay_out_of_the_log_until_selection(tmp_path, mo
     assert run6.tally("p6u2", "sealed6", "rules", "L0", records, stats)["correct"] == 2
     (tmp_path / "selection.json").write_text("{}")
     assert run6.tally("p6u2", "valid6", "rules", "L0", records, stats)["correct"] == 2
+
+
+def test_second_reading_of_h9_counts_replies_with_wrong_statements(monkeypatch):
+    import make_report6 as M
+
+    recs = [
+        {"id": f"x{i}", "intent": "domain:wealth:2000" if i < 4 else "flow:2000", "part": "rules"}
+        for i in range(10)
+    ]
+    flags = {
+        "p6u3": {"wrong_reply_ids": ["x0", "x1", "x5"], "wrong_hidden_ids": ["x0", "x1", "x5"]},
+        "p6u3v": {"wrong_reply_ids": ["x5"], "wrong_hidden_ids": ["x5"]},
+    }
+    monkeypatch.setattr(M, "rule_records", lambda split, lab, level="L0": recs)
+    monkeypatch.setattr(M, "claim_counts", lambda split, lab: flags[lab])
+    pair = M.statement_pair("dev6", "p6u3", "p6u3v")
+    every = pair["all rule items: replies with a wrong statement"]
+    assert (every["a"], every["b"], every["n"]) == (3, 1, 10)
+    assert abs(every["difference"]["difference"] + 0.2) < 1e-9
+    # only area-of-life replies count in the second row: x5 is a flow-year item
+    area = pair["area-of-life items: replies with a wrong hidden-stem statement"]
+    assert (area["a"], area["b"], area["n"]) == (2, 0, 4)
+    lines, summary = [], {}
+    M.fork_statements_section(lines, summary, "dev6")
+    assert "second reading" in lines[0] and len(lines) == 6
+    assert summary["h9_statements"]["dev6"] == pair

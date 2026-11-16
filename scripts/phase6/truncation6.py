@@ -28,6 +28,8 @@ def main():
     out = {}
     for path in sorted(ROOT.glob("*6/*/*_L*.jsonl")):
         split, label = path.parts[-3], path.parts[-2]
+        if split == "valid6" and not (ROOT / "selection.json").exists():
+            continue  # selection only: nothing of valid6 is read before the selection
         part, level = path.stem.rsplit("_", 1)
         cap = CAPS.get(part, RULE_CAP)
         recs = [json.loads(x) for x in path.read_text(encoding="utf-8").splitlines()]
