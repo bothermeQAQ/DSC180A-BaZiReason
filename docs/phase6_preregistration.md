@@ -273,3 +273,21 @@ Written after S2s's dev6 result and while U2 was training (no result of it), bef
   - **Pattern:** for every hidden stem that appears among the stems, the text says whether its Ten God is 比劫 before it is taken or not.
   - **Relations:** all eight groups of three are listed with the branches that are present, then the complete ones are named.
 - **H9's items** are those whose derivation differs between the versions: strength, 用神, area-of-life, flow-year, overview, pattern, relations and life-stage items.
+
+### 12.7 Composition rows as an arm of the second chain level (16 November, 04:16)
+
+Written while U2 was training, before any continuation existed.
+
+- **Why:** the held-out combinations of trained rules are the weakest rule items of every model (S2 50 of 100, S2s 55, A1 48). The replies start the right sub-procedures and fail where they join. Neither more rows of the same mixture (S2s) nor a larger base (S1-8B: 41) helped.
+- **Composition rows** (`bazireason.compose6`): questions that carry the result of one trained procedure into another, written out in small steps, with every value from the rule code. Six kinds:
+  - the life stage of the day master at all four branches;
+  - the branch that clashes with a given branch, and the Ten Gods of its hidden stems;
+  - the direction of the luck cycle, its first pillar and that pillar's Ten God;
+  - the most frequent element of the eight characters and its Ten-God class;
+  - the relation between two given branches and the Ten Gods of their main hidden stems;
+  - the life stage and the seasonal state of the day master in the month.
+- **The held-out kinds stay held out:** no row is a flow-year life stage, a 旬空 position question, a revealed-hidden-stem question or a Ten-God count, and no kind ends with one of those four last operations on the same inputs. The existing test that no evaluation wording occurs in a training set covers these rows.
+- **Arm:** U4 as in 10.2 and 10.5, and U4c with the same parent, weights, seed and budget, in which 10% of the tokens are composition rows taken from the procedure share.
+  - **H11:** U4c minus U4 at L0 on the held-out combination items (dev6: 100; sealed6: 160), with all rule items next to it.
+  - The chain continues from whichever of the two has the higher dev6 accuracy on all rule items (a tie goes to U4) and keeps that run's mixture.
+- **Sealed L0 runs:** U4 and U4c are added.
