@@ -260,3 +260,16 @@ Written while S2s was training (no result of it read) and before any continuatio
 - **Weights:** the parent answers sample C. For a cell with *n* scored requests and *w* wrong, the error is (*w* + 1) / (*n* + 2); the cell's weight is max(error, 0.05) divided by the mean of that value over the cells. In a continuation the calendar rows are drawn from a pool twice as large as before, with these weights; rows of other calendar tasks keep weight 1. The calendar share of the mixture does not change.
 - **Scope:** every continuation of the chain, both arms of the fork included (they get the same weights). If the sample cannot be scored for a technical reason, the continuation is built without calendar weights and the manifest says so.
 - **Reading:** H8 (each continuation against its parent) now covers both kinds of weights; the calendar difference is reported next to the rule items.
+
+### 12.6 After the H7 twin: U2 as built, and derivation version 2 extended (16 November, 04:07)
+
+Written after S2s's dev6 result and while U2 was training (no result of it), before the fork (U3, U3v) existed. Version 2 had not been used in any run.
+
+- **H7 on dev6:** S2s minus S2 is +0.1 points [−2.9, +3.2] on the rule items (658 against 657 of 822) and −0.9 [−7.6, +6.0] on the calendar rows. The short prompt held 45% more rows in the same budget and gave no gain; it is not worse either, so by 12.4 U2 uses it.
+- **U2 as built:** 29,775 rows, 15.0 M tokens, with the planned shares. A first build held only 20% calendar rows instead of 30%, because the calendar generator's pool was exhausted (a short prompt holds more rows in the same tokens). It was stopped after six minutes of training, before any result, and rebuilt; the pool now grows with the budget, and every earlier set rebuilds bit for bit.
+- **What S2s's errors showed** (`results/phase6/first_error/dev6_p6s2s.json`): on the counterfactual life-stage items it answers 4 of 14 (S1 13 of 14). It writes the walk through the twelve stages correctly but ends it at the wrong branch; S1 wrote all twelve stages and read the answer off. On training wordings it also takes a 比肩 or 劫财 stem as the pattern (5 of 32 pattern items) and names a group of three branches that is not in the chart.
+- **Principle:** in version 2 no step chooses, while it is written, where to stop or what to leave out. Three steps are added to the three of 10.5; the rule code and every answer are unchanged.
+  - **Life stage:** all twelve stages are listed from the day master's 长生, then the branch is looked up.
+  - **Pattern:** for every hidden stem that appears among the stems, the text says whether its Ten God is 比劫 before it is taken or not.
+  - **Relations:** all eight groups of three are listed with the branches that are present, then the complete ones are named.
+- **H9's items** are those whose derivation differs between the versions: strength, 用神, area-of-life, flow-year, overview, pattern, relations and life-stage items.
