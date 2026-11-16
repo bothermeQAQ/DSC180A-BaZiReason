@@ -1,0 +1,36 @@
+# BaZiReason Phase 6, s1 on Qwen3-8B: the base-size pilot (preregistration section 11)
+# Trained from the untuned base (no init adapter). Data: scripts/phase6/build_train6.py.
+run_name: bazireason-qwen3-8b-lora-p6-s1
+model: models/qwen3-8b-mlx-4bit
+base_model:
+  repo: Qwen/Qwen3-8B-MLX-4bit
+  revision: 383413e909f3bc5303ce195ebbdf0339c5a1a2a3
+  license: Apache-2.0
+  quantization: "4-bit MLX weights as published by Qwen"
+data:
+  train: data/phase6/train/s1/train.jsonl
+  valid: data/phase6/train/s1/valid.jsonl
+  valid_rows: 120
+adapter_dir: artifacts/adapters/bazireason-qwen3-8b-lora-p6-s1
+log_dir: results/phase6/training/bazireason-qwen3-8b-lora-p6-s1
+seed: 2026111711
+fine_tune_type: lora
+num_layers: 16
+lora_parameters:
+  rank: 16
+  scale: 2.0
+  dropout: 0.05
+optimizer: adamw
+weight_decay: 0.01
+learning_rate: 2.0e-4      # as the first Phase 2 round: a fresh adapter from the base
+warmup_updates: 40
+end_learning_rate: 2.0e-5
+batch_size: 1
+grad_accumulation_steps: 4
+epochs: 1.0
+max_seq_length: 2048
+steps_per_report: 20
+steps_per_eval: 500
+steps_per_save: 500
+mask_prompt: true
+enable_thinking: false

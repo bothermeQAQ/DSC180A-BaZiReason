@@ -29,6 +29,7 @@ NAMES = {
     "p6u2": "U2 short prompt", "p6u3": "U3 continuation", "p6u3v": "U3v continuation, steps v2",
     **{f"p6u{k}": f"U{k} continuation" for k in range(4, 11)},
     "p8s1": "S1-8B (S1's data on Qwen3-8B)",
+    "p6s2s": "S2s (S2 with the short prompt)",
 }  # fmt: skip
 ORDER = list(NAMES)
 CONTINUATIONS = tuple(k for k in NAMES if k[:4] == "p6u3" or k[3:].isdigit() and int(k[3:]) >= 4)
@@ -612,7 +613,7 @@ def round2_section(lines, summary):
         block["token_share"] = d
     if log.exists():
         entries = json.loads(log.read_text())
-        lines += ["## Round-2 decisions (dev6, frozen rules: preregistration section 10)\n"]
+        lines += ["## Round-2 decisions (dev6, frozen rules: preregistration sections 10 and 12)\n"]
         for e in entries:
             if e["decision"] == "structure":
                 d = e["u1hi_minus_u1"]
@@ -621,15 +622,22 @@ def round2_section(lines, summary):
                 lines.append(
                     f"- **Adapter structure:** {e['options'] or 'rank 16 on the last 16 layers'} ({why})."
                 )
+            elif e["decision"] == "prompt":
+                cells = []
+                for key, label in (("s2s_minus_s2_rule_items", "rule items"), ("s2s_minus_s2_calendar", "calendar")):  # fmt: skip
+                    d = e[key]
+                    cells.append(f"{label} {100 * d['difference']:+.1f} [{100 * d['interval95'][0]:+.1f}, {100 * d['interval95'][1]:+.1f}]")  # fmt: skip
+                lines.append(f"- **U2's system prompt:** {e['options'].split()[-1]} (S2s minus S2: {'; '.join(cells)}).")  # fmt: skip
             else:
                 counts = ", ".join(f"{name(k)} {v}" for k, v in e["dev6_correct"].items())
+                runs = " and ".join(name("p6" + r) for r in e.get("runs", []))
                 what = (
-                    f"{name('p6' + e['next'])} continues {name('p6' + e['parent'])}"
-                    if e["next"]
+                    f"{runs} from {name('p6' + e['parent'])}"
+                    if e.get("parent")
                     else "the loop ends"
                 )
                 lines.append(
-                    f"- **Loop:** {what} (dev6 right answers on all rule items: {counts})."
+                    f"- **Chain, level {e.get('level', '?')}:** {what} (dev6 right answers on all rule items: {counts})."
                 )
         lines.append("")
         block["decisions"] = entries
@@ -656,7 +664,7 @@ def round2_section(lines, summary):
 
 def round2_compare_section(lines, summary, split):
     """H7 (U2 against U1), H8 (each continuation against its parent) and H9 (the fork) at L0."""
-    pairs = [("H7: short system prompt at equal compute", "p6u1", "p6u2")]
+    pairs = [("H7: short system prompt at equal compute (6.0 M-token twin)", "p6s2", "p6s2s")]
     for lab in CONTINUATIONS:
         manifest = Path("data/phase6/train") / lab[2:] / "manifest.json"
         if manifest.exists():

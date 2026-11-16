@@ -35,12 +35,14 @@ All numbers come from files under `results/phase6/`. The full tables are in [`re
 | H4: the model can learn to use evidence and check itself | S3 (S2 plus evidence and self-check rows) against S2 |
 | H5: adapter capacity limits the result | U1-hi against U1, only if U1 under-fits |
 | H6: the base model limits the result | accuracy on fresh training-distribution questions |
-| H7: at equal compute, a short system prompt gives a better model | U2 (U1's recipe with a 36-token system prompt) against U1 |
+| H7: at equal compute, a short system prompt gives a better model | S2s (S2's recipe, seed and 6.0 M-token budget with a 36-token system prompt) against S2 |
 | H8: continuing with the failing question types weighted up improves the model further | each continuation (U3-U10) against its parent |
 | H9: writing the steps S1 gets wrong out further fixes them | U3v (derivation version 2) against U3: the same parent, weights, seed and budget |
 | H10: the base model's size limits the result | S1-8B (S1's training file and settings on Qwen3-8B) against S1 |
 
 H7 and H8 belong to a second round that was added on 14 November, while S1 was training and before any screening or validation result existed (pre-registration, section 10). H9 was added the same evening after S1's error analysis, before any other screening result and before any round-2 run (section 10.5). H10 was added on 15 November, after the user approved downloading Qwen3-8B and before any run on it (section 11).
+
+**The plan was revised once after the screening** (pre-registration section 12, recorded before any of its runs existed). S3's added components gave no gain alone and lowered calendar and combination accuracy, so the runs that the final model comes from use S2's recipe; the registered U1, with S3's recipe, is still trained. H7 became a twin at 6.0 M tokens, which decides the prompt of the 15 M-token run. The same section records a failed data build on 15 November: one new training question was on an evaluation chart, the check stopped the build, and no result was affected.
 
 ### 3.2 Data
 
@@ -80,9 +82,10 @@ The runs of the first round start from the untuned base with the earlier adapter
 | S1 | 6.0 M | small-step procedures on fresh charts in template wordings; fresh calendar rows; 12% earlier other tasks |
 | S2 | 6.0 M | S1 plus natural wordings (45% of procedure rows), other chart formats and contrast rows |
 | S3 | 6.0 M | S2 plus evidence rows, reference checking, self-check rows from S1's own replies, matched calendar twins |
-| U1 | 15 M | the recipe chosen by the frozen screening rule |
+| U1 | 15 M | the recipe chosen by the frozen screening rule (S3's: nothing was dropped); trained after the chain |
 | U1-hi | 15 M | U1's data with all 36 layers, only if U1 under-fits |
-| U2 | 15 M | U1's recipe with the short system prompt: about 1.4 times as many rows in the same budget |
+| S2s | 6.0 M | S2's recipe with the short system prompt: 11,845 rows against 8,161 in the same budget |
+| U2 | 15 M | S2's recipe, the best of the screening, with the system prompt that the S2s twin decides |
 | U3-U10 | 6.0 M each | continuations of the latest run, with the question types reweighted by its measured errors; learning rate 1e-4 |
 | U3v | 6.0 M | U3 with derivation version 2 (the fork) |
 

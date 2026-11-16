@@ -36,6 +36,7 @@ SEEDS = {
     "s1": 2026111711,
     "s2": 2026111712,
     "s3": 2026111713,
+    "s2s": 2026111712,  # section 12.4: S2's seed, recipe and budget with the short system prompt
     "u1": 2026111714,
     "u1hi": 2026111714,
     "u2": 2026111715,
@@ -104,6 +105,7 @@ PURPOSE = {
         "a continuation weighted by its parent's measured errors (round 2)",
     ),
     "u3v": "u3 with derivation version 2 (round 2, the fork of preregistration 10.5)",
+    "s2s": "s2 with the short system prompt at the same token budget (the H7 twin, section 12.4)",
 }
 
 
@@ -254,9 +256,14 @@ def main():
     ]
     for extra in args.extra_paraphrases or []:
         paraphrases += [json.loads(x) for x in Path(extra).read_text(encoding="utf-8").splitlines()]
+    # A training-writer question on an evaluation chart is left out (section 12.2): the same
+    # four pillars can recur on a date of the training years.
+    kept = [p for p in paraphrases if S.chart_key(p["meta"]["pillars"]) not in exclude]
+    left_out, paraphrases = len(paraphrases) - len(kept), kept
     replies = load_replies(args.replies)
     options = {"calendar_share": args.calendar_share, "drop": tuple(args.drop)}
-    if recipe in ROUND2:
+    round2 = recipe in ROUND2 or args.system == "short"
+    if round2:
         options["system"] = P6.SHORT_SYSTEM if args.system == "short" else None
         options["weights"] = weighting["weights"] if weighting else None
         options["block"] = block
@@ -294,8 +301,9 @@ def main():
     manifest = {"recipe": recipe, "data_recipe": data_recipe, "seed": seed, "token_budget": args.tokens,
                 "calendar_share": args.calendar_share, "drop": args.drop, "extra_paraphrases": args.extra_paraphrases,
                 "replies": args.replies, "excluded_charts": len(exclude),
+                "paraphrases_on_evaluation_charts_left_out": left_out,
                 **({"system": args.system, "parent": args.parent, "steps": args.steps or 1, "weighting": weighting,
-                    "fit_sample_b_charts_blocked": len(block)} if recipe in ROUND2 else {}),
+                    "fit_sample_b_charts_blocked": len(block)} if round2 else {}),
                 "files": {name: {"sha256": hashlib.sha256(d).hexdigest(), "rows": len(train if name == 'train.jsonl' else valid)} for name, d in files.items()},
                 "train_summary": T6.summary(train)}  # fmt: skip
     (folder / "manifest.json").write_text(json.dumps(manifest, ensure_ascii=False, indent=1) + "\n")

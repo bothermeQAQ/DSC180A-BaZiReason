@@ -1,0 +1,129 @@
+{
+ "rule": "docs/phase6_preregistration.md section 5",
+ "steps": [
+  {
+   "run": "p6s1",
+   "before": "p6u0",
+   "component": "small steps",
+   "l0_all_rule_items": {
+    "difference": 0.26520681265206814,
+    "interval95": [
+     0.2219482120838471,
+     0.30498177399756987
+    ],
+    "a": 331,
+    "b": 549,
+    "n": 822
+   },
+   "dropped": false
+  },
+  {
+   "run": "p6s2",
+   "before": "p6s1",
+   "component": "wording",
+   "l0_all_rule_items": {
+    "difference": 0.13138686131386862,
+    "interval95": [
+     0.09747292418772563,
+     0.1664626682986536
+    ],
+    "a": 549,
+    "b": 657,
+    "n": 822
+   },
+   "dropped": false
+  },
+  {
+   "run": "p6s3",
+   "before": "p6s2",
+   "component": "evidence and self-check",
+   "l0_all_rule_items": {
+    "difference": -0.023114355231143552,
+    "interval95": [
+     -0.052311435523114354,
+     0.0049079754601227
+    ],
+    "a": 657,
+    "b": 638,
+    "n": 822
+   },
+   "dropped": false
+  }
+ ],
+ "drop": [],
+ "targets": {
+  "computed_statements_wrong": {
+   "base": [
+    575,
+    1047
+   ],
+   "p2": [
+    521,
+    858
+   ],
+   "p4a1": [
+    242,
+    1606
+   ],
+   "p5g1": [
+    217,
+    1411
+   ],
+   "p6u0": [
+    326,
+    1562
+   ],
+   "p6s1": [
+    1156,
+    3151
+   ],
+   "p6s2": [
+    226,
+    2077
+   ],
+   "p6s3": [
+    208,
+    1924
+   ],
+   "p8s1": [
+    261,
+    1873
+   ]
+  },
+  "blind": {
+   "p6s2": {
+    "difference": 0.20212765957446807,
+    "interval95": [
+     0.1276595744680851,
+     0.2712765957446808
+    ],
+    "a": 129,
+    "b": 167,
+    "n": 188
+   }
+  },
+  "l1_minus_l0": {
+   "p6s2": {
+    "difference": -0.07664233576642336,
+    "interval95": [
+     -0.1051980198019802,
+     -0.04866180048661801
+    ]
+   },
+   "p6s3": {
+    "difference": -0.019464720194647202,
+    "interval95": [
+     -0.044740024183796856,
+     0.007220216606498195
+    ]
+   }
+  }
+ },
+ "calendar_gap_to_u0": {
+  "p6s1": -0.0365296803652968,
+  "p6s2": 0.013698630136986356,
+  "p6s3": -0.091324200913242
+ },
+ "calendar_share": null,
+ "best_s_run_on_dev6": "p6s2"
+}

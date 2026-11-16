@@ -519,3 +519,64 @@ def test_an_adapter_is_loaded_on_the_base_it_was_trained_on(tmp_path, monkeypatc
         ("models/qwen3-8b-mlx-4bit", "bazireason-qwen3-8b-lora-p6-s1", False),
         (default, "bazireason-qwen3-4b-lora-p6-u1-hi", False),
     ]
+
+
+# ---- the recovery (pre-registration, section 12) ------------------------------------------------------
+
+
+def test_training_writer_questions_on_evaluation_charts_are_known_and_left_out():
+    import build_train6 as B
+
+    from bazireason import splits6 as S
+
+    exclude = B.exclusions()
+    on_eval = {}
+    for path in sorted((ROOT / "data/phase6/blind").glob("train6*.jsonl")):
+        if path.name.endswith("_attempts.jsonl"):
+            continue
+        items = [json.loads(x) for x in path.read_text(encoding="utf-8").splitlines()]
+        on_eval[path.stem] = sum(S.chart_key(it["meta"]["pillars"]) in exclude for it in items)
+    # train6 feeds S2 and S3 and has none, so the filter of section 12.2 leaves them bit for bit.
+    assert on_eval["train6"] == 0
+    assert all(n <= 2 for n in on_eval.values()), on_eval  # a rare recurrence of four pillars
+    source = (ROOT / "scripts/phase6/build_train6.py").read_text(encoding="utf-8")
+    assert 'S.chart_key(p["meta"]["pillars"]) not in exclude' in source
+
+
+def test_u2_keeps_the_short_prompt_unless_the_twin_is_clearly_worse(monkeypatch, capsys):
+    import decide6 as D
+
+    log = []
+    monkeypatch.setattr(D, "record", log.append)
+    bounds = {}
+
+    def paired(split, a, b, level="L0", parts=None):
+        assert (split, a, b) == ("dev6", "p6s2", "p6s2s")
+        key = "calendar" if parts == ("calendar",) else "rules"
+        return {"difference": 0.0, "interval95": bounds[key]}
+
+    monkeypatch.setattr(D, "paired", paired)
+    for rules, calendar, expected in (
+        ([-0.02, 0.03], [-0.05, 0.04], "--system short"),
+        ([-0.06, -0.01], [-0.05, 0.04], "--system long"),  # clearly worse on the rule items
+        ([0.01, 0.06], [-0.12, -0.02], "--system long"),  # clearly worse on the calendar rows
+    ):
+        bounds.update(rules=rules, calendar=calendar)
+        D.prompt()
+        assert capsys.readouterr().out.strip() == expected
+    assert [e["decision"] for e in log] == ["prompt"] * 3
+
+
+def test_no_queue_script_can_report_success_after_a_failed_step():
+    """Every GPU step of a queue is followed by a stop (the U1 queue of 15 November was not)."""
+    for name in ("queue_s2s.sh", "queue_main.sh", "queue_sealed6.sh", "queue_u1hi.sh"):
+        text = (ROOT / "scripts/phase6" / name).read_text(encoding="utf-8")
+        for line in text.splitlines():
+            step = line.strip()
+            if "run $PY" not in step or step.startswith(("#", "P=", "if run", "elif run")):
+                continue
+            guarded = any(k in step for k in ("|| fail", "|| return 1", "|| exit 1"))
+            diagnostic = (
+                "--sample b" in step and "own_replies_${L}_b" in step
+            )  # the last, optional loop
+            assert guarded or diagnostic, (name, step[:90])

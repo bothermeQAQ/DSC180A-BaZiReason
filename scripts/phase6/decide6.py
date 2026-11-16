@@ -35,7 +35,7 @@ STEPS = (
 LEVELS = (("p6u3", "p6u3v"), ("p6u4",), ("p6u5",), ("p6u6",), ("p6u7",), ("p6u8",), ("p6u9",), ("p6u10",))  # fmt: skip
 ARM_OPTIONS = {"p6u3v": "--steps 2"}
 CONTINUATIONS = tuple(lab for level in LEVELS for lab in level)
-ORDER = ("p6s1", "p6s2", "p6s3", "p6u1", "p6u1hi", "p6u2", *CONTINUATIONS)  # earlier runs first
+ORDER = ("p6s1", "p6s2", "p6s3", "p6s2s", "p6u1", "p6u1hi", "p6u2", *CONTINUATIONS)  # earlier first
 DROP_NAMES = {
     "wording": ["wording", "contrast"],
     "evidence and self-check": ["evidence", "verify", "selfcheck", "twins"],
@@ -172,6 +172,18 @@ def structure():
     print(entry["options"])
 
 
+def prompt():
+    """Section 12.4: U2's system prompt. Short, unless S2s minus S2 on dev6 has a 95% upper
+    bound below 0 on the rule items or on the calendar rows. Prints the build option."""
+    rules = paired("dev6", "p6s2", "p6s2s")
+    cal = paired("dev6", "p6s2", "p6s2s", parts=("calendar",))
+    worse = any(d["interval95"] and d["interval95"][1] < 0 for d in (rules, cal))
+    entry = {"decision": "prompt", "options": "--system long" if worse else "--system short",
+             "s2s_minus_s2_rule_items": rules, "s2s_minus_s2_calendar": cal}  # fmt: skip
+    record(entry)
+    print(entry["options"])
+
+
 def nxt():
     """Round-2 loop (sections 10.2 and 10.5).
 
@@ -222,9 +234,9 @@ def sealed_extra():
     """Sections 10.4 and 10.5: the sealed L0 runs added by round 2 (U1, U2, the two arms of
     the fork and every ancestor of M)."""
     m = json.loads((ROOT / "selection.json").read_text())["selected"]
-    labels = ["p6u1", "p6u2", "p6u3", "p6u3v", *("p6" + r for r in P6.lineage(m[2:])[1:])]
-    if M.rule_records("dev6", "p8s1"):  # section 11: the base-size pilot and its 4B twin
-        labels += ["p6s1", "p8s1"]
+    # Section 12.4: S2 and S2s (H7), U3 and U3v (H9), S1 and S1-8B (H10), U1, U2, M's ancestors
+    labels = ["p6s2", "p6s2s", "p6u3", "p6u3v", "p6s1", "p8s1", "p6u1", "p6u2"]
+    labels += ["p6" + r for r in P6.lineage(m[2:])[1:]]
     keep = [lab for lab in dict.fromkeys(labels) if lab != m and M.rule_records("dev6", lab)]
     print(" ".join(keep))
 
@@ -232,8 +244,8 @@ def sealed_extra():
 def select():
     screening = json.loads((ROOT / "screening.json").read_text())
     pool = dict.fromkeys(
-        (screening["best_s_run_on_dev6"], "p6u1", "p6u1hi", "p6u2", *CONTINUATIONS)
-    )  # sections 10.4 and 10.5
+        (screening["best_s_run_on_dev6"], "p6s2s", "p6u1", "p6u1hi", "p6u2", *CONTINUATIONS)
+    )  # section 12.4
     candidates = [lab for lab in pool if M.rule_records("valid6", lab)]
     p2 = M.load("valid6", "p2", "calendar")
     table = {}
@@ -262,6 +274,7 @@ if __name__ == "__main__":
         "best": best_s,
         "small-steps-dropped": small_steps_dropped,
         "structure": structure,
+        "prompt": prompt,
         "next": nxt,
         "sealed-extra": sealed_extra,
     }[sys.argv[1]]()
