@@ -118,13 +118,13 @@ These are development results: dev6 was read freely to make decisions. The claim
 | S2s | S2's recipe with the short prompt, 6.0 M | 80.0% | 55% | 62.6% |
 | S1-8B | S1's data on Qwen3-8B, 6.0 M | 66.4% | 41% | 63.0% |
 
-Four hours of training from the untuned base on the new data (S1) passed the end of the earlier six-round chain (A1), and eight hours of design later S2 is 19.5 points above A1 [15.8, 23.4].
+Four hours of training from the untuned base on the new data (S1) passed the end of the earlier six-round chain (A1). S2, which adds natural wordings, is 19.5 points above A1 [15.8, 23.4].
 
 ### 4.2 What each change did
 
 | Hypothesis | Comparison | Rule items, points [95%] | Reading |
 |---|---|---|---|
-| H1 sequential rounds | U0 minus A1 | −20.2 [−23.9, −16.7] | one joint run on the earlier data, at a third of the tokens, reproduces neither specialist (calendar: 11.9 below Phase 2) |
+| H1 sequential rounds | U0 minus A1 | −20.2 [−23.9, −16.7] | one joint run on the earlier data, at about a third of the tokens, reproduces neither specialist (calendar: 11.9 below Phase 2) |
 | H2 small steps | S1 minus U0 | +26.5 [+22.2, +30.5] | supported: 旬空 96% right (A1 28%), element counts 98%, life stages 95% |
 | H3 wording | S2 minus S1 | +13.1 [+9.7, +16.6] | supported: held-out template wording 37.3% to 71.3%, natural wordings 68.6% to 88.8% |
 | H4 evidence and self-check | S3 minus S2 | −2.3 [−5.2, +0.5] | no gain alone; costs below |
@@ -147,7 +147,7 @@ Each reply was compared with the rule code's derivation step by step (`scripts/p
 
 - **Unseen wording was S1's largest loss** and S2 removed most of it.
 - **On wordings the model knows, about one answer in five is still wrong, and more data did not change that.** The wrong answers start at a few steps of the long derivations: the hidden-stem step of area-of-life questions, the clash step of flow years, the pair and trio steps of relations.
-- **These steps have one thing in common: the text must decide, while it is written, where to stop or what to leave out.** The clearest case is the life stage of the day master. S1 answered 13 of 14 counterfactual life-stage items, S2 9 and S2s 4. The count through the twelve stages was right every time, but it ended at the wrong branch. S1 had not stopped at all: it wrote all twelve stages and read the answer off.
+- **These steps have one thing in common: the text must decide, while it is written, where to stop or what to leave out.** The clearest case is the life stage of the day master. S1 answered 13 of 14 counterfactual life-stage items, S2 9 and S2s 4. In the wrong replies the count through the stages is right but ends at the wrong branch. S1's replies wrote all twelve stages and read the answer off.
 - **Derivation version 2** removes those decisions: it writes the whole table first and then looks the answer up (pre-registration 10.5 and 12.6; checked on 15,000 derivations, every answer unchanged). A paired fork of the first continuation (U3 against U3v) tests it.
 - **Held-out combinations stay near 50%.** The replies start the right sub-procedures and fail where they join. An arm of the second continuation level (U4c) adds composition rows of other kinds; the four held-out kinds stay out of training.
 
