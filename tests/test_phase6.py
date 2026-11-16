@@ -342,10 +342,10 @@ def test_round2_loop_structure_and_selection_follow_the_preregistered_rules(
     # The chain continues from the better arm of the fork (a tie goes to U3).
     right.update({("dev6", "p6u3"): 64, ("dev6", "p6u3v"): 65})
     D.nxt()
-    assert said() == "u4 u3v"
+    assert said() == "u4 u3v\nu4c u3v --compose-share 0.10"  # the second level has two arms too
     right[("dev6", "p6u3v")] = 64
     D.nxt()
-    assert said() == "u4 u3"
+    assert said().splitlines()[0] == "u4 u3"
     right[("dev6", "p6u3v")] = 65
     # It goes on from the latest level, and ends after two levels in a row without a new best.
     right[("dev6", "p6u4")] = 64  # not above 65: first level without a new best
@@ -632,3 +632,54 @@ def test_weighted_calendar_rows_favour_the_failing_cells_and_skip_the_fit_sample
     assert not any(T6.first_user(r) in pool_texts for r in weighted)
     again = T6.calendar_rows(150_000, seed, False, weights=weights, block_texts=pool_texts)
     assert [r["id"] for r in weighted] == [r["id"] for r in again]
+
+
+def test_composition_rows_match_the_rule_code_and_keep_the_held_out_kinds_out(items):
+    from bazireason import compose6 as C
+    from bazireason import splits6 as S
+    from bazireason import train_data6 as T6
+    from bazireason.grounded import claim_failures
+    from bazireason.p2_prompts import extract_final_json
+
+    assert not set(C.KINDS) & set(S.COMBO_KINDS)
+    held_out = {
+        it["meta"]["question"] for (_, part), v in items.items() if part == "combo" for it in v
+    }
+    prefixes = [
+        w.split("{")[0] for ws in S.COMBO_WORDS.values() for w in ws if len(w.split("{")[0]) > 6
+    ]
+    rng = random.Random(20261119)
+    for _ in range(50):
+        pillars, gender = S.random_pillars(rng), rng.choice(("male", "female"))
+        for kind in C.KINDS:
+            question, hint, text, reference = C.build(kind, pillars, gender, rng)
+            assert extract_final_json(text) == reference, (kind, pillars)
+            assert claim_failures(text, pillars, gender) == [], (kind, pillars)
+            assert question not in held_out and not any(p in question for p in prefixes)
+    charts = T6.Charts(5, frozenset())
+    rows = T6.compose_rows(30_000, charts, random.Random(5))
+    assert {r["family"] for r in rows} == {"compose"}
+    assert {r["meta"]["intent"].split(":")[1] for r in rows} == set(C.KINDS)
+
+
+def test_composition_rows_take_their_share_from_the_procedure_rows():
+    import build_train6 as B
+
+    from bazireason import train_data6 as T6
+
+    exclude = B.exclusions()
+    paraphrases = [
+        json.loads(x)
+        for x in (ROOT / "data/phase6/blind/train6.jsonl").read_text(encoding="utf-8").splitlines()
+    ]
+    plain = T6.build("s2", 120_000, 9, exclude, paraphrases)
+    mixed = T6.build("s2", 120_000, 9, exclude, paraphrases, compose_share=0.10)
+    assert not any(r["family"] == "compose" for r in plain)
+    tokens = lambda rows, fam: sum(T6.tokens(r) for r in rows if r["family"] == fam)  # noqa: E731
+    total = sum(T6.tokens(r) for r in mixed)
+    assert 0.08 < tokens(mixed, "compose") / total < 0.13
+    assert tokens(mixed, "procedure") < tokens(plain, "procedure")
+    # the calendar part does not depend on the arm: both arms of a level get the same requests
+    cal = lambda rows: [T6.first_user(r) for r in rows if T6.calendar_cell(r)]  # noqa: E731
+    assert sorted(cal(plain)) == sorted(cal(mixed))
+    assert T6.digest(plain) == T6.digest(T6.build("s2", 120_000, 9, exclude, paraphrases))

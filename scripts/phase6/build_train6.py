@@ -43,6 +43,7 @@ SEEDS = {
     "u3": 2026111716,
     "u3v": 2026111716,  # the fork of 10.5: U3's seed, derivation version 2
     "u4": 2026111717,
+    "u4c": 2026111717,  # the arm of 12.7: U4's seed, with composition rows
     "u5": 2026111718,
     "u6": 2026111719,
     "u7": 2026111720,
@@ -50,7 +51,7 @@ SEEDS = {
     "u9": 2026111722,
     "u10": 2026111723,
 }
-ROUND2 = ("u2", "u3", "u3v", "u4", "u5", "u6", "u7", "u8", "u9", "u10")
+ROUND2 = ("u2", "u3", "u3v", "u4", "u4c", "u5", "u6", "u7", "u8", "u9", "u10")
 FIT_B_SEED = 2026111791  # fit sample B (own_replies.py --sample b); never training input
 FIT_B_PER_TYPE = 100
 FIT_C_SEED = (
@@ -109,6 +110,7 @@ PURPOSE = {
         "a continuation weighted by its parent's measured errors (round 2)",
     ),
     "u3v": "u3 with derivation version 2 (round 2, the fork of preregistration 10.5)",
+    "u4c": "u4 with 10% composition rows (round 2, the arm of preregistration 12.7)",
     "s2s": "s2 with the short system prompt at the same token budget (the H7 twin, section 12.4)",
 }
 
@@ -253,6 +255,9 @@ def main():
     parser.add_argument(
         "--calendar-weights-from", help="round 2: the parent's replies to fit sample C (12.5)"
     )
+    parser.add_argument(
+        "--compose-share", type=float, help="round 2: share of composition rows (12.7)"
+    )
     parser.add_argument("--check", action="store_true")
     args = parser.parse_args()
     recipe = args.recipe
@@ -269,6 +274,8 @@ def main():
         args.extra_paraphrases = [extra] if isinstance(extra, str) else list(extra)
         args.system = inherited.get("system", "long")
         args.steps = args.steps or inherited.get("steps", 1)
+        if args.compose_share is None:
+            args.compose_share = inherited.get("compose_share") or 0.0
         shape = structure_of(args.parent)
         args.layers, args.rank = shape["layers"], shape["rank"]
         args.grad_checkpoint = shape["grad_checkpoint"]
@@ -304,6 +311,7 @@ def main():
         options["weights"] = weighting["weights"] if weighting else None
         options["block"] = block
         options["steps"] = args.steps or 1
+        options["compose_share"] = args.compose_share or 0.0
     train = T6.build(data_recipe, args.tokens, seed, exclude, paraphrases, replies, **options)
     valid = T6.build(data_recipe, 150_000, seed + 500, exclude, paraphrases, replies, **options)
     limit = MAX_TOKENS - 8 if T6._tokenizer() else int(MAX_TOKENS * 0.95)
@@ -350,7 +358,8 @@ def main():
                 "paraphrases_on_evaluation_charts_left_out": left_out,
                 "rows_on_held_out_charts_left_out": {"train": dropped[0], "valid": dropped[1]},
                 **({"system": args.system, "parent": args.parent, "steps": args.steps or 1, "weighting": weighting,
-                    "fit_sample_b_charts_blocked": len(block), "calendar_weighting": calendar_weighting} if round2 else {}),
+                    "fit_sample_b_charts_blocked": len(block), "calendar_weighting": calendar_weighting,
+                    "compose_share": args.compose_share or 0.0} if round2 else {}),
                 "files": {name: {"sha256": hashlib.sha256(d).hexdigest(), "rows": len(train if name == 'train.jsonl' else valid)} for name, d in files.items()},
                 "train_summary": T6.summary(train)}  # fmt: skip
     (folder / "manifest.json").write_text(json.dumps(manifest, ensure_ascii=False, indent=1) + "\n")

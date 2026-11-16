@@ -25,6 +25,7 @@ from collections import Counter
 from datetime import date, datetime, timedelta
 from pathlib import Path
 
+from bazireason import compose6 as C6
 from bazireason import deep_tasks as K
 from bazireason import ladder as LD
 from bazireason import rules as R
@@ -338,6 +339,24 @@ def procedure_rows(
         if r:
             out.append(r)
             used += tokens(r)
+    return out
+
+
+def compose_rows(target_tokens, charts, rng):
+    """Composition rows (preregistration 12.7): two or three trained procedures joined in one
+    question, never one of the held-out combinations."""
+    out, used = [], 0
+    while used < target_tokens:
+        pillars, gender = charts.draw()
+        kind = rng.choice(C6.KINDS)
+        question, hint, text, reference = C6.build(kind, pillars, gender, rng)
+        user = chart_head(pillars, gender, rng, True) + question + "\n" + hint
+        r = row("compose", [{"role": "system", "content": P2_SYSTEM}, {"role": "user", "content": user},
+                            {"role": "assistant", "content": text}],
+                {"intent": f"compose:{kind}", "pillars": pillars, "gender": gender, "question": question,
+                 "expected": reference})  # fmt: skip
+        out.append(r)
+        used += tokens(r)
     return out
 
 
@@ -694,6 +713,7 @@ def build(
     steps=1,
     calendar_weights=None,
     calendar_block=frozenset(),
+    compose_share=0.0,
 ):
     """Rows of one recipe. ``calendar_share`` and ``drop`` (component names) apply the
     pre-registered screening decisions (docs/phase6_preregistration.md, section 5) to U1.
@@ -701,13 +721,14 @@ def build(
     Round 2 (section 10): ``system`` replaces the main system prompt, ``weights`` reweights the
     question types of the procedure rows, no row has a chart in ``block`` (fit sample B), and
     ``steps`` is the derivation version (bazireason.steps6). ``calendar_weights`` draws the
-    calendar rows by cell weight, never a request of fit sample C (``calendar_block``)."""
+    calendar rows by cell weight, never a request of fit sample C (``calendar_block``).
+    ``compose_share`` of the tokens are composition rows, taken from the procedure share."""
     _SYSTEM[0] = system or P2_SYSTEM
     S6.set_steps(steps)
     try:
         return _build(
             recipe, total_tokens, seed, exclude, paraphrases, replies, calendar_share, drop,
-            weights, frozenset(block), calendar_weights, frozenset(calendar_block),
+            weights, frozenset(block), calendar_weights, frozenset(calendar_block), compose_share,
         )  # fmt: skip
     finally:
         _SYSTEM[0] = P2_SYSTEM
@@ -727,6 +748,7 @@ def _build(
     block,
     calendar_weights,
     calendar_block,
+    compose_share,
 ):
     rng = random.Random(f"{VERSION}:{recipe}:{seed}")
     if block:
@@ -745,6 +767,8 @@ def _build(
             }
         for part in drop:  # a dropped component's share goes to the procedure rows
             shares["procedure"] += shares.pop(part, 0.0)
+        if compose_share:  # composition rows take their share from the procedure rows
+            shares["procedure"] -= compose_share
         charts = Charts(seed, exclude)
         rows = []
         rows += calendar_rows(
@@ -766,6 +790,12 @@ def _build(
             rows += verify_rows(total_tokens * shares["verify"], charts, rng)
         if "selfcheck" in shares:
             rows += selfcheck_rows(replies or [], rng, total_tokens * shares["selfcheck"])
+        if compose_share:  # its own charts and random stream: the other parts are drawn as before
+            rows += compose_rows(
+                total_tokens * compose_share,
+                Charts(seed + 77, exclude),
+                random.Random(f"{VERSION}:compose:{seed}"),
+            )
         rows += other_rows(total_tokens * shares["other"], rng, block)
     rng.shuffle(rows)
     for i, r in enumerate(rows, 1):

@@ -8,6 +8,7 @@ runs that exist.
 """
 
 import json
+import re
 import sys
 from collections import Counter, defaultdict
 from pathlib import Path
@@ -27,12 +28,16 @@ NAMES = {
     "p6u0": "U0 joint, earlier data", "p6s1": "S1 small steps", "p6s2": "S2 + wording", "p6s3": "S3 + evidence, self-check",
     "p6u1": "U1", "p6u1hi": "U1-hi",
     "p6u2": "U2 short prompt", "p6u3": "U3 continuation", "p6u3v": "U3v continuation, steps v2",
+    "p6u4c": "U4c continuation, + composition rows",
     **{f"p6u{k}": f"U{k} continuation" for k in range(4, 11)},
     "p8s1": "S1-8B (S1's data on Qwen3-8B)",
     "p6s2s": "S2s (S2 with the short prompt)",
 }  # fmt: skip
 ORDER = list(NAMES)
-CONTINUATIONS = tuple(k for k in NAMES if k[:4] == "p6u3" or k[3:].isdigit() and int(k[3:]) >= 4)
+CONTINUATIONS = tuple(sorted(
+    (k for k in NAMES if re.fullmatch(r"p6u(\d+)[a-z]*", k) and int(re.fullmatch(r"p6u(\d+)[a-z]*", k)[1]) >= 3),
+    key=lambda k: (int(re.fullmatch(r"p6u(\d+)[a-z]*", k)[1]), k),
+))  # fmt: skip
 # Items whose derivation differs between versions 1 and 2 (preregistration 10.5 and 12.6)
 H9_TARGETS = ("strength", "yongshen:扶抑", "yongshen:格局", "domain", "flow", "overview", "pattern", "interact",
               "fact:life_stage")  # fmt: skip
@@ -683,6 +688,8 @@ def round2_compare_section(lines, summary, split):
                 )
             )
     pairs.append(("H10: base size (Qwen3-8B against Qwen3-4B, S1's data)", "p6s1", "p8s1"))
+    pairs.append(("H11: composition rows", "p6u4", "p6u4c"))
+    pairs.append(("H11, only the held-out combinations", "p6u4", "p6u4c"))
     pairs.append(("H9: derivation version 2", "p6u3", "p6u3v"))
     pairs.append(("H9, only the items whose derivation changed", "p6u3", "p6u3v"))
     rows = []
@@ -693,6 +700,9 @@ def round2_compare_section(lines, summary, split):
         if "changed" in title:
             ra = [r for r in ra if str(r["intent"]).startswith(H9_TARGETS)]
             rb = [r for r in rb if str(r["intent"]).startswith(H9_TARGETS)]
+        if "held-out combinations" in title:
+            ra = [r for r in ra if r["part"] == "combo"]
+            rb = [r for r in rb if r["part"] == "combo"]
         cell, d = diff(ra, rb)
         ca, cb = load(split, a, "calendar"), load(split, b, "calendar")
         cal = diff(ca, cb)[0] if ca and cb else "–"
