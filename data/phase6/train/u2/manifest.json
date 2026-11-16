@@ -1,0 +1,97 @@
+{
+ "recipe": "u2",
+ "data_recipe": "s2",
+ "seed": 2026111715,
+ "token_budget": 15000000,
+ "calendar_share": null,
+ "drop": [],
+ "extra_paraphrases": [
+  "data/phase6/blind/train6b.jsonl",
+  "data/phase6/blind/train6c.jsonl"
+ ],
+ "replies": null,
+ "excluded_charts": 6277,
+ "paraphrases_on_evaluation_charts_left_out": 1,
+ "rows_on_held_out_charts_left_out": {
+  "train": 0,
+  "valid": 0
+ },
+ "system": "short",
+ "parent": null,
+ "steps": 1,
+ "weighting": null,
+ "fit_sample_b_charts_blocked": 1991,
+ "calendar_weighting": null,
+ "files": {
+  "train.jsonl": {
+   "sha256": "ffe514b4b0deaed392e2e8fbbe8a28b26c740eecec2159727ddd4135c58967f7",
+   "rows": 29775
+  },
+  "valid.jsonl": {
+   "sha256": "2e6af81ed26df722f4811e31327660a516e715150f9e336b96d56ddc9a7d8e01",
+   "rows": 300
+  }
+ },
+ "train_summary": {
+  "rows": 29775,
+  "tokens_estimate": 15001828,
+  "families": {
+   "procedure": 17779,
+   "contrast": 1873,
+   "strict_audit": 926,
+   "zi_transition": 894,
+   "verify": 871,
+   "chart_plain": 842,
+   "mcq3": 698,
+   "invalid": 600,
+   "jie_boundary": 505,
+   "jie_window": 477,
+   "claims": 477,
+   "internal": 445,
+   "v3_strict": 428,
+   "tz_known": 408,
+   "v4_reasoned": 358,
+   "multi_turn": 352,
+   "dialog": 306,
+   "dst_fold": 273,
+   "chart_facts": 232,
+   "missing": 229,
+   "counterfactual": 192,
+   "policy": 158,
+   "tz_facts": 118,
+   "tz_needs_tool": 112,
+   "shanghai_dst": 95,
+   "replay_mcq": 95,
+   "dst_gap": 32
+  },
+  "family_tokens": {
+   "procedure": 7500223,
+   "contrast": 1200433,
+   "strict_audit": 935466,
+   "verify": 644725,
+   "zi_transition": 538770,
+   "chart_plain": 521024,
+   "v4_reasoned": 506565,
+   "v3_strict": 424544,
+   "mcq3": 397420,
+   "jie_boundary": 290970,
+   "claims": 262523,
+   "tz_known": 253991,
+   "dst_fold": 218353,
+   "jie_window": 190851,
+   "chart_facts": 186101,
+   "invalid": 157977,
+   "dialog": 153980,
+   "internal": 105120,
+   "multi_turn": 95868,
+   "tz_facts": 94270,
+   "counterfactual": 79704,
+   "missing": 74536,
+   "replay_mcq": 51479,
+   "shanghai_dst": 48158,
+   "policy": 37603,
+   "tz_needs_tool": 23771,
+   "dst_gap": 7403
+  }
+ }
+}

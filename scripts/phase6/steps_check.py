@@ -20,8 +20,9 @@ from bazireason.grounded import claim_failures
 from bazireason.p2_prompts import extract_final_json
 
 OUT = Path("results/phase6/steps_v2_check.json")
-INTENTS = ("strength", "yongshen:扶抑", "flow:2037", "flow:1999", "domain:marriage:2031",
-           "domain:wealth:2029", "domain:children:2027", "domain:career:2040", "overview")  # fmt: skip
+INTENTS = ("strength", "yongshen:扶抑", "yongshen:格局", "flow:2037", "flow:1999", "domain:marriage:2031",
+           "domain:wealth:2029", "domain:children:2027", "domain:career:2040", "overview", "pattern", "interact",
+           "fact:life_stage:day", "fact:life_stage:month", "fact:life_stage:hour")  # fmt: skip
 CHARTS = 1000
 
 
@@ -55,7 +56,12 @@ def main():
             out["derivations"] += 1
             out["answers_differ"] += texts[1][1] != texts[2][1] or extract_final_json(texts[2][0]) != texts[2][1]  # fmt: skip
             out["claim_failures"] += bool(claim_failures(texts[2][0], pillars, gender))
-            cell = out["tokens"].setdefault(intent.split(":")[0], {"v1_max": 0, "v2_max": 0, "v1_sum": 0, "v2_sum": 0, "n": 0})  # fmt: skip
+            kind = (
+                ":".join(intent.split(":")[:2])
+                if intent.startswith("fact")
+                else intent.split(":")[0]
+            )
+            cell = out["tokens"].setdefault(kind, {"v1_max": 0, "v2_max": 0, "v1_sum": 0, "v2_sum": 0, "n": 0})  # fmt: skip
             for version in (1, 2):
                 k = len(tok.encode(texts[version][0], add_special_tokens=False).ids)
                 cell[f"v{version}_max"] = max(cell[f"v{version}_max"], k)

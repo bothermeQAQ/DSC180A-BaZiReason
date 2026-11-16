@@ -1,6 +1,6 @@
 {
  "charts": 1000,
- "derivations": 9000,
+ "derivations": 15000,
  "answers_differ": 0,
  "claim_failures": 0,
  "tokens": {
@@ -12,11 +12,11 @@
    "v2_mean": 307
   },
   "yongshen": {
-   "v1_max": 304,
-   "v2_max": 368,
-   "n": 1000,
-   "v1_mean": 291,
-   "v2_mean": 355
+   "v1_max": 387,
+   "v2_max": 395,
+   "n": 2000,
+   "v1_mean": 310,
+   "v2_mean": 345
   },
   "flow": {
    "v1_max": 749,
@@ -34,10 +34,31 @@
   },
   "overview": {
    "v1_max": 1000,
-   "v2_max": 1063,
+   "v2_max": 1072,
    "n": 1000,
    "v1_mean": 899,
-   "v2_mean": 962
+   "v2_mean": 967
+  },
+  "pattern": {
+   "v1_max": 332,
+   "v2_max": 340,
+   "n": 1000,
+   "v1_mean": 277,
+   "v2_mean": 282
+  },
+  "interact": {
+   "v1_max": 757,
+   "v2_max": 824,
+   "n": 1000,
+   "v1_mean": 562,
+   "v2_mean": 618
+  },
+  "fact:life_stage": {
+   "v1_max": 89,
+   "v2_max": 103,
+   "n": 3000,
+   "v1_mean": 72,
+   "v2_mean": 101
   }
  }
 }

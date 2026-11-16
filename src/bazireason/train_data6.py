@@ -561,14 +561,29 @@ def calendar_rows(
     target_tokens, seed, balanced, weights=None, block_texts=frozenset(), held_out=frozenset()
 ):
     """Calendar rows of the training generator. Its dialogue rows carry a chart: one on a
-    held-out chart (``held_out``: evaluation charts and, in round 2, fit sample B) is left out."""
+    held-out chart (``held_out``: evaluation charts and, in round 2, fit sample B) is left out.
+
+    The generator's pool has a fixed size. When it cannot fill the budget (a short system
+    prompt holds more rows in the same tokens), a pool twice as large is drawn instead; the
+    first pool is the one of every earlier set, so those rebuild bit for bit."""
+    scales = (4.0, 8.0, 16.0) if weights is not None else (2.0, 4.0, 8.0, 16.0)
+    for scale in scales:
+        out, used = _calendar_rows(
+            target_tokens, seed, balanced, weights, block_texts, held_out, scale
+        )
+        if used >= target_tokens:
+            break
+    return out
+
+
+def _calendar_rows(target_tokens, seed, balanced, weights, block_texts, held_out, scale):
     blocked = TD.benchmark_exclusions() | TD.contest_exclusions()
     if weights is not None:
-        # Preregistration 12.5: a pool twice as large, drawn with the cells' weights (a row's
-        # key is u ** (1 / weight); the largest keys come first), never a fit-sample request.
+        # Preregistration 12.5: a larger pool, drawn with the cells' weights (a row's key is
+        # u ** (1 / weight); the largest keys come first), never a fit-sample request.
         pool = [
             _sys(r)
-            for r in TD.generate_split("train", seed, blocked, 4.0, 2)
+            for r in TD.generate_split("train", seed, blocked, scale, 2)
             if r["family"] not in CALENDAR_DROP
             and first_user(r) not in block_texts
             and chart_of(r) not in held_out
@@ -584,10 +599,10 @@ def calendar_rows(
                 break
             out.append(pool[i])
             used += tokens(pool[i])
-        return out
+        return out, used
     pool = [
         _sys(r)
-        for r in TD.generate_split("train", seed, blocked, 2.0, 2)
+        for r in TD.generate_split("train", seed, blocked, scale, 2)
         if r["family"] not in CALENDAR_DROP
     ]
     rng = random.Random(f"p6-cal:{seed}")
@@ -623,7 +638,7 @@ def calendar_rows(
             continue
         out.append(r)
         used += tokens(r)
-    return out
+    return out, used
 
 
 def other_rows(target_tokens, rng, block=frozenset()):

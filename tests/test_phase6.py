@@ -404,7 +404,7 @@ def test_derivation_version_2_keeps_every_answer_and_passes_the_claim_checker():
             assert S6.STATE_OF_POSITION[position] == R.seasonal_state(R.STEM_ELEMENT[day], branch)
     rng = random.Random(20261117)
     intents = ("strength", "flow:2037", "domain:marriage:2031", "domain:wealth:2029", "overview",
-               "yongshen:扶抑", "interact", "pattern", "gods", "fact:xun_kong")  # fmt: skip
+               "yongshen:扶抑", "interact", "pattern", "gods", "fact:xun_kong", "fact:life_stage:month")  # fmt: skip
     changed = set()
     for _ in range(40):
         pillars, gender = S.random_pillars(rng), rng.choice(("male", "female"))
@@ -418,8 +418,10 @@ def test_derivation_version_2_keeps_every_answer_and_passes_the_claim_checker():
             assert same == reference == extract_final_json(second), (intent, pillars)
             assert claim_failures(second, pillars, gender) == [], (intent, pillars)
             if first != second:
-                changed.add(intent.split(":")[0])
-    assert changed == {"strength", "flow", "domain", "overview", "yongshen"}
+                changed.add(":".join(intent.split(":")[:2]) if intent.startswith("fact") else intent.split(":")[0])  # fmt: skip
+    # gods and 旬空 are the same in both versions; the others changed (10.5 and 12.6)
+    assert changed == {"strength", "flow", "domain", "overview", "yongshen", "interact", "pattern",
+                       "fact:life_stage"}  # fmt: skip
     assert S6.steps_version() == 1
 
 
@@ -579,7 +581,9 @@ def test_no_queue_script_can_report_success_after_a_failed_step():
             diagnostic = (
                 "--sample b" in step and "own_replies_${L}_b" in step
             )  # the last, optional loop
-            assert guarded or diagnostic, (name, step[:90])
+            # Calendar weights are optional by 12.5: without the sample the build goes on.
+            optional = "--sample c" in step and "no calendar fit sample" in step
+            assert guarded or diagnostic or optional, (name, step[:90])
 
 
 def test_calendar_weights_follow_the_measured_errors(tmp_path):

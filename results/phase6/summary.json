@@ -272,12 +272,12 @@
    "rows": 11845,
    "tokens": 5990183,
    "iterations": [
-    60,
+    5922,
     5922
    ],
-   "train_loss_tail": 1.64255,
-   "val_loss": 2.1284308433532715,
-   "hours": 0.06
+   "train_loss_tail": 0.00953,
+   "val_loss": 0.011618421413004398,
+   "hours": 4.23
   },
   "p6s3": {
    "rows": 7893,
@@ -300,6 +300,17 @@
    "train_loss_tail": 0.02391,
    "val_loss": 0.015740662813186646,
    "hours": 4.02
+  },
+  "p6u2": {
+   "rows": 29775,
+   "tokens": 14972053,
+   "iterations": [
+    40,
+    14887
+   ],
+   "train_loss_tail": 1.72471,
+   "val_loss": 2.0772509574890137,
+   "hours": 0.05
   },
   "p8s1": {
    "rows": 7922,
@@ -378,7 +389,57 @@
     "pairs_merged_into_one_token": [],
     "pairs_checked": 60
    }
-  }
+  },
+  "decisions": [
+   {
+    "decision": "prompt",
+    "options": "--system short",
+    "s2s_minus_s2_rule_items": {
+     "difference": 0.0012165450121654502,
+     "interval95": [
+      -0.029197080291970802,
+      0.03155339805825243
+     ],
+     "a": 657,
+     "b": 658,
+     "n": 822
+    },
+    "s2s_minus_s2_calendar": {
+     "difference": -0.0091324200913242,
+     "interval95": [
+      -0.07589285714285714,
+      0.05982905982905983
+     ],
+     "a": 139,
+     "b": 137,
+     "n": 219
+    }
+   },
+   {
+    "decision": "prompt",
+    "options": "--system short",
+    "s2s_minus_s2_rule_items": {
+     "difference": 0.0012165450121654502,
+     "interval95": [
+      -0.029197080291970802,
+      0.03155339805825243
+     ],
+     "a": 657,
+     "b": 658,
+     "n": 822
+    },
+    "s2s_minus_s2_calendar": {
+     "difference": -0.0091324200913242,
+     "interval95": [
+      -0.07589285714285714,
+      0.05982905982905983
+     ],
+     "a": 139,
+     "b": 137,
+     "n": 219
+    }
+   }
+  ]
  },
  "screening": {
   "rule": "docs/phase6_preregistration.md section 5",
@@ -631,6 +692,14 @@
      "wrong": 10,
      "mean_tokens": 264.1
     }
+   },
+   "p6s2s": {
+    "L0": {
+     "cut": 8,
+     "n": 822,
+     "wrong": 8,
+     "mean_tokens": 304.0
+    }
    }
   }
  },
@@ -707,6 +776,13 @@
     "balanced_decision": 0.7188,
     "refused": 60,
     "definite": 6
+   },
+   "p6s2s": {
+    "k": 137,
+    "n": 219,
+    "balanced_decision": 0.6822,
+    "refused": 51,
+    "definite": 14
    }
   }
  },
@@ -981,11 +1057,57 @@
      138,
      219
     ]
+   },
+   "p6s2s": {
+    "rules": [
+     219,
+     294
+    ],
+    "indep": [
+     132,
+     140
+    ],
+    "blind": [
+     171,
+     188
+    ],
+    "combo": [
+     55,
+     100
+    ],
+    "cf": [
+     81,
+     100
+    ],
+    "all": [
+     658,
+     822
+    ],
+    "calendar": [
+     137,
+     219
+    ]
    }
   }
  },
  "round2_compare": {
   "dev6": [
+   {
+    "hypothesis": "H7: short system prompt at equal compute (6.0 M-token twin)",
+    "a": "p6s2",
+    "b": "p6s2s",
+    "difference": {
+     "n": 822,
+     "n_groups": 772,
+     "difference": 0.0012165450121654502,
+     "second_only": 82,
+     "first_only": 81,
+     "interval95": [
+      -0.029197080291970802,
+      0.03155339805825243
+     ]
+    }
+   },
    {
     "hypothesis": "H10: base size (Qwen3-8B against Qwen3-4B, S1's data)",
     "a": "p6s1",
@@ -1346,6 +1468,41 @@
     "replies_with_wrong": 124,
     "n": 822,
     "loops": 7
+   },
+   "p6s2s": {
+    "checked": {
+     "day_master": 691,
+     "hidden": 962,
+     "pattern": 91,
+     "relation": 732,
+     "stem_relation": 223,
+     "pillar": 408,
+     "flow_year": 530,
+     "detail": 131,
+     "ten_god": 205,
+     "spouse_star": 54,
+     "repetition": 1,
+     "star": 32,
+     "xun_kong": 112
+    },
+    "wrong": {
+     "day_master": 0,
+     "hidden": 35,
+     "pattern": 26,
+     "relation": 38,
+     "stem_relation": 15,
+     "pillar": 1,
+     "flow_year": 129,
+     "detail": 131,
+     "ten_god": 3,
+     "spouse_star": 0,
+     "repetition": 1,
+     "star": 0,
+     "xun_kong": 5
+    },
+    "replies_with_wrong": 106,
+    "n": 822,
+    "loops": 1
    }
   }
  },
@@ -1476,6 +1633,20 @@
      130,
      188
     ]
+   },
+   "p6s2s": {
+    "seen": [
+     115,
+     144
+    ],
+    "held_out": [
+     104,
+     150
+    ],
+    "blind": [
+     171,
+     188
+    ]
    }
   }
  },
@@ -1525,6 +1696,11 @@
     "both": 39,
     "pairs": 50,
     "same_answer": 3
+   },
+   "p6s2s": {
+    "both": 36,
+    "pairs": 50,
+    "same_answer": 5
    }
   }
  },
@@ -1566,6 +1742,10 @@
     "p8s1": [
      28,
      50
+    ],
+    "p6s2s": [
+     48,
+     50
     ]
    },
    "strength": {
@@ -1603,6 +1783,10 @@
     ],
     "p8s1": [
      33,
+     54
+    ],
+    "p6s2s": [
+     43,
      54
     ]
    },
@@ -1642,6 +1826,10 @@
     "p8s1": [
      46,
      54
+    ],
+    "p6s2s": [
+     49,
+     54
     ]
    },
    "yongshen": {
@@ -1679,6 +1867,10 @@
     ],
     "p8s1": [
      22,
+     40
+    ],
+    "p6s2s": [
+     37,
      40
     ]
    },
@@ -1718,6 +1910,10 @@
     "p8s1": [
      19,
      64
+    ],
+    "p6s2s": [
+     39,
+     64
     ]
    },
    "flow": {
@@ -1755,6 +1951,10 @@
     ],
     "p8s1": [
      20,
+     60
+    ],
+    "p6s2s": [
+     36,
      60
     ]
    },
@@ -1794,6 +1994,10 @@
     "p8s1": [
      22,
      46
+    ],
+    "p6s2s": [
+     29,
+     46
     ]
    },
    "ambig": {
@@ -1831,6 +2035,10 @@
     ],
     "p8s1": [
      30,
+     32
+    ],
+    "p6s2s": [
+     32,
      32
     ]
    },
@@ -1870,6 +2078,10 @@
     "p8s1": [
      15,
      16
+    ],
+    "p6s2s": [
+     16,
+     16
     ]
    },
    "overview": {
@@ -1906,6 +2118,10 @@
      20
     ],
     "p8s1": [
+     11,
+     20
+    ],
+    "p6s2s": [
      11,
      20
     ]
@@ -1946,6 +2162,10 @@
     "p8s1": [
      37,
      44
+    ],
+    "p6s2s": [
+     37,
+     44
     ]
    },
    "fact:ten_god_branch": {
@@ -1984,6 +2204,10 @@
     "p8s1": [
      27,
      30
+    ],
+    "p6s2s": [
+     30,
+     30
     ]
    },
    "fact:hidden": {
@@ -2020,6 +2244,10 @@
      30
     ],
     "p8s1": [
+     29,
+     30
+    ],
+    "p6s2s": [
      29,
      30
     ]
@@ -2060,6 +2288,10 @@
     "p8s1": [
      37,
      43
+    ],
+    "p6s2s": [
+     29,
+     43
     ]
    },
    "fact:xun_kong": {
@@ -2098,6 +2330,10 @@
     "p8s1": [
      37,
      46
+    ],
+    "p6s2s": [
+     46,
+     46
     ]
    },
    "fact:luck_direction": {
@@ -2134,6 +2370,10 @@
      29
     ],
     "p8s1": [
+     29,
+     29
+    ],
+    "p6s2s": [
      29,
      29
     ]
@@ -2174,6 +2414,10 @@
     "p8s1": [
      43,
      44
+    ],
+    "p6s2s": [
+     43,
+     44
     ]
    },
    "fact:missing_element": {
@@ -2210,6 +2454,10 @@
      10
     ],
     "p8s1": [
+     10,
+     10
+    ],
+    "p6s2s": [
      10,
      10
     ]
@@ -2250,6 +2498,10 @@
     "p8s1": [
      10,
      10
+    ],
+    "p6s2s": [
+     10,
+     10
     ]
    },
    "combo:flow_stage": {
@@ -2286,6 +2538,10 @@
      25
     ],
     "p8s1": [
+     3,
+     25
+    ],
+    "p6s2s": [
      3,
      25
     ]
@@ -2326,6 +2582,10 @@
     "p8s1": [
      10,
      25
+    ],
+    "p6s2s": [
+     20,
+     25
     ]
    },
    "combo:revealed": {
@@ -2364,6 +2624,10 @@
     "p8s1": [
      16,
      25
+    ],
+    "p6s2s": [
+     15,
+     25
     ]
    },
    "combo:god_count": {
@@ -2401,6 +2665,10 @@
     ],
     "p8s1": [
      12,
+     25
+    ],
+    "p6s2s": [
+     17,
      25
     ]
    }

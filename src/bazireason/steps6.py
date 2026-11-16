@@ -25,8 +25,9 @@ from bazireason import textstyle
 from bazireason.conventions import BRANCHES, CYCLE, STEMS
 
 PILLARS = ("year", "month", "day", "hour")
-# Derivation version. 1: the screening runs and U1. 2 (preregistration 10.5): three steps that
-# S1 got wrong on training wordings are written out further; answers are unchanged.
+# Derivation version. 1: the screening runs, U1 and U2. 2 (preregistration 10.5 and 12.6): the
+# steps that S1, S2 and S2s got wrong on training wordings are written out further, so that no
+# step has to choose where to stop or what to leave out; answers are unchanged.
 _STEPS = [1]
 STATE_OF_POSITION = {"比劫": "旺", "印": "相", "食伤": "休", "财": "囚", "官杀": "死"}
 CONTROL_ORDER = "相克次序：木克土、土克水、水克火、火克金、金克木"
@@ -154,6 +155,16 @@ def stage_steps(day: str, branch: str, label: str) -> list:
         if b == branch:
             break
     stage = R.life_stage(day, branch)
+    if _STEPS[0] >= 2:
+        every = [
+            (BRANCHES[(i + k) % 12] if forward else BRANCHES[(i - k) % 12]) + R.LIFE_STAGES[k]
+            for k in range(12)
+        ]
+        return [
+            f"日主{day}为{yy(day)}干，十二长生{'顺' if forward else '逆'}行；{day}的长生在{start}。",
+            f"从{start}起{'顺' if forward else '逆'}数十二宫：{'、'.join(every)}。",
+            f"在上面找{label}{branch}：{branch}{stage}，所以{label}{branch}为{stage}。",
+        ]
     return [
         f"日主{day}为{yy(day)}干，十二长生{'顺' if forward else '逆'}行；{day}的长生在{start}。",
         f"从{start}起{'顺' if forward else '逆'}数：{'、'.join(walk)}。",
@@ -306,11 +317,15 @@ def pattern_lines(pillars: dict) -> tuple:
         god = R.ten_god(day, h)
         present = h in others
         if present and god not in ("比肩", "劫财"):
+            how = f"出现；{god}不是比劫 → 透出" if _STEPS[0] >= 2 else "出现 → 透出"
             lines.append(
-                f"{h}（{RANK[i]}，{god}）：在{'、'.join(others)}中出现 → 透出，取{h}，记作{god}格。"
+                f"{h}（{RANK[i]}，{god}）：在{'、'.join(others)}中{how}，取{h}，记作{god}格。"
             )
             break
-        why = "出现，但是比劫，不取" if present else "没有出现"
+        if _STEPS[0] >= 2:
+            why = f"出现；{god}是比劫 → 不取" if present else "没有出现 → 不取"
+        else:
+            why = "出现，但是比劫，不取" if present else "没有出现"
         lines.append(f"{h}（{RANK[i]}，{god}）：在{'、'.join(others)}中{why}。")
     else:
         lines.append(f"都不取，回到本气{hidden[0]}，记作{main_god}格。")
@@ -378,11 +393,25 @@ def interact_lines(pillars: dict) -> list:
                 triple_checks.append(
                     f"{t}：有{''.join(have)}{'，三支齐全' if len(have) == 3 else '，不全'}"
                 )
-    lines.append(
-        "三合、三会（三支都在才算）："
-        + ("；".join(triple_checks) if triple_checks else "没有两支以上同组")
-        + "。"
-    )
+    if _STEPS[0] >= 2:
+        every, full = [], []
+        for table in (R.TRIPLE_HARMONIES, R.DIRECTIONAL_TRIPLES):
+            for t in table:
+                have = [b for b in t if b in present]
+                every.append(f"{t}：{'有' + ''.join(have) if have else '无'}")
+                if len(have) == 3:
+                    full.append(t)
+        lines.append(
+            f"三合、三会（三支都在才算）：四支是{'、'.join(branches)}。"
+            + "；".join(every)
+            + f"。三支齐全的：{'、'.join(full) or '没有'}。"
+        )
+    else:
+        lines.append(
+            "三合、三会（三支都在才算）："
+            + ("；".join(triple_checks) if triple_checks else "没有两支以上同组")
+            + "。"
+        )
     adjacent = sorted({item["key"] for item in D.positioned_relations(pillars) if item["adjacent"]})
     lines.append(
         "全部关系："

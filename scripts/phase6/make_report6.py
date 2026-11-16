@@ -33,7 +33,9 @@ NAMES = {
 }  # fmt: skip
 ORDER = list(NAMES)
 CONTINUATIONS = tuple(k for k in NAMES if k[:4] == "p6u3" or k[3:].isdigit() and int(k[3:]) >= 4)
-H9_TARGETS = ("strength", "yongshen:扶抑", "domain", "flow", "overview")  # changed in version 2
+# Items whose derivation differs between versions 1 and 2 (preregistration 10.5 and 12.6)
+H9_TARGETS = ("strength", "yongshen:扶抑", "yongshen:格局", "domain", "flow", "overview", "pattern", "interact",
+              "fact:life_stage")  # fmt: skip
 LOOKUP_KINDS = ("day_master", "hidden", "pillar", "spouse_star")
 COMPUTED_KINDS = (
     "xun_kong",
@@ -615,7 +617,11 @@ def round2_section(lines, summary):
     if log.exists():
         entries = json.loads(log.read_text())
         lines += ["## Round-2 decisions (dev6, frozen rules: preregistration sections 10 and 12)\n"]
+        shown = []
         for e in entries:
+            if e in shown:  # a restarted queue asks the same question again
+                continue
+            shown.append(e)
             if e["decision"] == "structure":
                 d = e["u1hi_minus_u1"]
                 why = "U1-hi was not trained" if d is None else (
