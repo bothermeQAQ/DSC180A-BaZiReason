@@ -22,7 +22,7 @@ Near-perfect on the training distribution with a low test score means a coverage
 | S2s (S2 with the short prompt) | untuned base | 11,845 | 5,990,183 | 16 / 16 | 5922/5922 | 0.0095 | 0.0116 | 20.0 GB | 4.23 |
 | S3 + evidence, self-check | untuned base | 7,893 | 5,978,033 | 16 / 16 | 3946/3946 | 0.0148 | 0.0135 | 23.6 GB | 3.93 |
 | U0 joint, earlier data | untuned base | 7,810 | 5,992,270 | 16 / 16 | 3905/3905 | 0.0239 | 0.0157 | 23.3 GB | 4.02 |
-| U2 short prompt | untuned base | 29,775 | 14,972,053 | 16 / 16 | 40/14887 (running) | 1.7247 | 2.0773 | 17.6 GB | 0.05 |
+| U2 short prompt | untuned base | 29,775 | 14,972,053 | 16 / 16 | 9080/14887 (running) | 0.0080 | 0.0085 | 22.3 GB | 6.47 |
 | S1-8B (S1's data on Qwen3-8B) | untuned base | 7,922 | 6,024,381 | 16 / 16 | 7922/7922 | 0.0132 | 0.0097 | 17.3 GB | 5.94 |
 
 Average per-token loss is dominated by template text; the fit table above is the measure of what was learned.
@@ -55,18 +55,7 @@ Dropped from U1: nothing. Calendar share for U1: unchanged (28%). Best S run on 
 
 ## Split `valid6`
 
-### Replies cut off at the token cap (`valid6`; scripts/phase6/truncation6.py)
-
-Caps: 1,100 tokens for rule items, 700 for calendar rows. A cut-off reply usually has no final JSON and scores wrong.
-
-| Model | Level | Rule items cut off | of which wrong | Mean reply tokens | Calendar cut off |
-|---|---|---:|---:|---:|---:|
-
-### Calendar requests (`valid6`, L0)
-
-| Model | Right | Minus Phase 2 [95%] | Balanced decision accuracy | Answerable refused | Definite where none exists |
-|---|---:|---|---:|---:|---:|
-| Phase 2 | 176/269 (65.4%) | – | 68.8% | 29/175 | 41/94 |
+Scored at L0 so far: Phase 2. This split is for selection only, so its tables are written when `selection.json` exists (`scripts/phase6/decide6.py select`).
 
 ## Split `dev6`
 

@@ -291,3 +291,13 @@ Written while U2 was training, before any continuation existed.
   - **H11:** U4c minus U4 at L0 on the held-out combination items (dev6: 100; sealed6: 160), with all rule items next to it.
   - The chain continues from whichever of the two has the higher dev6 accuracy on all rule items (a tie goes to U4) and keeps that run's mixture.
 - **Sealed L0 runs:** U4 and U4c are added.
+
+### 12.8 How U2 is read, and valid6 kept unread until the selection (16 November, 10:40)
+
+Written while U2 was training (iteration 9,220 of 14,887), before any result of it and before any candidate had a valid6 score.
+
+- **U2 against the 6.0 M runs is a description, not a hypothesis.** Two paired differences at L0 are reported on dev6 and on sealed6, on all rule items with the calendar rows next to them:
+  - **U2 minus S2s:** the same recipe and system prompt. U2 has 2.5 times the tokens, another seed and two more files of natural wordings (`train6b`, `train6c`), so the difference is not attributed to one of the three.
+  - **U2 minus S2:** the best screening run; it also differs in the system prompt.
+- **Why no hypothesis:** the budget is not varied alone, and no target was set before the run was built.
+- **valid6 is not shown before the selection.** The queue scores every candidate on valid6 after dev6. From now on `run6.py` prints the valid6 line without the count of right answers, and `make_report6.py` writes the valid6 tables only when `results/phase6/selection.json` exists. The records on disk, the gate and the selection rule are unchanged.

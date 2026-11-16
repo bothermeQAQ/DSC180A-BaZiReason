@@ -683,3 +683,44 @@ def test_composition_rows_take_their_share_from_the_procedure_rows():
     cal = lambda rows: [T6.first_user(r) for r in rows if T6.calendar_cell(r)]  # noqa: E731
     assert sorted(cal(plain)) == sorted(cal(mixed))
     assert T6.digest(plain) == T6.digest(T6.build("s2", 120_000, 9, exclude, paraphrases))
+
+
+def test_results_table_holds_the_selection_split_back_until_selection(tmp_path, monkeypatch):
+    import make_report6 as M
+
+    for label, part in (("p6u2", "rules"), ("p2", "calendar")):
+        (tmp_path / "valid6" / label).mkdir(parents=True)
+        (tmp_path / "valid6" / label / f"{part}_L0.jsonl").write_text("")
+    monkeypatch.setattr(M, "ROOT", tmp_path)
+    M.main()
+    text = (tmp_path / "RESULTS.md").read_text(encoding="utf-8")
+    held = text.split("## Split `valid6`")[1]
+    assert "Phase 2, U2" in held and "selection.json" in held
+    assert "###" not in held and "%" not in held and "|" not in held
+    summary = json.loads((tmp_path / "summary.json").read_text(encoding="utf-8"))
+    assert summary["valid6_scored_before_selection"] == ["p2", "p6u2"]
+    # once the selection exists, the split is written out like the others
+    (tmp_path / "selection.json").write_text(
+        json.dumps({"candidates": {}, "selected": "p6u2", "calendar_claim_failed": False})
+    )
+    M.main()
+    text = (tmp_path / "RESULTS.md").read_text(encoding="utf-8")
+    assert "for selection only, so its tables" not in text
+    assert "valid6_scored_before_selection" not in (tmp_path / "summary.json").read_text()
+
+
+def test_selection_split_counts_stay_out_of_the_log_until_selection(tmp_path, monkeypatch):
+    import run6
+
+    monkeypatch.setattr(run6, "ROOT", tmp_path)
+    records = [{"score": {"correct": c}, "follows_wrong": not c} for c in (True, False, True)]
+    stats = {"generated": 3}
+    shown = run6.tally("p6u2", "dev6", "rules", "L0", records, stats)
+    assert shown == {"label": "p6u2", "split": "dev6", "part": "rules", "level": "L0", "n": 3,
+                     "correct": 2, "stats": stats}  # fmt: skip
+    assert run6.tally("p6u2", "dev6", "rules", "L3w", records, stats)["follows_wrong"] == 1
+    held = run6.tally("p6u2", "valid6", "rules", "L0", records, stats)
+    assert "correct" not in held and held["n"] == 3
+    assert run6.tally("p6u2", "sealed6", "rules", "L0", records, stats)["correct"] == 2
+    (tmp_path / "selection.json").write_text("{}")
+    assert run6.tally("p6u2", "valid6", "rules", "L0", records, stats)["correct"] == 2

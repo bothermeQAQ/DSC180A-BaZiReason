@@ -135,6 +135,18 @@ def write(path, records):
             stream.write(json.dumps(r, ensure_ascii=False) + "\n")
 
 
+def tally(label, split, part, level, records, stats):
+    """The line printed after a part is scored. valid6 is for selection only: its count stays
+    out of the log until selection.json exists (the records are on disk either way)."""
+    line = {"label": label, "split": split, "part": part, "level": level, "n": len(records)}
+    if split != "valid6" or (ROOT / "selection.json").exists():
+        line["correct"] = sum(bool(r["score"]["correct"]) for r in records)
+        if level == "L3w":
+            line["follows_wrong"] = sum(r["follows_wrong"] for r in records)
+    line["stats"] = stats
+    return line
+
+
 def run_level(bank, label, split, part, level, batch):
     out = ROOT / split / label.translate(SAFE) / f"{part}_{level}.jsonl"
     if out.exists():
@@ -164,10 +176,9 @@ def run_level(bank, label, split, part, level, batch):
             rec["follows_wrong"] = bool(L.score(L.with_expected(it, it["_wrong"]), text)["correct"])
         records.append(rec)
     write(out, records)
-    print(json.dumps({"label": label, "split": split, "part": part, "level": level, "n": len(records),
-                      "correct": sum(bool(r["score"]["correct"]) for r in records),
-                      **({"follows_wrong": sum(r["follows_wrong"] for r in records)} if level == "L3w" else {}),
-                      "stats": stats}, ensure_ascii=False), flush=True)  # fmt: skip
+    print(
+        json.dumps(tally(label, split, part, level, records, stats), ensure_ascii=False), flush=True
+    )
 
 
 def run_checks(bank, label, split, part, level, batch, cache, items, max_tokens, out):

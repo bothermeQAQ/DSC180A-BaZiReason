@@ -39,8 +39,9 @@ All numbers come from files under `results/phase6/`. The full tables are in [`re
 | H8: continuing with the failing question types weighted up improves the model further | each continuation (U3-U10) against its parent |
 | H9: writing the steps S1 gets wrong out further fixes them | U3v (derivation version 2) against U3: the same parent, weights, seed and budget |
 | H10: the base model's size limits the result | S1-8B (S1's training file and settings on Qwen3-8B) against S1 |
+| H11: training on other combinations of procedures improves the held-out combinations | U4c (10% of its tokens are composition rows of six other kinds) against U4: the same parent, weights, seed and budget |
 
-H7 and H8 belong to a second round that was added on 14 November, while S1 was training and before any screening or validation result existed (pre-registration, section 10). H9 was added the same evening after S1's error analysis, before any other screening result and before any round-2 run (section 10.5). H10 was added on 15 November, after the user approved downloading Qwen3-8B and before any run on it (section 11).
+H7 and H8 belong to a second round that was added on 14 November, while S1 was training and before any screening or validation result existed (pre-registration, section 10). H9 was added the same evening after S1's error analysis, before any other screening result and before any round-2 run (section 10.5). H10 was added on 15 November, after the user approved downloading Qwen3-8B and before any run on it (section 11). H11 was added on 16 November, while U2 was training and before any continuation existed (section 12.7).
 
 **The plan was revised once after the screening** (pre-registration section 12, recorded before any of its runs existed). S3's added components gave no gain alone and lowered calendar and combination accuracy, so the runs that the final model comes from use S2's recipe; the registered U1, with S3's recipe, is still trained. H7 became a twin at 6.0 M tokens, which decides the prompt of the 15 M-token run. The same section records a failed data build on 15 November: one new training question was on an evaluation chart, the check stopped the build, and no result was affected.
 
@@ -85,9 +86,10 @@ The runs of the first round start from the untuned base with the earlier adapter
 | U1 | 15 M | the recipe chosen by the frozen screening rule (S3's: nothing was dropped); trained after the chain |
 | U1-hi | 15 M | U1's data with all 36 layers, only if U1 under-fits |
 | S2s | 6.0 M | S2's recipe with the short system prompt: 11,845 rows against 8,161 in the same budget |
-| U2 | 15 M | S2's recipe, the best of the screening, with the system prompt that the S2s twin decides |
-| U3-U10 | 6.0 M each | continuations of the latest run, with the question types reweighted by its measured errors; learning rate 1e-4 |
+| U2 | 15 M | S2's recipe, the best of the screening, with the short system prompt (the S2s twin was not worse than S2) |
+| U3-U10 | 6.0 M each | continuations of the best run of the level before, with the question types and the kinds of calendar request reweighted by its measured errors; learning rate 1e-4 |
 | U3v | 6.0 M | U3 with derivation version 2 (the fork) |
+| U4c | 6.0 M | U4 with 10% of its tokens as composition rows, taken from the procedure share |
 
 **The screening is additive:** each S run adds one component to the previous run. A component's effect is measured in the presence of the earlier ones, so interactions are confounded with the order in which the components were added.
 
