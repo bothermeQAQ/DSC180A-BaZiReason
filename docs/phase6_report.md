@@ -100,4 +100,66 @@ The runs of the first round start from the untuned base with the earlier adapter
 
 The chain has at most eight levels and ends after two levels in a row without a new best on dev6. Every round-2 run is a selection candidate, and the sealed split stayed closed until the round ended.
 
-<!-- RESULTS: sections 4 onwards are written from results/phase6/RESULTS.md once the runs exist -->
+## 4. Development results (dev6)
+
+These are development results: dev6 was read freely to make decisions. The claims of this report rest on the sealed split (section 5). Every number is in [`results/phase6/RESULTS.md`](../results/phase6/RESULTS.md); intervals are paired 95% intervals.
+
+### 4.1 The model alone (L0)
+
+| Model | Training | All rule items (822) | Held-out combinations (100) | Calendar (219) |
+|---|---|---:|---:|---:|
+| Untuned base | none | 14.1% | 38% | 1.8% |
+| Phase 2 | calendar, two rounds | 23.6% | 23% | 74.0% |
+| A1 | six sequential rounds | 60.5% | 48% | 62.1% |
+| U0 | the earlier data in one joint run, 6.0 M tokens | 40.3% | 40% | 62.1% |
+| S1 | small steps, 6.0 M | 66.8% | 36% | 58.4% |
+| **S2** | S1 plus natural wordings, 6.0 M | **79.9%** | 50% | 63.5% |
+| S3 | S2 plus evidence, self-check and calendar twins, 6.0 M | 77.6% | 38% | 53.0% |
+| S2s | S2's recipe with the short prompt, 6.0 M | 80.0% | 55% | 62.6% |
+| S1-8B | S1's data on Qwen3-8B, 6.0 M | 66.4% | 41% | 63.0% |
+
+Four hours of training from the untuned base on the new data (S1) passed the end of the earlier six-round chain (A1), and eight hours of design later S2 is 19.5 points above A1 [15.8, 23.4].
+
+### 4.2 What each change did
+
+| Hypothesis | Comparison | Rule items, points [95%] | Reading |
+|---|---|---|---|
+| H1 sequential rounds | U0 minus A1 | −20.2 [−23.9, −16.7] | one joint run on the earlier data, at a third of the tokens, reproduces neither specialist (calendar: 11.9 below Phase 2) |
+| H2 small steps | S1 minus U0 | +26.5 [+22.2, +30.5] | supported: 旬空 96% right (A1 28%), element counts 98%, life stages 95% |
+| H3 wording | S2 minus S1 | +13.1 [+9.7, +16.6] | supported: held-out template wording 37.3% to 71.3%, natural wordings 68.6% to 88.8% |
+| H4 evidence and self-check | S3 minus S2 | −2.3 [−5.2, +0.5] | no gain alone; costs below |
+| H7 short prompt | S2s minus S2 | +0.1 [−2.9, +3.2] | not supported: 45% more rows in the same budget changed nothing |
+| H10 base size | S1-8B minus S1 | −0.4 [−3.7, +3.1] | not supported: the larger base learns the same data no better |
+
+- **What S3's components bought and cost.** Raw facts in the prompt hurt S3 less (L1 minus L0 −1.9 [−4.5, +0.7], against −7.7 [−10.5, −4.9] for S2), and a plain re-check no longer breaks right answers (0 of 278, against 21 of 290 for S2). But it fixes almost none (2 of 184), and the mixture cost held-out combinations (−12.0 [−23.0, −1.0]) and calendar accuracy (−10.5 [−17.1, −3.8]).
+- **The frozen screening rule dropped nothing** (it drops a component only when the run is significantly worse on all rule items), so the registered U1 has S3's recipe. The runs that lead to the final model use S2's recipe instead; the change and its reasons were recorded before any of those runs existed (pre-registration, section 12).
+- **Two null results changed the plan.** More rows of the same mixture (H7) and a base twice as large (H10) both gave nothing. What separates the models is what the training text makes explicit, not how much of it there is or how large the model is.
+
+### 4.3 Where the remaining errors start
+
+Each reply was compared with the rule code's derivation step by step (`scripts/phase6/first_error.py`).
+
+| Wording of the question | S1 | S2 | S2s |
+|---|---:|---:|---:|
+| training template wordings (244) | 203 | 200 | 196 |
+| held-out template wording (150) | 56 | 107 | 104 |
+| natural wordings, written by another model (188) | 129 | 167 | 171 |
+
+- **Unseen wording was S1's largest loss** and S2 removed most of it.
+- **On wordings the model knows, about one answer in five is still wrong, and more data did not change that.** The wrong answers start at a few steps of the long derivations: the hidden-stem step of area-of-life questions, the clash step of flow years, the pair and trio steps of relations.
+- **These steps have one thing in common: the text must decide, while it is written, where to stop or what to leave out.** The clearest case is the life stage of the day master. S1 answered 13 of 14 counterfactual life-stage items, S2 9 and S2s 4. The count through the twelve stages was right every time, but it ended at the wrong branch. S1 had not stopped at all: it wrote all twelve stages and read the answer off.
+- **Derivation version 2** removes those decisions: it writes the whole table first and then looks the answer up (pre-registration 10.5 and 12.6; checked on 15,000 derivations, every answer unchanged). A paired fork of the first continuation (U3 against U3v) tests it.
+- **Held-out combinations stay near 50%.** The replies start the right sub-procedures and fail where they join. An arm of the second continuation level (U4c) adds composition rows of other kinds; the four held-out kinds stay out of training.
+
+### 4.4 Calendar
+
+Every Phase 6 model is about 10 points below Phase 2 on calendar requests, and the errors are decisions, not arithmetic. S2 refuses almost no answerable request (9 of 145) but gives a definite chart in 50 of the 74 requests where none exists; it answers 13 of 40 day-boundary requests and none of the 8 that need a time-zone tool. S3's matched twins moved the error to the other side (66 answerable requests refused). The continuations therefore weight calendar requests by measured error, in cells of request family and expected status (pre-registration 12.5).
+
+### 4.5 A failed build, and what the audit found
+
+On 15 November the data build for U1 stopped at its leakage check: one of 4,002 new training-writer questions was on a chart that is also an evaluation chart (the same four pillars recur on another date). The queue script did not stop after the failed step and reported completion, so the GPU was idle for about two hours.
+
+- **No result is affected.** No row of any trained set, and no row of the earlier training files, is on a Phase 6 evaluation chart. No candidate had a validation score, and the sealed split was closed.
+- **Fixed:** builds leave out and count any row on a held-out chart instead of stopping; every queue step is followed by a stop; both are tested. Dry runs of the later builds then found two more ways a build could have stopped (edited charts in contrast rows, and dialogue rows that come with the calendar data), which were fixed before they could occur.
+
+<!-- RESULTS: section 5 (sealed results) and the sections after it are written from results/phase6/RESULTS.md once the sealed runs exist -->
