@@ -210,3 +210,43 @@ Written while S2 was being scored on dev6 (no S2 result had been read) and befor
 - **Decision:** if H10 is supported, further runs on the larger model use the best 4B recipe of round 2; they are recorded here before they start. If it is not supported, no further run uses the larger model.
 - **Selection and claims:** runs on the larger model are selected separately, by the rule of section 6 (M8). P-1 to P-7 stay with the 4B selection M, whose base is A1's. On sealed6 the base-size comparisons are S1-8B minus S1 and, if M8 exists, M8 minus M, at L0.
 - **Order:** the GPU runs one job at a time. The pilot runs after the screening queue and before U1. If it stops for a technical reason, the queue goes on to U1.
+
+## 12. Changes after the screening and the pilot (15 November, 22:55)
+
+Written after the screening queue and the larger-base pilot had finished, and before any of the runs named here existed. The user asked a new lead agent to investigate, recover the queue and change the plan where the evidence justifies it.
+
+### 12.1 What was known
+
+- **dev6 results:** every level of S1, S2 and S3; L0 of S1-8B; `results/phase6/screening.json`.
+- **valid6:** only Phase 2's calendar rows (176/269). No candidate had any valid6 score. sealed6 was closed.
+- **No run of round 2 existed.** U1's data build had stopped at the leakage check, so U1, U1-hi and everything after them had not run.
+
+### 12.2 The failure, and what it did not affect
+
+- **Cause:** one of the 4,002 new training-writer questions (`train6b`) is on a chart that is also an evaluation chart (the same four pillars recur on another date). The build's check stopped before any file was written.
+- **The queue did not stop:** the U1 script went on through every later step, each failing in seconds, and printed its end marker. The GPU was idle from 21:02.
+- **No result is affected.** No row of any trained set (U0, S1, S2, S3), and no row of the earlier training files behind A1, G1 and Phase 2, is on a Phase 6 evaluation chart (checked for every family, including the earlier tasks that the build's check leaves out).
+- **Fix:** a training-writer question on an evaluation chart is left out when a set is built (none in `train6`, so S2 and S3 rebuild bit for bit; one in `train6b`). Every queue now stops at its first failed step.
+
+### 12.3 Screening and pilot results that change the plan
+
+| Comparison on dev6 | Points [95%] |
+|---|---|
+| S3 minus S2, all rule items at L0 | −2.3 [−5.2, +0.5] |
+| S3 minus S2, combinations of trained rules | −12.0 [−23.0, −1.0] |
+| S3 minus S2, calendar rows | −10.5 [−17.1, −3.8] |
+| S1-8B minus S1, all rule items at L0 (H10) | −0.4 [−3.7, +3.1] |
+
+- **The frozen rule of section 5 drops nothing**, so the registered U1 has S3's recipe.
+- **S3's added components gave no gain alone and cost calendar and combination accuracy.** What they bought: raw facts hurt less (L1 minus L0 −1.9 against −7.7 for S2), and a re-check no longer breaks right answers (0 of 278 against 21 of 290) but fixes almost none (2 of 184).
+- **H10 is not supported.** By section 11 no further run uses the larger model.
+
+### 12.4 The revised plan
+
+- **Main line on S2's recipe.** The runs that the final model comes from use the recipe of the best screening run on dev6 (S2), not S3's.
+- **H7, restated as a twin at 6.0 M tokens:** S2s is S2's recipe, seed and budget with the short system prompt; H7 is S2s minus S2 at L0 on dev6 (rule items; calendar next to it), and on sealed6.
+- **U2:** S2's recipe at 15 M tokens (seed 2026111715; `train6`, `train6b` and `train6c`), rank 16 on the last 16 layers. Its system prompt is the short one unless S2s minus S2 on dev6 has a 95% upper bound below 0 on the rule items or on the calendar rows.
+- **Chain:** as in 10.2 and 10.5 (the fork U3 / U3v, then up to U10 with the two-level stop). Its first parent is the best run on dev6 among U2 and any of U1 and U1-hi that exist at that time.
+- **U1 as registered** (S3's recipe, 15 M tokens, long prompt) is trained after the chain. **U1-hi** is not queued; it may be started by hand under the condition of section 5, and if it is not run H5 is reported as untested.
+- **Candidates for selection (replaces 10.4):** the best S run on dev6, S2s, U1, U1-hi and U2 if trained, and every run of the chain. The gate and the rule are unchanged.
+- **Sealed L0 runs (replaces the additions of 10.4, 10.5 and 11):** S2 and S2s (H7), U3 and U3v (H9), S1 and S1-8B (H10), U1, U2 and every ancestor of M.
