@@ -14,6 +14,9 @@ reply is right when its final JSON matches the rule code (the Phase 5 scorer).
 Sample b (round 2, pre-registration 10.2): 100 questions for each question type, in training
 template wordings on fresh charts; never training input. Its fit file leaves out a question
 whose chart is in the model's own training files (scripts/phase6/fit_clean.py).
+
+Sample c (pre-registration 12.5): fresh calendar requests, up to 40 for each request family
+and expected status; never training input (--sample c -> own_replies_<label>_c.jsonl).
 """
 
 import argparse
@@ -41,15 +44,17 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--label", required=True)
     parser.add_argument("--n", type=int, default=2400)
-    parser.add_argument("--sample", choices=("a", "b"), default="a")
+    parser.add_argument("--sample", choices=("a", "b", "c"), default="a")
     args = parser.parse_args()
-    suffix = "" if args.sample == "a" else "_b"
+    suffix = "" if args.sample == "a" else f"_{args.sample}"
     out = Path("results/phase6") / f"own_replies_{args.label}{suffix}.jsonl"
     fit = Path("results/phase6") / f"fit_{args.label}{suffix}.json"
     if out.exists():
         sys.exit(f"{out} exists")
     if args.sample == "b":
         return sample_b(args.label, out, fit)
+    if args.sample == "c":
+        return sample_c(args.label, out, fit)
     rng = random.Random(f"own:{SEED}")
     charts = T6.Charts(SEED, build_train6.exclusions())
     paraphrases = [
@@ -100,6 +105,35 @@ def sample_b(label, out, fit):
             stream.write(json.dumps({"row": {k: v for k, v in r.items() if k != "_tokens"}, "reply": text, "correct": ok},
                                     ensure_ascii=False) + "\n")  # fmt: skip
     result = dict(fit_clean.clean(label, "b"), stats=stats)
+    fit.write_text(json.dumps(result, ensure_ascii=False, indent=1) + "\n")
+    print(json.dumps(result, ensure_ascii=False))
+
+
+def sample_c(label, out, fit):
+    """Calendar fit sample (preregistration 12.5): fresh requests of the training generator,
+    up to 40 for each family and expected status; scored by the calendar scorer."""
+    from bazireason import workflow as W
+
+    rows = build_train6.fit_c_rows()
+    texts, stats = run6.Cache6(label).generate(
+        run6.Bank().get(label),
+        [W.prompt_messages(r) for r in rows],
+        run6.MAX_TOKENS["calendar"],
+        32,
+    )
+    by = {}
+    with out.open("x", encoding="utf-8") as stream:
+        for r, text in zip(rows, texts, strict=True):
+            ok = bool(score(r, text)["correct"])
+            cell = by.setdefault(T6.calendar_cell(r), [0, 0])
+            cell[0] += ok
+            cell[1] += 1
+            stream.write(
+                json.dumps({"row": r, "reply": text, "correct": ok}, ensure_ascii=False) + "\n"
+            )
+    right = sum(c[0] for c in by.values())
+    result = {"label": label, "sample": "c", "n": len(rows), "correct": right, "share": round(right / len(rows), 4),
+              "by_type": dict(sorted(by.items())), "stats": stats}  # fmt: skip
     fit.write_text(json.dumps(result, ensure_ascii=False, indent=1) + "\n")
     print(json.dumps(result, ensure_ascii=False))
 

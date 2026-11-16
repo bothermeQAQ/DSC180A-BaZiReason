@@ -107,3 +107,13 @@ Each needs a pre-registration entry before its results exist, and can be added a
 - Every number in a document comes from a saved file via a script. System accuracy (L5) is never called model accuracy.
 - Labels come from the rule code or lunar-python only. BaziQA is never training data. No life-prediction claims.
 - No downloads without the user's approval (Qwen3-8B was approved and is in `models/qwen3-8b-mlx-4bit`).
+
+## 9. State when the lead agent's session ended (15 November, about 23:35 PST)
+
+- **Running:** S2s training (started 22:57), then `queue_main.sh` (restarted 23:07 with the calendar-weights step).
+- **Added after section 1 to 8 were written** (pre-registration 12.5, log of 15 November): the continuations weight calendar cells by the parent's errors on fit sample C (`own_replies.py --sample c`, `build_train6.py --calendar-weights-from`); contrast rows and the calendar data's dialogue rows now avoid held-out charts; the build leaves out and counts any row on a held-out chart instead of stopping. S1, S2, S3, U0 and S2s rebuild bit for bit with the final code.
+- **Not yet verified, do this first (CPU only, before U2 finishes on Monday about 15:45):**
+  1. Run the full tests: `PYTHONPATH=src .venv/bin/python -m pytest -q` (the new tests passed one by one; the whole suite was not rerun after the last two edits of `train_data6.py`).
+  2. Dry-run a continuation build with both kinds of weights in a scratch folder (point `build_train6.OUT`, `build_train6.CONFIG` and `prompts6.TRAIN` at it; build a small `u2` with `--data-recipe s2 --system short`, write made-up reply files for samples B and C, then build `u3` with `--parent u2 --weights-from ... --calendar-weights-from ...` and repeat with `--check`). The first attempt at this dry run is what found the two held-out-chart bugs; it was not repeated after the fixes.
+  3. If the dry run fails and cannot be fixed in time, stop `queue_main.sh` while it is not in a build step, remove the three `CW` lines of its `arm()` function, and restart it: the chain then runs as registered in 10.2 and 10.5, and section 12.5 is reported as not applied.
+- **If `QUEUE_MAIN_FAILED` appears:** read the step above it in `artifacts/logs/p6_queue_main.log`, fix, restart with the command in section 2.

@@ -369,8 +369,11 @@ def contrast_rows(target_tokens, charts, rng):
                 (p, n) for p in ("year", "month", "day", "hour") for n in neighbours(pillars[p])
             ]
             rng.shuffle(options)
+            # An edited chart must not be a held-out chart either (an evaluation chart or, in
+            # round 2, a chart of fit sample B): the edit of a real chart is often a real chart.
             edited = next((dict(pillars, **{p: n}) for p, n in options[:12]
-                           if S6.derive(head, dict(pillars, **{p: n}), gender) and S6.derive(head, dict(pillars, **{p: n}), gender)[1] != base[1]), None)  # fmt: skip
+                           if "".join(dict(pillars, **{p: n}).values()) not in charts.exclude
+                           and S6.derive(head, dict(pillars, **{p: n}), gender) and S6.derive(head, dict(pillars, **{p: n}), gender)[1] != base[1]), None)  # fmt: skip
             if not base or not edited:
                 continue
             q = template_question(head, pillars, gender, rng)
@@ -527,8 +530,61 @@ def selfcheck_rows(replies, rng, limit_tokens):
 # ---- calendar and the other tasks ------------------------------------------------------------------------
 
 
-def calendar_rows(target_tokens, seed, balanced):
+def first_user(r):
+    return next((m["content"] for m in r["messages"] if m["role"] == "user"), "")
+
+
+def calendar_cell(r):
+    """A calendar request's cell: its family and expected status, or None for other tasks."""
+    expected = (r.get("meta") or {}).get("expected")
+    if r.get("task") != "chart" or not isinstance(expected, dict):
+        return None
+    return f"{r['family']}:{expected.get('status')}"
+
+
+def fit_sample_c(seed, per_cell):
+    """Round 2 calendar fit sample (preregistration 12.5): up to ``per_cell`` fresh requests for
+    each cell of the training generator. Never training input."""
     blocked = TD.benchmark_exclusions() | TD.contest_exclusions()
+    pool = [r for r in TD.generate_split("train", seed, blocked, 2.0, 2) if calendar_cell(r)]
+    random.Random(f"fit-c:{seed}").shuffle(pool)
+    taken, out = Counter(), []
+    for r in pool:
+        cell = calendar_cell(r)
+        if taken[cell] < per_cell:
+            taken[cell] += 1
+            out.append(r)
+    return sorted(out, key=lambda r: (calendar_cell(r), r["id"]))
+
+
+def calendar_rows(
+    target_tokens, seed, balanced, weights=None, block_texts=frozenset(), held_out=frozenset()
+):
+    """Calendar rows of the training generator. Its dialogue rows carry a chart: one on a
+    held-out chart (``held_out``: evaluation charts and, in round 2, fit sample B) is left out."""
+    blocked = TD.benchmark_exclusions() | TD.contest_exclusions()
+    if weights is not None:
+        # Preregistration 12.5: a pool twice as large, drawn with the cells' weights (a row's
+        # key is u ** (1 / weight); the largest keys come first), never a fit-sample request.
+        pool = [
+            _sys(r)
+            for r in TD.generate_split("train", seed, blocked, 4.0, 2)
+            if r["family"] not in CALENDAR_DROP
+            and first_user(r) not in block_texts
+            and chart_of(r) not in held_out
+        ]
+        rng = random.Random(f"p6-cal:{seed}")
+        keyed = [
+            (rng.random() ** (1.0 / weights.get(calendar_cell(r), 1.0)), i)
+            for i, r in enumerate(pool)
+        ]
+        out, used = [], 0
+        for _, i in sorted(keyed, reverse=True):
+            if used >= target_tokens:
+                break
+            out.append(pool[i])
+            used += tokens(pool[i])
+        return out
     pool = [
         _sys(r)
         for r in TD.generate_split("train", seed, blocked, 2.0, 2)
@@ -563,6 +619,8 @@ def calendar_rows(target_tokens, seed, balanced):
     for r in pool:
         if used >= target_tokens:
             break
+        if chart_of(r) in held_out:  # skipped when chosen, so the shuffle above is unchanged
+            continue
         out.append(r)
         used += tokens(r)
     return out
@@ -619,19 +677,22 @@ def build(
     weights=None,
     block=frozenset(),
     steps=1,
+    calendar_weights=None,
+    calendar_block=frozenset(),
 ):
     """Rows of one recipe. ``calendar_share`` and ``drop`` (component names) apply the
     pre-registered screening decisions (docs/phase6_preregistration.md, section 5) to U1.
 
     Round 2 (section 10): ``system`` replaces the main system prompt, ``weights`` reweights the
     question types of the procedure rows, no row has a chart in ``block`` (fit sample B), and
-    ``steps`` is the derivation version (bazireason.steps6)."""
+    ``steps`` is the derivation version (bazireason.steps6). ``calendar_weights`` draws the
+    calendar rows by cell weight, never a request of fit sample C (``calendar_block``)."""
     _SYSTEM[0] = system or P2_SYSTEM
     S6.set_steps(steps)
     try:
         return _build(
             recipe, total_tokens, seed, exclude, paraphrases, replies, calendar_share, drop,
-            weights, frozenset(block),
+            weights, frozenset(block), calendar_weights, frozenset(calendar_block),
         )  # fmt: skip
     finally:
         _SYSTEM[0] = P2_SYSTEM
@@ -639,7 +700,18 @@ def build(
 
 
 def _build(
-    recipe, total_tokens, seed, exclude, paraphrases, replies, calendar_share, drop, weights, block
+    recipe,
+    total_tokens,
+    seed,
+    exclude,
+    paraphrases,
+    replies,
+    calendar_share,
+    drop,
+    weights,
+    block,
+    calendar_weights,
+    calendar_block,
 ):
     rng = random.Random(f"{VERSION}:{recipe}:{seed}")
     if block:
@@ -664,6 +736,9 @@ def _build(
             total_tokens * shares["calendar"],
             seed + 1,
             balanced=base == "s3" and "twins" not in drop,
+            weights=calendar_weights,
+            block_texts=calendar_block,
+            held_out=exclude,
         )
         styled = base in ("s2", "s3") and "wording" not in drop
         rows += procedure_rows(total_tokens * shares["procedure"], charts, rng, paraphrases if styled else None,

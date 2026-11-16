@@ -32,13 +32,17 @@ run $PY scripts/phase6/run6.py --split dev6 --labels p6u2 --parts $ALL calendar 
 run $PY scripts/phase6/run6.py --split valid6 --labels p6u2 --parts $ALL calendar --levels L0 || fail
 
 # ---- 2. the chain -----------------------------------------------------------------------------------
-# One arm of a level: fit sample B for the parent, build, train, dev6 and valid6.
+# One arm of a level: fit samples B and C for the parent, build, train, dev6 and valid6.
 arm() {
   R=$1; P=$2; shift 2
   echo "continuation $R from $P $*"
   [ -f "results/phase6/own_replies_p6${P}_b.jsonl" ] || run $PY scripts/phase6/own_replies.py --label "p6$P" --sample b || return 1
-  # shellcheck disable=SC2068
-  [ -d "data/phase6/train/$R" ] || run $PY scripts/phase6/build_train6.py --recipe "$R" --parent "$P" --tokens 6000000 --weights-from "results/phase6/own_replies_p6${P}_b.jsonl" $@ || return 1
+  # Calendar weights (preregistration 12.5); without the sample the continuation is built without them.
+  CW=""
+  [ -f "results/phase6/own_replies_p6${P}_c.jsonl" ] || run $PY scripts/phase6/own_replies.py --label "p6$P" --sample c || echo "no calendar fit sample for $P"
+  [ -f "results/phase6/own_replies_p6${P}_c.jsonl" ] && CW="--calendar-weights-from results/phase6/own_replies_p6${P}_c.jsonl"
+  # shellcheck disable=SC2068,SC2086
+  [ -d "data/phase6/train/$R" ] || run $PY scripts/phase6/build_train6.py --recipe "$R" --parent "$P" --tokens 6000000 --weights-from "results/phase6/own_replies_p6${P}_b.jsonl" $CW $@ || return 1
   done_training "$R" || run $PY scripts/phase2/train_lora.py --config "configs/phase6/qwen3_4b_lora_p6_$R.yaml" || return 1
   run $PY scripts/phase6/run6.py --split dev6 --labels "p6$R" --parts $ALL calendar --levels L0 || return 1
   run $PY scripts/phase6/run6.py --split valid6 --labels "p6$R" --parts $ALL calendar --levels L0 || return 1

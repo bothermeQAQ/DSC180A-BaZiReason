@@ -580,3 +580,51 @@ def test_no_queue_script_can_report_success_after_a_failed_step():
                 "--sample b" in step and "own_replies_${L}_b" in step
             )  # the last, optional loop
             assert guarded or diagnostic, (name, step[:90])
+
+
+def test_calendar_weights_follow_the_measured_errors(tmp_path):
+    import build_train6 as B
+
+    from bazireason import train_data6 as T6
+
+    def reply(family, status, ok):
+        row = {"task": "chart", "family": family, "meta": {"expected": {"status": status}}}
+        return {"row": row, "reply": "", "correct": ok}
+
+    rows = [reply("zi_transition", "ambiguous", False)] * 9 + [
+        reply("zi_transition", "ambiguous", True)
+    ]
+    rows += [reply("chart_plain", "ok", True)] * 98
+    path = tmp_path / "c.jsonl"
+    path.write_text("".join(json.dumps(r, ensure_ascii=False) + "\n" for r in rows), "utf-8")
+    out = B.calendar_weights(path)
+    raw = {"zi_transition:ambiguous": 10 / 12, "chart_plain:ok": B.ERROR_FLOOR}  # 1/100 is floored
+    mean = sum(raw.values()) / len(raw)
+    assert out["weights"] == {cell: round(v / mean, 4) for cell, v in raw.items()}
+    assert out["scored_wrong"] == {"zi_transition:ambiguous": [10, 9], "chart_plain:ok": [98, 0]}
+    other = {"task": "verify", "family": "verify", "meta": {"expected": {"status": "ok"}}}
+    assert T6.calendar_cell(other) is None  # other calendar tasks keep weight 1
+
+
+def test_weighted_calendar_rows_favour_the_failing_cells_and_skip_the_fit_sample():
+    from collections import Counter
+
+    import build_train6 as B
+
+    from bazireason import ladder as LD
+    from bazireason import train_data6 as T6
+
+    sample = T6.fit_sample_c(B.FIT_C_SEED, 3)
+    cells = Counter(T6.calendar_cell(r) for r in sample)
+    assert None not in cells and max(cells.values()) == 3 and len(cells) >= 15
+    assert all(LD.score(r, r["messages"][-1]["content"])["correct"] for r in sample)  # scorable
+    seed = 2026111799
+    weights = dict.fromkeys(cells, 0.3) | {"zi_transition:ambiguous": 6.0}
+    plain = T6.calendar_rows(150_000, seed, False)
+    pool_texts = frozenset(T6.first_user(r) for r in plain[:20])  # stand-ins for fit requests
+    weighted = T6.calendar_rows(150_000, seed, False, weights=weights, block_texts=pool_texts)
+    count = lambda rows: sum(T6.calendar_cell(r) == "zi_transition:ambiguous" for r in rows)  # noqa: E731
+    assert count(weighted) > 3 * max(1, count(plain))
+    assert not any(T6.first_user(r) in pool_texts for r in weighted)
+    again = T6.calendar_rows(150_000, seed, False, weights=weights, block_texts=pool_texts)
+    assert [r["id"] for r in weighted] == [r["id"] for r in again]

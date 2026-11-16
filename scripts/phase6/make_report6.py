@@ -134,10 +134,11 @@ def fit_section(lines, summary):
     samples = {"": "sample A: Phase 6 procedure questions, training years (for S2, S3 and the U runs it "
                    "includes questions they train on)",
                "_clean": "sample A, only the charts the model never trained on",
-               "_b": "sample B: 100 per question type, template wordings, charts never trained on"}  # fmt: skip
+               "_b": "sample B: 100 per question type, template wordings, charts never trained on",
+               "_c": "sample C: fresh calendar requests, up to 40 per family and expected status"}  # fmt: skip
     for f in fits:
         d = json.loads(f.read_text())
-        kind = next(k for k in ("_clean", "_b", "") if f.stem.endswith(k))
+        kind = next(k for k in ("_clean", "_b", "_c", "") if f.stem.endswith(k))
         lines.append(f"| {name(d['label'])} | {samples[kind]} | {pct(d['correct'], d['n'])} |")
         out[f.stem[4:]] = d
     lines.append("")

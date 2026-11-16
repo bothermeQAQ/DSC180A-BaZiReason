@@ -53,6 +53,10 @@ SEEDS = {
 ROUND2 = ("u2", "u3", "u3v", "u4", "u5", "u6", "u7", "u8", "u9", "u10")
 FIT_B_SEED = 2026111791  # fit sample B (own_replies.py --sample b); never training input
 FIT_B_PER_TYPE = 100
+FIT_C_SEED = (
+    2026111792  # fit sample C (own_replies.py --sample c): calendar requests, never training input
+)
+FIT_C_PER_CELL = 40
 ERROR_FLOOR = 0.05
 FOLDER = "bazireason-qwen3-4b-lora-p6-{name}"
 TEMPLATE = """# BaZiReason Phase 6, {recipe}: {purpose}
@@ -130,6 +134,28 @@ def structure_of(recipe):
 
 def fit_b_rows():
     return T6.fit_sample_b(FIT_B_SEED, FIT_B_PER_TYPE, exclusions())
+
+
+def fit_c_rows():
+    return T6.fit_sample_c(FIT_C_SEED, FIT_C_PER_CELL)
+
+
+def calendar_weights(replies_path):
+    """Weights of the calendar cells from the parent's replies to fit sample C (section 12.5):
+    error = (wrong + 1) / (n + 2); weight = max(error, 0.05) / the mean of that over the cells."""
+    count = {}
+    for line in Path(replies_path).read_text(encoding="utf-8").splitlines():
+        r = json.loads(line)
+        c = count.setdefault(T6.calendar_cell(r["row"]), [0, 0])
+        c[0] += 1
+        c[1] += not r["correct"]
+    raw = {cell: max((w + 1) / (n + 2), ERROR_FLOOR) for cell, (n, w) in sorted(count.items())}
+    mean = sum(raw.values()) / len(raw)
+    return {
+        "source": str(replies_path),
+        "scored_wrong": {cell: count[cell] for cell in raw},
+        "weights": {cell: round(v / mean, 4) for cell, v in raw.items()},
+    }
 
 
 def training_charts(recipe):
@@ -224,6 +250,9 @@ def main():
     parser.add_argument(
         "--steps", type=int, choices=(1, 2), help="round 2: derivation version (steps6)"
     )
+    parser.add_argument(
+        "--calendar-weights-from", help="round 2: the parent's replies to fit sample C (12.5)"
+    )
     parser.add_argument("--check", action="store_true")
     args = parser.parse_args()
     recipe = args.recipe
@@ -263,6 +292,13 @@ def main():
     replies = load_replies(args.replies)
     options = {"calendar_share": args.calendar_share, "drop": tuple(args.drop)}
     round2 = recipe in ROUND2 or args.system == "short"
+    calendar_weighting = None
+    if args.calendar_weights_from:
+        if not args.parent:
+            sys.exit("--calendar-weights-from is for continuations (--parent)")
+        calendar_weighting = calendar_weights(args.calendar_weights_from)
+        options["calendar_weights"] = calendar_weighting["weights"]
+        options["calendar_block"] = frozenset(T6.first_user(r) for r in fit_c_rows())
     if round2:
         options["system"] = P6.SHORT_SYSTEM if args.system == "short" else None
         options["weights"] = weighting["weights"] if weighting else None
@@ -273,6 +309,16 @@ def main():
     limit = MAX_TOKENS - 8 if T6._tokenizer() else int(MAX_TOKENS * 0.95)
     train = [r for r in train if T6.tokens(r) <= limit]
     valid = [r for r in valid if T6.tokens(r) <= limit]
+
+    def held_out(r):  # a row on an evaluation chart or, in round 2, on a chart of fit sample B
+        chart = T6.chart_of(r)
+        return chart in block or (chart in exclude and r["family"] not in T6.OTHER_FAMILIES)
+
+    # The generators already avoid held-out charts; a row that still lands on one is left out
+    # and counted (section 12.2), so that a build cannot stop a queue. None in S1, S2 and S3.
+    dropped = [sum(held_out(r) for r in train), sum(held_out(r) for r in valid)]
+    train = [r for r in train if not held_out(r)]
+    valid = [r for r in valid if not held_out(r)]
     for r in train + valid:
         assert T6.chart_of(r) not in block, r["id"]
         pillars = (r.get("meta") or {}).get("pillars")
@@ -302,8 +348,9 @@ def main():
                 "calendar_share": args.calendar_share, "drop": args.drop, "extra_paraphrases": args.extra_paraphrases,
                 "replies": args.replies, "excluded_charts": len(exclude),
                 "paraphrases_on_evaluation_charts_left_out": left_out,
+                "rows_on_held_out_charts_left_out": {"train": dropped[0], "valid": dropped[1]},
                 **({"system": args.system, "parent": args.parent, "steps": args.steps or 1, "weighting": weighting,
-                    "fit_sample_b_charts_blocked": len(block)} if round2 else {}),
+                    "fit_sample_b_charts_blocked": len(block), "calendar_weighting": calendar_weighting} if round2 else {}),
                 "files": {name: {"sha256": hashlib.sha256(d).hexdigest(), "rows": len(train if name == 'train.jsonl' else valid)} for name, d in files.items()},
                 "train_summary": T6.summary(train)}  # fmt: skip
     (folder / "manifest.json").write_text(json.dumps(manifest, ensure_ascii=False, indent=1) + "\n")
