@@ -243,6 +243,201 @@
     "seconds": 4483.5,
     "completion_tokens": 723767
    }
+  },
+  "p6u2_b": {
+   "label": "p6u2",
+   "sample": "b",
+   "n": 2000,
+   "correct": 1960,
+   "share": 0.98,
+   "left_out_chart_in_training": 0,
+   "by_type": {
+    "ambig:no_rule": [
+     100,
+     100
+    ],
+    "ambig:yongshen_open": [
+     100,
+     100
+    ],
+    "domain": [
+     96,
+     100
+    ],
+    "fact:element_count": [
+     98,
+     100
+    ],
+    "fact:hidden": [
+     100,
+     100
+    ],
+    "fact:life_stage": [
+     89,
+     100
+    ],
+    "fact:luck_direction": [
+     100,
+     100
+    ],
+    "fact:missing_element": [
+     100,
+     100
+    ],
+    "fact:ten_god_branch": [
+     100,
+     100
+    ],
+    "fact:ten_god_stem": [
+     100,
+     100
+    ],
+    "fact:xun_kong": [
+     100,
+     100
+    ],
+    "flow": [
+     96,
+     100
+    ],
+    "gods": [
+     99,
+     100
+    ],
+    "interact": [
+     94,
+     100
+    ],
+    "overview": [
+     91,
+     100
+    ],
+    "pattern": [
+     99,
+     100
+    ],
+    "prediction": [
+     100,
+     100
+    ],
+    "star": [
+     100,
+     100
+    ],
+    "strength": [
+     100,
+     100
+    ],
+    "yongshen": [
+     98,
+     100
+    ]
+   },
+   "stats": {
+    "generated": 2000,
+    "reused": 0,
+    "seconds": 2245.3,
+    "completion_tokens": 540902
+   }
+  },
+  "p6u2_c": {
+   "label": "p6u2",
+   "sample": "c",
+   "n": 780,
+   "correct": 638,
+   "share": 0.8179,
+   "by_type": {
+    "chart_facts:ok": [
+     38,
+     40
+    ],
+    "chart_plain:ok": [
+     34,
+     40
+    ],
+    "dst_fold:ambiguous": [
+     35,
+     35
+    ],
+    "dst_fold:ok": [
+     30,
+     40
+    ],
+    "dst_gap:invalid": [
+     24,
+     24
+    ],
+    "invalid:invalid": [
+     33,
+     40
+    ],
+    "invalid:unsupported": [
+     40,
+     40
+    ],
+    "jie_boundary:ambiguous": [
+     26,
+     26
+    ],
+    "jie_boundary:needs_tool": [
+     33,
+     40
+    ],
+    "jie_boundary:ok": [
+     38,
+     40
+    ],
+    "jie_window:needs_tool": [
+     33,
+     40
+    ],
+    "jie_window:ok": [
+     15,
+     40
+    ],
+    "missing:ambiguous": [
+     36,
+     40
+    ],
+    "missing:ok": [
+     28,
+     31
+    ],
+    "shanghai_dst:needs_tool": [
+     10,
+     32
+    ],
+    "shanghai_dst:ok": [
+     29,
+     32
+    ],
+    "tz_facts:ok": [
+     36,
+     40
+    ],
+    "tz_known:ok": [
+     32,
+     40
+    ],
+    "tz_needs_tool:needs_tool": [
+     32,
+     40
+    ],
+    "zi_transition:ambiguous": [
+     29,
+     40
+    ],
+    "zi_transition:ok": [
+     27,
+     40
+    ]
+   },
+   "stats": {
+    "generated": 778,
+    "reused": 2,
+    "seconds": 1189.8,
+    "completion_tokens": 226692
+   }
   }
  },
  "training": {
@@ -311,6 +506,17 @@
    "train_loss_tail": 0.00586,
    "val_loss": 0.004718353506177664,
    "hours": 10.56
+  },
+  "p6u3": {
+   "rows": 10942,
+   "tokens": 5990828,
+   "iterations": [
+    2720,
+    5471
+   ],
+   "train_loss_tail": 0.00672,
+   "val_loss": 0.004803588148206472,
+   "hours": 2.06
   },
   "p8s1": {
    "rows": 7922,
@@ -451,7 +657,139 @@
      "p6u2": 733
     }
    }
-  ]
+  ],
+  "weights": {
+   "p6u3": {
+    "source": "results/phase6/own_replies_p6u2_b.jsonl",
+    "left_out": 0,
+    "scored_wrong": {
+     "fact:xun_kong": [
+      100,
+      0
+     ],
+     "fact:element_count": [
+      100,
+      2
+     ],
+     "fact:missing_element": [
+      100,
+      0
+     ],
+     "fact:life_stage": [
+      100,
+      11
+     ],
+     "fact:ten_god_stem": [
+      100,
+      0
+     ],
+     "fact:ten_god_branch": [
+      100,
+      0
+     ],
+     "fact:hidden": [
+      100,
+      0
+     ],
+     "fact:luck_direction": [
+      100,
+      0
+     ],
+     "gods": [
+      100,
+      1
+     ],
+     "strength": [
+      100,
+      0
+     ],
+     "pattern": [
+      100,
+      1
+     ],
+     "yongshen": [
+      100,
+      2
+     ],
+     "interact": [
+      100,
+      6
+     ],
+     "flow": [
+      100,
+      4
+     ],
+     "domain": [
+      100,
+      4
+     ],
+     "overview": [
+      100,
+      9
+     ],
+     "ambig:yongshen_open": [
+      100,
+      0
+     ],
+     "ambig:no_rule": [
+      100,
+      0
+     ],
+     "star": [
+      100,
+      0
+     ],
+     "prediction": [
+      100,
+      0
+     ]
+    },
+    "error": {
+     "fact:xun_kong": 0.0098,
+     "fact:element_count": 0.0294,
+     "fact:missing_element": 0.0098,
+     "fact:life_stage": 0.1176,
+     "fact:ten_god_stem": 0.0098,
+     "fact:ten_god_branch": 0.0098,
+     "fact:hidden": 0.0098,
+     "fact:luck_direction": 0.0098,
+     "gods": 0.0196,
+     "strength": 0.0098,
+     "pattern": 0.0196,
+     "yongshen": 0.0294,
+     "interact": 0.0686,
+     "flow": 0.049,
+     "domain": 0.049,
+     "overview": 0.098,
+     "ambig:yongshen_open": 0.0098,
+     "ambig:no_rule": 0.0098,
+     "star": 0.0098,
+     "prediction": 0.0098
+    },
+    "weights": {
+     "fact:xun_kong": 0.05,
+     "fact:element_count": 0.05,
+     "fact:missing_element": 0.05,
+     "fact:life_stage": 0.1176,
+     "fact:ten_god_stem": 0.05,
+     "fact:ten_god_branch": 0.05,
+     "fact:hidden": 0.05,
+     "fact:luck_direction": 0.05,
+     "gods": 0.05,
+     "strength": 0.05,
+     "pattern": 0.05,
+     "yongshen": 0.05,
+     "interact": 0.0686,
+     "flow": 0.05,
+     "domain": 0.05,
+     "overview": 0.098,
+     "ambig:yongshen_open": 0.05,
+     "ambig:no_rule": 0.05,
+     "star": 0.05,
+     "prediction": 0.05
+    }
+   }
+  }
  },
  "screening": {
   "rule": "docs/phase6_preregistration.md section 5",
@@ -1697,6 +2035,208 @@
     "blind": [
      171,
      188
+    ]
+   }
+  }
+ },
+ "question_years": {
+  "dev6": {
+   "base": {
+    "flow_inside": [
+     0,
+     16
+    ],
+    "flow_outside": [
+     0,
+     44
+    ],
+    "domain_inside": [
+     0,
+     13
+    ],
+    "domain_outside": [
+     0,
+     33
+    ]
+   },
+   "p2": {
+    "flow_inside": [
+     0,
+     16
+    ],
+    "flow_outside": [
+     0,
+     44
+    ],
+    "domain_inside": [
+     0,
+     13
+    ],
+    "domain_outside": [
+     0,
+     33
+    ]
+   },
+   "p4a1": {
+    "flow_inside": [
+     5,
+     16
+    ],
+    "flow_outside": [
+     23,
+     44
+    ],
+    "domain_inside": [
+     3,
+     13
+    ],
+    "domain_outside": [
+     4,
+     33
+    ]
+   },
+   "p5g1": {
+    "flow_inside": [
+     4,
+     16
+    ],
+    "flow_outside": [
+     17,
+     44
+    ],
+    "domain_inside": [
+     1,
+     13
+    ],
+    "domain_outside": [
+     3,
+     33
+    ]
+   },
+   "p6u0": {
+    "flow_inside": [
+     3,
+     16
+    ],
+    "flow_outside": [
+     3,
+     44
+    ],
+    "domain_inside": [
+     2,
+     13
+    ],
+    "domain_outside": [
+     0,
+     33
+    ]
+   },
+   "p6s1": {
+    "flow_inside": [
+     4,
+     16
+    ],
+    "flow_outside": [
+     20,
+     44
+    ],
+    "domain_inside": [
+     3,
+     13
+    ],
+    "domain_outside": [
+     21,
+     33
+    ]
+   },
+   "p6s2": {
+    "flow_inside": [
+     11,
+     16
+    ],
+    "flow_outside": [
+     31,
+     44
+    ],
+    "domain_inside": [
+     7,
+     13
+    ],
+    "domain_outside": [
+     18,
+     33
+    ]
+   },
+   "p6s3": {
+    "flow_inside": [
+     13,
+     16
+    ],
+    "flow_outside": [
+     25,
+     44
+    ],
+    "domain_inside": [
+     7,
+     13
+    ],
+    "domain_outside": [
+     15,
+     33
+    ]
+   },
+   "p6u2": {
+    "flow_inside": [
+     16,
+     16
+    ],
+    "flow_outside": [
+     39,
+     44
+    ],
+    "domain_inside": [
+     13,
+     13
+    ],
+    "domain_outside": [
+     18,
+     33
+    ]
+   },
+   "p8s1": {
+    "flow_inside": [
+     4,
+     16
+    ],
+    "flow_outside": [
+     16,
+     44
+    ],
+    "domain_inside": [
+     0,
+     13
+    ],
+    "domain_outside": [
+     22,
+     33
+    ]
+   },
+   "p6s2s": {
+    "flow_inside": [
+     15,
+     16
+    ],
+    "flow_outside": [
+     21,
+     44
+    ],
+    "domain_inside": [
+     10,
+     13
+    ],
+    "domain_outside": [
+     19,
+     33
     ]
    }
   }

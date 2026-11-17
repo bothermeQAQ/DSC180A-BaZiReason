@@ -258,6 +258,11 @@ def main():
     parser.add_argument(
         "--compose-share", type=float, help="round 2: share of composition rows (12.7)"
     )
+    parser.add_argument(
+        "--years",
+        choices=("fixed", "life"),
+        help="round 2: years of flow and area questions (12.11)",
+    )
     parser.add_argument("--check", action="store_true")
     args = parser.parse_args()
     recipe = args.recipe
@@ -276,6 +281,7 @@ def main():
         args.steps = args.steps or inherited.get("steps", 1)
         if args.compose_share is None:
             args.compose_share = inherited.get("compose_share") or 0.0
+        args.years = args.years or inherited.get("years", "fixed")
         shape = structure_of(args.parent)
         args.layers, args.rank = shape["layers"], shape["rank"]
         args.grad_checkpoint = shape["grad_checkpoint"]
@@ -312,6 +318,7 @@ def main():
         options["block"] = block
         options["steps"] = args.steps or 1
         options["compose_share"] = args.compose_share or 0.0
+        options["years"] = args.years or "fixed"
     train = T6.build(data_recipe, args.tokens, seed, exclude, paraphrases, replies, **options)
     valid = T6.build(data_recipe, 150_000, seed + 500, exclude, paraphrases, replies, **options)
     limit = MAX_TOKENS - 8 if T6._tokenizer() else int(MAX_TOKENS * 0.95)
@@ -359,7 +366,7 @@ def main():
                 "rows_on_held_out_charts_left_out": {"train": dropped[0], "valid": dropped[1]},
                 **({"system": args.system, "parent": args.parent, "steps": args.steps or 1, "weighting": weighting,
                     "fit_sample_b_charts_blocked": len(block), "calendar_weighting": calendar_weighting,
-                    "compose_share": args.compose_share or 0.0} if round2 else {}),
+                    "compose_share": args.compose_share or 0.0, "years": args.years or "fixed"} if round2 else {}),
                 "files": {name: {"sha256": hashlib.sha256(d).hexdigest(), "rows": len(train if name == 'train.jsonl' else valid)} for name, d in files.items()},
                 "train_summary": T6.summary(train)}  # fmt: skip
     (folder / "manifest.json").write_text(json.dumps(manifest, ensure_ascii=False, indent=1) + "\n")

@@ -322,3 +322,19 @@ Written after the queue had started the fork (15:37, level 3: U3 and U3v from U2
 - **Found by reading the code:** `decide6.py next` counted a level as reached as soon as one of its arms had a dev6 result. A queue restarted between the two arms of a pair would have gone on to the next level; the second arm (U3v or U4c) and its hypothesis would have been lost. The same held for an arm that failed.
 - **Rule from now on:** when the latest level has an arm without a dev6 result, that arm is asked for once more, with the same parent, options, seed and budget (decision `complete` in `results/phase6/round2.json`). If it still has no result after that, the level stands with the arms it has, as before.
 - **Unchanged:** the run a level starts from, the arms of each level, the two-level stop and the cutoff date.
+
+### 12.11 Years of the chart's life in flow-year and area-of-life questions (16 November, 18:48)
+
+Written while U3 was training (iteration 2,900 of 5,471), after U2's dev6 result and before any data of level 4 existed. U3v's data is not affected.
+
+- **Found:** every Phase 6 training row of these two types asks about the same window: flow years 2024-2049, area-of-life periods starting 2024-2045 (`train_data6.concrete_intent`). The evaluation questions use years of the chart's life, drawn by the Phase 3 generator (flow years 8 to 69 years after the birth year, first years 16 to 49 after it). U2 on dev6:
+  - flow-year items: 16 of 16 right with the year inside 2024-2049, 39 of 44 outside;
+  - area-of-life items: 13 of 13 inside, 18 of 33 outside (S2: 7 of 13 and 18 of 33).
+  - All 20 of U2's wrong answers on these two types are on years the training rows never asked about. Fit sample B uses the window too, so the continuation weights cannot see this (U2 answers 1,960 of its 2,000 questions).
+- **Change:** from level 4 on, the template-wording questions of these two types ask about years of the chart's life, drawn as the Phase 3 generator draws them (`build_train6.py --years life`; the birth year is the date the training chart was drawn from). Paraphrased questions keep their years. Both arms of level 4 get it (`ARM_OPTIONS` in `decide6.py`), so H11 stays paired, and every later level inherits it from its parent.
+- **Checked before use:**
+  - 6,000 derivations (1,500 training charts, both types, both derivation versions) with years 1910-2160: every final JSON equals the rule code's answer, the claim checker finds no wrong statement, and the longest reply is 929 tokens of the 1,100 cap.
+  - With the default (`fixed`), every existing set (U0, S1, S2, S3, S2s, U2, U3) rebuilds bit for bit, and U3v builds identically with and without the change.
+  - A dry run of level 4 (stand-in parent U2): 546 of U4's 638 template rows of these types are outside 2024-2049 (years 1915-2152); no row on a held-out chart; both arms have the same calendar requests; U4c's procedure questions are a subset of U4's.
+- **How it is read (a description, not a hypothesis):** on dev6 and sealed6, flow-year and area-of-life items with the year inside and outside 2024-2049, for every run (`make_report6.years_section`). Level 4 also changes the parent and the weights, so the change is not separated from the continuation; the items inside the window are the comparison.
+- **Unchanged:** fit samples B and C, the evaluation splits, the chain's rules, and U1 as registered (fixed years).

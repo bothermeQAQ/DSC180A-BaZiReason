@@ -87,7 +87,7 @@ The runs of the first round start from the untuned base with the earlier adapter
 | U1-hi | 15 M | U1's data with all 36 layers, only if U1 under-fits |
 | S2s | 6.0 M | S2's recipe with the short system prompt: 11,845 rows against 8,161 in the same budget |
 | U2 | 15 M | S2's recipe, the best of the screening, with the short system prompt (the S2s twin was not worse than S2) |
-| U3-U10 | 6.0 M each | continuations of the best run of the level before, with the question types and the kinds of calendar request reweighted by its measured errors; learning rate 1e-4 |
+| U3-U10 | 6.0 M each | continuations of the best run of the level before, with the question types and the kinds of calendar request reweighted by its measured errors; learning rate 1e-4; from U4 on, flow-year and area-of-life questions ask about years of the chart's life instead of 2024-2049 |
 | U3v | 6.0 M | U3 with derivation version 2 (the fork) |
 | U4c | 6.0 M | U4 with 10% of its tokens as composition rows, taken from the procedure share |
 
@@ -154,6 +154,7 @@ Each reply was compared with the rule code's derivation step by step (`scripts/p
 - **These steps have one thing in common: the text must decide, while it is written, where to stop or what to leave out.** The clearest case is the life stage of the day master. S1 answered 13 of 14 counterfactual life-stage items, S2 9, S2s 4 and U2 12. In the wrong replies the count through the stages is right but ends at the wrong branch. S1's replies wrote all twelve stages and read the answer off.
 - **Derivation version 2** removes those decisions: it writes the whole table first and then looks the answer up (pre-registration 10.5 and 12.6; checked on 15,000 derivations, every answer unchanged). A paired fork of the first continuation (U3 against U3v) tests it.
 - **One step got less truthful with more training.** In area-of-life replies, version 1 lists only the hidden stems that carry the wanted Ten Gods. U2 names a stem that the branch does not hide in 35 of its 46 such replies (S1 14, S2 14, S2s 22), and the answer is still right in 24 of the 35, because the final JSON does not carry that step. Version 2 writes the hidden stems of all four branches before it selects; the fork is also read on the statements in the replies (pre-registration 12.9).
+- **Every wrong flow-year and area-of-life answer of U2 is on a year the training never asked about.** The training rows asked only about 2024-2049; the evaluation asks about years of the chart's life. U2 answers 29 of 29 such items inside that window and 57 of 77 outside it. From the second continuation level on, the training asks about years of the chart's life, as the Phase 3 data did (pre-registration 12.11).
 - **Held-out combinations stay near 50%** (U2: 50 of 100, more than half of its 89 wrong answers). The replies start the right sub-procedures and fail where they join. An arm of the second continuation level (U4c) adds composition rows of other kinds; the four held-out kinds stay out of training.
 
 ### 4.4 Calendar

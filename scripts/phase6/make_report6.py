@@ -298,6 +298,35 @@ def wording_section(lines, summary, split):
     summary.setdefault("wording", {})[split] = block
 
 
+def years_section(lines, summary, split):
+    """Flow-year and area-of-life items by whether their year is inside the window that the
+    training rows asked about up to U3v (2024-2049; preregistration 12.11)."""
+    labs = [lab for lab in labels_in(split) if rule_records(split, lab)]
+    if not labs:
+        return
+    cells = (("flow", "inside"), ("flow", "outside"), ("domain", "inside"), ("domain", "outside"))
+    lines += [f"### Question years (`{split}`, L0): inside or outside 2024-2049\n",
+              "Up to U3v every training row asked about years 2024-2049; from level 4 the template rows ask about years of the chart's life.\n",
+              "| Model | Flow year, inside | Flow year, outside | Area of life, inside | Area of life, outside |",
+              "|---|---:|---:|---:|---:|"]  # fmt: skip
+    block = {}
+    for lab in labs:
+        count = {c: [0, 0] for c in cells}
+        for r in rule_records(split, lab):
+            intent = str(r["intent"])
+            if intent.startswith(("flow:", "domain:")) and intent.split(":")[-1].isdigit():
+                year = int(intent.split(":")[-1])
+                cell = count[
+                    (intent.split(":")[0], "inside" if 2024 <= year <= 2049 else "outside")
+                ]
+                cell[0] += bool(r["score"]["correct"])
+                cell[1] += 1
+        lines.append(f"| {name(lab)} | " + " | ".join(pct(*count[c]) for c in cells) + " |")
+        block[lab] = {f"{k}_{w}": v for (k, w), v in count.items()}
+    lines.append("")
+    summary.setdefault("question_years", {})[split] = block
+
+
 def intent_section(lines, summary, split):
     labs = [lab for lab in labels_in(split) if rule_records(split, lab)]
     if not labs:
@@ -959,6 +988,7 @@ def main():
             statements_section,
             truncation_section,
             wording_section,
+            years_section,
             cf_section,
             intent_section,
             calendar_section,

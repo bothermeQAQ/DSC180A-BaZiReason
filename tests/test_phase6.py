@@ -349,7 +349,7 @@ def test_round2_loop_structure_and_selection_follow_the_preregistered_rules(
         log[-1]["decision"] == "complete" and log[-1]["level"] == 3 and log[-1]["runs"] == ["u3v"]
     )
     D.nxt()
-    assert said() == "u4 u3\nu4c u3 --compose-share 0.10"
+    assert said() == "u4 u3 --years life\nu4c u3 --compose-share 0.10 --years life"
     del right[("dev6", "p6u3")]
     right[("dev6", "p6u3v")] = 65
     D.nxt()
@@ -357,15 +357,16 @@ def test_round2_loop_structure_and_selection_follow_the_preregistered_rules(
     # The chain continues from the better arm of the fork (a tie goes to U3).
     right.update({("dev6", "p6u3"): 64, ("dev6", "p6u3v"): 65})
     D.nxt()
-    assert said() == "u4 u3v\nu4c u3v --compose-share 0.10"  # the second level has two arms too
+    # the second level has two arms too, and both ask about years of the chart's life (12.11)
+    assert said() == "u4 u3v --years life\nu4c u3v --compose-share 0.10 --years life"
     right[("dev6", "p6u3v")] = 64
     D.nxt()
-    assert said().splitlines()[0] == "u4 u3"
+    assert said().splitlines()[0] == "u4 u3 --years life"
     right[("dev6", "p6u3v")] = 65
     # It goes on from the latest level, and ends after two levels in a row without a new best.
     right[("dev6", "p6u4")] = 64  # not above 65: first level without a new best
     D.nxt()
-    assert said() == "u4c u3v --compose-share 0.10"  # the missing arm of the pair, once
+    assert said() == "u4c u3v --compose-share 0.10 --years life"  # the missing arm, once
     D.nxt()
     assert said() == "u5 u4"
     right[("dev6", "p6u5")] = 65  # equal is not a new best: second in a row
@@ -767,3 +768,41 @@ def test_second_reading_of_h9_counts_replies_with_wrong_statements(monkeypatch):
     M.fork_statements_section(lines, summary, "dev6")
     assert "second reading" in lines[0] and len(lines) == 6
     assert summary["h9_statements"]["dev6"] == pair
+
+
+def test_question_years_of_the_chart_life_only_when_asked():
+    import build_train6 as B
+
+    from bazireason import train_data6 as T6
+
+    exclude = B.exclusions()
+    paraphrases = [
+        json.loads(x)
+        for x in (ROOT / "data/phase6/blind/train6.jsonl").read_text(encoding="utf-8").splitlines()
+    ]
+
+    def years(rows):
+        out = {"flow": [], "domain": []}
+        for r in rows:
+            intent = str(r["meta"].get("intent", ""))
+            if r["meta"].get("source") == "template" and intent.startswith(("flow:", "domain:")):
+                birth = T6._BIRTH["".join(r["meta"]["pillars"].values())]
+                out[intent.split(":")[0]].append((birth, int(intent.split(":")[-1])))
+        return out
+
+    fixed = years(T6.build("s2", 300_000, 11, exclude, paraphrases))
+    life = years(T6.build("s2", 300_000, 11, exclude, paraphrases, years="life"))
+    assert T6._YEARS[0] == "fixed"  # the setting does not outlive the build
+    assert fixed["flow"] and fixed["domain"] and life["flow"] and life["domain"]
+    assert all(2024 <= y < 2050 for _, y in fixed["flow"])
+    assert all(2024 <= y < 2046 for _, y in fixed["domain"])
+    assert all(y == 2160 or b + 8 <= y < b + 70 for b, y in life["flow"])
+    assert all(y == 2150 or b + 16 <= y < b + 50 for b, y in life["domain"])
+    assert min(y for _, y in life["flow"] + life["domain"]) < 2000  # not the fixed window
+    # the default is the fixed window, so every earlier set rebuilds unchanged
+    again = T6.build("s2", 300_000, 11, exclude, paraphrases)
+    assert T6.digest(again) == T6.digest(
+        T6.build("s2", 300_000, 11, exclude, paraphrases, years="fixed")
+    )
+    with pytest.raises(ValueError):
+        T6.build("s2", 10_000, 11, exclude, paraphrases, years="wide")

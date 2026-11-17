@@ -86,6 +86,12 @@ CONTRAST = (("strength", "yongshen:扶抑"), ("pattern", "gods"), ("fact:life_st
 
 # The main system prompt of the rows being built (round 2 builds with the short one).
 _SYSTEM = [P2_SYSTEM]
+# Years of flow-year and area-of-life questions (preregistration 12.11). "fixed": flow years
+# 2024-2049 and first years 2024-2045, as in every set up to U3v. "life": years of the chart's
+# life, as the Phase 3 generator draws them (train_data3): flow years 8 to 69 years after the
+# birth year (at most 2160), first years 16 to 49 years after it (at most 2150).
+_YEARS = ["fixed"]
+_BIRTH = {}  # chart key -> birth year of its latest draw (Charts.draw); no random draw is added
 
 
 def _sys(r):
@@ -170,10 +176,17 @@ class Charts:
                 "hour": c.getTime(),
             }
             if "".join(pillars.values()) not in self.exclude:
+                _BIRTH["".join(pillars.values())] = day.year
                 return pillars, self.rng.choice(("male", "female"))
 
 
 # ---- procedure rows -----------------------------------------------------------------------------------
+
+
+def life_year(pillars, rng, low, high, cap):
+    """A year of the chart's life: ``low`` to ``high`` - 1 years after its birth year, at most
+    ``cap``. Every caller draws the chart from ``Charts`` first, so its birth year is known."""
+    return min(_BIRTH["".join(pillars.values())] + rng.randrange(low, high), cap)
 
 
 def concrete_intent(head, pillars, rng):
@@ -184,9 +197,14 @@ def concrete_intent(head, pillars, rng):
     if head == "yongshen":
         return f"yongshen:{rng.choice(('扶抑', '调候', '格局'))}"
     if head == "flow":
+        if _YEARS[0] == "life":
+            return f"flow:{life_year(pillars, rng, 8, 70, 2160)}"
         return f"flow:{rng.randrange(2024, 2050)}"
     if head == "domain":
-        return f"domain:{rng.choice(('marriage', 'career', 'wealth', 'study', 'children'))}:{rng.randrange(2024, 2046)}"
+        area = rng.choice(("marriage", "career", "wealth", "study", "children"))
+        if _YEARS[0] == "life":
+            return f"domain:{area}:{life_year(pillars, rng, 16, 50, 2150)}"
+        return f"domain:{area}:{rng.randrange(2024, 2046)}"
     if head == "star":
         return f"star:{rng.choice(('桃花', '驿马', '华盖'))}"
     return head
@@ -714,6 +732,7 @@ def build(
     calendar_weights=None,
     calendar_block=frozenset(),
     compose_share=0.0,
+    years="fixed",
 ):
     """Rows of one recipe. ``calendar_share`` and ``drop`` (component names) apply the
     pre-registered screening decisions (docs/phase6_preregistration.md, section 5) to U1.
@@ -722,9 +741,13 @@ def build(
     question types of the procedure rows, no row has a chart in ``block`` (fit sample B), and
     ``steps`` is the derivation version (bazireason.steps6). ``calendar_weights`` draws the
     calendar rows by cell weight, never a request of fit sample C (``calendar_block``).
-    ``compose_share`` of the tokens are composition rows, taken from the procedure share."""
+    ``compose_share`` of the tokens are composition rows, taken from the procedure share.
+    ``years`` sets the years of flow-year and area-of-life questions (``_YEARS``, 12.11)."""
+    if years not in ("fixed", "life"):
+        raise ValueError(f"years: {years}")
     _SYSTEM[0] = system or P2_SYSTEM
     S6.set_steps(steps)
+    _YEARS[0] = years
     try:
         return _build(
             recipe, total_tokens, seed, exclude, paraphrases, replies, calendar_share, drop,
@@ -733,6 +756,7 @@ def build(
     finally:
         _SYSTEM[0] = P2_SYSTEM
         S6.set_steps(1)
+        _YEARS[0] = "fixed"
 
 
 def _build(

@@ -12,6 +12,33 @@ Near-perfect on the training distribution with a low test score means a coverage
 | P4 A1 | fresh rows, A1's generator, training years | 183/240 (76.2%) |
 | P4 A1 | dev6 rule rows (validation years) | 157/294 (53.4%) |
 | S1 small steps | sample A: Phase 6 procedure questions, training years (for S2, S3 and the U runs it includes questions they train on) | 1818/2400 (75.8%) |
+| U2 short prompt | sample B: 100 per question type, template wordings, charts never trained on | 1960/2000 (98.0%) |
+| U2 short prompt | sample C: fresh calendar requests, up to 40 per family and expected status | 638/780 (81.8%) |
+
+Sample B by question type (right answers of the scored questions):
+
+| Type | U2 short prompt |
+|---|---:|
+| ambig:no_rule | 100/100 (100.0%) |
+| ambig:yongshen_open | 100/100 (100.0%) |
+| domain | 96/100 (96.0%) |
+| fact:element_count | 98/100 (98.0%) |
+| fact:hidden | 100/100 (100.0%) |
+| fact:life_stage | 89/100 (89.0%) |
+| fact:luck_direction | 100/100 (100.0%) |
+| fact:missing_element | 100/100 (100.0%) |
+| fact:ten_god_branch | 100/100 (100.0%) |
+| fact:ten_god_stem | 100/100 (100.0%) |
+| fact:xun_kong | 100/100 (100.0%) |
+| flow | 96/100 (96.0%) |
+| gods | 99/100 (99.0%) |
+| interact | 94/100 (94.0%) |
+| overview | 91/100 (91.0%) |
+| pattern | 99/100 (99.0%) |
+| prediction | 100/100 (100.0%) |
+| star | 100/100 (100.0%) |
+| strength | 100/100 (100.0%) |
+| yongshen | 98/100 (98.0%) |
 
 ## Training runs
 
@@ -23,6 +50,7 @@ Near-perfect on the training distribution with a low test score means a coverage
 | S3 + evidence, self-check | untuned base | 7,893 | 5,978,033 | 16 / 16 | 3946/3946 | 0.0148 | 0.0135 | 23.6 GB | 3.93 |
 | U0 joint, earlier data | untuned base | 7,810 | 5,992,270 | 16 / 16 | 3905/3905 | 0.0239 | 0.0157 | 23.3 GB | 4.02 |
 | U2 short prompt | untuned base | 29,775 | 14,972,053 | 16 / 16 | 14887/14887 | 0.0059 | 0.0047 | 22.6 GB | 10.56 |
+| U3 continuation | U2 short prompt | 10,942 | 5,990,828 | 16 / 16 | 2720/5471 (running) | 0.0067 | 0.0048 | 20.0 GB | 2.06 |
 | S1-8B (S1's data on Qwen3-8B) | untuned base | 7,922 | 6,024,381 | 16 / 16 | 7922/7922 | 0.0132 | 0.0097 | 17.3 GB | 5.94 |
 
 Average per-token loss is dominated by template text; the fit table above is the measure of what was learned.
@@ -43,6 +71,31 @@ Tokenization: 0 of 60 stem-branch pairs are merged into one token, and 0 stems o
 
 - **U2's system prompt:** short (S2s minus S2: rule items +0.1 [-2.9, +3.2]; calendar -0.9 [-7.6, +6.0]).
 - **Chain, level 3:** U3 continuation and U3v continuation, steps v2 from U2 short prompt (dev6 right answers on all rule items: U2 short prompt 733).
+
+Question-type weights of the continuations (parent's error on fit sample B; weight = max(error, 0.05)):
+
+| Type | U3 continuation: wrong of scored | weight |
+|---|---:|---:|
+| fact:xun_kong | 0/100 | 0.05 |
+| fact:element_count | 2/100 | 0.05 |
+| fact:missing_element | 0/100 | 0.05 |
+| fact:life_stage | 11/100 | 0.12 |
+| fact:ten_god_stem | 0/100 | 0.05 |
+| fact:ten_god_branch | 0/100 | 0.05 |
+| fact:hidden | 0/100 | 0.05 |
+| fact:luck_direction | 0/100 | 0.05 |
+| gods | 1/100 | 0.05 |
+| strength | 0/100 | 0.05 |
+| pattern | 1/100 | 0.05 |
+| yongshen | 2/100 | 0.05 |
+| interact | 6/100 | 0.07 |
+| flow | 4/100 | 0.05 |
+| domain | 4/100 | 0.05 |
+| overview | 9/100 | 0.10 |
+| ambig:yongshen_open | 0/100 | 0.05 |
+| ambig:no_rule | 0/100 | 0.05 |
+| star | 0/100 | 0.05 |
+| prediction | 0/100 | 0.05 |
 
 ## Screening decisions (dev6, frozen rule: preregistration section 5)
 
@@ -160,6 +213,24 @@ Caps: 1,100 tokens for rule items, 700 for calendar rows. A cut-off reply usuall
 | U2 short prompt | 128/144 (88.9%) | 133/150 (88.7%) | 187/188 (99.5%) |
 | S1-8B (S1's data on Qwen3-8B) | 110/144 (76.4%) | 53/150 (35.3%) | 130/188 (69.1%) |
 | S2s (S2 with the short prompt) | 115/144 (79.9%) | 104/150 (69.3%) | 171/188 (91.0%) |
+
+### Question years (`dev6`, L0): inside or outside 2024-2049
+
+Up to U3v every training row asked about years 2024-2049; from level 4 the template rows ask about years of the chart's life.
+
+| Model | Flow year, inside | Flow year, outside | Area of life, inside | Area of life, outside |
+|---|---:|---:|---:|---:|
+| Untuned base | 0/16 (0.0%) | 0/44 (0.0%) | 0/13 (0.0%) | 0/33 (0.0%) |
+| Phase 2 | 0/16 (0.0%) | 0/44 (0.0%) | 0/13 (0.0%) | 0/33 (0.0%) |
+| P4 A1 | 5/16 (31.2%) | 23/44 (52.3%) | 3/13 (23.1%) | 4/33 (12.1%) |
+| P5 G1 | 4/16 (25.0%) | 17/44 (38.6%) | 1/13 (7.7%) | 3/33 (9.1%) |
+| U0 joint, earlier data | 3/16 (18.8%) | 3/44 (6.8%) | 2/13 (15.4%) | 0/33 (0.0%) |
+| S1 small steps | 4/16 (25.0%) | 20/44 (45.5%) | 3/13 (23.1%) | 21/33 (63.6%) |
+| S2 + wording | 11/16 (68.8%) | 31/44 (70.5%) | 7/13 (53.8%) | 18/33 (54.5%) |
+| S3 + evidence, self-check | 13/16 (81.2%) | 25/44 (56.8%) | 7/13 (53.8%) | 15/33 (45.5%) |
+| U2 short prompt | 16/16 (100.0%) | 39/44 (88.6%) | 13/13 (100.0%) | 18/33 (54.5%) |
+| S1-8B (S1's data on Qwen3-8B) | 4/16 (25.0%) | 16/44 (36.4%) | 0/13 (0.0%) | 22/33 (66.7%) |
+| S2s (S2 with the short prompt) | 15/16 (93.8%) | 21/44 (47.7%) | 10/13 (76.9%) | 19/33 (57.6%) |
 
 ### Counterfactual pairs (`dev6`, L0): one character changed, the answer changes
 
