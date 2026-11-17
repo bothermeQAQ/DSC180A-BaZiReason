@@ -1,0 +1,338 @@
+{
+ "recipe": "u3",
+ "data_recipe": "s2",
+ "seed": 2026111716,
+ "token_budget": 6000000,
+ "calendar_share": null,
+ "drop": [],
+ "extra_paraphrases": [
+  "data/phase6/blind/train6b.jsonl",
+  "data/phase6/blind/train6c.jsonl"
+ ],
+ "replies": null,
+ "excluded_charts": 6277,
+ "paraphrases_on_evaluation_charts_left_out": 1,
+ "rows_on_held_out_charts_left_out": {
+  "train": 0,
+  "valid": 0
+ },
+ "system": "short",
+ "parent": "u2",
+ "steps": 1,
+ "weighting": {
+  "source": "results/phase6/own_replies_p6u2_b.jsonl",
+  "left_out": 0,
+  "scored_wrong": {
+   "fact:xun_kong": [
+    100,
+    0
+   ],
+   "fact:element_count": [
+    100,
+    2
+   ],
+   "fact:missing_element": [
+    100,
+    0
+   ],
+   "fact:life_stage": [
+    100,
+    11
+   ],
+   "fact:ten_god_stem": [
+    100,
+    0
+   ],
+   "fact:ten_god_branch": [
+    100,
+    0
+   ],
+   "fact:hidden": [
+    100,
+    0
+   ],
+   "fact:luck_direction": [
+    100,
+    0
+   ],
+   "gods": [
+    100,
+    1
+   ],
+   "strength": [
+    100,
+    0
+   ],
+   "pattern": [
+    100,
+    1
+   ],
+   "yongshen": [
+    100,
+    2
+   ],
+   "interact": [
+    100,
+    6
+   ],
+   "flow": [
+    100,
+    4
+   ],
+   "domain": [
+    100,
+    4
+   ],
+   "overview": [
+    100,
+    9
+   ],
+   "ambig:yongshen_open": [
+    100,
+    0
+   ],
+   "ambig:no_rule": [
+    100,
+    0
+   ],
+   "star": [
+    100,
+    0
+   ],
+   "prediction": [
+    100,
+    0
+   ]
+  },
+  "error": {
+   "fact:xun_kong": 0.0098,
+   "fact:element_count": 0.0294,
+   "fact:missing_element": 0.0098,
+   "fact:life_stage": 0.1176,
+   "fact:ten_god_stem": 0.0098,
+   "fact:ten_god_branch": 0.0098,
+   "fact:hidden": 0.0098,
+   "fact:luck_direction": 0.0098,
+   "gods": 0.0196,
+   "strength": 0.0098,
+   "pattern": 0.0196,
+   "yongshen": 0.0294,
+   "interact": 0.0686,
+   "flow": 0.049,
+   "domain": 0.049,
+   "overview": 0.098,
+   "ambig:yongshen_open": 0.0098,
+   "ambig:no_rule": 0.0098,
+   "star": 0.0098,
+   "prediction": 0.0098
+  },
+  "weights": {
+   "fact:xun_kong": 0.05,
+   "fact:element_count": 0.05,
+   "fact:missing_element": 0.05,
+   "fact:life_stage": 0.1176,
+   "fact:ten_god_stem": 0.05,
+   "fact:ten_god_branch": 0.05,
+   "fact:hidden": 0.05,
+   "fact:luck_direction": 0.05,
+   "gods": 0.05,
+   "strength": 0.05,
+   "pattern": 0.05,
+   "yongshen": 0.05,
+   "interact": 0.0686,
+   "flow": 0.05,
+   "domain": 0.05,
+   "overview": 0.098,
+   "ambig:yongshen_open": 0.05,
+   "ambig:no_rule": 0.05,
+   "star": 0.05,
+   "prediction": 0.05
+  }
+ },
+ "fit_sample_b_charts_blocked": 1991,
+ "calendar_weighting": {
+  "source": "results/phase6/own_replies_p6u2_c.jsonl",
+  "scored_wrong": {
+   "chart_facts:ok": [
+    40,
+    2
+   ],
+   "chart_plain:ok": [
+    40,
+    6
+   ],
+   "dst_fold:ambiguous": [
+    35,
+    0
+   ],
+   "dst_fold:ok": [
+    40,
+    10
+   ],
+   "dst_gap:invalid": [
+    24,
+    0
+   ],
+   "invalid:invalid": [
+    40,
+    7
+   ],
+   "invalid:unsupported": [
+    40,
+    0
+   ],
+   "jie_boundary:ambiguous": [
+    26,
+    0
+   ],
+   "jie_boundary:needs_tool": [
+    40,
+    7
+   ],
+   "jie_boundary:ok": [
+    40,
+    2
+   ],
+   "jie_window:needs_tool": [
+    40,
+    7
+   ],
+   "jie_window:ok": [
+    40,
+    25
+   ],
+   "missing:ambiguous": [
+    40,
+    4
+   ],
+   "missing:ok": [
+    31,
+    3
+   ],
+   "shanghai_dst:needs_tool": [
+    32,
+    22
+   ],
+   "shanghai_dst:ok": [
+    32,
+    3
+   ],
+   "tz_facts:ok": [
+    40,
+    4
+   ],
+   "tz_known:ok": [
+    40,
+    8
+   ],
+   "tz_needs_tool:needs_tool": [
+    40,
+    8
+   ],
+   "zi_transition:ambiguous": [
+    40,
+    11
+   ],
+   "zi_transition:ok": [
+    40,
+    13
+   ]
+  },
+  "weights": {
+   "chart_facts:ok": 0.3603,
+   "chart_plain:ok": 0.8408,
+   "dst_fold:ambiguous": 0.2522,
+   "dst_fold:ok": 1.3212,
+   "dst_gap:invalid": 0.2522,
+   "invalid:invalid": 0.9609,
+   "invalid:unsupported": 0.2522,
+   "jie_boundary:ambiguous": 0.2522,
+   "jie_boundary:needs_tool": 0.9609,
+   "jie_boundary:ok": 0.3603,
+   "jie_window:needs_tool": 0.9609,
+   "jie_window:ok": 3.1228,
+   "missing:ambiguous": 0.6005,
+   "missing:ok": 0.6115,
+   "shanghai_dst:needs_tool": 3.4125,
+   "shanghai_dst:ok": 0.5935,
+   "tz_facts:ok": 0.6005,
+   "tz_known:ok": 1.081,
+   "tz_needs_tool:needs_tool": 1.081,
+   "zi_transition:ambiguous": 1.4413,
+   "zi_transition:ok": 1.6815
+  }
+ },
+ "compose_share": 0.0,
+ "files": {
+  "train.jsonl": {
+   "sha256": "13b4d8a9e7c17e8850d2c1d5190490264bb6733f4548ddc0c73df6454c83a4a0",
+   "rows": 10942
+  },
+  "valid.jsonl": {
+   "sha256": "40831f053b1c817d5cb1b52218e520d377cfbad6c0400746f73676ebf745f3c6",
+   "rows": 282
+  }
+ },
+ "train_summary": {
+  "rows": 10942,
+  "tokens_estimate": 6001770,
+  "families": {
+   "procedure": 6192,
+   "contrast": 786,
+   "zi_transition": 507,
+   "strict_audit": 376,
+   "verify": 363,
+   "jie_window": 296,
+   "chart_plain": 285,
+   "mcq3": 263,
+   "claims": 178,
+   "tz_known": 175,
+   "v3_strict": 166,
+   "internal": 164,
+   "invalid": 153,
+   "v4_reasoned": 150,
+   "multi_turn": 131,
+   "dialog": 120,
+   "dst_fold": 117,
+   "jie_boundary": 100,
+   "counterfactual": 76,
+   "policy": 67,
+   "shanghai_dst": 63,
+   "tz_needs_tool": 54,
+   "missing": 51,
+   "chart_facts": 39,
+   "replay_mcq": 37,
+   "tz_facts": 29,
+   "dst_gap": 4
+  },
+  "family_tokens": {
+   "procedure": 3000253,
+   "contrast": 480526,
+   "strict_audit": 379951,
+   "zi_transition": 310960,
+   "verify": 269265,
+   "v4_reasoned": 212170,
+   "chart_plain": 176398,
+   "v3_strict": 162741,
+   "mcq3": 153255,
+   "jie_window": 144382,
+   "tz_known": 108734,
+   "claims": 108640,
+   "dst_fold": 96642,
+   "dialog": 60207,
+   "jie_boundary": 50453,
+   "invalid": 39644,
+   "internal": 38912,
+   "multi_turn": 35545,
+   "counterfactual": 31544,
+   "chart_facts": 31354,
+   "tz_facts": 23190,
+   "shanghai_dst": 22001,
+   "replay_mcq": 18321,
+   "missing": 18180,
+   "policy": 16059,
+   "tz_needs_tool": 11504,
+   "dst_gap": 939
+  }
+ }
+}
