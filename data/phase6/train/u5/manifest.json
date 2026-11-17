@@ -1,0 +1,340 @@
+{
+ "recipe": "u5",
+ "data_recipe": "s2",
+ "seed": 2026111718,
+ "token_budget": 6000000,
+ "calendar_share": null,
+ "drop": [],
+ "extra_paraphrases": [
+  "data/phase6/blind/train6b.jsonl",
+  "data/phase6/blind/train6c.jsonl"
+ ],
+ "replies": null,
+ "excluded_charts": 6277,
+ "paraphrases_on_evaluation_charts_left_out": 1,
+ "rows_on_held_out_charts_left_out": {
+  "train": 0,
+  "valid": 0
+ },
+ "system": "short",
+ "parent": "u4",
+ "steps": 2,
+ "weighting": {
+  "source": "results/phase6/own_replies_p6u4_b.jsonl",
+  "left_out": 0,
+  "scored_wrong": {
+   "fact:xun_kong": [
+    100,
+    0
+   ],
+   "fact:element_count": [
+    100,
+    1
+   ],
+   "fact:missing_element": [
+    100,
+    0
+   ],
+   "fact:life_stage": [
+    100,
+    0
+   ],
+   "fact:ten_god_stem": [
+    100,
+    0
+   ],
+   "fact:ten_god_branch": [
+    100,
+    0
+   ],
+   "fact:hidden": [
+    100,
+    0
+   ],
+   "fact:luck_direction": [
+    100,
+    0
+   ],
+   "gods": [
+    100,
+    0
+   ],
+   "strength": [
+    100,
+    0
+   ],
+   "pattern": [
+    100,
+    0
+   ],
+   "yongshen": [
+    100,
+    2
+   ],
+   "interact": [
+    100,
+    1
+   ],
+   "flow": [
+    100,
+    0
+   ],
+   "domain": [
+    100,
+    11
+   ],
+   "overview": [
+    100,
+    4
+   ],
+   "ambig:yongshen_open": [
+    100,
+    0
+   ],
+   "ambig:no_rule": [
+    100,
+    0
+   ],
+   "star": [
+    100,
+    0
+   ],
+   "prediction": [
+    100,
+    0
+   ]
+  },
+  "error": {
+   "fact:xun_kong": 0.0098,
+   "fact:element_count": 0.0196,
+   "fact:missing_element": 0.0098,
+   "fact:life_stage": 0.0098,
+   "fact:ten_god_stem": 0.0098,
+   "fact:ten_god_branch": 0.0098,
+   "fact:hidden": 0.0098,
+   "fact:luck_direction": 0.0098,
+   "gods": 0.0098,
+   "strength": 0.0098,
+   "pattern": 0.0098,
+   "yongshen": 0.0294,
+   "interact": 0.0196,
+   "flow": 0.0098,
+   "domain": 0.1176,
+   "overview": 0.049,
+   "ambig:yongshen_open": 0.0098,
+   "ambig:no_rule": 0.0098,
+   "star": 0.0098,
+   "prediction": 0.0098
+  },
+  "weights": {
+   "fact:xun_kong": 0.05,
+   "fact:element_count": 0.05,
+   "fact:missing_element": 0.05,
+   "fact:life_stage": 0.05,
+   "fact:ten_god_stem": 0.05,
+   "fact:ten_god_branch": 0.05,
+   "fact:hidden": 0.05,
+   "fact:luck_direction": 0.05,
+   "gods": 0.05,
+   "strength": 0.05,
+   "pattern": 0.05,
+   "yongshen": 0.05,
+   "interact": 0.05,
+   "flow": 0.05,
+   "domain": 0.1176,
+   "overview": 0.05,
+   "ambig:yongshen_open": 0.05,
+   "ambig:no_rule": 0.05,
+   "star": 0.05,
+   "prediction": 0.05
+  }
+ },
+ "fit_sample_b_charts_blocked": 1991,
+ "calendar_weighting": {
+  "source": "results/phase6/own_replies_p6u4_c.jsonl",
+  "scored_wrong": {
+   "chart_facts:ok": [
+    40,
+    1
+   ],
+   "chart_plain:ok": [
+    40,
+    4
+   ],
+   "dst_fold:ambiguous": [
+    35,
+    0
+   ],
+   "dst_fold:ok": [
+    40,
+    8
+   ],
+   "dst_gap:invalid": [
+    24,
+    0
+   ],
+   "invalid:invalid": [
+    40,
+    10
+   ],
+   "invalid:unsupported": [
+    40,
+    0
+   ],
+   "jie_boundary:ambiguous": [
+    26,
+    0
+   ],
+   "jie_boundary:needs_tool": [
+    40,
+    5
+   ],
+   "jie_boundary:ok": [
+    40,
+    0
+   ],
+   "jie_window:needs_tool": [
+    40,
+    3
+   ],
+   "jie_window:ok": [
+    40,
+    18
+   ],
+   "missing:ambiguous": [
+    40,
+    0
+   ],
+   "missing:ok": [
+    31,
+    1
+   ],
+   "shanghai_dst:needs_tool": [
+    32,
+    25
+   ],
+   "shanghai_dst:ok": [
+    32,
+    0
+   ],
+   "tz_facts:ok": [
+    40,
+    0
+   ],
+   "tz_known:ok": [
+    40,
+    7
+   ],
+   "tz_needs_tool:needs_tool": [
+    40,
+    9
+   ],
+   "zi_transition:ambiguous": [
+    40,
+    0
+   ],
+   "zi_transition:ok": [
+    40,
+    2
+   ]
+  },
+  "weights": {
+   "chart_facts:ok": 0.3632,
+   "chart_plain:ok": 0.8648,
+   "dst_fold:ambiguous": 0.8491,
+   "dst_fold:ok": 0.8491,
+   "dst_gap:invalid": 0.3632,
+   "invalid:invalid": 0.9745,
+   "invalid:unsupported": 0.9745,
+   "jie_boundary:ambiguous": 0.4036,
+   "jie_boundary:needs_tool": 0.4036,
+   "jie_boundary:ok": 0.4036,
+   "jie_window:needs_tool": 1.949,
+   "jie_window:ok": 1.949,
+   "missing:ambiguous": 0.3632,
+   "missing:ok": 0.3632,
+   "shanghai_dst:needs_tool": 2.8617,
+   "shanghai_dst:ok": 2.8617,
+   "tz_facts:ok": 0.3632,
+   "tz_known:ok": 1.3837,
+   "tz_needs_tool:needs_tool": 1.7296,
+   "zi_transition:ambiguous": 0.3632,
+   "zi_transition:ok": 0.3632
+  },
+  "by": "family"
+ },
+ "compose_share": 0.0,
+ "years": "life",
+ "files": {
+  "train.jsonl": {
+   "sha256": "2219f1be3566ac140bfda7ccd39dcf5694541f606c0ca92bb163fb96d267ddde",
+   "rows": 10424
+  },
+  "valid.jsonl": {
+   "sha256": "777fed9f5e46a35ebc384eb22933e1e7828c157ebd983a7485d6a3ae6c1f88b1",
+   "rows": 258
+  }
+ },
+ "train_summary": {
+  "rows": 10424,
+  "tokens_estimate": 6001860,
+  "families": {
+   "procedure": 5558,
+   "contrast": 751,
+   "strict_audit": 394,
+   "verify": 387,
+   "chart_plain": 358,
+   "jie_window": 348,
+   "mcq3": 269,
+   "invalid": 248,
+   "tz_known": 240,
+   "internal": 204,
+   "v3_strict": 202,
+   "claims": 180,
+   "multi_turn": 172,
+   "zi_transition": 170,
+   "v4_reasoned": 157,
+   "dialog": 120,
+   "dst_fold": 115,
+   "jie_boundary": 91,
+   "shanghai_dst": 89,
+   "counterfactual": 83,
+   "tz_needs_tool": 72,
+   "policy": 71,
+   "chart_facts": 48,
+   "missing": 40,
+   "replay_mcq": 39,
+   "tz_facts": 14,
+   "dst_gap": 4
+  },
+  "family_tokens": {
+   "procedure": 3000234,
+   "contrast": 480470,
+   "strict_audit": 397647,
+   "verify": 285450,
+   "chart_plain": 221653,
+   "v4_reasoned": 220589,
+   "v3_strict": 200786,
+   "tz_known": 149654,
+   "mcq3": 147058,
+   "jie_window": 138251,
+   "zi_transition": 101038,
+   "claims": 98688,
+   "dst_fold": 89815,
+   "invalid": 66988,
+   "dialog": 60555,
+   "jie_boundary": 54228,
+   "internal": 48632,
+   "multi_turn": 47733,
+   "shanghai_dst": 46306,
+   "chart_facts": 38571,
+   "counterfactual": 34441,
+   "replay_mcq": 16888,
+   "policy": 16733,
+   "tz_needs_tool": 15265,
+   "missing": 12129,
+   "tz_facts": 11135,
+   "dst_gap": 923
+  }
+ }
+}

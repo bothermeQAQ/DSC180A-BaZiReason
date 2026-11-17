@@ -242,3 +242,16 @@ Decisions, surprises and negative results, in order. Plan: [`phase6_execution_pr
   - **Calendar 200/219** (U4 200): balanced decision accuracy 92.5% (U4 91.2%), definite charts where none exists 7/74 (U4 9), answerable requests refused 8/145 (U4 8).
   - **Against 12.12, for comparison only** (the conditions are read on the chain's best run, U4): U4c would meet condition 3 (72/77 outside, 93.5%, a gap of 6.5 points) and miss condition 2 on pattern (48/54). The two arms of one level miss different conditions by a few items each.
   - **The level:** U4 (740) is the better arm, so level 5 continues from U4 with U4's mixture: no composition rows (12.7). Its options are inherited from U4's manifest: derivation version 2, years of the chart's life, calendar weights by family. Level 4 raised the best from 733 to 740, so the count of levels without a new best is back to 0.
+- **U5 built at 15:00 and training since 15:02** (level 5, from U4, the better arm of level 4).
+  - **U4's fit samples** (14:00-15:00): template questions 1,981/2,000 (U3v 1,976). Area of life is the lowest type at 89/100 (U3v 91), then overview 96/100 and 用神 98/100; every other type is at 99 or 100. Calendar requests 687/780 (U3v 689).
+  - **A calendar regression the fit sample shows:** Shanghai daylight-saving requests that need the tool, 7/32 right (U3v 26/32).
+    - All 25 errors are summer dates of 1986-1989 given without the calendar tool's facts. U4 states that Asia/Shanghai is UTC+8 on that date and gives a definite chart.
+    - The 32 answerable Shanghai requests (with the tool's facts) are all right.
+    - On dev6 this cell has 4 requests (U4 2/4, U3v 3/4), too few to show it.
+  - Other calendar cells that moved: ambiguous daylight-saving folds 35/35 (U3v 23/35). Answerable solar-term window requests are still 22/40 (U3v 21/40), the weakest answerable cell.
+  - **U5's weights from those samples:** area of life 0.118; every other template type is at the floor of 0.05. Calendar family weights:
+    - Shanghai daylight saving 2.86 (U4 0.83), so 89 rows against U4's 37.
+    - Solar-term window 1.95 (U4 2.29), time zone that needs the tool 1.73 (1.67), time zone known 1.38 (1.12), daylight-saving fold 0.85 (1.42).
+  - **Inherited from U4's manifest, checked in the real build:** derivation version 2 (`steps` 2), years of the chart's life, no composition rows, calendar weights by family, the short system prompt. 10,424 rows, 6.0 M tokens (procedure 3.00 M), seed 2026111718.
+  - The config differs from U4's only in its name, paths, seed and start adapter (U4's).
+  - Training started normally (validation loss 0.005 before the first update). U5 should finish about 19:10 and be scored on dev6 about 19:40.
