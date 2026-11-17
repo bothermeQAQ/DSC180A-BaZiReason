@@ -142,22 +142,37 @@ def fit_c_rows():
     return T6.fit_sample_c(FIT_C_SEED, FIT_C_PER_CELL)
 
 
-def calendar_weights(replies_path):
+def calendar_weights(replies_path, by="cell"):
     """Weights of the calendar cells from the parent's replies to fit sample C (section 12.5):
-    error = (wrong + 1) / (n + 2); weight = max(error, 0.05) / the mean of that over the cells."""
+    error = (wrong + 1) / (n + 2); weight = max(error, 0.05) / the mean of that over the cells.
+
+    By family (section 12.13), a cell's error is that of its whole family, so the cells of a
+    family (one kind of request with different expected answers, for example a definite chart
+    and "needs the tool" near a solar term) keep the generator's balance between them."""
     count = {}
     for line in Path(replies_path).read_text(encoding="utf-8").splitlines():
         r = json.loads(line)
         c = count.setdefault(T6.calendar_cell(r["row"]), [0, 0])
         c[0] += 1
         c[1] += not r["correct"]
-    raw = {cell: max((w + 1) / (n + 2), ERROR_FLOOR) for cell, (n, w) in sorted(count.items())}
+    pooled = count
+    if by == "family":
+        family = {}
+        for cell, (n, w) in count.items():
+            f = family.setdefault(cell.rsplit(":", 1)[0], [0, 0])
+            f[0] += n
+            f[1] += w
+        pooled = {cell: family[cell.rsplit(":", 1)[0]] for cell in count}
+    raw = {cell: max((w + 1) / (n + 2), ERROR_FLOOR) for cell, (n, w) in sorted(pooled.items())}
     mean = sum(raw.values()) / len(raw)
-    return {
+    out = {
         "source": str(replies_path),
         "scored_wrong": {cell: count[cell] for cell in raw},
         "weights": {cell: round(v / mean, 4) for cell, v in raw.items()},
     }
+    if by == "family":
+        out["by"] = "family"
+    return out
 
 
 def training_charts(recipe):
@@ -263,6 +278,11 @@ def main():
         choices=("fixed", "life"),
         help="round 2: years of flow and area questions (12.11)",
     )
+    parser.add_argument(
+        "--calendar-weight-by",
+        choices=("cell", "family"),
+        help="round 2: calendar weights per kind of request or per family (12.13)",
+    )
     parser.add_argument("--check", action="store_true")
     args = parser.parse_args()
     recipe = args.recipe
@@ -282,6 +302,8 @@ def main():
         if args.compose_share is None:
             args.compose_share = inherited.get("compose_share") or 0.0
         args.years = args.years or inherited.get("years", "fixed")
+        by = (inherited.get("calendar_weighting") or {}).get("by", "cell")
+        args.calendar_weight_by = args.calendar_weight_by or by
         shape = structure_of(args.parent)
         args.layers, args.rank = shape["layers"], shape["rank"]
         args.grad_checkpoint = shape["grad_checkpoint"]
@@ -309,7 +331,9 @@ def main():
     if args.calendar_weights_from:
         if not args.parent:
             sys.exit("--calendar-weights-from is for continuations (--parent)")
-        calendar_weighting = calendar_weights(args.calendar_weights_from)
+        calendar_weighting = calendar_weights(
+            args.calendar_weights_from, args.calendar_weight_by or "cell"
+        )
         options["calendar_weights"] = calendar_weighting["weights"]
         options["calendar_block"] = frozenset(T6.first_user(r) for r in fit_c_rows())
     if round2:

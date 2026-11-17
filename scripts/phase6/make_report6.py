@@ -426,6 +426,39 @@ def calendar_section(lines, summary, split):
     summary.setdefault("calendar", {})[split] = block
 
 
+def calendar_kinds_section(lines, summary, split):
+    """Calendar requests by kind (family and expected answer) for Phase 2, U2 and the chain.
+    The continuations draw their calendar rows by weight (preregistration 12.5; by family from
+    level 4, 12.13): this shows where the decision between a definite chart and "needs the
+    tool" or "ambiguous" moves."""
+    labs = [lab for lab in ("p2", "p6u2", *CONTINUATIONS) if load(split, lab, "calendar")]
+    if len(labs) < 3:
+        return
+    count = defaultdict(dict)
+    for lab in labs:
+        for r in load(split, lab, "calendar"):
+            s = r["score"]
+            k, n = count[(s.get("family"), s.get("expected_status"))].get(lab, (0, 0))
+            count[(s.get("family"), s.get("expected_status"))][lab] = (
+                k + bool(s.get("correct")),
+                n + 1,
+            )
+    lines += [f"### Calendar requests by kind (`{split}`, L0)\n",
+              "Right answers by family and expected answer. From level 4 the continuations weight the calendar rows by family, not by kind (preregistration 12.13).\n",
+              "| Family | Expected | n | " + " | ".join(name(lab) for lab in labs) + " |",
+              "|---|---|---:|" + "---:|" * len(labs)]  # fmt: skip
+    block = {}
+    for (family, status), row in sorted(
+        count.items(), key=lambda kv: (str(kv[0][0]), str(kv[0][1]))
+    ):
+        n = max(v[1] for v in row.values())
+        cells = [str(row[lab][0]) if lab in row else "–" for lab in labs]
+        lines.append(f"| {family} | {status} | {n} | " + " | ".join(cells) + " |")
+        block[f"{family}:{status}"] = {lab: list(v) for lab, v in row.items()}
+    lines.append("")
+    summary.setdefault("calendar_kinds", {})[split] = block
+
+
 def levels_section(lines, summary, split):
     labs = [
         lab
@@ -992,6 +1025,7 @@ def main():
             cf_section,
             intent_section,
             calendar_section,
+            calendar_kinds_section,
             levels_section,
             selfcheck_section,
             l5_section,

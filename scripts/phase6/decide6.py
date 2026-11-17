@@ -34,12 +34,13 @@ STEPS = (
 # Round-2 chain (sections 10.2 and 10.5): the first level is a fork with two arms.
 # Level 3 forks on the derivation version (10.5, 12.6), level 4 on composition rows (12.7).
 LEVELS = (("p6u3", "p6u3v"), ("p6u4", "p6u4c"), ("p6u5",), ("p6u6",), ("p6u7",), ("p6u8",), ("p6u9",), ("p6u10",))  # fmt: skip
-# Level 4 and the levels after it ask about years of the chart's life (preregistration 12.11);
-# later levels inherit it from their parent's manifest.
+# Level 4 and the levels after it ask about years of the chart's life (preregistration 12.11)
+# and weight the calendar rows by family (12.13); later levels inherit both from their
+# parent's manifest.
 ARM_OPTIONS = {
     "p6u3v": "--steps 2",
-    "p6u4": "--years life",
-    "p6u4c": "--compose-share 0.10 --years life",
+    "p6u4": "--years life --calendar-weight-by family",
+    "p6u4c": "--compose-share 0.10 --years life --calendar-weight-by family",
 }
 CONTINUATIONS = tuple(lab for level in LEVELS for lab in level)
 ORDER = ("p6s1", "p6s2", "p6s3", "p6s2s", "p6u1", "p6u1hi", "p6u2", *CONTINUATIONS)  # earlier first

@@ -50,7 +50,7 @@ Sample B by question type (right answers of the scored questions):
 | S3 + evidence, self-check | untuned base | 7,893 | 5,978,033 | 16 / 16 | 3946/3946 | 0.0148 | 0.0135 | 23.6 GB | 3.93 |
 | U0 joint, earlier data | untuned base | 7,810 | 5,992,270 | 16 / 16 | 3905/3905 | 0.0239 | 0.0157 | 23.3 GB | 4.02 |
 | U2 short prompt | untuned base | 29,775 | 14,972,053 | 16 / 16 | 14887/14887 | 0.0059 | 0.0047 | 22.6 GB | 10.56 |
-| U3 continuation | U2 short prompt | 10,942 | 5,990,828 | 16 / 16 | 2720/5471 (running) | 0.0067 | 0.0048 | 20.0 GB | 2.06 |
+| U3 continuation | U2 short prompt | 10,942 | 5,990,828 | 16 / 16 | 5471/5471 | 0.0035 | 0.0036 | 20.0 GB | 4.17 |
 | S1-8B (S1's data on Qwen3-8B) | untuned base | 7,922 | 6,024,381 | 16 / 16 | 7922/7922 | 0.0132 | 0.0097 | 17.3 GB | 5.94 |
 
 Average per-token loss is dominated by template text; the fit table above is the measure of what was learned.
@@ -126,6 +126,7 @@ Scored at L0 so far: Phase 2, U2 short prompt. This split is for selection only,
 | S2 + wording | 217/294 (73.8%) | 133/140 (95.0%) | 167/188 (88.8%) | 50/100 (50.0%) | 90/100 (90.0%) | **657/822 (79.9%)** | 139/219 (63.5%) |
 | S3 + evidence, self-check | 215/294 (73.1%) | 137/140 (97.9%) | 167/188 (88.8%) | 38/100 (38.0%) | 81/100 (81.0%) | **638/822 (77.6%)** | 116/219 (53.0%) |
 | U2 short prompt | 261/294 (88.8%) | 140/140 (100.0%) | 187/188 (99.5%) | 50/100 (50.0%) | 95/100 (95.0%) | **733/822 (89.2%)** | 182/219 (83.1%) |
+| U3 continuation | 266/294 (90.5%) | 132/140 (94.3%) | 182/188 (96.8%) | 43/100 (43.0%) | 99/100 (99.0%) | **722/822 (87.8%)** | 189/219 (86.3%) |
 | S1-8B (S1's data on Qwen3-8B) | 163/294 (55.4%) | 125/140 (89.3%) | 130/188 (69.1%) | 41/100 (41.0%) | 87/100 (87.0%) | **546/822 (66.4%)** | 138/219 (63.0%) |
 | S2s (S2 with the short prompt) | 219/294 (74.5%) | 132/140 (94.3%) | 171/188 (91.0%) | 55/100 (55.0%) | 81/100 (81.0%) | **658/822 (80.0%)** | 137/219 (62.6%) |
 
@@ -142,6 +143,7 @@ Paired differences on all rule items (`dev6`, L0), points [95%]:
 | S2 + wording | +19.5 [+15.8, +23.4] | +39.7 [+35.7, +43.3] | +65.8 [+62.2, +69.3] |
 | S3 + evidence, self-check | +17.2 [+13.2, +21.4] | +37.3 [+33.2, +41.3] | +63.5 [+59.8, +67.2] |
 | U2 short prompt | +28.7 [+24.8, +32.5] | +48.9 [+44.9, +52.5] | +75.1 [+71.8, +78.2] |
+| U3 continuation | +27.4 [+23.5, +31.3] | +47.6 [+43.4, +51.3] | +73.7 [+70.2, +77.0] |
 | S1-8B (S1's data on Qwen3-8B) | +6.0 [+1.8, +10.3] | +26.2 [+21.7, +30.1] | +52.3 [+48.4, +56.1] |
 | S2s (S2 with the short prompt) | +19.6 [+15.6, +23.6] | +39.8 [+35.8, +43.7] | +65.9 [+62.3, +69.4] |
 
@@ -152,6 +154,7 @@ Paired differences on all rule items (`dev6`, L0), points [95%]:
 | H7: short system prompt at equal compute (6.0 M-token twin) | S2s (S2 with the short prompt) minus S2 + wording | +0.1 [-2.9, +3.2] | -0.9 [-7.6, +6.0] |
 | Description: 15 M against 6.0 M tokens, same recipe and prompt | U2 short prompt minus S2s (S2 with the short prompt) | +9.1 [+6.1, +12.2] | +20.5 [+12.7, +27.8] |
 | Description: 15 M tokens and the short prompt against the best screening run | U2 short prompt minus S2 + wording | +9.2 [+6.2, +12.3] | +19.6 [+12.1, +27.1] |
+| H8: weighted continuation | U3 continuation minus U2 short prompt | -1.3 [-3.6, +0.9] | +3.2 [-2.5, +8.5] |
 | H10: base size (Qwen3-8B against Qwen3-4B, S1's data) | S1-8B (S1's data on Qwen3-8B) minus S1 small steps | -0.4 [-3.7, +3.1] | +4.6 [-1.0, +10.1] |
 
 ### Statements in L0 replies (`dev6`, claim checker)
@@ -169,6 +172,7 @@ Look-ups: day master, hidden stems, pillars, spouse star. Computed: 旬空, elem
 | S2 + wording | 20/2074 (1.0%) | 226/2077 (10.9%) | 3/94 (3.2%) | – | 28/100 (28.0%) | 174/1171 (14.9%) | 86/822 (10.5%) | 6 |
 | S3 + evidence, self-check | 15/2100 (0.7%) | 208/1924 (10.8%) | 0/61 (0.0%) | – | 28/96 (29.2%) | 86/997 (8.6%) | 85/822 (10.3%) | 1 |
 | U2 short prompt | 68/1995 (3.4%) | 187/1910 (9.8%) | 0/131 (0.0%) | – | 24/100 (24.0%) | 27/984 (2.7%) | 88/822 (10.7%) | 1 |
+| U3 continuation | 50/2117 (2.4%) | 181/2027 (8.9%) | 1/196 (0.5%) | 1/1 (100.0%) | 27/102 (26.5%) | 21/1006 (2.1%) | 93/822 (11.3%) | 0 |
 | S1-8B (S1's data on Qwen3-8B) | 45/2169 (2.1%) | 261/1873 (13.9%) | 2/45 (4.4%) | – | 33/96 (34.4%) | 178/1112 (16.0%) | 124/822 (15.1%) | 7 |
 | S2s (S2 with the short prompt) | 36/2115 (1.7%) | 216/1925 (11.2%) | 5/112 (4.5%) | – | 26/91 (28.6%) | 53/955 (5.5%) | 106/822 (12.9%) | 1 |
 
@@ -195,6 +199,7 @@ Caps: 1,100 tokens for rule items, 700 for calendar rows. A cut-off reply usuall
 | S3 + evidence, self-check | L1 | 7/822 (0.9%) | 7 | 302 | – |
 | S3 + evidence, self-check | L4 | 13/1386 (0.9%) | 13 | 103 | – |
 | U2 short prompt | L0 | 6/822 (0.7%) | 6 | 305 | 0/219 (0.0%) |
+| U3 continuation | L0 | 4/822 (0.5%) | 4 | 310 | 0/219 (0.0%) |
 | S1-8B (S1's data on Qwen3-8B) | L0 | 10/822 (1.2%) | 10 | 264 | 0/219 (0.0%) |
 | S2s (S2 with the short prompt) | L0 | 8/822 (1.0%) | 8 | 304 | 0/219 (0.0%) |
 
@@ -211,6 +216,7 @@ Caps: 1,100 tokens for rule items, 700 for calendar rows. A cut-off reply usuall
 | S2 + wording | 110/144 (76.4%) | 107/150 (71.3%) | 167/188 (88.8%) |
 | S3 + evidence, self-check | 115/144 (79.9%) | 100/150 (66.7%) | 167/188 (88.8%) |
 | U2 short prompt | 128/144 (88.9%) | 133/150 (88.7%) | 187/188 (99.5%) |
+| U3 continuation | 129/144 (89.6%) | 137/150 (91.3%) | 182/188 (96.8%) |
 | S1-8B (S1's data on Qwen3-8B) | 110/144 (76.4%) | 53/150 (35.3%) | 130/188 (69.1%) |
 | S2s (S2 with the short prompt) | 115/144 (79.9%) | 104/150 (69.3%) | 171/188 (91.0%) |
 
@@ -229,6 +235,7 @@ Up to U3v every training row asked about years 2024-2049; from level 4 the templ
 | S2 + wording | 11/16 (68.8%) | 31/44 (70.5%) | 7/13 (53.8%) | 18/33 (54.5%) |
 | S3 + evidence, self-check | 13/16 (81.2%) | 25/44 (56.8%) | 7/13 (53.8%) | 15/33 (45.5%) |
 | U2 short prompt | 16/16 (100.0%) | 39/44 (88.6%) | 13/13 (100.0%) | 18/33 (54.5%) |
+| U3 continuation | 15/16 (93.8%) | 38/44 (86.4%) | 12/13 (92.3%) | 19/33 (57.6%) |
 | S1-8B (S1's data on Qwen3-8B) | 4/16 (25.0%) | 16/44 (36.4%) | 0/13 (0.0%) | 22/33 (66.7%) |
 | S2s (S2 with the short prompt) | 15/16 (93.8%) | 21/44 (47.7%) | 10/13 (76.9%) | 19/33 (57.6%) |
 
@@ -245,36 +252,37 @@ Up to U3v every training row asked about years 2024-2049; from level 4 the templ
 | S2 + wording | 90/100 (90.0%) | 41/50 (82.0%) | 0/50 (0.0%) |
 | S3 + evidence, self-check | 81/100 (81.0%) | 37/50 (74.0%) | 2/50 (4.0%) |
 | U2 short prompt | 95/100 (95.0%) | 45/50 (90.0%) | 0/50 (0.0%) |
+| U3 continuation | 99/100 (99.0%) | 49/50 (98.0%) | 0/50 (0.0%) |
 | S1-8B (S1's data on Qwen3-8B) | 87/100 (87.0%) | 39/50 (78.0%) | 3/50 (6.0%) |
 | S2s (S2 with the short prompt) | 81/100 (81.0%) | 36/50 (72.0%) | 5/50 (10.0%) |
 
 ### By question type (`dev6`, L0, all rule items)
 
-| Type | n | Untuned base | Phase 2 | P4 A1 | P5 G1 | U0 joint, earlier data | S1 small steps | S2 + wording | S3 + evidence, self-check | U2 short prompt | S1-8B (S1's data on Qwen3-8B) | S2s (S2 with the short prompt) |
-|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| interact | 64 | 0% | 2% | 50% | 39% | 25% | 30% | 72% | 56% | 92% | 30% | 61% |
-| flow | 60 | 0% | 0% | 47% | 35% | 10% | 40% | 70% | 63% | 92% | 33% | 60% |
-| strength | 54 | 0% | 4% | 76% | 78% | 59% | 65% | 83% | 74% | 100% | 61% | 80% |
-| pattern | 54 | 0% | 20% | 72% | 69% | 31% | 80% | 89% | 81% | 94% | 85% | 91% |
-| gods | 50 | 0% | 0% | 54% | 52% | 12% | 58% | 96% | 98% | 94% | 56% | 96% |
-| domain | 46 | 0% | 0% | 15% | 9% | 4% | 52% | 54% | 48% | 67% | 48% | 63% |
-| fact:xun_kong | 46 | 0% | 13% | 28% | 22% | 22% | 96% | 100% | 100% | 100% | 80% | 100% |
-| fact:ten_god_stem | 44 | 20% | 50% | 82% | 93% | 25% | 93% | 98% | 100% | 100% | 84% | 84% |
-| fact:element_count | 44 | 16% | 70% | 86% | 77% | 55% | 98% | 95% | 98% | 100% | 98% | 98% |
-| fact:life_stage | 43 | 9% | 72% | 72% | 70% | 72% | 95% | 70% | 84% | 95% | 86% | 67% |
-| yongshen | 40 | 0% | 0% | 65% | 68% | 42% | 60% | 72% | 85% | 95% | 55% | 92% |
-| ambig | 32 | 0% | 0% | 94% | 62% | 81% | 100% | 100% | 100% | 100% | 94% | 100% |
-| fact:ten_god_branch | 30 | 27% | 40% | 63% | 80% | 60% | 57% | 100% | 93% | 100% | 90% | 100% |
-| fact:hidden | 30 | 77% | 93% | 100% | 97% | 97% | 90% | 97% | 97% | 97% | 97% | 97% |
-| fact:luck_direction | 29 | 69% | 34% | 76% | 62% | 59% | 100% | 100% | 100% | 100% | 100% | 100% |
-| combo:flow_stage | 25 | 4% | 20% | 44% | 8% | 36% | 12% | 24% | 8% | 28% | 12% | 12% |
-| combo:kong_positions | 25 | 28% | 24% | 36% | 20% | 20% | 28% | 52% | 40% | 40% | 40% | 80% |
-| combo:revealed | 25 | 80% | 16% | 36% | 36% | 64% | 52% | 36% | 28% | 60% | 64% | 60% |
-| combo:god_count | 25 | 40% | 32% | 76% | 68% | 40% | 52% | 88% | 76% | 72% | 48% | 68% |
-| overview | 20 | 0% | 0% | 0% | 0% | 5% | 55% | 40% | 80% | 90% | 55% | 55% |
-| star | 16 | 0% | 6% | 100% | 88% | 94% | 62% | 94% | 88% | 94% | 94% | 100% |
-| fact:missing_element | 10 | 50% | 60% | 40% | 60% | 40% | 100% | 100% | 100% | 100% | 100% | 100% |
-| prediction | 10 | 20% | 100% | 100% | 100% | 90% | 100% | 100% | 100% | 100% | 100% | 100% |
+| Type | n | Untuned base | Phase 2 | P4 A1 | P5 G1 | U0 joint, earlier data | S1 small steps | S2 + wording | S3 + evidence, self-check | U2 short prompt | U3 continuation | S1-8B (S1's data on Qwen3-8B) | S2s (S2 with the short prompt) |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| interact | 64 | 0% | 2% | 50% | 39% | 25% | 30% | 72% | 56% | 92% | 94% | 30% | 61% |
+| flow | 60 | 0% | 0% | 47% | 35% | 10% | 40% | 70% | 63% | 92% | 88% | 33% | 60% |
+| strength | 54 | 0% | 4% | 76% | 78% | 59% | 65% | 83% | 74% | 100% | 100% | 61% | 80% |
+| pattern | 54 | 0% | 20% | 72% | 69% | 31% | 80% | 89% | 81% | 94% | 100% | 85% | 91% |
+| gods | 50 | 0% | 0% | 54% | 52% | 12% | 58% | 96% | 98% | 94% | 98% | 56% | 96% |
+| domain | 46 | 0% | 0% | 15% | 9% | 4% | 52% | 54% | 48% | 67% | 67% | 48% | 63% |
+| fact:xun_kong | 46 | 0% | 13% | 28% | 22% | 22% | 96% | 100% | 100% | 100% | 100% | 80% | 100% |
+| fact:ten_god_stem | 44 | 20% | 50% | 82% | 93% | 25% | 93% | 98% | 100% | 100% | 100% | 84% | 84% |
+| fact:element_count | 44 | 16% | 70% | 86% | 77% | 55% | 98% | 95% | 98% | 100% | 80% | 98% | 98% |
+| fact:life_stage | 43 | 9% | 72% | 72% | 70% | 72% | 95% | 70% | 84% | 95% | 98% | 86% | 67% |
+| yongshen | 40 | 0% | 0% | 65% | 68% | 42% | 60% | 72% | 85% | 95% | 98% | 55% | 92% |
+| ambig | 32 | 0% | 0% | 94% | 62% | 81% | 100% | 100% | 100% | 100% | 100% | 94% | 100% |
+| fact:ten_god_branch | 30 | 27% | 40% | 63% | 80% | 60% | 57% | 100% | 93% | 100% | 97% | 90% | 100% |
+| fact:hidden | 30 | 77% | 93% | 100% | 97% | 97% | 90% | 97% | 97% | 97% | 93% | 97% | 97% |
+| fact:luck_direction | 29 | 69% | 34% | 76% | 62% | 59% | 100% | 100% | 100% | 100% | 100% | 100% | 100% |
+| combo:flow_stage | 25 | 4% | 20% | 44% | 8% | 36% | 12% | 24% | 8% | 28% | 20% | 12% | 12% |
+| combo:kong_positions | 25 | 28% | 24% | 36% | 20% | 20% | 28% | 52% | 40% | 40% | 32% | 40% | 80% |
+| combo:revealed | 25 | 80% | 16% | 36% | 36% | 64% | 52% | 36% | 28% | 60% | 36% | 64% | 60% |
+| combo:god_count | 25 | 40% | 32% | 76% | 68% | 40% | 52% | 88% | 76% | 72% | 84% | 48% | 68% |
+| overview | 20 | 0% | 0% | 0% | 0% | 5% | 55% | 40% | 80% | 90% | 95% | 55% | 55% |
+| star | 16 | 0% | 6% | 100% | 88% | 94% | 62% | 94% | 88% | 94% | 94% | 94% | 100% |
+| fact:missing_element | 10 | 50% | 60% | 40% | 60% | 40% | 100% | 100% | 100% | 100% | 100% | 100% | 100% |
+| prediction | 10 | 20% | 100% | 100% | 100% | 90% | 100% | 100% | 100% | 100% | 100% | 100% | 100% |
 
 ### Calendar requests (`dev6`, L0)
 
@@ -289,8 +297,37 @@ Up to U3v every training row asked about years 2024-2049; from level 4 the templ
 | S2 + wording | 139/219 (63.5%) | -10.5 [-16.6, -3.7] | 62.4% | 9/145 | 50/74 |
 | S3 + evidence, self-check | 116/219 (53.0%) | -21.0 [-28.4, -12.4] | 57.0% | 66/145 | 16/74 |
 | U2 short prompt | 182/219 (83.1%) | +9.1 [+3.4, +15.2] | 85.7% | 14/145 | 13/74 |
+| U3 continuation | 189/219 (86.3%) | +12.3 [+6.8, +17.7] | 83.4% | 3/145 | 22/74 |
 | S1-8B (S1's data on Qwen3-8B) | 138/219 (63.0%) | -11.0 [-18.6, -2.8] | 71.9% | 60/145 | 6/74 |
 | S2s (S2 with the short prompt) | 137/219 (62.6%) | -11.4 [-19.0, -3.2] | 68.2% | 51/145 | 14/74 |
+
+### Calendar requests by kind (`dev6`, L0)
+
+Right answers by family and expected answer. From level 4 the continuations weight the calendar rows by family, not by kind (preregistration 12.13).
+
+| Family | Expected | n | Phase 2 | U2 short prompt | U3 continuation |
+|---|---|---:|---:|---:|---:|
+| chart_facts | ok | 16 | 15 | 15 | 16 |
+| chart_plain | ok | 28 | 22 | 23 | 27 |
+| dst_fold | ambiguous | 1 | 1 | 1 | 1 |
+| dst_fold | ok | 11 | 9 | 8 | 8 |
+| dst_gap | invalid | 4 | 4 | 4 | 4 |
+| invalid | invalid | 12 | 9 | 9 | 9 |
+| invalid | unsupported | 8 | 7 | 8 | 8 |
+| jie_boundary | ambiguous | 1 | 1 | 1 | 1 |
+| jie_boundary | needs_tool | 8 | 2 | 7 | 5 |
+| jie_boundary | ok | 16 | 16 | 16 | 16 |
+| jie_window | needs_tool | 10 | 0 | 8 | 1 |
+| jie_window | ok | 10 | 7 | 5 | 9 |
+| missing | ambiguous | 10 | 10 | 9 | 8 |
+| missing | ok | 4 | 3 | 4 | 4 |
+| shanghai_dst | needs_tool | 4 | 1 | 1 | 0 |
+| shanghai_dst | ok | 4 | 4 | 4 | 4 |
+| tz_facts | ok | 8 | 8 | 8 | 8 |
+| tz_known | ok | 16 | 12 | 14 | 14 |
+| tz_needs_tool | needs_tool | 8 | 7 | 7 | 8 |
+| zi_transition | ambiguous | 8 | 3 | 5 | 6 |
+| zi_transition | ok | 32 | 21 | 25 | 32 |
 
 ### Levels of help (`dev6`, all rule items; each level its own row of prompts)
 

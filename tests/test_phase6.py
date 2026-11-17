@@ -300,6 +300,10 @@ def test_error_weights_score_only_charts_the_parent_never_trained_on(tmp_path, m
     assert set(out["weights"]) == set(T6.WEIGHTS)
 
 
+# Level 4 asks about years of the chart's life (12.11) and weights calendar rows by family (12.13)
+L4 = "--years life --calendar-weight-by family"
+
+
 def test_round2_loop_structure_and_selection_follow_the_preregistered_rules(
     tmp_path, monkeypatch, capsys
 ):
@@ -349,7 +353,7 @@ def test_round2_loop_structure_and_selection_follow_the_preregistered_rules(
         log[-1]["decision"] == "complete" and log[-1]["level"] == 3 and log[-1]["runs"] == ["u3v"]
     )
     D.nxt()
-    assert said() == "u4 u3 --years life\nu4c u3 --compose-share 0.10 --years life"
+    assert said() == f"u4 u3 {L4}\nu4c u3 --compose-share 0.10 {L4}"
     del right[("dev6", "p6u3")]
     right[("dev6", "p6u3v")] = 65
     D.nxt()
@@ -358,15 +362,15 @@ def test_round2_loop_structure_and_selection_follow_the_preregistered_rules(
     right.update({("dev6", "p6u3"): 64, ("dev6", "p6u3v"): 65})
     D.nxt()
     # the second level has two arms too, and both ask about years of the chart's life (12.11)
-    assert said() == "u4 u3v --years life\nu4c u3v --compose-share 0.10 --years life"
+    assert said() == f"u4 u3v {L4}\nu4c u3v --compose-share 0.10 {L4}"
     right[("dev6", "p6u3v")] = 64
     D.nxt()
-    assert said().splitlines()[0] == "u4 u3 --years life"
+    assert said().splitlines()[0] == f"u4 u3 {L4}"
     right[("dev6", "p6u3v")] = 65
     # It goes on from the latest level, and ends after two levels in a row without a new best.
     right[("dev6", "p6u4")] = 64  # not above 65: first level without a new best
     D.nxt()
-    assert said() == "u4c u3v --compose-share 0.10 --years life"  # the missing arm, once
+    assert said() == f"u4c u3v --compose-share 0.10 {L4}"  # the missing arm, once
     D.nxt()
     assert said() == "u5 u4"
     right[("dev6", "p6u5")] = 65  # equal is not a new best: second in a row
@@ -626,6 +630,36 @@ def test_calendar_weights_follow_the_measured_errors(tmp_path):
     assert out["scored_wrong"] == {"zi_transition:ambiguous": [10, 9], "chart_plain:ok": [98, 0]}
     other = {"task": "verify", "family": "verify", "meta": {"expected": {"status": "ok"}}}
     assert T6.calendar_cell(other) is None  # other calendar tasks keep weight 1
+
+
+def test_calendar_weights_by_family_keep_the_balance_inside_a_family(tmp_path):
+    """Preregistration 12.13: from level 4 a cell's error is that of its whole family."""
+    import build_train6 as B
+
+    def reply(family, status, ok):
+        row = {"task": "chart", "family": family, "meta": {"expected": {"status": status}}}
+        return {"row": row, "reply": "", "correct": ok}
+
+    rows = [reply("jie_window", "ok", False)] * 25 + [reply("jie_window", "ok", True)] * 15
+    rows += [reply("jie_window", "needs_tool", False)] * 7
+    rows += [reply("jie_window", "needs_tool", True)] * 33
+    rows += [reply("chart_plain", "ok", True)] * 40
+    path = tmp_path / "c.jsonl"
+    path.write_text("".join(json.dumps(r, ensure_ascii=False) + "\n" for r in rows), "utf-8")
+    cell, family = B.calendar_weights(path), B.calendar_weights(path, "family")
+    assert cell == B.calendar_weights(path, "cell") and "by" not in cell  # the default, as before
+    assert cell["weights"]["jie_window:ok"] > 3 * cell["weights"]["jie_window:needs_tool"]
+    w = family["weights"]
+    assert family["by"] == "family" and w["jie_window:ok"] == w["jie_window:needs_tool"]
+    pooled = 33 / 82  # jie_window: 32 wrong of 80
+    raw = {
+        "chart_plain:ok": B.ERROR_FLOOR,
+        "jie_window:needs_tool": pooled,
+        "jie_window:ok": pooled,
+    }
+    mean = sum(raw.values()) / len(raw)
+    assert w == {c: round(v / mean, 4) for c, v in raw.items()}
+    assert family["scored_wrong"] == cell["scored_wrong"]  # the counts stay per kind
 
 
 def test_weighted_calendar_rows_favour_the_failing_cells_and_skip_the_fit_sample():
