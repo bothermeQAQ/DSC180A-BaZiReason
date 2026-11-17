@@ -518,6 +518,17 @@
    "val_loss": 0.003646001685410738,
    "hours": 4.17
   },
+  "p6u3v": {
+   "rows": 10530,
+   "tokens": 5991362,
+   "iterations": [
+    5265,
+    5265
+   ],
+   "train_loss_tail": 0.00536,
+   "val_loss": 0.0021976435091346502,
+   "hours": 4.11
+  },
   "p8s1": {
    "rows": 7922,
    "tokens": 6024381,
@@ -788,6 +799,136 @@
      "star": 0.05,
      "prediction": 0.05
     }
+   },
+   "p6u3v": {
+    "source": "results/phase6/own_replies_p6u2_b.jsonl",
+    "left_out": 0,
+    "scored_wrong": {
+     "fact:xun_kong": [
+      100,
+      0
+     ],
+     "fact:element_count": [
+      100,
+      2
+     ],
+     "fact:missing_element": [
+      100,
+      0
+     ],
+     "fact:life_stage": [
+      100,
+      11
+     ],
+     "fact:ten_god_stem": [
+      100,
+      0
+     ],
+     "fact:ten_god_branch": [
+      100,
+      0
+     ],
+     "fact:hidden": [
+      100,
+      0
+     ],
+     "fact:luck_direction": [
+      100,
+      0
+     ],
+     "gods": [
+      100,
+      1
+     ],
+     "strength": [
+      100,
+      0
+     ],
+     "pattern": [
+      100,
+      1
+     ],
+     "yongshen": [
+      100,
+      2
+     ],
+     "interact": [
+      100,
+      6
+     ],
+     "flow": [
+      100,
+      4
+     ],
+     "domain": [
+      100,
+      4
+     ],
+     "overview": [
+      100,
+      9
+     ],
+     "ambig:yongshen_open": [
+      100,
+      0
+     ],
+     "ambig:no_rule": [
+      100,
+      0
+     ],
+     "star": [
+      100,
+      0
+     ],
+     "prediction": [
+      100,
+      0
+     ]
+    },
+    "error": {
+     "fact:xun_kong": 0.0098,
+     "fact:element_count": 0.0294,
+     "fact:missing_element": 0.0098,
+     "fact:life_stage": 0.1176,
+     "fact:ten_god_stem": 0.0098,
+     "fact:ten_god_branch": 0.0098,
+     "fact:hidden": 0.0098,
+     "fact:luck_direction": 0.0098,
+     "gods": 0.0196,
+     "strength": 0.0098,
+     "pattern": 0.0196,
+     "yongshen": 0.0294,
+     "interact": 0.0686,
+     "flow": 0.049,
+     "domain": 0.049,
+     "overview": 0.098,
+     "ambig:yongshen_open": 0.0098,
+     "ambig:no_rule": 0.0098,
+     "star": 0.0098,
+     "prediction": 0.0098
+    },
+    "weights": {
+     "fact:xun_kong": 0.05,
+     "fact:element_count": 0.05,
+     "fact:missing_element": 0.05,
+     "fact:life_stage": 0.1176,
+     "fact:ten_god_stem": 0.05,
+     "fact:ten_god_branch": 0.05,
+     "fact:hidden": 0.05,
+     "fact:luck_direction": 0.05,
+     "gods": 0.05,
+     "strength": 0.05,
+     "pattern": 0.05,
+     "yongshen": 0.05,
+     "interact": 0.0686,
+     "flow": 0.05,
+     "domain": 0.05,
+     "overview": 0.098,
+     "ambig:yongshen_open": 0.05,
+     "ambig:no_rule": 0.05,
+     "star": 0.05,
+     "prediction": 0.05
+    }
    }
   }
  },
@@ -922,7 +1063,8 @@
  },
  "valid6_scored_before_selection": [
   "p2",
-  "p6u2"
+  "p6u2",
+  "p6u3"
  ],
  "l0": {
   "dev6": {
@@ -1226,6 +1368,36 @@
      219
     ]
    },
+   "p6u3v": {
+    "rules": [
+     272,
+     294
+    ],
+    "indep": [
+     138,
+     140
+    ],
+    "blind": [
+     185,
+     188
+    ],
+    "combo": [
+     39,
+     100
+    ],
+    "cf": [
+     96,
+     100
+    ],
+    "all": [
+     730,
+     822
+    ],
+    "calendar": [
+     201,
+     219
+    ]
+   },
    "p8s1": {
     "rules": [
      163,
@@ -1355,6 +1527,22 @@
     }
    },
    {
+    "hypothesis": "H8: weighted continuation",
+    "a": "p6u2",
+    "b": "p6u3v",
+    "difference": {
+     "n": 822,
+     "n_groups": 772,
+     "difference": -0.0036496350364963502,
+     "second_only": 39,
+     "first_only": 42,
+     "interval95": [
+      -0.025925925925925925,
+      0.01715686274509804
+     ]
+    }
+   },
+   {
     "hypothesis": "H10: base size (Qwen3-8B against Qwen3-4B, S1's data)",
     "a": "p6s1",
     "b": "p8s1",
@@ -1369,8 +1557,76 @@
       0.030826140567200986
      ]
     }
+   },
+   {
+    "hypothesis": "H9: derivation version 2",
+    "a": "p6u3",
+    "b": "p6u3v",
+    "difference": {
+     "n": 822,
+     "n_groups": 772,
+     "difference": 0.009732360097323601,
+     "second_only": 41,
+     "first_only": 33,
+     "interval95": [
+      -0.010962241169305725,
+      0.030712530712530713
+     ]
+    }
+   },
+   {
+    "hypothesis": "H9, only the items whose derivation changed",
+    "a": "p6u3",
+    "b": "p6u3v",
+    "difference": {
+     "n": 361,
+     "n_groups": 333,
+     "difference": 0.00554016620498615,
+     "second_only": 15,
+     "first_only": 13,
+     "interval95": [
+      -0.022222222222222223,
+      0.0335195530726257
+     ]
+    }
    }
   ]
+ },
+ "h9_statements": {
+  "dev6": {
+   "all rule items: replies with a wrong statement": {
+    "a": 93,
+    "b": 56,
+    "n": 822,
+    "difference": {
+     "n": 822,
+     "n_groups": 822,
+     "difference": -0.045012165450121655,
+     "second_only": 13,
+     "first_only": 50,
+     "interval95": [
+      -0.06326034063260341,
+      -0.0267639902676399
+     ]
+    }
+   },
+   "area-of-life items: replies with a wrong hidden-stem statement": {
+    "a": 30,
+    "b": 0,
+    "n": 46,
+    "difference": {
+     "n": 46,
+     "n_groups": 46,
+     "difference": -0.6521739130434783,
+     "second_only": 0,
+     "first_only": 30,
+     "interval95": [
+      -0.782608695652174,
+      -0.5
+     ]
+    }
+   }
+  }
  },
  "statements": {
   "dev6": {
@@ -1750,6 +2006,43 @@
     "n": 822,
     "loops": 0
    },
+   "p6u3v": {
+    "checked": {
+     "day_master": 644,
+     "hidden": 1011,
+     "pattern": 104,
+     "relation": 808,
+     "stem_relation": 238,
+     "pillar": 359,
+     "flow_year": 441,
+     "detail": 92,
+     "ten_god": 199,
+     "spouse_star": 42,
+     "star": 32,
+     "repetition": 1,
+     "xun_kong": 154,
+     "citation": 1
+    },
+    "wrong": {
+     "day_master": 0,
+     "hidden": 0,
+     "pattern": 24,
+     "relation": 25,
+     "stem_relation": 2,
+     "pillar": 0,
+     "flow_year": 93,
+     "detail": 92,
+     "ten_god": 0,
+     "spouse_star": 0,
+     "star": 0,
+     "repetition": 1,
+     "xun_kong": 14,
+     "citation": 1
+    },
+    "replies_with_wrong": 56,
+    "n": 822,
+    "loops": 1
+   },
    "p8s1": {
     "checked": {
      "day_master": 618,
@@ -1952,6 +2245,14 @@
      "mean_tokens": 310.1
     }
    },
+   "p6u3v": {
+    "L0": {
+     "cut": 6,
+     "n": 822,
+     "wrong": 6,
+     "mean_tokens": 328.3
+    }
+   },
    "p8s1": {
     "L0": {
      "cut": 10,
@@ -2109,6 +2410,20 @@
     ],
     "blind": [
      182,
+     188
+    ]
+   },
+   "p6u3v": {
+    "seen": [
+     131,
+     144
+    ],
+    "held_out": [
+     141,
+     150
+    ],
+    "blind": [
+     185,
      188
     ]
    },
@@ -2324,6 +2639,24 @@
      33
     ]
    },
+   "p6u3v": {
+    "flow_inside": [
+     16,
+     16
+    ],
+    "flow_outside": [
+     41,
+     44
+    ],
+    "domain_inside": [
+     12,
+     13
+    ],
+    "domain_outside": [
+     19,
+     33
+    ]
+   },
    "p8s1": {
     "flow_inside": [
      4,
@@ -2414,6 +2747,11 @@
     "pairs": 50,
     "same_answer": 0
    },
+   "p6u3v": {
+    "both": 46,
+    "pairs": 50,
+    "same_answer": 0
+   },
    "p8s1": {
     "both": 39,
     "pairs": 50,
@@ -2469,6 +2807,10 @@
      49,
      50
     ],
+    "p6u3v": [
+     50,
+     50
+    ],
     "p8s1": [
      28,
      50
@@ -2516,6 +2858,10 @@
      54
     ],
     "p6u3": [
+     54,
+     54
+    ],
+    "p6u3v": [
      54,
      54
     ],
@@ -2569,6 +2915,10 @@
      54,
      54
     ],
+    "p6u3v": [
+     54,
+     54
+    ],
     "p8s1": [
      46,
      54
@@ -2617,6 +2967,10 @@
     ],
     "p6u3": [
      39,
+     40
+    ],
+    "p6u3v": [
+     40,
      40
     ],
     "p8s1": [
@@ -2669,6 +3023,10 @@
      60,
      64
     ],
+    "p6u3v": [
+     57,
+     64
+    ],
     "p8s1": [
      19,
      64
@@ -2719,6 +3077,10 @@
      53,
      60
     ],
+    "p6u3v": [
+     57,
+     60
+    ],
     "p8s1": [
      20,
      60
@@ -2766,6 +3128,10 @@
      46
     ],
     "p6u3": [
+     31,
+     46
+    ],
+    "p6u3v": [
      31,
      46
     ],
@@ -2819,6 +3185,10 @@
      32,
      32
     ],
+    "p6u3v": [
+     32,
+     32
+    ],
     "p8s1": [
      30,
      32
@@ -2869,6 +3239,10 @@
      15,
      16
     ],
+    "p6u3v": [
+     16,
+     16
+    ],
     "p8s1": [
      15,
      16
@@ -2916,6 +3290,10 @@
      20
     ],
     "p6u3": [
+     19,
+     20
+    ],
+    "p6u3v": [
      19,
      20
     ],
@@ -2969,6 +3347,10 @@
      44,
      44
     ],
+    "p6u3v": [
+     44,
+     44
+    ],
     "p8s1": [
      37,
      44
@@ -3017,6 +3399,10 @@
     ],
     "p6u3": [
      29,
+     30
+    ],
+    "p6u3v": [
+     30,
      30
     ],
     "p8s1": [
@@ -3069,6 +3455,10 @@
      28,
      30
     ],
+    "p6u3v": [
+     29,
+     30
+    ],
     "p8s1": [
      29,
      30
@@ -3116,6 +3506,10 @@
      43
     ],
     "p6u3": [
+     42,
+     43
+    ],
+    "p6u3v": [
      42,
      43
     ],
@@ -3169,6 +3563,10 @@
      46,
      46
     ],
+    "p6u3v": [
+     46,
+     46
+    ],
     "p8s1": [
      37,
      46
@@ -3216,6 +3614,10 @@
      29
     ],
     "p6u3": [
+     29,
+     29
+    ],
+    "p6u3v": [
      29,
      29
     ],
@@ -3269,6 +3671,10 @@
      35,
      44
     ],
+    "p6u3v": [
+     41,
+     44
+    ],
     "p8s1": [
      43,
      44
@@ -3316,6 +3722,10 @@
      10
     ],
     "p6u3": [
+     10,
+     10
+    ],
+    "p6u3v": [
      10,
      10
     ],
@@ -3369,6 +3779,10 @@
      10,
      10
     ],
+    "p6u3v": [
+     10,
+     10
+    ],
     "p8s1": [
      10,
      10
@@ -3417,6 +3831,10 @@
     ],
     "p6u3": [
      5,
+     25
+    ],
+    "p6u3v": [
+     7,
      25
     ],
     "p8s1": [
@@ -3469,6 +3887,10 @@
      8,
      25
     ],
+    "p6u3v": [
+     6,
+     25
+    ],
     "p8s1": [
      10,
      25
@@ -3519,6 +3941,10 @@
      9,
      25
     ],
+    "p6u3v": [
+     11,
+     25
+    ],
     "p8s1": [
      16,
      25
@@ -3567,6 +3993,10 @@
     ],
     "p6u3": [
      21,
+     25
+    ],
+    "p6u3v": [
+     15,
      25
     ],
     "p8s1": [
@@ -3652,6 +4082,13 @@
     "refused": 3,
     "definite": 22
    },
+   "p6u3v": {
+    "k": 201,
+    "n": 219,
+    "balanced_decision": 0.9283,
+    "refused": 11,
+    "definite": 2
+   },
    "p8s1": {
     "k": 138,
     "n": 219,
@@ -3682,6 +4119,10 @@
     "p6u3": [
      16,
      16
+    ],
+    "p6u3v": [
+     15,
+     16
     ]
    },
    "chart_plain:ok": {
@@ -3696,6 +4137,10 @@
     "p6u3": [
      27,
      28
+    ],
+    "p6u3v": [
+     25,
+     28
     ]
    },
    "dst_fold:ambiguous": {
@@ -3708,6 +4153,10 @@
      1
     ],
     "p6u3": [
+     1,
+     1
+    ],
+    "p6u3v": [
      1,
      1
     ]
@@ -3724,6 +4173,10 @@
     "p6u3": [
      8,
      11
+    ],
+    "p6u3v": [
+     10,
+     11
     ]
    },
    "dst_gap:invalid": {
@@ -3736,6 +4189,10 @@
      4
     ],
     "p6u3": [
+     4,
+     4
+    ],
+    "p6u3v": [
      4,
      4
     ]
@@ -3752,6 +4209,10 @@
     "p6u3": [
      9,
      12
+    ],
+    "p6u3v": [
+     10,
+     12
     ]
    },
    "invalid:unsupported": {
@@ -3764,6 +4225,10 @@
      8
     ],
     "p6u3": [
+     8,
+     8
+    ],
+    "p6u3v": [
      8,
      8
     ]
@@ -3780,6 +4245,10 @@
     "p6u3": [
      1,
      1
+    ],
+    "p6u3v": [
+     1,
+     1
     ]
    },
    "jie_boundary:needs_tool": {
@@ -3794,6 +4263,10 @@
     "p6u3": [
      5,
      8
+    ],
+    "p6u3v": [
+     7,
+     8
     ]
    },
    "jie_boundary:ok": {
@@ -3806,6 +4279,10 @@
      16
     ],
     "p6u3": [
+     16,
+     16
+    ],
+    "p6u3v": [
      16,
      16
     ]
@@ -3822,6 +4299,10 @@
     "p6u3": [
      1,
      10
+    ],
+    "p6u3v": [
+     10,
+     10
     ]
    },
    "jie_window:ok": {
@@ -3835,6 +4316,10 @@
     ],
     "p6u3": [
      9,
+     10
+    ],
+    "p6u3v": [
+     5,
      10
     ]
    },
@@ -3850,6 +4335,10 @@
     "p6u3": [
      8,
      10
+    ],
+    "p6u3v": [
+     9,
+     10
     ]
    },
    "missing:ok": {
@@ -3863,6 +4352,10 @@
     ],
     "p6u3": [
      4,
+     4
+    ],
+    "p6u3v": [
+     3,
      4
     ]
    },
@@ -3878,6 +4371,10 @@
     "p6u3": [
      0,
      4
+    ],
+    "p6u3v": [
+     3,
+     4
     ]
    },
    "shanghai_dst:ok": {
@@ -3890,6 +4387,10 @@
      4
     ],
     "p6u3": [
+     4,
+     4
+    ],
+    "p6u3v": [
      4,
      4
     ]
@@ -3906,6 +4407,10 @@
     "p6u3": [
      8,
      8
+    ],
+    "p6u3v": [
+     8,
+     8
     ]
    },
    "tz_known:ok": {
@@ -3920,6 +4425,10 @@
     "p6u3": [
      14,
      16
+    ],
+    "p6u3v": [
+     15,
+     16
     ]
    },
    "tz_needs_tool:needs_tool": {
@@ -3932,6 +4441,10 @@
      8
     ],
     "p6u3": [
+     8,
+     8
+    ],
+    "p6u3v": [
      8,
      8
     ]
@@ -3948,6 +4461,10 @@
     "p6u3": [
      6,
      8
+    ],
+    "p6u3v": [
+     8,
+     8
     ]
    },
    "zi_transition:ok": {
@@ -3961,6 +4478,10 @@
     ],
     "p6u3": [
      32,
+     32
+    ],
+    "p6u3v": [
+     31,
      32
     ]
    }

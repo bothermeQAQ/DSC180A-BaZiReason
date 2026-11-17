@@ -1,0 +1,442 @@
+{
+ "label": "p6u3v",
+ "split": "dev6",
+ "steps_version": 2,
+ "right_of_scored_by_wording": {
+  "ambig:no_rule": {
+   "training": [
+    2,
+    2
+   ],
+   "held-out": [
+    4,
+    4
+   ],
+   "blind": [
+    10,
+    10
+   ]
+  },
+  "ambig:yongshen_open": {
+   "training": [
+    2,
+    2
+   ],
+   "held-out": [
+    4,
+    4
+   ],
+   "blind": [
+    10,
+    10
+   ]
+  },
+  "domain": {
+   "training": [
+    9,
+    21
+   ],
+   "held-out": [
+    13,
+    15
+   ],
+   "blind": [
+    9,
+    10
+   ]
+  },
+  "fact:element_count": {
+   "blind": [
+    10,
+    10
+   ],
+   "training": [
+    13,
+    14
+   ]
+  },
+  "fact:hidden": {
+   "blind": [
+    9,
+    10
+   ]
+  },
+  "fact:life_stage": {
+   "blind": [
+    8,
+    9
+   ],
+   "training": [
+    14,
+    14
+   ]
+  },
+  "fact:luck_direction": {
+   "blind": [
+    9,
+    9
+   ]
+  },
+  "fact:missing_element": {
+   "blind": [
+    10,
+    10
+   ]
+  },
+  "fact:ten_god_branch": {
+   "blind": [
+    10,
+    10
+   ]
+  },
+  "fact:ten_god_stem": {
+   "blind": [
+    10,
+    10
+   ],
+   "training": [
+    14,
+    14
+   ]
+  },
+  "fact:xun_kong": {
+   "blind": [
+    10,
+    10
+   ],
+   "training": [
+    16,
+    16
+   ]
+  },
+  "flow": {
+   "held-out": [
+    21,
+    24
+   ],
+   "training": [
+    26,
+    26
+   ],
+   "blind": [
+    10,
+    10
+   ]
+  },
+  "gods": {
+   "held-out": [
+    22,
+    22
+   ],
+   "training": [
+    18,
+    18
+   ],
+   "blind": [
+    10,
+    10
+   ]
+  },
+  "interact": {
+   "held-out": [
+    22,
+    25
+   ],
+   "training": [
+    25,
+    29
+   ],
+   "blind": [
+    10,
+    10
+   ]
+  },
+  "overview": {
+   "held-out": [
+    7,
+    8
+   ],
+   "training": [
+    12,
+    12
+   ]
+  },
+  "pattern": {
+   "held-out": [
+    12,
+    12
+   ],
+   "training": [
+    32,
+    32
+   ],
+   "blind": [
+    10,
+    10
+   ]
+  },
+  "prediction": {
+   "blind": [
+    10,
+    10
+   ]
+  },
+  "star": {
+   "held-out": [
+    4,
+    4
+   ],
+   "training": [
+    2,
+    2
+   ],
+   "blind": [
+    10,
+    10
+   ]
+  },
+  "strength": {
+   "training": [
+    28,
+    28
+   ],
+   "held-out": [
+    16,
+    16
+   ],
+   "blind": [
+    10,
+    10
+   ]
+  },
+  "yongshen": {
+   "held-out": [
+    16,
+    16
+   ],
+   "training": [
+    14,
+    14
+   ],
+   "blind": [
+    10,
+    10
+   ]
+  }
+ },
+ "first_difference_of_wrong_answers": {
+  "domain": {
+   "training": {
+    "逐年": 10,
+    "四支藏干逐一查表": 2
+   },
+   "held-out": {
+    "逐年": 1,
+    "四支藏干逐一查表": 1
+   },
+   "blind": {
+    "十神表": 1
+   }
+  },
+  "fact:element_count": {
+   "training": {
+    "按五行归类": 1
+   }
+  },
+  "fact:hidden": {
+   "blind": {
+    "another procedure from the first step": 1
+   }
+  },
+  "fact:life_stage": {
+   "blind": {
+    "step missing: 在上面找日支未": 1
+   }
+  },
+  "flow": {
+   "held-out": {
+    "another procedure from the first step": 2,
+    "流年干支": 1
+   }
+  },
+  "interact": {
+   "held-out": {
+    "全部关系": 3
+   },
+   "training": {
+    "全部关系": 3,
+    "地支两两比对": 1
+   }
+  },
+  "overview": {
+   "held-out": {
+    "no final JSON (cut off or loop)": 1
+   }
+  }
+ },
+ "wrong_json_fields": {
+  "domain": {
+   "trigger_years": 15
+  },
+  "fact:element_count": {
+   "answer": 1
+  },
+  "fact:hidden": {
+   "answer": 1
+  },
+  "fact:life_stage": {
+   "answer": 1
+  },
+  "flow": {
+   "special": 2,
+   "branch_relations": 2,
+   "pillar": 2,
+   "luck": 1,
+   "ten_god": 1
+  },
+  "interact": {
+   "answer": 7,
+   "adjacent": 3
+  }
+ },
+ "examples": {
+  "interact | held-out | 全部关系": [
+   {
+    "id": "P6D-rules-00132",
+    "wrote": "全部关系：巳酉丑三合金局、丑酉半合金局、丑午相害、巳酉半合金局；",
+    "derivation": "全部关系：巳酉丑三合金局、丑酉半合金局、巳酉半合金局、丑午相害；"
+   },
+   {
+    "id": "P6D-rules-00136",
+    "wrote": "全部关系：午未六合（合化土）、寅午半合火局、乙辛相冲、甲庚相冲、乙庚相合（合化金）、破：午未、寅午、寅卯、甲庚；",
+    "derivation": "全部关系：午未六合（合化土）、寅午半合火局、乙辛相冲、甲庚相冲、乙庚相合（合化金）；"
+   },
+   {
+    "id": "P6D-rules-00163",
+    "wrote": "全部关系：寅午戌三合火局、寅巳相刑、寅巳相害、午戌半合火局、寅午半合火局、巳申六合（合化水）、寅申相冲、寅巳相刑、寅巳相害、午戌半合火局；",
+    "derivation": "全部关系：寅午戌三合火局、寅巳相刑、午戌半合火局、寅午半合火局、寅巳相害；"
+   }
+  ],
+  "interact | training | 全部关系": [
+   {
+    "id": "P6D-rules-00161",
+    "wrote": "全部关系：午未六合（合化土）、丑戌相刑、丑未相冲、丑未相刑、午戌半合火局、未戌相刑、戊癸相合（合化火）、丑午相害、未戌相破；",
+    "derivation": "全部关系：午未六合（合化土）、丑未相冲、丑戌相刑、丑未相刑、未戌相刑、午戌半合火局、丑午相害、戊癸相合（合化火）、未戌相破；"
+   },
+   {
+    "id": "P6D-cf-00014b",
+    "wrote": "全部关系：辰戌相冲、丑戌相刑；",
+    "derivation": "全部关系：辰戌相冲、丑戌相刑、丑辰相破；"
+   },
+   {
+    "id": "P6D-cf-00035a",
+    "wrote": "全部关系：寅申相冲、寅申相刑、丑午相害、甲庚相冲、甲己相合（合化土）；",
+    "derivation": "全部关系：寅申相冲、寅申相刑、寅午半合火局、丑午相害、甲庚相冲、甲己相合（合化土）；"
+   }
+  ],
+  "flow | held-out | another procedure from the first step": [
+   {
+    "id": "P6D-rules-00180",
+    "wrote": "1. 流年：2002 − 4 = 1998；60×33 = 1980，1998 − 1980 = 18；18 = 10×1 + 8 → 第 8 干壬（甲为 0）；18 = 12×1 + 6 → 第 6 支午（子为 0）；2002 年为壬午年。",
+    "derivation": "1. 流年干支：2002 − 4 = 1998；60×33 = 1980，1998 − 1980 = 18；18 = 10×1 + 8 → 第 8 干壬（甲为 0）；18 = 12×1 + 6 → 第 6 支午（子为 0）；2002 年为壬午年。"
+   },
+   {
+    "id": "P6D-rules-00217",
+    "wrote": "1. 流年：2072 − 4 = 2068；60×34 = 2040，2072 − 2040 = 32；32 = 10×3 + 2 → 第 2 干丙（甲为 0）；32 = 12×2 + 8 → 第 8 支申（子为 0）；2072 年为丙申年。",
+    "derivation": "1. 流年干支：2072 − 4 = 2068；60×34 = 2040，2068 − 2040 = 28；28 = 10×2 + 8 → 第 8 干壬（甲为 0）；28 = 12×2 + 4 → 第 4 支辰（子为 0）；2072 年为壬辰年。"
+   }
+  ],
+  "flow | held-out | 流年干支": [
+   {
+    "id": "P6D-rules-00192",
+    "wrote": "60×34 = 2040，2040 + 12 = 2052；",
+    "derivation": "60×34 = 2040，2052 − 2040 = 12；"
+   }
+  ],
+  "domain | training | 逐年": [
+   {
+    "id": "P6D-rules-00222",
+    "wrote": "60×32 = 1920，1920 + 1 = 1921；",
+    "derivation": "60×32 = 1920，1941 − 1920 = 21；"
+   },
+   {
+    "id": "P6D-rules-00226",
+    "wrote": "60×34 = 2040，2040 + 32 = 2072；",
+    "derivation": "60×34 = 2040，2072 − 2040 = 32；"
+   },
+   {
+    "id": "P6D-rules-00231",
+    "wrote": "逐年（每年天干、地支各往后一位）：2004：2004 − 4 = 2000；",
+    "derivation": "逐年（每年天干、地支各往后一位）：1997：1997 − 4 = 1993；"
+   }
+  ],
+  "domain | training | 四支藏干逐一查表": [
+   {
+    "id": "P6D-rules-00228",
+    "wrote": "其中是正财或偏财的：年支戌的辛、月支未的辛、日支酉的辛、时支戌的辛。",
+    "derivation": "其中是正财或偏财的：年支戌的辛、日支酉的辛、时支戌的辛。"
+   },
+   {
+    "id": "P6D-rules-00229",
+    "wrote": "其中是正印或偏印的：无。",
+    "derivation": "其中是正印或偏印的：没有。"
+   }
+  ],
+  "domain | held-out | 逐年": [
+   {
+    "id": "P6D-rules-00242",
+    "wrote": "60×34 = 2040，2040 + 12 = 2052；",
+    "derivation": "60×34 = 2040，2052 − 2040 = 12；"
+   }
+  ],
+  "domain | held-out | 四支藏干逐一查表": [
+   {
+    "id": "P6D-rules-00255",
+    "wrote": "其中是正官或七杀的：月支巳的庚、时支午的庚。",
+    "derivation": "其中是正官或七杀的：月支巳的庚。"
+   }
+  ],
+  "overview | held-out | no final JSON (cut off or loop)": [
+   {
+    "id": "P6D-rules-00293",
+    "wrote": "",
+    "derivation": ""
+   }
+  ],
+  "domain | blind | 十神表": [
+   {
+    "id": "P6D-blind-00036",
+    "wrote": "壬偏印、癸正印。",
+    "derivation": "壬七杀、癸正官；"
+   }
+  ],
+  "fact:hidden | blind | another procedure from the first step": [
+   {
+    "id": "P6D-blind-00114",
+    "wrote": "1. 日支申藏庚、壬、戊（本气庚，中气壬，余气戊）。",
+    "derivation": "1. 月支是戌。"
+   }
+  ],
+  "fact:life_stage | blind | step missing: 在上面找日支未": [
+   {
+    "id": "P6D-blind-00152",
+    "wrote": "",
+    "derivation": "在上面找日支未：未养，所以日支未为养。"
+   }
+  ],
+  "fact:element_count | training | 按五行归类": [
+   {
+    "id": "P6D-cf-00009b",
+    "wrote": "金：庚、申、申，共 3；",
+    "derivation": "金：庚、申，共 2；"
+   }
+  ],
+  "interact | training | 地支两两比对": [
+   {
+    "id": "P6D-cf-00028a",
+    "wrote": "日子–时亥（相邻）：亥在子卡的六合 → 子亥六合（合化水）。",
+    "derivation": "日子–时亥（相邻）：亥不在子卡 → 无。"
+   }
+  ]
+ }
+}

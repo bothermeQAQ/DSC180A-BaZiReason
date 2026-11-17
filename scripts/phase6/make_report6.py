@@ -791,15 +791,20 @@ def round2_compare_section(lines, summary, split):
             rb = [r for r in rb if r["part"] == "combo"]
         cell, d = diff(ra, rb)
         ca, cb = load(split, a, "calendar"), load(split, b, "calendar")
-        cal = diff(ca, cb)[0] if ca and cb else "–"
+        subset = ", only " in title  # a subset of the rule items; the calendar is in the full row
+        cal = diff(ca, cb)[0] if ca and cb and not subset else "–"
         rows.append((title, a, b, cell, cal, d))
     if not rows:
         return
     lines += [f"### Round 2 (`{split}`, L0): paired differences, points [95%]\n",
-              "| Hypothesis | Comparison | All rule items | Calendar |", "|---|---|---|---|"]  # fmt: skip
+              "| Hypothesis | Comparison | Rule items | Calendar |", "|---|---|---|---|"]  # fmt: skip
     for title, a, b, cell, cal, _ in rows:
         lines.append(f"| {title} | {name(b)} minus {name(a)} | {cell} | {cal} |")
-    lines.append("")
+    lines += [
+        "",
+        'Rule items are all of the split\'s unless the row names a subset ("only ...").',
+        "",
+    ]
     summary.setdefault("round2_compare", {})[split] = [
         {"hypothesis": t, "a": a, "b": b, "difference": d} for t, a, b, _, _, d in rows
     ]
