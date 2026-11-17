@@ -338,3 +338,18 @@ Written while U3 was training (iteration 2,900 of 5,471), after U2's dev6 result
   - A dry run of level 4 (stand-in parent U2): 546 of U4's 638 template rows of these types are outside 2024-2049 (years 1915-2152); no row on a held-out chart; both arms have the same calendar requests; U4c's procedure questions are a subset of U4's.
 - **How it is read (a description, not a hypothesis):** on dev6 and sealed6, flow-year and area-of-life items with the year inside and outside 2024-2049, for every run (`make_report6.years_section`). Level 4 also changes the parent and the weights, so the change is not separated from the continuation; the items inside the window are the comparison.
 - **Unchanged:** fit samples B and C, the evaluation splits, the chain's rules, and U1 as registered (fixed years).
+
+### 12.12 When the model counts as well trained (16 November, 21:07)
+
+Written while U3 was being scored on dev6, before its result was read, after the user asked to be told when the model is well trained.
+
+- **Why the stop rule is not enough:** two levels without a new best on dev6 say that more of the same continuation stops paying. They do not say whether what is left could be fixed by better data. U2 answered 1,960 of 2,000 fresh training-distribution questions, yet 20 of its 89 wrong dev6 answers came from years the training never asked about (12.11).
+- **The lead agent calls the model well trained only when all four hold**, read on dev6, model alone, for the chain's best run on dev6:
+  1. **The chain has ended** by its rule (two levels without a new best) or after U10.
+  2. **Every trained question type is learned:** each type with at least 30 dev6 rule items is at 90% or more. The four held-out combinations are not counted. U2: only area of life is below (31/46).
+  3. **The year window is closed:** on flow-year and area-of-life items together, the share right with the year outside 2024-2049 is within 10 points of the share inside. U2: 57/77 outside, 29/29 inside.
+  4. **Calendar has levelled off:** the runs of the last two levels raised the best dev6 calendar count by fewer than 5 of 219 requests (about 2 points) over the best before them.
+- **Not a condition:** the held-out combinations. They are never trained (H11 tests whether composition rows help), so they are reported as the limit of generalization, not counted against training. U2: 50/100.
+- **If 1 holds and 2, 3 or 4 does not,** the plateau points to a gap in the data, not to the limit of the model. The lead agent looks for the cause (as for the year window), registers a targeted change in this section before any of its data or results exist, and runs one more level from the best run if it can start by 27 November. If no cause is found, the model is reported as trained as far as this recipe goes, with the failed condition named.
+- **The user is told** when the chain ends, either way, before the selection.
+- **Unchanged:** the chain's rules, the candidates, the selection rule and the sealed runs. This decides only whether a targeted level is added before the selection.
