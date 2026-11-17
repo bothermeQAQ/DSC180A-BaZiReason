@@ -315,10 +315,11 @@ def test_round2_loop_structure_and_selection_follow_the_preregistered_rules(
 
     size = {"p6u1hi": 33_000_000}
     log = []
-    parents = {"u3": {"parent": "u2"}, "u3v": {"parent": "u2"}}
+    parents = {"u3": {"parent": "u2"}, "u3v": {"parent": "u2"}, "u4": {"parent": "u3v"}}
     monkeypatch.setattr(D.M, "rule_records", records)
     monkeypatch.setattr(D, "parameters", lambda lab: size.get(lab, 14_680_064))
     monkeypatch.setattr(D, "record", log.append)
+    monkeypatch.setattr(D, "recorded", lambda: log)
     monkeypatch.setattr(D.P6, "manifest", lambda recipe: parents.get(recipe, {}))
     monkeypatch.setattr(
         D, "paired", lambda split, a, b, **kw: {"difference": 0.0, "interval95": gap}
@@ -339,6 +340,20 @@ def test_round2_loop_structure_and_selection_follow_the_preregistered_rules(
     D.nxt()
     assert said().splitlines()[0] == "u3 u1"
     right[("dev6", "p6u1")] = 60
+    # A level with a missing arm (a restart, or a failed arm) asks for that arm once more, with
+    # the same parent; if it is still missing after that, the level stands as it is.
+    right[("dev6", "p6u3")] = 64
+    D.nxt()
+    assert said() == "u3v u2 --steps 2"
+    assert (
+        log[-1]["decision"] == "complete" and log[-1]["level"] == 3 and log[-1]["runs"] == ["u3v"]
+    )
+    D.nxt()
+    assert said() == "u4 u3\nu4c u3 --compose-share 0.10"
+    del right[("dev6", "p6u3")]
+    right[("dev6", "p6u3v")] = 65
+    D.nxt()
+    assert said() == "u3 u2"  # the same for the other arm
     # The chain continues from the better arm of the fork (a tie goes to U3).
     right.update({("dev6", "p6u3"): 64, ("dev6", "p6u3v"): 65})
     D.nxt()
@@ -349,6 +364,8 @@ def test_round2_loop_structure_and_selection_follow_the_preregistered_rules(
     right[("dev6", "p6u3v")] = 65
     # It goes on from the latest level, and ends after two levels in a row without a new best.
     right[("dev6", "p6u4")] = 64  # not above 65: first level without a new best
+    D.nxt()
+    assert said() == "u4c u3v --compose-share 0.10"  # the missing arm of the pair, once
     D.nxt()
     assert said() == "u5 u4"
     right[("dev6", "p6u5")] = 65  # equal is not a new best: second in a row
@@ -386,7 +403,7 @@ def test_round2_loop_structure_and_selection_follow_the_preregistered_rules(
     assert list(chosen["candidates"]) == ["p6s2", "p6u1", "p6u1hi", "p6u2", "p6u3", "p6u4"]
     assert chosen["passing_calendar_gate"] == ["p6s2", "p6u1", "p6u1hi", "p6u2", "p6u4"]
     assert chosen["selected"] == "p6u2"  # 66 three times: smaller than U1-hi, earlier than U4
-    assert log and all(e["decision"] in ("next", "structure") for e in log)
+    assert log and all(e["decision"] in ("next", "complete", "structure") for e in log)
 
 
 def test_derivation_version_2_keeps_every_answer_and_passes_the_claim_checker():

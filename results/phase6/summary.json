@@ -438,6 +438,18 @@
      "b": 137,
      "n": 219
     }
+   },
+   {
+    "decision": "next",
+    "level": 3,
+    "runs": [
+     "u3",
+     "u3v"
+    ],
+    "parent": "u2",
+    "dev6_correct": {
+     "p6u2": 733
+    }
    }
   ]
  },
@@ -571,7 +583,8 @@
   "best_s_run_on_dev6": "p6s2"
  },
  "valid6_scored_before_selection": [
-  "p2"
+  "p2",
+  "p6u2"
  ],
  "l0": {
   "dev6": {

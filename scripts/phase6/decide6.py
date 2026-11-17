@@ -149,11 +149,15 @@ def best(labels, split):
     )
 
 
-def record(entry):
+def recorded():
     path = ROOT / "round2.json"
-    log = json.loads(path.read_text()) if path.exists() else []
+    return json.loads(path.read_text()) if path.exists() else []
+
+
+def record(entry):
+    log = recorded()
     log.append(entry)
-    path.write_text(json.dumps(log, ensure_ascii=False, indent=1) + "\n")
+    (ROOT / "round2.json").write_text(json.dumps(log, ensure_ascii=False, indent=1) + "\n")
 
 
 def structure():
@@ -192,10 +196,28 @@ def nxt():
     from the best arm of the level before it. The loop ends when two levels in a row fail to
     exceed the best dev6 accuracy reached so far in the chain (the first parent included), or
     after the last level. Prints one line per arm, "<recipe> <parent recipe> [options]", or
-    "stop"."""
+    "stop".
+
+    A level counts as reached when one of its arms has a dev6 result. If another arm of it has
+    none (the queue was restarted between the arms, or the arm failed), that arm is asked for
+    once more before the chain goes on, so that a restart cannot drop an arm of a pair."""
     score = lambda lab: M.correct(M.rule_records("dev6", lab))  # noqa: E731
     done = [[lab for lab in level if M.rule_records("dev6", lab)] for level in LEVELS]
     done = done[: next((i for i, arms in enumerate(done) if not arms), len(done))]
+    arm_line = lambda run, parent: f"{run} {parent} {ARM_OPTIONS.get('p6' + run, '')}".strip()  # noqa: E731
+    # A level that was interrupted (the queue restarted, or an arm failed): its arms without a
+    # result are asked for once more, with the same parent, before the chain goes on.
+    if done:
+        missing = [lab[2:] for lab in LEVELS[len(done) - 1] if lab not in done[-1]]
+        asked = any(
+            e.get("decision") == "complete" and e.get("runs") == missing for e in recorded()
+        )
+        if missing and not asked:
+            parent = P6.manifest(done[-1][0][2:])["parent"]
+            record({"decision": "complete", "level": len(done) + 2, "runs": missing, "parent": parent,
+                    "dev6_correct": {lab: score(lab) for lab in done[-1]}})  # fmt: skip
+            print("\n".join(arm_line(run, parent) for run in missing))
+            return
     entry = {"decision": "next", "level": len(done) + 3, "runs": [], "parent": None}
     if not done:
         if not M.rule_records("dev6", "p6u2"):
@@ -224,10 +246,7 @@ def nxt():
         entry["parent"] = parent[2:]
         entry["runs"] = [lab[2:] for lab in LEVELS[len(done)]]
     record(entry)
-    lines = [
-        f"{run} {entry['parent']} {ARM_OPTIONS.get('p6' + run, '')}".strip()
-        for run in entry["runs"]
-    ]
+    lines = [arm_line(run, entry["parent"]) for run in entry["runs"]]
     print("\n".join(lines) if lines else "stop")
 
 

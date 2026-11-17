@@ -655,8 +655,13 @@ def round2_section(lines, summary):
                     if e.get("parent")
                     else "the loop ends"
                 )
+                again = (
+                    " (an arm without a result, run once more)"
+                    if e["decision"] == "complete"
+                    else ""
+                )
                 lines.append(
-                    f"- **Chain, level {e.get('level', '?')}:** {what} (dev6 right answers on all rule items: {counts})."
+                    f"- **Chain, level {e.get('level', '?')}{again}:** {what} (dev6 right answers on all rule items: {counts})."
                 )
         lines.append("")
         block["decisions"] = entries

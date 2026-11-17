@@ -314,3 +314,11 @@ Written after U2's dev6 result and before the fork existed: no data, weights or 
   paired by item with the same bootstrap as the accuracy differences (`make_report6.statement_pair`).
 - **The test of H9 is unchanged:** answer accuracy on the items whose derivation changed (12.6). The second reading is reported next to it and decides nothing in the chain.
 - **Nothing else changes:** the fork, its weights, seeds and budgets, and the chain's rules are as registered.
+
+### 12.10 A level whose arm has no result (16 November, 15:39)
+
+Written after the queue had started the fork (15:37, level 3: U3 and U3v from U2) and before any data, weights or result of it existed.
+
+- **Found by reading the code:** `decide6.py next` counted a level as reached as soon as one of its arms had a dev6 result. A queue restarted between the two arms of a pair would have gone on to the next level; the second arm (U3v or U4c) and its hypothesis would have been lost. The same held for an arm that failed.
+- **Rule from now on:** when the latest level has an arm without a dev6 result, that arm is asked for once more, with the same parent, options, seed and budget (decision `complete` in `results/phase6/round2.json`). If it still has no result after that, the level stands with the arms it has, as before.
+- **Unchanged:** the run a level starts from, the arms of each level, the two-level stop and the cutoff date.

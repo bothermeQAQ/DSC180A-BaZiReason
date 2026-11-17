@@ -42,6 +42,7 @@ Tokenization: 0 of 60 stem-branch pairs are merged into one token, and 0 stems o
 ## Round-2 decisions (dev6, frozen rules: preregistration sections 10 and 12)
 
 - **U2's system prompt:** short (S2s minus S2: rule items +0.1 [-2.9, +3.2]; calendar -0.9 [-7.6, +6.0]).
+- **Chain, level 3:** U3 continuation and U3v continuation, steps v2 from U2 short prompt (dev6 right answers on all rule items: U2 short prompt 733).
 
 ## Screening decisions (dev6, frozen rule: preregistration section 5)
 
@@ -55,7 +56,7 @@ Dropped from U1: nothing. Calendar share for U1: unchanged (28%). Best S run on 
 
 ## Split `valid6`
 
-Scored at L0 so far: Phase 2. This split is for selection only, so its tables are written when `selection.json` exists (`scripts/phase6/decide6.py select`).
+Scored at L0 so far: Phase 2, U2 short prompt. This split is for selection only, so its tables are written when `selection.json` exists (`scripts/phase6/decide6.py select`).
 
 ## Split `dev6`
 
