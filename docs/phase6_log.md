@@ -186,3 +186,15 @@ Decisions, surprises and negative results, in order. Plan: [`phase6_execution_pr
     - Condition 3 fails: flow-year and area-of-life items are 60/77 right outside 2024-2049 and 28/29 inside.
     - Condition 4 cannot hold if the chain ends after level 4. Level 3 raised the best calendar count from 182 to 201, and it would then be one of the last two levels.
 - **Report:** in the round-2 table, the rows that compare a subset of the rule items ("H9, only the items whose derivation changed", "H11, only the held-out combinations") no longer repeat the calendar difference of the full comparison. A note under the table says so. No number changed.
+- **Level 4 started** (`round2.json`: level 4, U4 and U4c from U3v, the better arm of level 3; one level without a new best so far).
+  - **U3v's fit samples:**
+    - B: 1,976 of 2,000 right (area of life 91, relations 95, overview 97; every other type 98-100).
+    - C: 689 of 780 (solar-term windows with a definite chart 21 of 40, ambiguous DST folds 23 of 35, invalid requests 29 of 40).
+    - U4's question-type weights are therefore flat except area of life (0.098) and relations (0.059).
+  - **U4 was built at 03:56** with `--years life --calendar-weight-by family` (10,317 rows, 6.0 M tokens). It has trained from U3v's adapter since 03:57 (5,158 iterations, about 4 h).
+  - **Checked in the real build:**
+    - 392 of the 459 template area-of-life rows and 315 of the 350 template flow-year rows ask about years outside 2024-2049 (U3v: none). Paraphrased questions keep their years.
+    - Every calendar cell of a family has one weight.
+    - Solar-term windows: 185 rows with a definite chart and 170 needing the tool (U3v 209 and 87).
+    - Shanghai daylight saving: 19 and 18 (U3v 15 and 48).
+    - 子时 changes: 158 definite and 44 ambiguous (U3v 426 and 81). U3v made 4 errors in 80 of these in fit sample C.

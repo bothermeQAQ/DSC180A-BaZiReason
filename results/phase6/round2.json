@@ -58,5 +58,20 @@
   "dev6_correct": {
    "p6u2": 733
   }
+ },
+ {
+  "decision": "next",
+  "level": 4,
+  "runs": [
+   "u4",
+   "u4c"
+  ],
+  "parent": "u3v",
+  "dev6_correct": {
+   "p6u2": 733,
+   "p6u3": 722,
+   "p6u3v": 730
+  },
+  "levels_without_a_new_best": 1
  }
 ]
