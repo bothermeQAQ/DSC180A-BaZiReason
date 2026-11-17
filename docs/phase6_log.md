@@ -221,3 +221,9 @@ Decisions, surprises and negative results, in order. Plan: [`phase6_execution_pr
     - Condition 3 fails by one item: 69/77 right outside 2024-2049 (89.6%) against 29/29 inside, a gap of 10.4 points (U3v 18.6, U2 26.0).
     - Condition 4: the best calendar count is still U3v's 201, from level 3. Whether it has levelled off is read when the chain ends.
   - **Next:** U4c (U4's recipe plus composition rows at a share of 0.10, for H11) trains from U3v. Level 4 has a new best, so the chain goes on: level 5 starts from the better of U4 and U4c on dev6.
+- **U4c built at 08:57 and training since 08:58** (the composition arm of level 4, pre-registration 12.7; same parent U3v, fit samples, seed 2026111717 and 6.0 M-token budget as U4). Checked in the real build:
+  - 1,719 composition rows (600,133 tokens, 10.0%), all six registered kinds (257 to 317 rows each). None is a flow-year life stage, a 旬空 position, a revealed hidden stem or a Ten-God count.
+  - The composition tokens come from the procedure share: 2.40 M procedure tokens against U4's 3.00 M. All 4,434 of U4c's procedure rows are also in U4's set.
+  - The 1,966 calendar rows are identical in the two sets. Flow-year and area-of-life template rows ask about years of the chart's life, as in U4.
+  - Six small families are drawn anew with nearly the same token counts: contrast, strict audit, three-choice questions, claims, dialogue, replayed choices. They come to 1.2 M tokens in each set. So H11 compares the composition rows plus that redraw.
+  - The config differs from U4's only in its name and paths (the same start adapter, U3v's).
