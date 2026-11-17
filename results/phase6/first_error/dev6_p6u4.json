@@ -1,0 +1,396 @@
+{
+ "label": "p6u4",
+ "split": "dev6",
+ "steps_version": 2,
+ "right_of_scored_by_wording": {
+  "ambig:no_rule": {
+   "training": [
+    2,
+    2
+   ],
+   "held-out": [
+    4,
+    4
+   ],
+   "blind": [
+    10,
+    10
+   ]
+  },
+  "ambig:yongshen_open": {
+   "training": [
+    2,
+    2
+   ],
+   "held-out": [
+    4,
+    4
+   ],
+   "blind": [
+    10,
+    10
+   ]
+  },
+  "domain": {
+   "training": [
+    17,
+    21
+   ],
+   "held-out": [
+    13,
+    15
+   ],
+   "blind": [
+    10,
+    10
+   ]
+  },
+  "fact:element_count": {
+   "blind": [
+    10,
+    10
+   ],
+   "training": [
+    14,
+    14
+   ]
+  },
+  "fact:hidden": {
+   "blind": [
+    9,
+    10
+   ]
+  },
+  "fact:life_stage": {
+   "blind": [
+    8,
+    9
+   ],
+   "training": [
+    14,
+    14
+   ]
+  },
+  "fact:luck_direction": {
+   "blind": [
+    9,
+    9
+   ]
+  },
+  "fact:missing_element": {
+   "blind": [
+    10,
+    10
+   ]
+  },
+  "fact:ten_god_branch": {
+   "blind": [
+    10,
+    10
+   ]
+  },
+  "fact:ten_god_stem": {
+   "blind": [
+    10,
+    10
+   ],
+   "training": [
+    14,
+    14
+   ]
+  },
+  "fact:xun_kong": {
+   "blind": [
+    10,
+    10
+   ],
+   "training": [
+    16,
+    16
+   ]
+  },
+  "flow": {
+   "held-out": [
+    23,
+    24
+   ],
+   "training": [
+    25,
+    26
+   ],
+   "blind": [
+    10,
+    10
+   ]
+  },
+  "gods": {
+   "held-out": [
+    22,
+    22
+   ],
+   "training": [
+    18,
+    18
+   ],
+   "blind": [
+    10,
+    10
+   ]
+  },
+  "interact": {
+   "held-out": [
+    25,
+    25
+   ],
+   "training": [
+    25,
+    29
+   ],
+   "blind": [
+    10,
+    10
+   ]
+  },
+  "overview": {
+   "held-out": [
+    7,
+    8
+   ],
+   "training": [
+    12,
+    12
+   ]
+  },
+  "pattern": {
+   "held-out": [
+    12,
+    12
+   ],
+   "training": [
+    31,
+    32
+   ],
+   "blind": [
+    10,
+    10
+   ]
+  },
+  "prediction": {
+   "blind": [
+    10,
+    10
+   ]
+  },
+  "star": {
+   "held-out": [
+    4,
+    4
+   ],
+   "training": [
+    2,
+    2
+   ],
+   "blind": [
+    10,
+    10
+   ]
+  },
+  "strength": {
+   "training": [
+    28,
+    28
+   ],
+   "held-out": [
+    16,
+    16
+   ],
+   "blind": [
+    10,
+    10
+   ]
+  },
+  "yongshen": {
+   "held-out": [
+    16,
+    16
+   ],
+   "training": [
+    14,
+    14
+   ],
+   "blind": [
+    10,
+    10
+   ]
+  }
+ },
+ "first_difference_of_wrong_answers": {
+  "domain": {
+   "training": {
+    "符合约定的年份": 2,
+    "逐年": 2
+   },
+   "held-out": {
+    "传统对应": 2
+   }
+  },
+  "fact:hidden": {
+   "blind": {
+    "another procedure from the first step": 1
+   }
+  },
+  "fact:life_stage": {
+   "blind": {
+    "step missing: 在上面找日支未": 1
+   }
+  },
+  "flow": {
+   "held-out": {
+    "伏吟": 1
+   },
+   "training": {
+    "only the final JSON differs": 1
+   }
+  },
+  "interact": {
+   "training": {
+    "全部关系": 4
+   }
+  },
+  "overview": {
+   "held-out": {
+    "三、格局": 1
+   }
+  },
+  "pattern": {
+   "training": {
+    "戊": 1
+   }
+  }
+ },
+ "wrong_json_fields": {
+  "domain": {
+   "trigger_years": 6,
+   "gods": 2,
+   "in_stems": 1
+  },
+  "fact:hidden": {
+   "answer": 1
+  },
+  "fact:life_stage": {
+   "answer": 1
+  },
+  "flow": {
+   "special": 2,
+   "luck": 1
+  },
+  "interact": {
+   "answer": 4,
+   "adjacent": 3
+  },
+  "overview": {
+   "pattern": 1
+  },
+  "pattern": {
+   "answer": 1,
+   "basis": 1
+  }
+ },
+ "examples": {
+  "interact | training | 全部关系": [
+   {
+    "id": "P6D-rules-00161",
+    "wrote": "全部关系：午未六合（合化土）、丑未相冲、丑戌相刑、丑未相刑、未戌相刑、午戌半合火局、戊癸相合（合化火）、丑午相害；",
+    "derivation": "全部关系：午未六合（合化土）、丑未相冲、丑戌相刑、丑未相刑、未戌相刑、午戌半合火局、丑午相害、戊癸相合（合化火）、未戌相破；"
+   },
+   {
+    "id": "P6D-cf-00014b",
+    "wrote": "全部关系：辰戌相冲、丑戌相刑；",
+    "derivation": "全部关系：辰戌相冲、丑戌相刑、丑辰相破；"
+   },
+   {
+    "id": "P6D-cf-00035a",
+    "wrote": "全部关系：寅申相冲、寅申相刑、寅午半合火局、丑午相害、甲己相合（合化土）；",
+    "derivation": "全部关系：寅申相冲、寅申相刑、寅午半合火局、丑午相害、甲庚相冲、甲己相合（合化土）；"
+   }
+  ],
+  "flow | held-out | 伏吟": [
+   {
+    "id": "P6D-rules-00180",
+    "wrote": "日柱壬午不同；",
+    "derivation": "日柱壬午相同；"
+   }
+  ],
+  "flow | training | only the final JSON differs": [
+   {
+    "id": "P6D-rules-00210",
+    "wrote": "结论JSON: {\"pillar\":\"丁亥\",\"ten_god\":\"七杀\",\"branch_relations\":{\"year\":[\"六合:寅亥\",\"破:寅亥\"],\"month\":[\"自刑:亥亥\"],\"day\":[],\"hour\":[]},\"special\":[\"六合:寅亥\",\"破:寅亥\",\"干合:丁壬\"]}",
+    "derivation": "结论JSON: {\"pillar\":\"丁亥\",\"ten_god\":\"七杀\",\"branch_relations\":{\"year\":[\"六合:寅亥\",\"破:寅亥\"],\"month\":[\"自刑:亥亥\"],\"day\":[],\"hour\":[]},\"special\":[\"伏吟:month\"]}"
+   }
+  ],
+  "domain | training | 符合约定的年份": [
+   {
+    "id": "P6D-rules-00221",
+    "wrote": "符合约定的年份：1987、1988、1989、1990。",
+    "derivation": "符合约定的年份：1987、1988、1989。"
+   },
+   {
+    "id": "P6D-rules-00226",
+    "wrote": "符合约定的年份：2080、2077、2081。",
+    "derivation": "符合约定的年份：2080、2081。"
+   }
+  ],
+  "domain | held-out | 传统对应": [
+   {
+    "id": "P6D-rules-00230",
+    "wrote": "传统对应：女命以正官、七杀象征子女，以子女宫（时支）为宫位。",
+    "derivation": "传统对应：女命以食神、伤官象征子女，以子女宫（时支）为宫位。"
+   },
+   {
+    "id": "P6D-rules-00250",
+    "wrote": "传统对应：女命以正官、七杀象征子女，以子女宫（时支）为宫位。",
+    "derivation": "传统对应：女命以食神、伤官象征子女，以子女宫（时支）为宫位。"
+   }
+  ],
+  "domain | training | 逐年": [
+   {
+    "id": "P6D-rules-00235",
+    "wrote": "未不在午卡 → 无；",
+    "derivation": "未在午卡的六合 → 午未六合（合化土） → 宫动；"
+   },
+   {
+    "id": "P6D-rules-00236",
+    "wrote": "子在亥卡的六合、破 → 子亥六合（合化木）、子亥相破 → 宫动；",
+    "derivation": "子不在亥卡 → 无；"
+   }
+  ],
+  "overview | held-out | 三、格局": [
+   {
+    "id": "P6D-rules-00290",
+    "wrote": " 本气戊查表为七杀。",
+    "derivation": " 本气戊查表为正官。"
+   }
+  ],
+  "fact:hidden | blind | another procedure from the first step": [
+   {
+    "id": "P6D-blind-00114",
+    "wrote": "1. 日支是申。",
+    "derivation": "1. 月支是戌。"
+   }
+  ],
+  "fact:life_stage | blind | step missing: 在上面找日支未": [
+   {
+    "id": "P6D-blind-00152",
+    "wrote": "",
+    "derivation": "在上面找日支未：未养，所以日支未为养。"
+   }
+  ],
+  "pattern | training | 戊": [
+   {
+    "id": "P6D-cf-00013b",
+    "wrote": "戊（余气，食神）：在庚、丙、己中出现；",
+    "derivation": "戊（余气，食神）：在庚、丙、己中没有出现 → 不取。"
+   }
+  ]
+ }
+}

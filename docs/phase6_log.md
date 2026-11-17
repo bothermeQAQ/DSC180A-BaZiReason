@@ -198,3 +198,26 @@ Decisions, surprises and negative results, in order. Plan: [`phase6_execution_pr
     - Solar-term windows: 185 rows with a definite chart and 170 needing the tool (U3v 209 and 87).
     - Shanghai daylight saving: 19 and 18 (U3v 15 and 48).
     - 子时 changes: 158 definite and 44 ambiguous (U3v 426 and 81). U3v made 4 errors in 80 of these in fit sample C.
+- **U4 scored on dev6** (training 03:57-08:00, 4.0 h, 5,158 iterations, checkpoint 5,000 chosen by validation loss (0.0038), peak memory 20.0 GB; scored 08:00-08:28). Model alone:
+  - **Rule items 740/822 (90.0%), a new best** (U2 733, U3v 730): template rules 284/294 (U3v 272), independent 139/140, blind wording 186/188, combinations 35/100 (U3v 39, U2 50), counterfactual 96/100 (47 of 50 pairs right on both charts). Held-out template wording 146/150 (U3v 141).
+    - H8, U4 minus U3v: +1.2 points [−0.7, +3.2] (36 right only for U4, 26 only for U3v). U4 minus U2: +0.9 [−1.5, +3.2] (48 and 41).
+    - No reply is cut off at the token cap (U3v 6 of 1,041).
+    - Without the held-out combinations (a description only; the chain counts all 822): 705 of 722 (U2 683, U3v 691). U4 minus U2 +3.0 [+1.4, +4.8], minus U3v +1.9 [+0.6, +3.5].
+  - **The life years of 12.11 closed most of the year gap.** Flow years: 16/16 inside 2024-2049, 42/44 outside. Area of life: 13/13 inside, 27/33 outside (U3v 19/33). No wrong answer works out a year's stem and branch wrongly (U3v: 10 of its 15 area-of-life errors and 2 of its 3 flow-year errors). Flow-year statements wrong: 1 of 431 (U3v 93 of 441, U2 134 of 449).
+  - **Area of life 40/46 (87.0%)** (U2, U3 and U3v 31). All 6 wrong answers ask about years outside the window, and all go wrong after the year arithmetic:
+    - 2 female charts asked about children name the female marriage gods (正官、七杀) in step 1 instead of 食神、伤官, although the same line says 女命. Female children items: 1/4 (U3v 3/4). No training row crosses the two: U4's set has 65 female-children rows, 104 female-marriage rows and 56 male-children rows. This reads as interference from the more frequent female mapping, not a label error.
+    - 2 summaries also list a year whose branch only half-combines with the palace (半合), although that year's own row has no 宫动.
+    - 2 year rows misread the palace card. In one, 未 is read as not in the 午 card, which lists 六合未. In the other, 子 is given 寅's six-combination and destruction with the 亥 card, and the year with 寅, two rows later, then loses its 宫动.
+  - **Statements:** replies with a wrong statement 41/822 (U3v 56, U2 88). Computed statements wrong 50 of 1,847 (U3v 158 of 1,976). Look-ups wrong 0 of 1,961. 旬空 wrong 0 of 72.
+  - **Other trained types:** relations 60/64 (U3v 57), flow years 58/60 (57), element counts 43/44 (41), pattern 53/54 (54). Every trained type with at least 30 items other than area of life is at 93.8% or more; relations is the lowest.
+  - **Held-out combinations 35/100** (U3v 39, U2 50): Ten-God counts 14/25 (U2 18), revealed hidden stems 12/25 (15), 旬空 positions 5/25 (10), flow-year life stage 4/25 (7). They are never trained, and each level has lost a few.
+  - **Calendar 200/219 (91.3%)** (U3v 201, the best): minus Phase 2 +17.4 [+10.8, +23.9], minus U3v −0.5 [−4.3, +3.3]. Balanced decision accuracy 91.2% (U3v 92.8%).
+    - Against U3v, U4 gains 8 requests and loses 9.
+    - 6 of the gains are answerable requests that U3v refused: plain charts, a solar-term window, a 子时 change, missing data.
+    - 5 of the losses are definite charts where none exists: 2 time-zone requests that need the tool, 1 Shanghai daylight-saving request, 2 invalid dates. 3 are answerable requests refused (1 plain chart, 2 daylight-saving folds), and 1 is a wrong chart.
+    - Over all requests: definite charts where none exists 9/74 (U3v 2), answerable requests refused 8/145 (U3v 11). U4 says ok more often than U3v. The total does not differ, and these cells have 4 to 12 requests each.
+  - **Against pre-registration 12.12** (the chain has not ended; U4 is its best run so far):
+    - Condition 2 fails only on area of life: 40/46, two items short of 90%.
+    - Condition 3 fails by one item: 69/77 right outside 2024-2049 (89.6%) against 29/29 inside, a gap of 10.4 points (U3v 18.6, U2 26.0).
+    - Condition 4: the best calendar count is still U3v's 201, from level 3. Whether it has levelled off is read when the chain ends.
+  - **Next:** U4c (U4's recipe plus composition rows at a share of 0.10, for H11) trains from U3v. Level 4 has a new best, so the chain goes on: level 5 starts from the better of U4 and U4c on dev6.
