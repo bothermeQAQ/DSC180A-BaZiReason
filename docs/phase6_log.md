@@ -227,3 +227,18 @@ Decisions, surprises and negative results, in order. Plan: [`phase6_execution_pr
   - The 1,966 calendar rows are identical in the two sets. Flow-year and area-of-life template rows ask about years of the chart's life, as in U4.
   - Six small families are drawn anew with nearly the same token counts: contrast, strict audit, three-choice questions, claims, dialogue, replayed choices. They come to 1.2 M tokens in each set. So H11 compares the composition rows plus that redraw.
   - The config differs from U4's only in its name and paths (the same start adapter, U3v's).
+- **U4c scored on dev6** (training 08:58-13:03, 4.1 h, 5,483 iterations, the last checkpoint chosen by validation loss (0.0038), peak memory 20.0 GB; scored 13:03-13:30). Model alone:
+  - **Rule items 739/822 (89.9%)**, one fewer than U4: template rules 280/294 (U4 284), independent 140/140, blind wording 186/188, combinations 36/100 (U4 35), counterfactual 97/100 (48 of 50 pairs right on both charts). Held-out template wording 141/150 (U4 146). No reply is cut off.
+  - **H11 on dev6:** U4c minus U4 on the held-out combinations +1.0 points [−12.0, +14.0] (36 against 35). On all rule items −0.1 [−2.2, +1.8] (31 right only for U4c, 32 only for U4).
+    - By kind: 旬空 positions 10/25 (U4 5), revealed hidden stems 13/25 (12), Ten-God counts 10/25 (14), flow-year life stage 3/25 (4).
+    - The composition rows show no gain on the combinations they were meant to help.
+  - **A side effect on one held-out wording:** pattern 48/54 (U4 53/54).
+    - All six errors are on the wording "月令的藏干里哪一个透出来了？按透干取格的约定，格局记作什么？", which U4 answers right all six times.
+    - U4c answers in three steps: the month branch's hidden stems, the Ten-God table, the main stem's Ten God. It then gives the Ten God's name without 格 and never checks which stems are revealed.
+    - That is the shape of the composition kinds that ask for the Ten Gods of a branch's hidden stems: 296 pair rows and 278 clash rows, 234 of which name the month branch in the question.
+    - U4c also had fewer pattern rows (358 against U4's 455), because the composition tokens came from the procedure share.
+  - **Years:** flow years 16/16 inside 2024-2049 and 43/44 outside; area of life 13/13 inside and 29/33 outside (42/46 in all). The 4 area-of-life errors and the 1 flow-year error are all later steps on years outside the window; no year is worked out wrongly. Flow-year statements wrong: 2 of 431.
+  - **Statements:** replies with a wrong statement 49/822 (U4 41).
+  - **Calendar 200/219** (U4 200): balanced decision accuracy 92.5% (U4 91.2%), definite charts where none exists 7/74 (U4 9), answerable requests refused 8/145 (U4 8).
+  - **Against 12.12, for comparison only** (the conditions are read on the chain's best run, U4): U4c would meet condition 3 (72/77 outside, 93.5%, a gap of 6.5 points) and miss condition 2 on pattern (48/54). The two arms of one level miss different conditions by a few items each.
+  - **The level:** U4 (740) is the better arm, so level 5 continues from U4 with U4's mixture: no composition rows (12.7). Its options are inherited from U4's manifest: derivation version 2, years of the chart's life, calendar weights by family. Level 4 raised the best from 733 to 740, so the count of levels without a new best is back to 0.

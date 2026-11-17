@@ -1,0 +1,425 @@
+{
+ "label": "p6u4c",
+ "split": "dev6",
+ "steps_version": 2,
+ "right_of_scored_by_wording": {
+  "ambig:no_rule": {
+   "training": [
+    2,
+    2
+   ],
+   "held-out": [
+    4,
+    4
+   ],
+   "blind": [
+    10,
+    10
+   ]
+  },
+  "ambig:yongshen_open": {
+   "training": [
+    2,
+    2
+   ],
+   "held-out": [
+    4,
+    4
+   ],
+   "blind": [
+    10,
+    10
+   ]
+  },
+  "domain": {
+   "training": [
+    18,
+    21
+   ],
+   "held-out": [
+    14,
+    15
+   ],
+   "blind": [
+    10,
+    10
+   ]
+  },
+  "fact:element_count": {
+   "blind": [
+    10,
+    10
+   ],
+   "training": [
+    14,
+    14
+   ]
+  },
+  "fact:hidden": {
+   "blind": [
+    9,
+    10
+   ]
+  },
+  "fact:life_stage": {
+   "blind": [
+    8,
+    9
+   ],
+   "training": [
+    14,
+    14
+   ]
+  },
+  "fact:luck_direction": {
+   "blind": [
+    9,
+    9
+   ]
+  },
+  "fact:missing_element": {
+   "blind": [
+    10,
+    10
+   ]
+  },
+  "fact:ten_god_branch": {
+   "blind": [
+    10,
+    10
+   ]
+  },
+  "fact:ten_god_stem": {
+   "blind": [
+    10,
+    10
+   ],
+   "training": [
+    14,
+    14
+   ]
+  },
+  "fact:xun_kong": {
+   "blind": [
+    10,
+    10
+   ],
+   "training": [
+    16,
+    16
+   ]
+  },
+  "flow": {
+   "held-out": [
+    24,
+    24
+   ],
+   "training": [
+    25,
+    26
+   ],
+   "blind": [
+    10,
+    10
+   ]
+  },
+  "gods": {
+   "held-out": [
+    22,
+    22
+   ],
+   "training": [
+    18,
+    18
+   ],
+   "blind": [
+    10,
+    10
+   ]
+  },
+  "interact": {
+   "held-out": [
+    23,
+    25
+   ],
+   "training": [
+    25,
+    29
+   ],
+   "blind": [
+    10,
+    10
+   ]
+  },
+  "overview": {
+   "held-out": [
+    8,
+    8
+   ],
+   "training": [
+    12,
+    12
+   ]
+  },
+  "pattern": {
+   "held-out": [
+    6,
+    12
+   ],
+   "training": [
+    32,
+    32
+   ],
+   "blind": [
+    10,
+    10
+   ]
+  },
+  "prediction": {
+   "blind": [
+    10,
+    10
+   ]
+  },
+  "star": {
+   "held-out": [
+    4,
+    4
+   ],
+   "training": [
+    2,
+    2
+   ],
+   "blind": [
+    10,
+    10
+   ]
+  },
+  "strength": {
+   "training": [
+    28,
+    28
+   ],
+   "held-out": [
+    16,
+    16
+   ],
+   "blind": [
+    10,
+    10
+   ]
+  },
+  "yongshen": {
+   "held-out": [
+    16,
+    16
+   ],
+   "training": [
+    14,
+    14
+   ],
+   "blind": [
+    10,
+    10
+   ]
+  }
+ },
+ "first_difference_of_wrong_answers": {
+  "domain": {
+   "training": {
+    "逐年": 2,
+    "符合约定的年份": 1
+   },
+   "held-out": {
+    "三干逐一查表": 1
+   }
+  },
+  "fact:hidden": {
+   "blind": {
+    "another procedure from the first step": 1
+   }
+  },
+  "fact:life_stage": {
+   "blind": {
+    "step missing: 在上面找日支未": 1
+   }
+  },
+  "flow": {
+   "training": {
+    "天克地冲": 1
+   }
+  },
+  "interact": {
+   "training": {
+    "全部关系": 2,
+    "三合、三会": 2
+   },
+   "held-out": {
+    "全部关系": 1,
+    "天干两两比对": 1
+   }
+  },
+  "pattern": {
+   "held-out": {
+    "step missing: 年、月、时三干是庚、丙、庚。": 1,
+    "step missing: 年、月、时三干是庚、癸、壬。": 1,
+    "step missing: 本气是劫财": 1,
+    "step missing: 年、月、时三干是庚、癸、丙。": 1,
+    "step missing: 年、月、时三干是庚、己、戊。": 1,
+    "step missing: 年、月、时三干是庚、癸、辛。": 1
+   }
+  }
+ },
+ "wrong_json_fields": {
+  "domain": {
+   "trigger_years": 4,
+   "in_stems": 1
+  },
+  "fact:hidden": {
+   "answer": 1
+  },
+  "fact:life_stage": {
+   "answer": 1
+  },
+  "flow": {
+   "special": 1
+  },
+  "interact": {
+   "answer": 6,
+   "adjacent": 2
+  },
+  "pattern": {
+   "answer": 6,
+   "basis": 3
+  }
+ },
+ "examples": {
+  "pattern | held-out | step missing: 年、月、时三干是庚、丙、庚。": [
+   {
+    "id": "P6D-rules-00071",
+    "wrote": "",
+    "derivation": "年、月、时三干是庚、丙、庚。按本气、中气、余气的顺序看是否透出："
+   }
+  ],
+  "pattern | held-out | step missing: 年、月、时三干是庚、癸、壬。": [
+   {
+    "id": "P6D-rules-00072",
+    "wrote": "",
+    "derivation": "年、月、时三干是庚、癸、壬。按本气、中气、余气的顺序看是否透出："
+   }
+  ],
+  "pattern | held-out | step missing: 本气是劫财": [
+   {
+    "id": "P6D-rules-00077",
+    "wrote": "",
+    "derivation": "本气是劫财（比劫）→ 按约定不看透干：劫财且日主为阴干，取月劫 → 月劫格。"
+   }
+  ],
+  "pattern | held-out | step missing: 年、月、时三干是庚、癸、丙。": [
+   {
+    "id": "P6D-rules-00085",
+    "wrote": "",
+    "derivation": "年、月、时三干是庚、癸、丙。按本气、中气、余气的顺序看是否透出："
+   }
+  ],
+  "pattern | held-out | step missing: 年、月、时三干是庚、己、戊。": [
+   {
+    "id": "P6D-rules-00088",
+    "wrote": "",
+    "derivation": "年、月、时三干是庚、己、戊。按本气、中气、余气的顺序看是否透出："
+   }
+  ],
+  "pattern | held-out | step missing: 年、月、时三干是庚、癸、辛。": [
+   {
+    "id": "P6D-rules-00093",
+    "wrote": "",
+    "derivation": "年、月、时三干是庚、癸、辛。按本气、中气、余气的顺序看是否透出："
+   }
+  ],
+  "interact | training | 全部关系": [
+   {
+    "id": "P6D-rules-00161",
+    "wrote": "全部关系：午未六合（合化土）、丑戌相刑、丑未相冲、丑未相刑、午戌半合火局、戊癸相合（合化火）、丑午相害、未戌相刑、未戌相破；",
+    "derivation": "全部关系：午未六合（合化土）、丑未相冲、丑戌相刑、丑未相刑、未戌相刑、午戌半合火局、丑午相害、戊癸相合（合化火）、未戌相破；"
+   },
+   {
+    "id": "P6D-cf-00014b",
+    "wrote": "全部关系：辰戌相冲、丑戌相刑；",
+    "derivation": "全部关系：辰戌相冲、丑戌相刑、丑辰相破；"
+   }
+  ],
+  "interact | held-out | 全部关系": [
+   {
+    "id": "P6D-rules-00163",
+    "wrote": "全部关系：寅午戌三合火局、寅巳相刑、午戌半合火局、寅巳相害、寅午半合火局；",
+    "derivation": "全部关系：寅午戌三合火局、寅巳相刑、午戌半合火局、寅午半合火局、寅巳相害；"
+   }
+  ],
+  "interact | held-out | 天干两两比对": [
+   {
+    "id": "P6D-rules-00166",
+    "wrote": "日癸–时己：己癸在五合表 → 癸己相合（合化火）。",
+    "derivation": "日癸–时己：己癸不在五合表、相冲表 → 无。"
+   }
+  ],
+  "flow | training | 天克地冲": [
+   {
+    "id": "P6D-rules-00214",
+    "wrote": "日柱甲戌：天干丙火与甲木，火克金在次序里、木克土在次序里，相克 → 天克地冲。",
+    "derivation": "日柱甲戌：天干丙火与甲木，火、木不在次序里，不相克 → 不算。"
+   }
+  ],
+  "domain | training | 符合约定的年份": [
+   {
+    "id": "P6D-rules-00226",
+    "wrote": "符合约定的年份：2080、2077、2081。",
+    "derivation": "符合约定的年份：2080、2081。"
+   }
+  ],
+  "domain | training | 逐年": [
+   {
+    "id": "P6D-rules-00235",
+    "wrote": "未不在午卡 → 无；",
+    "derivation": "未在午卡的六合 → 午未六合（合化土） → 宫动；"
+   },
+   {
+    "id": "P6D-rules-00236",
+    "wrote": "子在亥卡的六合 → 子亥六合（合化木）、子亥相破 → 宫动；",
+    "derivation": "子不在亥卡 → 无；"
+   }
+  ],
+  "domain | held-out | 三干逐一查表": [
+   {
+    "id": "P6D-rules-00255",
+    "wrote": "其中是正官或七杀的：年干、时干。",
+    "derivation": "其中是正官或七杀的：年干、月干、时干。"
+   }
+  ],
+  "fact:hidden | blind | another procedure from the first step": [
+   {
+    "id": "P6D-blind-00114",
+    "wrote": "1. 日支是申。",
+    "derivation": "1. 月支是戌。"
+   }
+  ],
+  "fact:life_stage | blind | step missing: 在上面找日支未": [
+   {
+    "id": "P6D-blind-00152",
+    "wrote": "",
+    "derivation": "在上面找日支未：未养，所以日支未为养。"
+   }
+  ],
+  "interact | training | 三合、三会": [
+   {
+    "id": "P6D-cf-00042a",
+    "wrote": "三支齐全的：亥子丑。",
+    "derivation": "三支齐全的：没有。"
+   },
+   {
+    "id": "P6D-cf-00042b",
+    "wrote": "三支齐全的：亥子丑。",
+    "derivation": "三支齐全的：没有。"
+   }
+  ]
+ }
+}
