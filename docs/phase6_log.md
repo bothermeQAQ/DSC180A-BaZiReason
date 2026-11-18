@@ -260,3 +260,8 @@ Decisions, surprises and negative results, in order. Plan: [`phase6_execution_pr
   - The failed attempt's training log, plan and adapter config are kept in `artifacts/logs/p6u5_attempt1_oom/` (ignored by Git, like the queue log). No checkpoint was written.
   - A restart trains U5 again from its start with the same data, config and seed (handoff section 2; the data folder is reused). A failed arm does not count as a level without a new best.
   - The queue restarts by itself once no Ollama process has existed for 5 minutes in a row, unless the user asks for a restart sooner. A training run beside a local model of that size would run out of memory again.
+- **The queue restarted at 16:18 at the user's request** (they chose an immediate restart over waiting for Ollama to quit; the watcher was stopped first).
+  - At the restart, `ollama serve` was still running with no model loaded, and the `qwen3.5:4b` download had finished.
+  - `decide6.py next` recorded the same level-5 decision again (U5 from U4, no levels without a new best) in `round2.json`. The fit samples and the U5 data folder were reused, not rebuilt.
+  - U5 trains again from its start since 16:18:13. Its training plan is identical to the first attempt's: the same data files (hashes match the manifest), U4's adapter, 5,212 iterations.
+  - If a local model is loaded while U5 trains, it may run out of memory again. Expected (PST): trained about 20:25, scored on dev6 about 20:55.
