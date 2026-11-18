@@ -396,3 +396,9 @@ Written while U7 was training, before U7's dev6 result and before any data, weig
   - on thousands of random calendar requests, the version-3 text decides as `no_tool_expected` does: a refusal exactly when the tool is needed, the 时区 conclusion equal to `known_offset`, the 交节 conclusion equal to `jie_window_of`;
   - a dry build of UD in a scratch folder, with the current best run as a stand-in parent.
 - **Unchanged:** the chain and its rules, U1, the candidates already registered, the selection rule, the gate, and the sealed split's rules.
+- **Amendment (18 November, 09:45), before any of UD's data existed:** calendar replies are scored with a cap of 700 tokens (`run6.MAX_TOKENS`). As first written, the version-3 calendar answers with a definite chart ran up to 707 tokens before the final JSON, so many would have been cut off. They are now written compactly:
+  - the 时区 step gives the zone's rule in one clause ("Asia/Shanghai 除 1919 年、1940–1949 年和 1986–1991 年 4–9 月外为 UTC+8；1961 年 6 月不在例外中 → UTC+8");
+  - the 参考时刻 step no longer repeats the zone and its offset;
+  - the 交节 step compares the date with the nearest window bounds ("6 月 27 日晚于芒种最晚的 6 月 7 日、早于小暑最早的 7 月 6 日 → 不在交节窗口内");
+  - the month step refers to the 交节 step ("上一个节是芒种（见交节）") instead of restating the windows. The year, day and hour steps are as before.
+  - Measured with the final JSON line (`results/phase6/steps_v3_check.json`): answers with a chart at most 624 tokens of 700 (mean 555; version 2: 542 and 480); area of life at most 1,001 of 1,100 (version 2: 928); relations at most 931 (803). No training answer is over a cap.
