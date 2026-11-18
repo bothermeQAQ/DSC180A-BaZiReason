@@ -32,6 +32,7 @@ NAMES = {
     **{f"p6u{k}": f"U{k} continuation" for k in range(4, 11)},
     "p8s1": "S1-8B (S1's data on Qwen3-8B)",
     "p6s2s": "S2s (S2 with the short prompt)",
+    "p6ud": "UD, steps v3 (decide after the check)",
 }  # fmt: skip
 ORDER = list(NAMES)
 CONTINUATIONS = tuple(sorted(
@@ -750,7 +751,7 @@ def round2_section(lines, summary):
 
 def round2_compare_section(lines, summary, split):
     """H7 (the 6.0 M twin), U2 against the 6.0 M runs, H8 (each continuation against its parent),
-    H9 (the fork), H10 (the larger base) and H11 (composition rows) at L0."""
+    H9 (the fork), H10 (the larger base), H11 (composition rows) and H12 (UD) at L0."""
     pairs = [("H7: short system prompt at equal compute (6.0 M-token twin)", "p6s2", "p6s2s")]
     # Descriptive, no hypothesis (preregistration 12.8): U2 differs from S2s in budget, seed and two wording files.
     pairs.append(
@@ -778,6 +779,14 @@ def round2_compare_section(lines, summary, split):
     pairs.append(("H11, only the held-out combinations", "p6u4", "p6u4c"))
     pairs.append(("H9: derivation version 2", "p6u3", "p6u3v"))
     pairs.append(("H9, only the items whose derivation changed", "p6u3", "p6u3v"))
+    # Preregistration 12.14: UD against its twin (H12) and, as a description, against its parent.
+    decisions = json.loads((ROOT / "round2.json").read_text()) if (ROOT / "round2.json").exists() else []
+    for e in decisions:
+        if e.get("decision") == "ud":
+            if e["twin"]:
+                pairs.append(("H12: derivation version 3", "p6" + e["twin"], "p6ud"))
+                pairs.append(("H12, only the relations and area-of-life items", "p6" + e["twin"], "p6ud"))
+            pairs.append(("Description: UD against its parent", "p6" + e["parent"], "p6ud"))
     rows = []
     for title, a, b in pairs:
         ra, rb = rule_records(split, a), rule_records(split, b)
@@ -786,6 +795,9 @@ def round2_compare_section(lines, summary, split):
         if "changed" in title:
             ra = [r for r in ra if str(r["intent"]).startswith(H9_TARGETS)]
             rb = [r for r in rb if str(r["intent"]).startswith(H9_TARGETS)]
+        if "relations and area-of-life" in title:
+            ra = [r for r in ra if str(r["intent"]).startswith(("interact", "domain"))]
+            rb = [r for r in rb if str(r["intent"]).startswith(("interact", "domain"))]
         if "held-out combinations" in title:
             ra = [r for r in ra if r["part"] == "combo"]
             rb = [r for r in rb if r["part"] == "combo"]

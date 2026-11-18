@@ -1,0 +1,63 @@
+{
+ "charts": 1500,
+ "derivations": 3000,
+ "answers_differ": 0,
+ "claim_failures": 0,
+ "calendar": {
+  "requests": 20000,
+  "response_differs": 0,
+  "decided_before_the_offset": 0,
+  "unchanged_text_differs": 0,
+  "checked": 20000,
+  "by_status": {
+   "needs_tool": 9816,
+   "ok": 9906,
+   "ambiguous": 278
+  },
+  "zone_conclusion_wrong": 0,
+  "window_conclusion_wrong": 0,
+  "refusal_wrong": 0
+ },
+ "tokens": {
+  "interact": {
+   "v2_max": 803,
+   "v3_max": 931,
+   "n": 1500,
+   "v3_over_cap": 0,
+   "v2_mean": 614,
+   "v3_mean": 703
+  },
+  "domain": {
+   "v2_max": 928,
+   "v3_max": 1001,
+   "n": 1500,
+   "v3_over_cap": 0,
+   "v2_mean": 768,
+   "v3_mean": 828
+  },
+  "calendar:needs_tool": {
+   "v2_max": 97,
+   "v3_max": 245,
+   "n": 9816,
+   "v3_over_cap": 0,
+   "v2_mean": 94,
+   "v3_mean": 148
+  },
+  "calendar:ok": {
+   "v2_max": 542,
+   "v3_max": 624,
+   "n": 9906,
+   "v3_over_cap": 0,
+   "v2_mean": 480,
+   "v3_mean": 555
+  },
+  "calendar:ambiguous": {
+   "v2_max": 119,
+   "v3_max": 215,
+   "n": 278,
+   "v3_over_cap": 0,
+   "v2_mean": 119,
+   "v3_mean": 188
+  }
+ }
+}

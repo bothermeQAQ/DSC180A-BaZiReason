@@ -50,8 +50,9 @@ SEEDS = {
     "u8": 2026111721,
     "u9": 2026111722,
     "u10": 2026111723,
+    "ud": 2026111724,  # 12.14: used only if UD has no twin; otherwise --seed-from the twin
 }
-ROUND2 = ("u2", "u3", "u3v", "u4", "u4c", "u5", "u6", "u7", "u8", "u9", "u10")
+ROUND2 = ("u2", "u3", "u3v", "u4", "u4c", "u5", "u6", "u7", "u8", "u9", "u10", "ud")
 FIT_B_SEED = 2026111791  # fit sample B (own_replies.py --sample b); never training input
 FIT_B_PER_TYPE = 100
 FIT_C_SEED = (
@@ -112,6 +113,7 @@ PURPOSE = {
     "u3v": "u3 with derivation version 2 (round 2, the fork of preregistration 10.5)",
     "u4c": "u4 with 10% composition rows (round 2, the arm of preregistration 12.7)",
     "s2s": "s2 with the short system prompt at the same token budget (the H7 twin, section 12.4)",
+    "ud": "the chain's best run continued with derivation version 3, each decision after its check (12.14)",
 }
 
 
@@ -265,7 +267,7 @@ def main():
     parser.add_argument("--parent", help="round 2: continue this recipe's adapter and options")
     parser.add_argument("--weights-from", help="round 2: the parent's replies to fit sample B")
     parser.add_argument(
-        "--steps", type=int, choices=(1, 2), help="round 2: derivation version (steps6)"
+        "--steps", type=int, choices=(1, 2, 3), help="round 2: derivation version (steps6)"
     )
     parser.add_argument(
         "--calendar-weights-from", help="round 2: the parent's replies to fit sample C (12.5)"
@@ -282,6 +284,9 @@ def main():
         "--calendar-weight-by",
         choices=("cell", "family"),
         help="round 2: calendar weights per kind of request or per family (12.13)",
+    )
+    parser.add_argument(
+        "--seed-from", choices=list(SEEDS), help="round 2: another recipe's seed (12.14: UD's twin)"
     )
     parser.add_argument("--check", action="store_true")
     args = parser.parse_args()
@@ -309,7 +314,7 @@ def main():
         args.grad_checkpoint = shape["grad_checkpoint"]
         weighting = error_weights(args.weights_from, args.parent)
     data_recipe = args.data_recipe or recipe
-    seed = SEEDS[recipe]
+    seed = SEEDS[args.seed_from or recipe]
     exclude = exclusions()
     block = frozenset()
     if recipe in ROUND2:
@@ -391,6 +396,7 @@ def main():
                 **({"system": args.system, "parent": args.parent, "steps": args.steps or 1, "weighting": weighting,
                     "fit_sample_b_charts_blocked": len(block), "calendar_weighting": calendar_weighting,
                     "compose_share": args.compose_share or 0.0, "years": args.years or "fixed"} if round2 else {}),
+                **({"seed_from": args.seed_from} if args.seed_from else {}),
                 "files": {name: {"sha256": hashlib.sha256(d).hexdigest(), "rows": len(train if name == 'train.jsonl' else valid)} for name, d in files.items()},
                 "train_summary": T6.summary(train)}  # fmt: skip
     (folder / "manifest.json").write_text(json.dumps(manifest, ensure_ascii=False, indent=1) + "\n")

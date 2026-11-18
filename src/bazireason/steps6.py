@@ -27,16 +27,22 @@ from bazireason.conventions import BRANCHES, CYCLE, STEMS
 PILLARS = ("year", "month", "day", "hour")
 # Derivation version. 1: the screening runs, U1 and U2. 2 (preregistration 10.5 and 12.6): the
 # steps that S1, S2 and S2s got wrong on training wordings are written out further, so that no
-# step has to choose where to stop or what to leave out; answers are unchanged.
+# step has to choose where to stop or what to leave out; answers are unchanged. 3
+# (preregistration 12.14): every decision comes after the check it rests on, and every final
+# list is copied from the checks (relations, areas of life, and the calendar answers without
+# tool facts in bazireason.worked); answers are unchanged.
 _STEPS = [1]
 STATE_OF_POSITION = {"比劫": "旺", "印": "相", "食伤": "休", "财": "囚", "官杀": "死"}
 CONTROL_ORDER = "相克次序：木克土、土克水、水克火、火克金、金克木"
 
 
 def set_steps(version: int) -> None:
-    if version not in (1, 2):
+    if version not in (1, 2, 3):
         raise ValueError(version)
     _STEPS[0] = version
+    from bazireason import worked  # the calendar answers follow the same version (12.14)
+
+    worked.set_check_first(version >= 3)
 
 
 def steps_version() -> int:
@@ -365,7 +371,65 @@ def stem_lookup(a: str, b: str) -> str:
 STEM_TABLES = "天干五合：甲己、乙庚、丙辛、丁壬、戊癸；天干相冲：甲庚、乙辛、丙壬、丁癸。"
 
 
+def interact_v3(pillars: dict) -> tuple:
+    """Version 3 (preregistration 12.14): (lines, every key, adjacent keys). Each pairwise
+    result ends with the keys it adds ("记作 …"), and the two final lines copy those keys in the
+    order they appeared, each once, so that collecting is copying."""
+    branches = [pillars[p][1] for p in PILLARS]
+    lines = [
+        "地支卡片：" + "；".join(D.branch_card_text(b) for b in dict.fromkeys(branches)) + "。",
+        STEM_TABLES,
+    ]
+    every, adjacent = [], []
+
+    def note(keys, near):
+        for key in keys:
+            if key not in every:
+                every.append(key)
+            if near and key not in adjacent:
+                adjacent.append(key)
+        return f" → 记作 {'、'.join(keys)}" if keys else ""
+
+    for layer, index, relation_of, check in (
+        ("天干", 0, R.stem_pair_relations, stem_lookup),
+        ("地支", 1, R.branch_pair_relations, lookup),
+    ):
+        parts = []
+        for i, first in enumerate(PILLARS):
+            for second in PILLARS[i + 1 :]:
+                near = PILLARS.index(second) - i == 1
+                a, b = pillars[first][index], pillars[second][index]
+                keys = list(relation_of(a, b))
+                parts.append(
+                    f"{POS[first]}{a}–{POS[second]}{b}（{'相邻' if near else '不相邻'}）："
+                    + check(a, b)
+                    + note(keys, near)
+                )
+        lines.append(f"{layer}两两比对：" + "；".join(parts) + "。")
+    present = set(branches)
+    groups, full = [], []
+    for kind, table in (("三合", R.TRIPLE_HARMONIES), ("三会", R.DIRECTIONAL_TRIPLES)):
+        for t in table:
+            have = [b for b in t if b in present]
+            groups.append(f"{t}：{'有' + ''.join(have) if have else '无'}")
+            if len(have) == 3:
+                full.append(f"{t}{note([f'{kind}:{t}'], False)}")
+    lines.append(
+        f"三合、三会（三支都在才算）：四支是{'、'.join(branches)}。"
+        + "；".join(groups)
+        + f"。三支齐全的：{'、'.join(full) or '没有'}。"
+    )
+    lines.append("全部关系（上面记作的，按出现顺序，重复的只记一次）：" + ("、".join(every) or "无") + "。")
+    lines.append("相邻两柱之间的（标“相邻”的比对里记作的）：" + ("、".join(adjacent) or "无") + "。")
+    assert set(every) == set(R.chart_relations(pillars)), (pillars, every)
+    near_keys = {item["key"] for item in D.positioned_relations(pillars) if item["adjacent"]}
+    assert set(adjacent) == near_keys, (pillars, adjacent)
+    return lines, every, adjacent
+
+
 def interact_lines(pillars: dict) -> list:
+    if _STEPS[0] >= 3:
+        return interact_v3(pillars)[0]
     branches = [pillars[p][1] for p in PILLARS]
     lines = [
         "地支卡片：" + "；".join(D.branch_card_text(b) for b in dict.fromkeys(branches)) + "。",
@@ -517,11 +581,21 @@ def domain_lines(pillars: dict, gender: str, domain: str, first: int) -> list:
     day = pillars["day"][0]
     facts = D.domain_facts(pillars, domain, gender)
     sex = "男" if gender == "male" else "女"
-    lines = [
-        f"传统对应：{sex}命以{'、'.join(gods)}象征{name}"
-        + (f"，以{palace_name}为宫位。" if palace else "。"),
-        god_table(day),
-    ]
+    if _STEPS[0] >= 3:  # the table for both sexes first, then the chart's row (12.14)
+        male, female = gods_by_gender["male"], gods_by_gender["female"]
+        table = (  # "看", not "以": a table, not a claim about this chart (claim_check.SPOUSE_RULE)
+            f"男命、女命都看{'、'.join(male)}"
+            if male == female
+            else f"男命看{'、'.join(male)}，女命看{'、'.join(female)}"
+        )
+        first_line = f"传统对应（{name}）：{table}；本命为{sex}命 → {'、'.join(gods)}" + (
+            f"；以{palace_name}为宫位。" if palace else "。"
+        )
+    else:
+        first_line = f"传统对应：{sex}命以{'、'.join(gods)}象征{name}" + (
+            f"，以{palace_name}为宫位。" if palace else "。"
+        )
+    lines = [first_line, god_table(day)]
     stems = [
         f"{POS[p]}干{pillars[p][0]}为{R.ten_god(day, pillars[p][0])}"
         for p in ("year", "month", "hour")
@@ -562,7 +636,10 @@ def domain_lines(pillars: dict, gender: str, domain: str, first: int) -> list:
         lines.append(
             f"{palace_name}为{pb}。宫位卡片：{D.branch_card_text(pb)}。"
             f"约定：流年天干是{'或'.join(gods)}为星现，流年支在{pb}卡的冲或六合里为宫动。"
+            + ("其他不算；星现或宫动计入。" if _STEPS[0] >= 3 else "")
         )
+    elif not palace and _STEPS[0] >= 3:
+        lines.append(f"约定：流年天干是{'或'.join(gods)}为星现；星现计入。")
     elif palace:
         pb = pillars[palace][1]
         lines.append(
@@ -582,6 +659,25 @@ def domain_lines(pillars: dict, gender: str, domain: str, first: int) -> list:
             flow = nxt
         god = R.ten_god(day, flow[0])
         reasons = ["星现"] if god in gods else []
+        if _STEPS[0] >= 3:  # every check says its result, and every row its verdict (12.14)
+            row = f"{year}：{step}；{flow[0]}为{god}" + (
+                f"，在{'、'.join(gods)}中 → 星现" if god in gods else ""
+            )
+            if palace:
+                pb = pillars[palace][1]
+                keys = R.branch_pair_relations(flow[1], pb)
+                kinds = list(dict.fromkeys(k.split(":")[0] for k in keys))
+                row += f"；{lookup(pb, flow[1])}"
+                if "冲" in kinds or "六合" in kinds:
+                    row += f"，{'冲' if '冲' in kinds else '六合'} → 宫动"
+                    reasons.append("宫动")
+                elif kinds:
+                    row += f"，{'、'.join(kinds)}不算"
+            row += "；计入" if reasons else "；不计"
+            if reasons:
+                hits.append(year)
+            rows.append(row)
+            continue
         row = f"{year}：{step}；{flow[0]}为{god}{'，在' + '、'.join(gods) + '中' if god in gods else ''}"
         if _STEPS[0] >= 2:  # each conclusion directly after the check it rests on
             if god in gods:
@@ -607,8 +703,9 @@ def domain_lines(pillars: dict, gender: str, domain: str, first: int) -> list:
             hits.append(year)
         rows.append(row)
     lines.append("逐年（每年天干、地支各往后一位）：" + "；".join(rows) + "。")
+    copied = "（上面标“计入”的）" if _STEPS[0] >= 3 else ""
     lines.append(
-        f"符合约定的年份：{'、'.join(map(str, hits)) or '无'}。这只是符号上的对应，{name}在现实中是否发生、何时发生，规则无法确证，不作预测。"
+        f"符合约定的年份{copied}：{'、'.join(map(str, hits)) or '无'}。这只是符号上的对应，{name}在现实中是否发生、何时发生，规则无法确证，不作预测。"
     )
     return lines
 
@@ -655,6 +752,7 @@ def derive(intent: str, pillars: dict, gender=None):
         if plan is None:
             return None
         reference = plan["reference"]
+        shown = reference  # the JSON written at the end of the text
         if head == "fact":
             kind, _, position = rest.partition(":")
             body = numbered(fact_text(kind, pillars, gender, position or None))
@@ -662,6 +760,14 @@ def derive(intent: str, pillars: dict, gender=None):
             body = numbered(strength_lines(pillars)[0])
         elif head == "pattern":
             body = numbered(pattern_lines(pillars)[0])
+        elif head == "interact" and _STEPS[0] >= 3:
+            # The JSON copies the two final lines; scoring compares relation lists as sets
+            # (p2_eval._same, p3_eval.UNORDERED), and the returned reference keeps its order.
+            lines, every, adjacent = interact_v3(pillars)
+            body = numbered(lines)
+            assert set(every) == set(reference["answer"]), (pillars, every)
+            assert set(adjacent) == set(reference["adjacent"]), (pillars, adjacent)
+            shown = dict(reference, answer=every, adjacent=adjacent)
         elif head == "interact":
             body = numbered(interact_lines(pillars))
         elif head == "flow":
@@ -693,7 +799,7 @@ def derive(intent: str, pillars: dict, gender=None):
             body = plan["text"]  # 调候, ambiguity, stars and declines: no computation to break up
     finally:
         textstyle.set_version(previous)
-    return body + "\n" + final(reference), reference
+    return body + "\n" + final(shown), reference
 
 
 __all__ = ["derive", "final", "god_steps", "xun_kong_steps", "count_steps", "year_steps"]

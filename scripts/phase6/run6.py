@@ -51,6 +51,7 @@ FOLDERS = {
     },
     "p8s1": "bazireason-qwen3-8b-lora-p6-s1",  # section 11: S1's data on Qwen3-8B
     "p6s2s": "bazireason-qwen3-4b-lora-p6-s2s",  # section 12.4: S2 with the short system prompt
+    "p6ud": "bazireason-qwen3-4b-lora-p6-ud",  # section 12.14: derivation version 3
 }
 
 

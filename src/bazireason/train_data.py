@@ -862,13 +862,22 @@ def verify_row(pool, group, inputs, conv, mode, claimed, kind):
         else:
             unverified = ["year", "month"] if window == "立春" else ["month"]
             verifiable = [p for p in PILLARS if p not in unverified]
-            steps.append(
-                f"参考时刻：{inputs['timezone']} 在该日期为 UTC+8，参考时刻即 {W.clock(reference)}。"
-            )
-            steps.append(
-                f"参考日期落在{window}可能的交节日期（约 {W.window_text(window)}）内，没有精确交节时刻，"
-                f"{'年柱和月柱' if window == '立春' else '月柱'}无法核验。"
-            )
+            if W.check_first():  # derivation version 3: the checks before the decision (12.14)
+                wall = W.parse_wall_time(inputs["datetime"])[1]
+                checks, checked_reference, name = W.check_steps(inputs["timezone"], wall)
+                assert checked_reference == reference and name == window, (inputs, name)
+                steps += checks
+                steps.append(
+                    f"没有精确交节时刻，{'年柱和月柱' if window == '立春' else '月柱'}无法核验。"
+                )
+            else:
+                steps.append(
+                    f"参考时刻：{inputs['timezone']} 在该日期为 UTC+8，参考时刻即 {W.clock(reference)}。"
+                )
+                steps.append(
+                    f"参考日期落在{window}可能的交节日期（约 {W.window_text(window)}）内，没有精确交节时刻，"
+                    f"{'年柱和月柱' if window == '立春' else '月柱'}无法核验。"
+                )
             if "year" in verifiable:
                 steps.append(W._year_step(reference, None, False)[2])
             _day, civil_index, day_text = W._day_step(reference, sect, None)

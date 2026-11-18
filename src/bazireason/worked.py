@@ -188,6 +188,187 @@ def clock(moment: datetime) -> str:
     return moment.strftime("%Y-%m-%d %H:%M:%S")
 
 
+# ---- derivation version 3: the checks before the decision (preregistration 12.14) ---------------
+# Without tool facts, the zone's rule and the solar-term windows are written and compared before
+# the answer is decided. Off by default; bazireason.steps6.set_steps(3) turns it on.
+_CHECK_FIRST = [False]
+KNOWN_ZONES_TEXT = "、".join(
+    ["UTC", "Asia/Shanghai", *(z for z in FIXED_ZONES if z != "UTC"), *SEASONAL_ZONES]
+)
+# Reason codes decided before the offset (as in no_tool_expected).
+_DECIDED_BEFORE_OFFSET = {
+    "missing_datetime_or_timezone",
+    "full_wall_time_required",
+    "invalid_datetime_format",
+    "invalid_date_or_timezone",
+    "invalid_convention",
+    "invalid_sect",
+    "invalid_fold",
+    "unsupported_convention",
+}
+
+
+def set_check_first(on: bool) -> None:
+    _CHECK_FIRST[0] = bool(on)
+
+
+def check_first() -> bool:
+    return _CHECK_FIRST[0]
+
+
+def zone_step(zone: str, wall: datetime):
+    """(the 时区 step, UTC offset in minutes or None): the zone's rule, then the date against it.
+    The conclusion always equals ``known_offset``. Compact: a calendar reply is capped at 700
+    tokens (run6.MAX_TOKENS)."""
+    y, m = wall.year, wall.month
+    when = f"{y} 年 {m} 月"
+    if zone == "Asia/Shanghai":
+        rule = "Asia/Shanghai 除 1919 年、1940–1949 年和 1986–1991 年 4–9 月外为 UTC+8"
+        if y in SHANGHAI_UNCERTAIN_YEARS:
+            check, offset = f"{when}在 1919 年或 1940–1949 年 → 偏移需工具", None
+        elif y in SHANGHAI_DST_YEARS and m in SHANGHAI_DST_MONTHS:
+            check, offset = f"{when}在 1986–1991 年 4–9 月 → 偏移需工具", None
+        elif y in SHANGHAI_DST_YEARS:
+            check, offset = f"{when}在 1986–1991 年但不在 4–9 月 → UTC+8", 480
+        else:
+            check, offset = f"{when}不在例外中 → UTC+8", 480
+    elif zone in FIXED_ZONES:
+        minutes, since = FIXED_ZONES[zone]
+        fixed = offset_text(minutes)
+        rule = f"{zone} 自 {since} 年起为 {fixed}"
+        if y >= since:
+            check, offset = f"{y} 年不早于 {since} 年 → {fixed}", minutes
+        else:
+            check, offset = f"{y} 年早于 {since} 年 → 偏移需工具", None
+    elif zone in SEASONAL_ZONES:
+        standard, daylight = SEASONAL_ZONES[zone]
+        rule = (
+            f"{zone} 自 {SEASONAL_FROM_YEAR} 年起 5–9 月为 {offset_text(daylight)}、"
+            f"12–2 月为 {offset_text(standard)}，其余月份要查工具"
+        )
+        if y < SEASONAL_FROM_YEAR:
+            check, offset = f"{y} 年早于 {SEASONAL_FROM_YEAR} 年 → 偏移需工具", None
+        elif m in DAYLIGHT_MONTHS:
+            check, offset = f"{when}在 5–9 月 → {offset_text(daylight)}", daylight
+        elif m in STANDARD_MONTHS:
+            check, offset = f"{when}在 12–2 月 → {offset_text(standard)}", standard
+        else:
+            check, offset = f"{when}是切换月份 → 偏移需工具", None
+    else:
+        rule = f"凭记忆能确定偏移的时区只有 {KNOWN_ZONES_TEXT}"
+        check, offset = f"{zone} 不在其中 → 偏移需工具", None
+    if offset != known_offset(zone, wall):
+        raise AssertionError(f"zone step {zone} {wall}: {offset} != {known_offset(zone, wall)}")
+    return f"时区：{rule}；{check}。", offset
+
+
+def window_step(reference: datetime):
+    """(the 交节 step, the term whose possible dates hold the reference date, or None): the
+    reference date against the nearest bounds of the solar-term windows around it."""
+    day = reference.date()
+    here = f"{day.month} 月 {day.day} 日"
+    name = jie_window_of(day)
+    if name:
+        (m1, d1), (m2, d2) = jie_windows()[name]
+        return (
+            f"交节：{here}不早于{name}最早的 {m1} 月 {d1} 日、不晚于最晚的 {m2} 月 {d2} 日 "
+            f"→ 在{name}窗口内，需工具。"
+        ), name
+    before = previous_jie_by_date(day)
+    after = JIE_IN_YEAR[(JIE_IN_YEAR.index(before) + 1) % 12]
+    pm, pd = jie_windows()[before][1]
+    nm, nd = jie_windows()[after][0]
+    last = "上年" if (pm, pd) > (day.month, day.day) else ""
+    following = "次年" if (nm, nd) < (day.month, day.day) else ""
+    return (
+        f"交节：{here}晚于{last}{before}最晚的 {pm} 月 {pd} 日、早于{following}{after}最早的 "
+        f"{nm} 月 {nd} 日 → 不在交节窗口内。"
+    ), None
+
+
+def reference_text(zone: str, offset: int, reference: datetime) -> str:
+    """The 参考时刻 step of version 3 (the zone's offset is in the 时区 step just before)."""
+    if offset == 480:
+        return f"参考时刻：即 {clock(reference)}（UTC+08:00）。"
+    shift = 480 - offset
+    hours, minutes = divmod(abs(shift), 60)
+    amount = f"{hours} 小时" + (f" {minutes} 分" if minutes else "")
+    return (
+        f"参考时刻：{offset_text(offset)} {'加' if shift > 0 else '减'} {amount}，"
+        f"得 {clock(reference)}（UTC+08:00）。"
+    )
+
+
+def check_steps(zone: str, wall: datetime) -> tuple:
+    """([时区, 参考时刻, 交节] steps, reference, term or None) for a zone whose offset is known."""
+    text, offset = zone_step(zone, wall)
+    if offset is None:
+        raise ValueError(f"{zone} {wall}: the offset needs the tool")
+    reference = wall + timedelta(minutes=480 - offset)
+    window, name = window_step(reference)
+    return [text, reference_text(zone, offset, reference), window], reference, name
+
+
+def window_refusal(name: str) -> str:
+    affected = "年柱和月柱" if name == "立春" else "月柱"
+    return (
+        f"没有该年{name}的精确时刻，就无法判断出生在节前还是节后，{affected}不能确定。"
+        "请提供历法工具给出的交节时刻。"
+    )
+
+
+OFFSET_REFUSAL = (
+    "没有时区工具，就无法可靠地把出生时间归一到 UTC+08:00。请提供历法工具的时间事实，"
+    "或直接给出对应的 UTC+08:00 时刻。"
+)
+
+
+def _checked_answer(inputs, convention, result, expected, sect):
+    """Version 3: the answer without tool facts with its checks first, or None when the answer
+    does not depend on the offset (decided before it, as in no_tool_expected)."""
+    raw, zone = inputs.get("datetime"), inputs.get("timezone")
+    parsed = None
+    if not any(r in _DECIDED_BEFORE_OFFSET for r in result["reason_codes"]):
+        try:
+            parsed = parse_wall_time(raw) if isinstance(raw, str) else None
+        except ValueError:
+            parsed = None
+    if parsed is None or not isinstance(zone, str) or result["status"] == "unsupported":
+        if expected["reason_codes"] in (["utc_offset_required"], ["jie_instant_required"]):
+            raise AssertionError(f"decided before the offset, yet {expected}")
+        return None
+    wall = parsed[1]
+    text, offset = zone_step(zone, wall)
+    steps = [text]
+    if offset is None:
+        if expected["reason_codes"] != ["utc_offset_required"]:
+            raise AssertionError(f"offset unknown, yet {expected}")
+        return {"steps": [*steps, OFFSET_REFUSAL], "response": expected}
+    reference = wall + timedelta(minutes=480 - offset)
+    if result["status"] == "ambiguous" and result["reason_codes"] == ["missing_convention"]:
+        steps.append(_nonanswer_text(inputs, convention, result, None, offset))
+        return {"steps": steps, "response": expected}
+    steps.append(reference_text(zone, offset, reference))
+    if result["status"] in ("ok", "ambiguous"):
+        window, name = window_step(reference)
+        steps.append(window)
+        if name:
+            if expected["reason_codes"] != ["jie_instant_required"]:
+                raise AssertionError(f"inside {name}, yet {expected}")
+            return {"steps": [*steps, window_refusal(name)], "response": expected}
+    if expected["reason_codes"] in (["utc_offset_required"], ["jie_instant_required"]):
+        raise AssertionError(f"checks passed, yet {expected}")
+    if expected["status"] != "ok":
+        steps.append(_nonanswer_text(inputs, convention, result, None, offset))
+        return {"steps": steps, "response": expected}
+    pillars, derived = derive_pillars(reference, sect, None, brief=True)
+    if sect is None:
+        derived[2] = derived[2][:-1] + "（未指定流派，但时刻不在 23 点，两派结果相同）。"
+    if pillars != expected["pillars"]:
+        raise AssertionError(f"Worked answer {pillars} differs from engine {expected['pillars']}")
+    return {"steps": [*steps, *derived], "response": expected}
+
+
 def _year_step(reference, previous_jie, with_facts):
     civil = reference.year
     if with_facts:
@@ -213,9 +394,12 @@ def _year_step(reference, previous_jie, with_facts):
     )
 
 
-def _month_step(reference, previous_jie, next_jie, year_pillar, with_facts):
+def _month_step(reference, previous_jie, next_jie, year_pillar, with_facts, brief=False):
     first = rules.first_month_stem(year_pillar[0])
-    if with_facts:
+    if brief:  # version 3: the 交节 step just before has compared the date with the windows
+        name = previous_jie
+        where = f"上一个节是{name}（见交节）"
+    elif with_facts:
         name = previous_jie[0]
         where = (
             f"上一个节是{name}（{previous_jie[1]}），下一个节是{next_jie[0]}"
@@ -288,7 +472,7 @@ def _hour_step(reference, civil_index):
     )
 
 
-def derive_pillars(reference: datetime, sect, entry=None):
+def derive_pillars(reference: datetime, sect, entry=None, brief=False):
     """(pillars, [four step texts]) for a UTC+08:00 instant; ``entry`` is a tool-facts candidate.
 
     Without ``entry`` the date must lie outside every Jie window. ``sect`` may be
@@ -310,7 +494,7 @@ def derive_pillars(reference: datetime, sect, entry=None):
             raise ValueError("A date inside a Jie window needs tool facts")
         previous = previous_jie_by_date(reference.date())
         _, year_pillar, year_text = _year_step(reference, previous, False)
-        month_pillar, month_text = _month_step(reference, previous, None, year_pillar, False)
+        month_pillar, month_text = _month_step(reference, previous, None, year_pillar, False, brief)
         day_pillar, civil_index, day_text = _day_step(reference, sect, None)
     hour_pillar, hour_text = _hour_step(reference, civil_index)
     pillars = dict(zip(PILLARS, (year_pillar, month_pillar, day_pillar, hour_pillar), strict=True))
@@ -468,6 +652,10 @@ def explain_request(inputs: dict, convention: dict, mode: str) -> dict:
     )
     raw, zone = inputs.get("datetime"), inputs.get("timezone")
     sect = (convention or {}).get("sect")
+    if _CHECK_FIRST[0] and mode == "none":  # derivation version 3 (preregistration 12.14)
+        checked = _checked_answer(inputs, convention, result, expected, sect)
+        if checked is not None:
+            return checked
     offset = None
     if mode == "none" and isinstance(raw, str) and isinstance(zone, str):
         try:

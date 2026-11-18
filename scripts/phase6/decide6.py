@@ -8,10 +8,12 @@ Round 2 (section 10; every decision is appended to results/phase6/round2.json):
 
     .venv/bin/python scripts/phase6/decide6.py structure # adapter options of round 2
     .venv/bin/python scripts/phase6/decide6.py next      # "<recipe> <parent>" of the next continuation, or "stop"
+    .venv/bin/python scripts/phase6/decide6.py ud        # 12.14: UD's parent and twin, after the chain
 
 Reads saved records only. "select" writes results/phase6/selection.json, which opens sealed6.
 """
 
+import datetime
 import json
 import sys
 from pathlib import Path
@@ -43,7 +45,10 @@ ARM_OPTIONS = {
     "p6u4c": "--compose-share 0.10 --years life --calendar-weight-by family",
 }
 CONTINUATIONS = tuple(lab for level in LEVELS for lab in level)
-ORDER = ("p6s1", "p6s2", "p6s3", "p6s2s", "p6u1", "p6u1hi", "p6u2", *CONTINUATIONS)  # earlier first
+# Preregistration 12.14: UD, built after the chain from its best run with derivation version 3.
+# A candidate like every continuation, never a level of the chain.
+EXTRA = ("p6ud",)
+ORDER = ("p6s1", "p6s2", "p6s3", "p6s2s", "p6u1", "p6u1hi", "p6u2", *CONTINUATIONS, *EXTRA)  # earlier first
 DROP_NAMES = {
     "wording": ["wording", "contrast"],
     "evidence and self-check": ["evidence", "verify", "selfcheck", "twins"],
@@ -257,6 +262,31 @@ def nxt():
     print("\n".join(lines) if lines else "stop")
 
 
+def ud():
+    """Preregistration 12.14, after the chain: UD's parent is the chain's best run on dev6 (its
+    runs and its first parent; ties as in best()), and its twin the chain level built from that
+    parent (the first arm of a two-arm level). Prints "ud <parent> --steps 3 --seed-from <twin>"
+    (without a twin: no --seed-from) and records the decision once; a restart repeats it."""
+    earlier = [e for e in recorded() if e.get("decision") == "ud"]
+    if not earlier:
+        nexts = [e for e in recorded() if e.get("decision") == "next"]
+        stopped = bool(nexts) and not nexts[-1]["runs"]
+        reached = [lab for level in LEVELS for lab in level if M.rule_records("dev6", lab)]
+        after_cutoff = datetime.date.today() > datetime.date(2026, 11, 27)
+        if not reached or not (stopped or len(reached) == len(CONTINUATIONS) or after_cutoff):
+            sys.exit("the chain has not ended")
+        first = "p6" + P6.manifest(reached[0][2:])["parent"]
+        parent = best([first, *reached], "dev6")
+        twins = [lab for level in LEVELS for lab in level
+                 if lab in reached and P6.manifest(lab[2:]).get("parent") == parent[2:]]  # fmt: skip
+        twin = twins[0] if twins else None
+        record({"decision": "ud", "parent": parent[2:], "twin": twin[2:] if twin else None,
+                "dev6_correct": {lab: M.correct(M.rule_records("dev6", lab)) for lab in [first, *reached]}})  # fmt: skip
+        earlier = [e for e in recorded() if e.get("decision") == "ud"]
+    entry = earlier[0]
+    print(f"ud {entry['parent']} --steps 3" + (f" --seed-from {entry['twin']}" if entry["twin"] else ""))
+
+
 def sealed_extra():
     """Sections 10.4 and 10.5: the sealed L0 runs added by round 2 (U1, U2, the two arms of
     the fork and every ancestor of M)."""
@@ -265,6 +295,10 @@ def sealed_extra():
     # (H10), U1, U2 and M's ancestors
     labels = ["p6s2", "p6s2s", "p6u3", "p6u3v", "p6u4", "p6u4c", "p6s1", "p8s1", "p6u1", "p6u2"]
     labels += ["p6" + r for r in P6.lineage(m[2:])[1:]]
+    # Section 12.14: UD and its twin (H12)
+    for e in recorded():
+        if e.get("decision") == "ud":
+            labels += ["p6ud"] + (["p6" + e["twin"]] if e["twin"] else [])
     keep = [lab for lab in dict.fromkeys(labels) if lab != m and M.rule_records("dev6", lab)]
     print(" ".join(keep))
 
@@ -272,8 +306,8 @@ def sealed_extra():
 def select():
     screening = json.loads((ROOT / "screening.json").read_text())
     pool = dict.fromkeys(
-        (screening["best_s_run_on_dev6"], "p6s2s", "p6u1", "p6u1hi", "p6u2", *CONTINUATIONS)
-    )  # section 12.4
+        (screening["best_s_run_on_dev6"], "p6s2s", "p6u1", "p6u1hi", "p6u2", *CONTINUATIONS, *EXTRA)
+    )  # sections 12.4 and 12.14
     candidates = [lab for lab in pool if M.rule_records("valid6", lab)]
     p2 = M.load("valid6", "p2", "calendar")
     table = {}
@@ -304,5 +338,6 @@ if __name__ == "__main__":
         "structure": structure,
         "prompt": prompt,
         "next": nxt,
+        "ud": ud,
         "sealed-extra": sealed_extra,
     }[sys.argv[1]]()
