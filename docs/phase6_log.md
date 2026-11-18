@@ -265,3 +265,28 @@ Decisions, surprises and negative results, in order. Plan: [`phase6_execution_pr
   - `decide6.py next` recorded the same level-5 decision again (U5 from U4, no levels without a new best) in `round2.json`. The fit samples and the U5 data folder were reused, not rebuilt.
   - U5 trains again from its start since 16:18:13. Its training plan is identical to the first attempt's: the same data files (hashes match the manifest), U4's adapter, 5,212 iterations.
   - If a local model is loaded while U5 trains, it may run out of memory again. Expected (PST): trained about 20:25, scored on dev6 about 20:55.
+- **U5 scored on dev6** (training 16:18-20:32, 4.24 h, 5,212 iterations, the last checkpoint chosen by validation loss (0.0042), peak memory 20.0 GB; scored 20:32-21:01). Model alone:
+  - **Rule items 740/822 (90.0%), the same count as U4:** template rules 284/294 (U4 284), independent 139/140 (139), blind wording 185/188 (186), combinations 35/100 (35), counterfactual 97/100 (96). U5 minus U4: +0.0 [−1.8, +1.7] (24 right only for U5, 24 only for U4). Held-out template wording 144/150 (U4 146).
+  - **Not a new best** (a tie is not higher), so level 5 has none: one level without a new best. Level 6 starts from U5, the only arm of level 5. For 12.12 the chain's best run is still U4: `decide6.best` gives a tie to the earlier run.
+  - **Area of life 43/46** (U4 40) and **years outside 2024-2049** 72/77 against 29/29 inside, a gap of 6.5 points (U4 10.4). Flow years 58/60. Pattern 54/54, overview 20/20, life stage 43/43.
+  - **Relations 56/64** (U4 60), the only trained type with 30+ items below 90%.
+    - The whole drop is on one held-out wording, "原局有哪些合、冲、刑、害、破？哪些是紧贴的（相邻两柱）？请按表逐项查。": 21/25 (U4 25, U4c 23, U3v 22). The training wording and the counterfactual wording are unchanged (11/12, 11/14).
+    - The four errors are in the last step, which collects the relations found into one list. In two, the list adds relations no pairwise check found (00142: 子丑相刑, 子申相破; 00153: six). One turns a found 乙庚相合 into "丁庚相冲" (00141). One drops a clash found as "癸丁相冲" (00137).
+    - Two counterfactual items have a wrong card look-up (亥 called "不是自刑"; 子亥 called a half combination). U5 is right on two others that U4 missed.
+  - **Statements:** replies with a wrong statement 44/822 (U4 41). Computed statements wrong 52 of 1,906, look-ups 0 of 2,020.
+  - **Three replies are cut off,** all held-out combinations and all wrong.
+  - **Calendar 193/219 (88.1%)** (U4 200, U3v 201): minus Phase 2 +14.2 [+7.7, +20.7]. U5 gains 5 requests and loses 12. Answerable requests refused 15/145 (U4 8), definite charts where none exists 6/74 (U4 9), balanced decision accuracy 90.1% (U4 91.2%).
+    - **The family weights overshot:** U5 refuses 9 answerable requests with the Shanghai daylight-saving refusal ("没有时区工具时，我不能凭记忆确定 … 的 UTC 偏移"), against 1 for U4.
+      - 5 are Asia/Shanghai dates in years without daylight saving (1910, 1930, 1950, 1970 twice).
+      - The others are Hong Kong 1990, Kolkata 1950, Singapore 1990 (U4 refused it too), and Sydney 1930 with the tool's facts given.
+    - The two dev6 requests that do need the tool (Shanghai, June and July 1990) still get a definite chart, as in U4.
+    - So the 89 Shanghai rows (U4 37) taught a refusal for Shanghai dates from May to October of any year, and for some other zones, not the 1986-1991 rule.
+    - Of the other 5 losses, 4 are wrong charts (one a slip in the year stem: "6 mod 10 = 0 → 甲" for 1990, which is 庚午). 1 is a definite chart near a solar term where the tool is needed.
+  - **Against pre-registration 12.12** (the chain has not ended; its best run is U4):
+    - U4: condition 2 fails on area of life (40/46), condition 3 by one item (gap 10.4).
+    - For comparison only: U5 meets condition 3 and misses condition 2 on relations (56/64, two items short).
+    - Condition 4 holds so far: levels 4 and 5 did not raise the best calendar count (201, level 3).
+  - **Candidate causes to examine if the chain ends with 12.12 unmet** (not registered):
+    - The last step of the relations derivation is free text that the model can garble on a new wording.
+    - Calendar decisions rest on recalled daylight-saving dates, with no stated rule for the zone. Weights by family move the decision back and forth between refusing and answering, rather than teaching the rule.
+  - **Next:** U5's valid6 run (from 21:01), then level 6 from U5: U5's fit samples, then U6's build, training and dev6 result (about 03:30 Wednesday). If U6 is not above 740, the chain ends after level 6 with two levels without a new best.

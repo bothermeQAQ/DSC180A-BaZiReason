@@ -16,31 +16,33 @@ Near-perfect on the training distribution with a low test score means a coverage
 | U2 short prompt | sample C: fresh calendar requests, up to 40 per family and expected status | 638/780 (81.8%) |
 | U3v continuation, steps v2 | sample B: 100 per question type, template wordings, charts never trained on | 1976/2000 (98.8%) |
 | U3v continuation, steps v2 | sample C: fresh calendar requests, up to 40 per family and expected status | 689/780 (88.3%) |
+| U4 continuation | sample B: 100 per question type, template wordings, charts never trained on | 1981/2000 (99.0%) |
+| U4 continuation | sample C: fresh calendar requests, up to 40 per family and expected status | 687/780 (88.1%) |
 
 Sample B by question type (right answers of the scored questions):
 
-| Type | U2 short prompt | U3v continuation, steps v2 |
-|---|---:|---:|
-| ambig:no_rule | 100/100 (100.0%) | 100/100 (100.0%) |
-| ambig:yongshen_open | 100/100 (100.0%) | 100/100 (100.0%) |
-| domain | 96/100 (96.0%) | 91/100 (91.0%) |
-| fact:element_count | 98/100 (98.0%) | 98/100 (98.0%) |
-| fact:hidden | 100/100 (100.0%) | 100/100 (100.0%) |
-| fact:life_stage | 89/100 (89.0%) | 100/100 (100.0%) |
-| fact:luck_direction | 100/100 (100.0%) | 100/100 (100.0%) |
-| fact:missing_element | 100/100 (100.0%) | 100/100 (100.0%) |
-| fact:ten_god_branch | 100/100 (100.0%) | 100/100 (100.0%) |
-| fact:ten_god_stem | 100/100 (100.0%) | 100/100 (100.0%) |
-| fact:xun_kong | 100/100 (100.0%) | 99/100 (99.0%) |
-| flow | 96/100 (96.0%) | 98/100 (98.0%) |
-| gods | 99/100 (99.0%) | 100/100 (100.0%) |
-| interact | 94/100 (94.0%) | 95/100 (95.0%) |
-| overview | 91/100 (91.0%) | 97/100 (97.0%) |
-| pattern | 99/100 (99.0%) | 100/100 (100.0%) |
-| prediction | 100/100 (100.0%) | 100/100 (100.0%) |
-| star | 100/100 (100.0%) | 100/100 (100.0%) |
-| strength | 100/100 (100.0%) | 99/100 (99.0%) |
-| yongshen | 98/100 (98.0%) | 99/100 (99.0%) |
+| Type | U2 short prompt | U3v continuation, steps v2 | U4 continuation |
+|---|---:|---:|---:|
+| ambig:no_rule | 100/100 (100.0%) | 100/100 (100.0%) | 100/100 (100.0%) |
+| ambig:yongshen_open | 100/100 (100.0%) | 100/100 (100.0%) | 100/100 (100.0%) |
+| domain | 96/100 (96.0%) | 91/100 (91.0%) | 89/100 (89.0%) |
+| fact:element_count | 98/100 (98.0%) | 98/100 (98.0%) | 99/100 (99.0%) |
+| fact:hidden | 100/100 (100.0%) | 100/100 (100.0%) | 100/100 (100.0%) |
+| fact:life_stage | 89/100 (89.0%) | 100/100 (100.0%) | 100/100 (100.0%) |
+| fact:luck_direction | 100/100 (100.0%) | 100/100 (100.0%) | 100/100 (100.0%) |
+| fact:missing_element | 100/100 (100.0%) | 100/100 (100.0%) | 100/100 (100.0%) |
+| fact:ten_god_branch | 100/100 (100.0%) | 100/100 (100.0%) | 100/100 (100.0%) |
+| fact:ten_god_stem | 100/100 (100.0%) | 100/100 (100.0%) | 100/100 (100.0%) |
+| fact:xun_kong | 100/100 (100.0%) | 99/100 (99.0%) | 100/100 (100.0%) |
+| flow | 96/100 (96.0%) | 98/100 (98.0%) | 100/100 (100.0%) |
+| gods | 99/100 (99.0%) | 100/100 (100.0%) | 100/100 (100.0%) |
+| interact | 94/100 (94.0%) | 95/100 (95.0%) | 99/100 (99.0%) |
+| overview | 91/100 (91.0%) | 97/100 (97.0%) | 96/100 (96.0%) |
+| pattern | 99/100 (99.0%) | 100/100 (100.0%) | 100/100 (100.0%) |
+| prediction | 100/100 (100.0%) | 100/100 (100.0%) | 100/100 (100.0%) |
+| star | 100/100 (100.0%) | 100/100 (100.0%) | 100/100 (100.0%) |
+| strength | 100/100 (100.0%) | 99/100 (99.0%) | 100/100 (100.0%) |
+| yongshen | 98/100 (98.0%) | 99/100 (99.0%) | 98/100 (98.0%) |
 
 ## Training runs
 
@@ -56,6 +58,7 @@ Sample B by question type (right answers of the scored questions):
 | U3v continuation, steps v2 | U2 short prompt | 10,530 | 5,991,362 | 16 / 16 | 5265/5265 | 0.0054 | 0.0022 | 20.0 GB | 4.11 |
 | U4 continuation | U3v continuation, steps v2 | 10,317 | 5,991,076 | 16 / 16 | 5158/5158 | 0.0051 | 0.0039 | 20.0 GB | 4.05 |
 | U4c continuation, + composition rows | U3v continuation, steps v2 | 10,967 | 5,991,386 | 16 / 16 | 5483/5483 | 0.0043 | 0.0038 | 20.0 GB | 4.08 |
+| U5 continuation | U4 continuation | 10,424 | 5,991,436 | 16 / 16 | 5212/5212 | 0.0062 | 0.0042 | 20.0 GB | 4.24 |
 | S1-8B (S1's data on Qwen3-8B) | untuned base | 7,922 | 6,024,381 | 16 / 16 | 7922/7922 | 0.0132 | 0.0097 | 17.3 GB | 5.94 |
 
 Average per-token loss is dominated by template text; the fit table above is the measure of what was learned.
@@ -77,31 +80,32 @@ Tokenization: 0 of 60 stem-branch pairs are merged into one token, and 0 stems o
 - **U2's system prompt:** short (S2s minus S2: rule items +0.1 [-2.9, +3.2]; calendar -0.9 [-7.6, +6.0]).
 - **Chain, level 3:** U3 continuation and U3v continuation, steps v2 from U2 short prompt (dev6 right answers on all rule items: U2 short prompt 733).
 - **Chain, level 4:** U4 continuation and U4c continuation, + composition rows from U3v continuation, steps v2 (dev6 right answers on all rule items: U2 short prompt 733, U3 continuation 722, U3v continuation, steps v2 730).
+- **Chain, level 5:** U5 continuation from U4 continuation (dev6 right answers on all rule items: U2 short prompt 733, U3 continuation 722, U3v continuation, steps v2 730, U4 continuation 740, U4c continuation, + composition rows 739).
 
 Question-type weights of the continuations (parent's error on fit sample B; weight = max(error, 0.05)):
 
-| Type | U3 continuation: wrong of scored | weight | U3v continuation, steps v2: wrong of scored | weight | U4 continuation: wrong of scored | weight | U4c continuation, + composition rows: wrong of scored | weight |
-|---|---:|---:|---:|---:|---:|---:|---:|---:|
-| fact:xun_kong | 0/100 | 0.05 | 0/100 | 0.05 | 1/100 | 0.05 | 1/100 | 0.05 |
-| fact:element_count | 2/100 | 0.05 | 2/100 | 0.05 | 2/100 | 0.05 | 2/100 | 0.05 |
-| fact:missing_element | 0/100 | 0.05 | 0/100 | 0.05 | 0/100 | 0.05 | 0/100 | 0.05 |
-| fact:life_stage | 11/100 | 0.12 | 11/100 | 0.12 | 0/100 | 0.05 | 0/100 | 0.05 |
-| fact:ten_god_stem | 0/100 | 0.05 | 0/100 | 0.05 | 0/100 | 0.05 | 0/100 | 0.05 |
-| fact:ten_god_branch | 0/100 | 0.05 | 0/100 | 0.05 | 0/100 | 0.05 | 0/100 | 0.05 |
-| fact:hidden | 0/100 | 0.05 | 0/100 | 0.05 | 0/100 | 0.05 | 0/100 | 0.05 |
-| fact:luck_direction | 0/100 | 0.05 | 0/100 | 0.05 | 0/100 | 0.05 | 0/100 | 0.05 |
-| gods | 1/100 | 0.05 | 1/100 | 0.05 | 0/100 | 0.05 | 0/100 | 0.05 |
-| strength | 0/100 | 0.05 | 0/100 | 0.05 | 1/100 | 0.05 | 1/100 | 0.05 |
-| pattern | 1/100 | 0.05 | 1/100 | 0.05 | 0/100 | 0.05 | 0/100 | 0.05 |
-| yongshen | 2/100 | 0.05 | 2/100 | 0.05 | 1/100 | 0.05 | 1/100 | 0.05 |
-| interact | 6/100 | 0.07 | 6/100 | 0.07 | 5/100 | 0.06 | 5/100 | 0.06 |
-| flow | 4/100 | 0.05 | 4/100 | 0.05 | 2/100 | 0.05 | 2/100 | 0.05 |
-| domain | 4/100 | 0.05 | 4/100 | 0.05 | 9/100 | 0.10 | 9/100 | 0.10 |
-| overview | 9/100 | 0.10 | 9/100 | 0.10 | 3/100 | 0.05 | 3/100 | 0.05 |
-| ambig:yongshen_open | 0/100 | 0.05 | 0/100 | 0.05 | 0/100 | 0.05 | 0/100 | 0.05 |
-| ambig:no_rule | 0/100 | 0.05 | 0/100 | 0.05 | 0/100 | 0.05 | 0/100 | 0.05 |
-| star | 0/100 | 0.05 | 0/100 | 0.05 | 0/100 | 0.05 | 0/100 | 0.05 |
-| prediction | 0/100 | 0.05 | 0/100 | 0.05 | 0/100 | 0.05 | 0/100 | 0.05 |
+| Type | U3 continuation: wrong of scored | weight | U3v continuation, steps v2: wrong of scored | weight | U4 continuation: wrong of scored | weight | U4c continuation, + composition rows: wrong of scored | weight | U5 continuation: wrong of scored | weight |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| fact:xun_kong | 0/100 | 0.05 | 0/100 | 0.05 | 1/100 | 0.05 | 1/100 | 0.05 | 0/100 | 0.05 |
+| fact:element_count | 2/100 | 0.05 | 2/100 | 0.05 | 2/100 | 0.05 | 2/100 | 0.05 | 1/100 | 0.05 |
+| fact:missing_element | 0/100 | 0.05 | 0/100 | 0.05 | 0/100 | 0.05 | 0/100 | 0.05 | 0/100 | 0.05 |
+| fact:life_stage | 11/100 | 0.12 | 11/100 | 0.12 | 0/100 | 0.05 | 0/100 | 0.05 | 0/100 | 0.05 |
+| fact:ten_god_stem | 0/100 | 0.05 | 0/100 | 0.05 | 0/100 | 0.05 | 0/100 | 0.05 | 0/100 | 0.05 |
+| fact:ten_god_branch | 0/100 | 0.05 | 0/100 | 0.05 | 0/100 | 0.05 | 0/100 | 0.05 | 0/100 | 0.05 |
+| fact:hidden | 0/100 | 0.05 | 0/100 | 0.05 | 0/100 | 0.05 | 0/100 | 0.05 | 0/100 | 0.05 |
+| fact:luck_direction | 0/100 | 0.05 | 0/100 | 0.05 | 0/100 | 0.05 | 0/100 | 0.05 | 0/100 | 0.05 |
+| gods | 1/100 | 0.05 | 1/100 | 0.05 | 0/100 | 0.05 | 0/100 | 0.05 | 0/100 | 0.05 |
+| strength | 0/100 | 0.05 | 0/100 | 0.05 | 1/100 | 0.05 | 1/100 | 0.05 | 0/100 | 0.05 |
+| pattern | 1/100 | 0.05 | 1/100 | 0.05 | 0/100 | 0.05 | 0/100 | 0.05 | 0/100 | 0.05 |
+| yongshen | 2/100 | 0.05 | 2/100 | 0.05 | 1/100 | 0.05 | 1/100 | 0.05 | 2/100 | 0.05 |
+| interact | 6/100 | 0.07 | 6/100 | 0.07 | 5/100 | 0.06 | 5/100 | 0.06 | 1/100 | 0.05 |
+| flow | 4/100 | 0.05 | 4/100 | 0.05 | 2/100 | 0.05 | 2/100 | 0.05 | 0/100 | 0.05 |
+| domain | 4/100 | 0.05 | 4/100 | 0.05 | 9/100 | 0.10 | 9/100 | 0.10 | 11/100 | 0.12 |
+| overview | 9/100 | 0.10 | 9/100 | 0.10 | 3/100 | 0.05 | 3/100 | 0.05 | 4/100 | 0.05 |
+| ambig:yongshen_open | 0/100 | 0.05 | 0/100 | 0.05 | 0/100 | 0.05 | 0/100 | 0.05 | 0/100 | 0.05 |
+| ambig:no_rule | 0/100 | 0.05 | 0/100 | 0.05 | 0/100 | 0.05 | 0/100 | 0.05 | 0/100 | 0.05 |
+| star | 0/100 | 0.05 | 0/100 | 0.05 | 0/100 | 0.05 | 0/100 | 0.05 | 0/100 | 0.05 |
+| prediction | 0/100 | 0.05 | 0/100 | 0.05 | 0/100 | 0.05 | 0/100 | 0.05 | 0/100 | 0.05 |
 
 ## Screening decisions (dev6, frozen rule: preregistration section 5)
 
@@ -115,7 +119,7 @@ Dropped from U1: nothing. Calendar share for U1: unchanged (28%). Best S run on 
 
 ## Split `valid6`
 
-Scored at L0 so far: Phase 2, U2 short prompt, U3 continuation, U3v continuation, steps v2, U4 continuation. This split is for selection only, so its tables are written when `selection.json` exists (`scripts/phase6/decide6.py select`).
+Scored at L0 so far: Phase 2, U2 short prompt, U3 continuation, U3v continuation, steps v2, U4c continuation, + composition rows, U4 continuation. This split is for selection only, so its tables are written when `selection.json` exists (`scripts/phase6/decide6.py select`).
 
 ## Split `dev6`
 
@@ -136,6 +140,7 @@ Scored at L0 so far: Phase 2, U2 short prompt, U3 continuation, U3v continuation
 | U3v continuation, steps v2 | 272/294 (92.5%) | 138/140 (98.6%) | 185/188 (98.4%) | 39/100 (39.0%) | 96/100 (96.0%) | **730/822 (88.8%)** | 201/219 (91.8%) |
 | U4c continuation, + composition rows | 280/294 (95.2%) | 140/140 (100.0%) | 186/188 (98.9%) | 36/100 (36.0%) | 97/100 (97.0%) | **739/822 (89.9%)** | 200/219 (91.3%) |
 | U4 continuation | 284/294 (96.6%) | 139/140 (99.3%) | 186/188 (98.9%) | 35/100 (35.0%) | 96/100 (96.0%) | **740/822 (90.0%)** | 200/219 (91.3%) |
+| U5 continuation | 284/294 (96.6%) | 139/140 (99.3%) | 185/188 (98.4%) | 35/100 (35.0%) | 97/100 (97.0%) | **740/822 (90.0%)** | 193/219 (88.1%) |
 | S1-8B (S1's data on Qwen3-8B) | 163/294 (55.4%) | 125/140 (89.3%) | 130/188 (69.1%) | 41/100 (41.0%) | 87/100 (87.0%) | **546/822 (66.4%)** | 138/219 (63.0%) |
 | S2s (S2 with the short prompt) | 219/294 (74.5%) | 132/140 (94.3%) | 171/188 (91.0%) | 55/100 (55.0%) | 81/100 (81.0%) | **658/822 (80.0%)** | 137/219 (62.6%) |
 
@@ -156,6 +161,7 @@ Paired differences on all rule items (`dev6`, L0), points [95%]:
 | U3v continuation, steps v2 | +28.3 [+24.5, +32.1] | +48.5 [+44.7, +52.1] | +74.7 [+71.1, +77.9] |
 | U4c continuation, + composition rows | +29.4 [+25.5, +33.5] | +49.6 [+45.6, +53.4] | +75.8 [+72.6, +79.1] |
 | U4 continuation | +29.6 [+25.7, +33.5] | +49.8 [+46.0, +53.4] | +75.9 [+72.5, +79.2] |
+| U5 continuation | +29.6 [+25.9, +33.5] | +49.8 [+46.0, +53.3] | +75.9 [+72.6, +79.1] |
 | S1-8B (S1's data on Qwen3-8B) | +6.0 [+1.8, +10.3] | +26.2 [+21.7, +30.1] | +52.3 [+48.4, +56.1] |
 | S2s (S2 with the short prompt) | +19.6 [+15.6, +23.6] | +39.8 [+35.8, +43.7] | +65.9 [+62.3, +69.4] |
 
@@ -170,6 +176,7 @@ Paired differences on all rule items (`dev6`, L0), points [95%]:
 | H8: weighted continuation | U3v continuation, steps v2 minus U2 short prompt | -0.4 [-2.6, +1.7] | +8.7 [+4.0, +13.8] |
 | H8: weighted continuation | U4 continuation minus U3v continuation, steps v2 | +1.2 [-0.7, +3.2] | -0.5 [-4.3, +3.3] |
 | H8: weighted continuation | U4c continuation, + composition rows minus U3v continuation, steps v2 | +1.1 [-1.0, +3.2] | -0.5 [-4.2, +3.3] |
+| H8: weighted continuation | U5 continuation minus U4 continuation | +0.0 [-1.8, +1.7] | -3.2 [-6.9, +0.5] |
 | H10: base size (Qwen3-8B against Qwen3-4B, S1's data) | S1-8B (S1's data on Qwen3-8B) minus S1 small steps | -0.4 [-3.7, +3.1] | +4.6 [-1.0, +10.1] |
 | H11: composition rows | U4c continuation, + composition rows minus U4 continuation | -0.1 [-2.2, +1.8] | +0.0 [-2.5, +2.7] |
 | H11, only the held-out combinations | U4c continuation, + composition rows minus U4 continuation | +1.0 [-12.0, +14.0] | – |
@@ -204,6 +211,7 @@ Look-ups: day master, hidden stems, pillars, spouse star. Computed: 旬空, elem
 | U3v continuation, steps v2 | 0/2056 (0.0%) | 158/1976 (8.0%) | 14/154 (9.1%) | – | 24/104 (23.1%) | 27/1046 (2.6%) | 56/822 (6.8%) | 1 |
 | U4c continuation, + composition rows | 1/2008 (0.0%) | 58/1879 (3.1%) | 0/80 (0.0%) | – | 27/101 (26.7%) | 25/1011 (2.5%) | 49/822 (6.0%) | 0 |
 | U4 continuation | 0/1961 (0.0%) | 50/1847 (2.7%) | 0/72 (0.0%) | – | 27/103 (26.2%) | 21/1010 (2.1%) | 41/822 (5.0%) | 0 |
+| U5 continuation | 0/2020 (0.0%) | 52/1906 (2.7%) | 0/104 (0.0%) | – | 26/103 (25.2%) | 22/1021 (2.2%) | 44/822 (5.4%) | 0 |
 | S1-8B (S1's data on Qwen3-8B) | 45/2169 (2.1%) | 261/1873 (13.9%) | 2/45 (4.4%) | – | 33/96 (34.4%) | 178/1112 (16.0%) | 124/822 (15.1%) | 7 |
 | S2s (S2 with the short prompt) | 36/2115 (1.7%) | 216/1925 (11.2%) | 5/112 (4.5%) | – | 26/91 (28.6%) | 53/955 (5.5%) | 106/822 (12.9%) | 1 |
 
@@ -234,6 +242,7 @@ Caps: 1,100 tokens for rule items, 700 for calendar rows. A cut-off reply usuall
 | U3v continuation, steps v2 | L0 | 6/822 (0.7%) | 6 | 328 | 0/219 (0.0%) |
 | U4c continuation, + composition rows | L0 | 0/822 (0.0%) | 0 | 315 | 0/219 (0.0%) |
 | U4 continuation | L0 | 0/822 (0.0%) | 0 | 309 | 0/219 (0.0%) |
+| U5 continuation | L0 | 3/822 (0.4%) | 3 | 314 | 0/219 (0.0%) |
 | S1-8B (S1's data on Qwen3-8B) | L0 | 10/822 (1.2%) | 10 | 264 | 0/219 (0.0%) |
 | S2s (S2 with the short prompt) | L0 | 8/822 (1.0%) | 8 | 304 | 0/219 (0.0%) |
 
@@ -254,6 +263,7 @@ Caps: 1,100 tokens for rule items, 700 for calendar rows. A cut-off reply usuall
 | U3v continuation, steps v2 | 131/144 (91.0%) | 141/150 (94.0%) | 185/188 (98.4%) |
 | U4c continuation, + composition rows | 139/144 (96.5%) | 141/150 (94.0%) | 186/188 (98.9%) |
 | U4 continuation | 138/144 (95.8%) | 146/150 (97.3%) | 186/188 (98.9%) |
+| U5 continuation | 140/144 (97.2%) | 144/150 (96.0%) | 185/188 (98.4%) |
 | S1-8B (S1's data on Qwen3-8B) | 110/144 (76.4%) | 53/150 (35.3%) | 130/188 (69.1%) |
 | S2s (S2 with the short prompt) | 115/144 (79.9%) | 104/150 (69.3%) | 171/188 (91.0%) |
 
@@ -276,6 +286,7 @@ Up to U3v every training row asked about years 2024-2049; from level 4 the templ
 | U3v continuation, steps v2 | 16/16 (100.0%) | 41/44 (93.2%) | 12/13 (92.3%) | 19/33 (57.6%) |
 | U4c continuation, + composition rows | 16/16 (100.0%) | 43/44 (97.7%) | 13/13 (100.0%) | 29/33 (87.9%) |
 | U4 continuation | 16/16 (100.0%) | 42/44 (95.5%) | 13/13 (100.0%) | 27/33 (81.8%) |
+| U5 continuation | 16/16 (100.0%) | 42/44 (95.5%) | 13/13 (100.0%) | 30/33 (90.9%) |
 | S1-8B (S1's data on Qwen3-8B) | 4/16 (25.0%) | 16/44 (36.4%) | 0/13 (0.0%) | 22/33 (66.7%) |
 | S2s (S2 with the short prompt) | 15/16 (93.8%) | 21/44 (47.7%) | 10/13 (76.9%) | 19/33 (57.6%) |
 
@@ -296,36 +307,37 @@ Up to U3v every training row asked about years 2024-2049; from level 4 the templ
 | U3v continuation, steps v2 | 96/100 (96.0%) | 46/50 (92.0%) | 0/50 (0.0%) |
 | U4c continuation, + composition rows | 97/100 (97.0%) | 48/50 (96.0%) | 0/50 (0.0%) |
 | U4 continuation | 96/100 (96.0%) | 47/50 (94.0%) | 1/50 (2.0%) |
+| U5 continuation | 97/100 (97.0%) | 47/50 (94.0%) | 0/50 (0.0%) |
 | S1-8B (S1's data on Qwen3-8B) | 87/100 (87.0%) | 39/50 (78.0%) | 3/50 (6.0%) |
 | S2s (S2 with the short prompt) | 81/100 (81.0%) | 36/50 (72.0%) | 5/50 (10.0%) |
 
 ### By question type (`dev6`, L0, all rule items)
 
-| Type | n | Untuned base | Phase 2 | P4 A1 | P5 G1 | U0 joint, earlier data | S1 small steps | S2 + wording | S3 + evidence, self-check | U2 short prompt | U3 continuation | U3v continuation, steps v2 | U4c continuation, + composition rows | U4 continuation | S1-8B (S1's data on Qwen3-8B) | S2s (S2 with the short prompt) |
-|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| interact | 64 | 0% | 2% | 50% | 39% | 25% | 30% | 72% | 56% | 92% | 94% | 89% | 91% | 94% | 30% | 61% |
-| flow | 60 | 0% | 0% | 47% | 35% | 10% | 40% | 70% | 63% | 92% | 88% | 95% | 98% | 97% | 33% | 60% |
-| strength | 54 | 0% | 4% | 76% | 78% | 59% | 65% | 83% | 74% | 100% | 100% | 100% | 100% | 100% | 61% | 80% |
-| pattern | 54 | 0% | 20% | 72% | 69% | 31% | 80% | 89% | 81% | 94% | 100% | 100% | 89% | 98% | 85% | 91% |
-| gods | 50 | 0% | 0% | 54% | 52% | 12% | 58% | 96% | 98% | 94% | 98% | 100% | 100% | 100% | 56% | 96% |
-| domain | 46 | 0% | 0% | 15% | 9% | 4% | 52% | 54% | 48% | 67% | 67% | 67% | 91% | 87% | 48% | 63% |
-| fact:xun_kong | 46 | 0% | 13% | 28% | 22% | 22% | 96% | 100% | 100% | 100% | 100% | 100% | 100% | 100% | 80% | 100% |
-| fact:ten_god_stem | 44 | 20% | 50% | 82% | 93% | 25% | 93% | 98% | 100% | 100% | 100% | 100% | 100% | 100% | 84% | 84% |
-| fact:element_count | 44 | 16% | 70% | 86% | 77% | 55% | 98% | 95% | 98% | 100% | 80% | 93% | 100% | 98% | 98% | 98% |
-| fact:life_stage | 43 | 9% | 72% | 72% | 70% | 72% | 95% | 70% | 84% | 95% | 98% | 98% | 98% | 98% | 86% | 67% |
-| yongshen | 40 | 0% | 0% | 65% | 68% | 42% | 60% | 72% | 85% | 95% | 98% | 100% | 100% | 100% | 55% | 92% |
-| ambig | 32 | 0% | 0% | 94% | 62% | 81% | 100% | 100% | 100% | 100% | 100% | 100% | 100% | 100% | 94% | 100% |
-| fact:ten_god_branch | 30 | 27% | 40% | 63% | 80% | 60% | 57% | 100% | 93% | 100% | 97% | 100% | 100% | 100% | 90% | 100% |
-| fact:hidden | 30 | 77% | 93% | 100% | 97% | 97% | 90% | 97% | 97% | 97% | 93% | 97% | 97% | 97% | 97% | 97% |
-| fact:luck_direction | 29 | 69% | 34% | 76% | 62% | 59% | 100% | 100% | 100% | 100% | 100% | 100% | 100% | 100% | 100% | 100% |
-| combo:flow_stage | 25 | 4% | 20% | 44% | 8% | 36% | 12% | 24% | 8% | 28% | 20% | 28% | 12% | 16% | 12% | 12% |
-| combo:kong_positions | 25 | 28% | 24% | 36% | 20% | 20% | 28% | 52% | 40% | 40% | 32% | 24% | 40% | 20% | 40% | 80% |
-| combo:revealed | 25 | 80% | 16% | 36% | 36% | 64% | 52% | 36% | 28% | 60% | 36% | 44% | 52% | 48% | 64% | 60% |
-| combo:god_count | 25 | 40% | 32% | 76% | 68% | 40% | 52% | 88% | 76% | 72% | 84% | 60% | 40% | 56% | 48% | 68% |
-| overview | 20 | 0% | 0% | 0% | 0% | 5% | 55% | 40% | 80% | 90% | 95% | 95% | 100% | 95% | 55% | 55% |
-| star | 16 | 0% | 6% | 100% | 88% | 94% | 62% | 94% | 88% | 94% | 94% | 100% | 100% | 100% | 94% | 100% |
-| fact:missing_element | 10 | 50% | 60% | 40% | 60% | 40% | 100% | 100% | 100% | 100% | 100% | 100% | 100% | 100% | 100% | 100% |
-| prediction | 10 | 20% | 100% | 100% | 100% | 90% | 100% | 100% | 100% | 100% | 100% | 100% | 100% | 100% | 100% | 100% |
+| Type | n | Untuned base | Phase 2 | P4 A1 | P5 G1 | U0 joint, earlier data | S1 small steps | S2 + wording | S3 + evidence, self-check | U2 short prompt | U3 continuation | U3v continuation, steps v2 | U4c continuation, + composition rows | U4 continuation | U5 continuation | S1-8B (S1's data on Qwen3-8B) | S2s (S2 with the short prompt) |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| interact | 64 | 0% | 2% | 50% | 39% | 25% | 30% | 72% | 56% | 92% | 94% | 89% | 91% | 94% | 88% | 30% | 61% |
+| flow | 60 | 0% | 0% | 47% | 35% | 10% | 40% | 70% | 63% | 92% | 88% | 95% | 98% | 97% | 97% | 33% | 60% |
+| strength | 54 | 0% | 4% | 76% | 78% | 59% | 65% | 83% | 74% | 100% | 100% | 100% | 100% | 100% | 100% | 61% | 80% |
+| pattern | 54 | 0% | 20% | 72% | 69% | 31% | 80% | 89% | 81% | 94% | 100% | 100% | 89% | 98% | 100% | 85% | 91% |
+| gods | 50 | 0% | 0% | 54% | 52% | 12% | 58% | 96% | 98% | 94% | 98% | 100% | 100% | 100% | 98% | 56% | 96% |
+| domain | 46 | 0% | 0% | 15% | 9% | 4% | 52% | 54% | 48% | 67% | 67% | 67% | 91% | 87% | 93% | 48% | 63% |
+| fact:xun_kong | 46 | 0% | 13% | 28% | 22% | 22% | 96% | 100% | 100% | 100% | 100% | 100% | 100% | 100% | 100% | 80% | 100% |
+| fact:ten_god_stem | 44 | 20% | 50% | 82% | 93% | 25% | 93% | 98% | 100% | 100% | 100% | 100% | 100% | 100% | 100% | 84% | 84% |
+| fact:element_count | 44 | 16% | 70% | 86% | 77% | 55% | 98% | 95% | 98% | 100% | 80% | 93% | 100% | 98% | 95% | 98% | 98% |
+| fact:life_stage | 43 | 9% | 72% | 72% | 70% | 72% | 95% | 70% | 84% | 95% | 98% | 98% | 98% | 98% | 100% | 86% | 67% |
+| yongshen | 40 | 0% | 0% | 65% | 68% | 42% | 60% | 72% | 85% | 95% | 98% | 100% | 100% | 100% | 100% | 55% | 92% |
+| ambig | 32 | 0% | 0% | 94% | 62% | 81% | 100% | 100% | 100% | 100% | 100% | 100% | 100% | 100% | 100% | 94% | 100% |
+| fact:ten_god_branch | 30 | 27% | 40% | 63% | 80% | 60% | 57% | 100% | 93% | 100% | 97% | 100% | 100% | 100% | 100% | 90% | 100% |
+| fact:hidden | 30 | 77% | 93% | 100% | 97% | 97% | 90% | 97% | 97% | 97% | 93% | 97% | 97% | 97% | 97% | 97% | 97% |
+| fact:luck_direction | 29 | 69% | 34% | 76% | 62% | 59% | 100% | 100% | 100% | 100% | 100% | 100% | 100% | 100% | 100% | 100% | 100% |
+| combo:flow_stage | 25 | 4% | 20% | 44% | 8% | 36% | 12% | 24% | 8% | 28% | 20% | 28% | 12% | 16% | 24% | 12% | 12% |
+| combo:kong_positions | 25 | 28% | 24% | 36% | 20% | 20% | 28% | 52% | 40% | 40% | 32% | 24% | 40% | 20% | 20% | 40% | 80% |
+| combo:revealed | 25 | 80% | 16% | 36% | 36% | 64% | 52% | 36% | 28% | 60% | 36% | 44% | 52% | 48% | 40% | 64% | 60% |
+| combo:god_count | 25 | 40% | 32% | 76% | 68% | 40% | 52% | 88% | 76% | 72% | 84% | 60% | 40% | 56% | 56% | 48% | 68% |
+| overview | 20 | 0% | 0% | 0% | 0% | 5% | 55% | 40% | 80% | 90% | 95% | 95% | 100% | 95% | 100% | 55% | 55% |
+| star | 16 | 0% | 6% | 100% | 88% | 94% | 62% | 94% | 88% | 94% | 94% | 100% | 100% | 100% | 100% | 94% | 100% |
+| fact:missing_element | 10 | 50% | 60% | 40% | 60% | 40% | 100% | 100% | 100% | 100% | 100% | 100% | 100% | 100% | 100% | 100% | 100% |
+| prediction | 10 | 20% | 100% | 100% | 100% | 90% | 100% | 100% | 100% | 100% | 100% | 100% | 100% | 100% | 100% | 100% | 100% |
 
 ### Calendar requests (`dev6`, L0)
 
@@ -344,6 +356,7 @@ Up to U3v every training row asked about years 2024-2049; from level 4 the templ
 | U3v continuation, steps v2 | 201/219 (91.8%) | +17.8 [+11.2, +24.4] | 92.8% | 11/145 | 2/74 |
 | U4c continuation, + composition rows | 200/219 (91.3%) | +17.4 [+11.1, +23.7] | 92.5% | 8/145 | 7/74 |
 | U4 continuation | 200/219 (91.3%) | +17.4 [+10.8, +23.9] | 91.2% | 8/145 | 9/74 |
+| U5 continuation | 193/219 (88.1%) | +14.2 [+7.7, +20.7] | 90.1% | 15/145 | 6/74 |
 | S1-8B (S1's data on Qwen3-8B) | 138/219 (63.0%) | -11.0 [-18.6, -2.8] | 71.9% | 60/145 | 6/74 |
 | S2s (S2 with the short prompt) | 137/219 (62.6%) | -11.4 [-19.0, -3.2] | 68.2% | 51/145 | 14/74 |
 
@@ -351,29 +364,29 @@ Up to U3v every training row asked about years 2024-2049; from level 4 the templ
 
 Right answers by family and expected answer. From level 4 the continuations weight the calendar rows by family, not by kind (preregistration 12.13).
 
-| Family | Expected | n | Phase 2 | U2 short prompt | U3 continuation | U3v continuation, steps v2 | U4 continuation | U4c continuation, + composition rows |
-|---|---|---:|---:|---:|---:|---:|---:|---:|
-| chart_facts | ok | 16 | 15 | 15 | 16 | 15 | 16 | 16 |
-| chart_plain | ok | 28 | 22 | 23 | 27 | 25 | 27 | 26 |
-| dst_fold | ambiguous | 1 | 1 | 1 | 1 | 1 | 1 | 1 |
-| dst_fold | ok | 11 | 9 | 8 | 8 | 10 | 8 | 8 |
-| dst_gap | invalid | 4 | 4 | 4 | 4 | 4 | 4 | 4 |
-| invalid | invalid | 12 | 9 | 9 | 9 | 10 | 8 | 9 |
-| invalid | unsupported | 8 | 7 | 8 | 8 | 8 | 8 | 8 |
-| jie_boundary | ambiguous | 1 | 1 | 1 | 1 | 1 | 1 | 1 |
-| jie_boundary | needs_tool | 8 | 2 | 7 | 5 | 7 | 7 | 7 |
-| jie_boundary | ok | 16 | 16 | 16 | 16 | 16 | 16 | 16 |
-| jie_window | needs_tool | 10 | 0 | 8 | 1 | 10 | 10 | 10 |
-| jie_window | ok | 10 | 7 | 5 | 9 | 5 | 5 | 6 |
-| missing | ambiguous | 10 | 10 | 9 | 8 | 9 | 10 | 10 |
-| missing | ok | 4 | 3 | 4 | 4 | 3 | 4 | 4 |
-| shanghai_dst | needs_tool | 4 | 1 | 1 | 0 | 3 | 2 | 2 |
-| shanghai_dst | ok | 4 | 4 | 4 | 4 | 4 | 4 | 4 |
-| tz_facts | ok | 8 | 8 | 8 | 8 | 8 | 8 | 8 |
-| tz_known | ok | 16 | 12 | 14 | 14 | 15 | 15 | 14 |
-| tz_needs_tool | needs_tool | 8 | 7 | 7 | 8 | 8 | 6 | 7 |
-| zi_transition | ambiguous | 8 | 3 | 5 | 6 | 8 | 8 | 8 |
-| zi_transition | ok | 32 | 21 | 25 | 32 | 31 | 32 | 31 |
+| Family | Expected | n | Phase 2 | U2 short prompt | U3 continuation | U3v continuation, steps v2 | U4 continuation | U4c continuation, + composition rows | U5 continuation |
+|---|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| chart_facts | ok | 16 | 15 | 15 | 16 | 15 | 16 | 16 | 15 |
+| chart_plain | ok | 28 | 22 | 23 | 27 | 25 | 27 | 26 | 24 |
+| dst_fold | ambiguous | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 |
+| dst_fold | ok | 11 | 9 | 8 | 8 | 10 | 8 | 8 | 8 |
+| dst_gap | invalid | 4 | 4 | 4 | 4 | 4 | 4 | 4 | 4 |
+| invalid | invalid | 12 | 9 | 9 | 9 | 10 | 8 | 9 | 9 |
+| invalid | unsupported | 8 | 7 | 8 | 8 | 8 | 8 | 8 | 8 |
+| jie_boundary | ambiguous | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 |
+| jie_boundary | needs_tool | 8 | 2 | 7 | 5 | 7 | 7 | 7 | 6 |
+| jie_boundary | ok | 16 | 16 | 16 | 16 | 16 | 16 | 16 | 15 |
+| jie_window | needs_tool | 10 | 0 | 8 | 1 | 10 | 10 | 10 | 10 |
+| jie_window | ok | 10 | 7 | 5 | 9 | 5 | 5 | 6 | 5 |
+| missing | ambiguous | 10 | 10 | 9 | 8 | 9 | 10 | 10 | 10 |
+| missing | ok | 4 | 3 | 4 | 4 | 3 | 4 | 4 | 4 |
+| shanghai_dst | needs_tool | 4 | 1 | 1 | 0 | 3 | 2 | 2 | 2 |
+| shanghai_dst | ok | 4 | 4 | 4 | 4 | 4 | 4 | 4 | 4 |
+| tz_facts | ok | 8 | 8 | 8 | 8 | 8 | 8 | 8 | 7 |
+| tz_known | ok | 16 | 12 | 14 | 14 | 15 | 15 | 14 | 14 |
+| tz_needs_tool | needs_tool | 8 | 7 | 7 | 8 | 8 | 6 | 7 | 8 |
+| zi_transition | ambiguous | 8 | 3 | 5 | 6 | 8 | 8 | 8 | 8 |
+| zi_transition | ok | 32 | 21 | 25 | 32 | 31 | 32 | 31 | 30 |
 
 ### Levels of help (`dev6`, all rule items; each level its own row of prompts)
 

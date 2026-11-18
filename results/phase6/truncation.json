@@ -896,6 +896,50 @@
     "n": 294
    }
   },
+  "p6u5": {
+   "blind_L0": {
+    "cap": 1100,
+    "cut_off": 0,
+    "cut_off_and_wrong": 0,
+    "mean_tokens": 248.7,
+    "n": 188
+   },
+   "calendar_L0": {
+    "cap": 700,
+    "cut_off": 0,
+    "cut_off_and_wrong": 0,
+    "mean_tokens": 337.9,
+    "n": 219
+   },
+   "cf_L0": {
+    "cap": 1100,
+    "cut_off": 0,
+    "cut_off_and_wrong": 0,
+    "mean_tokens": 240.4,
+    "n": 100
+   },
+   "combo_L0": {
+    "cap": 1100,
+    "cut_off": 3,
+    "cut_off_and_wrong": 3,
+    "mean_tokens": 190.6,
+    "n": 100
+   },
+   "indep_L0": {
+    "cap": 1100,
+    "cut_off": 0,
+    "cut_off_and_wrong": 0,
+    "mean_tokens": 98.7,
+    "n": 140
+   },
+   "rules_L0": {
+    "cap": 1100,
+    "cut_off": 0,
+    "cut_off_and_wrong": 0,
+    "mean_tokens": 526.5,
+    "n": 294
+   }
+  },
   "p8s1": {
    "blind_L0": {
     "cap": 1100,
