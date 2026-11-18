@@ -326,3 +326,17 @@ Decisions, surprises and negative results, in order. Plan: [`phase6_execution_pr
     - The 16 errors by family: solar-term window, answerable 4 of 10; daylight-saving fold 3 of 11; invalid inputs 3 of 12; plain charts 2 of 28; Shanghai daylight saving that needs the tool 2 of 4; tool facts given 1 of 8; solar-term boundary that needs the tool 1 of 8.
   - **Against pre-registration 12.12** (the chain has not ended): on U6, conditions 2, 3 and 4 hold. Every trained type with 30+ items is at 90% or more (lowest: area of life 42/46, 91.3%); the gap for years outside 2024-2049 is 6.5 points; levels 5 and 6 raised the best calendar count by 2 (201 to 203). Condition 1 waits for the chain's end.
   - **Next:** U6's valid6 run (from 03:10, not read), then level 7 from U6: U6's fit samples, U7's build (about 04:45), training (about 4.2 h) and dev6 result (about 09:30 Wednesday). If U7 is not above 747, that is one level without a new best.
+- **Level 7: U7 built at 04:40, training since 04:42** (`decide6.py next` at 03:40: U7 from U6, no level without a new best; recorded in `round2.json`). U6's valid6 run (03:10-03:40) was not read.
+  - **U6's fit samples** (model alone; the weights come from these, not from dev6):
+    - Sample B (2,000 template questions): 1,984 right (U5 1,973, U4 1,981). Wrong by type: area of life 7 (U5 5), relations 2 (11), element count 2 (2), use god 2 (2), overview 1 (6), flow year 1 (0), stars 1 (1). U5's relations drop is gone on the training wordings too.
+    - Sample C (780 calendar requests): 685 right (U5 704, U4 687, U3v 689). Shanghai daylight-saving requests that need the tool 11/32 (U5 29/32), time zones that need the tool 29/40 (35/40), solar-term windows with an answer 23/40 (27/40).
+  - **The Shanghai cell follows the last level's weight.** Sample C's 32 Shanghai requests that need the tool, with that family's weight in the next level's data:
+    - U2 10/32, then U3v's data 3.41; U3v 26/32, then U4's data 0.83; U4 7/32, then U5's data 2.86; U5 29/32, then U6's data 0.55; U6 11/32, then U7's data 2.44.
+    - So the models learn how often to refuse a Shanghai summer date, not the rule (daylight saving only from 1986 to 1991, April to September). Sample C's total has stayed between 685 and 704 since U3v. dev6 sees little of it: it has 4 such requests.
+    - The training answers state this decision before any check (log, "How the calendar replies decide"). If the rule were written before the decision, the decision would not depend on a weight.
+  - **U7's data** follows the registered procedure unchanged.
+    - Type weights from sample B: area of life 0.078 (U6's data 0.059); every other type at the floor of 0.05 (relations 0.118 in U6's data).
+    - Calendar rows by family from sample C: Shanghai daylight saving 72 (U6 28), time zones that need the tool 88 (66), time zones known 159 (201), plain charts 452 (509), charts with tool facts 46 (96), solar-term boundary 136 (186).
+    - 10,566 rows, 6.0 M tokens. Inherited from U6: derivation version 2, flow years over a whole life, no compositions, calendar weights by family, the short system prompt.
+  - **Config:** U6's, with U7's data, seed 2026111720 and U6's adapter as the start (sha256 61bd3554…, the file U6 wrote). Training plan: 5,283 iterations; the data hashes match the manifest. Validation loss 0.0044 before the first update.
+  - Expected (PST): trained about 09:00 Wednesday, scored on dev6 about 09:30.

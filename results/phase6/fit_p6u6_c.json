@@ -1,0 +1,99 @@
+{
+ "label": "p6u6",
+ "sample": "c",
+ "n": 780,
+ "correct": 685,
+ "share": 0.8782,
+ "by_type": {
+  "chart_facts:ok": [
+   39,
+   40
+  ],
+  "chart_plain:ok": [
+   34,
+   40
+  ],
+  "dst_fold:ambiguous": [
+   35,
+   35
+  ],
+  "dst_fold:ok": [
+   33,
+   40
+  ],
+  "dst_gap:invalid": [
+   24,
+   24
+  ],
+  "invalid:invalid": [
+   31,
+   40
+  ],
+  "invalid:unsupported": [
+   40,
+   40
+  ],
+  "jie_boundary:ambiguous": [
+   25,
+   26
+  ],
+  "jie_boundary:needs_tool": [
+   34,
+   40
+  ],
+  "jie_boundary:ok": [
+   38,
+   40
+  ],
+  "jie_window:needs_tool": [
+   38,
+   40
+  ],
+  "jie_window:ok": [
+   23,
+   40
+  ],
+  "missing:ambiguous": [
+   37,
+   40
+  ],
+  "missing:ok": [
+   29,
+   31
+  ],
+  "shanghai_dst:needs_tool": [
+   11,
+   32
+  ],
+  "shanghai_dst:ok": [
+   32,
+   32
+  ],
+  "tz_facts:ok": [
+   39,
+   40
+  ],
+  "tz_known:ok": [
+   36,
+   40
+  ],
+  "tz_needs_tool:needs_tool": [
+   29,
+   40
+  ],
+  "zi_transition:ambiguous": [
+   40,
+   40
+  ],
+  "zi_transition:ok": [
+   38,
+   40
+  ]
+ },
+ "stats": {
+  "generated": 778,
+  "reused": 2,
+  "seconds": 1214.6,
+  "completion_tokens": 228922
+ }
+}

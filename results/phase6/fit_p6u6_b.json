@@ -1,0 +1,96 @@
+{
+ "label": "p6u6",
+ "sample": "b",
+ "n": 2000,
+ "correct": 1984,
+ "share": 0.992,
+ "left_out_chart_in_training": 0,
+ "by_type": {
+  "ambig:no_rule": [
+   100,
+   100
+  ],
+  "ambig:yongshen_open": [
+   100,
+   100
+  ],
+  "domain": [
+   93,
+   100
+  ],
+  "fact:element_count": [
+   98,
+   100
+  ],
+  "fact:hidden": [
+   100,
+   100
+  ],
+  "fact:life_stage": [
+   100,
+   100
+  ],
+  "fact:luck_direction": [
+   100,
+   100
+  ],
+  "fact:missing_element": [
+   100,
+   100
+  ],
+  "fact:ten_god_branch": [
+   100,
+   100
+  ],
+  "fact:ten_god_stem": [
+   100,
+   100
+  ],
+  "fact:xun_kong": [
+   100,
+   100
+  ],
+  "flow": [
+   99,
+   100
+  ],
+  "gods": [
+   100,
+   100
+  ],
+  "interact": [
+   98,
+   100
+  ],
+  "overview": [
+   99,
+   100
+  ],
+  "pattern": [
+   100,
+   100
+  ],
+  "prediction": [
+   100,
+   100
+  ],
+  "star": [
+   99,
+   100
+  ],
+  "strength": [
+   100,
+   100
+  ],
+  "yongshen": [
+   98,
+   100
+  ]
+ },
+ "stats": {
+  "generated": 2000,
+  "reused": 0,
+  "seconds": 2362.8,
+  "completion_tokens": 572832
+ }
+}
