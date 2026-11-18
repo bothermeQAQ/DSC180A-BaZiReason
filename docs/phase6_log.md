@@ -290,3 +290,23 @@ Decisions, surprises and negative results, in order. Plan: [`phase6_execution_pr
     - The last step of the relations derivation is free text that the model can garble on a new wording.
     - Calendar decisions rest on recalled daylight-saving dates, with no stated rule for the zone. Weights by family move the decision back and forth between refusing and answering, rather than teaching the rule.
   - **Next:** U5's valid6 run (from 21:01), then level 6 from U5: U5's fit samples, then U6's build, training and dev6 result (about 03:30 Wednesday). If U6 is not above 740, the chain ends after level 6 with two levels without a new best.
+- **Level 6: U6 built at 22:31, training since 22:32** (`decide6.py next` at 21:31: U6 from U5, one level without a new best; recorded in `round2.json`). U5's valid6 run (21:01-21:31) was not read.
+  - **U5's fit samples** (model alone; the weights come from these, not from dev6):
+    - Sample B (2,000 template questions, 100 per type): 1,973 right (U4's sample 1,981). Wrong by type: relations 11 (U4 1), overview 6 (4), area of life 5 (11), element count 2 (1), use god 2 (2), stars 1 (0); every other type 0. So U5's relations drop shows on the training wordings too, not only on dev6's held-out wording.
+    - Sample C (780 calendar requests): 704 right (U4 687). Shanghai daylight-saving requests that need the tool 29/32 (U4 7/32). Plain charts 33/40 (36), charts with tool facts 36/40 (39), solar-term boundary requests that need the tool 31/40 (35).
+  - **U6's data** follows the registered procedure unchanged.
+    - Type weights from sample B: relations 0.118 (U5's data 0.050, the floor), overview 0.069 (0.050), area of life 0.059 (0.118), the rest at the floor.
+    - Calendar rows by family from sample C: Shanghai daylight saving 28 (U5 89), plain charts 509 (358), solar-term boundary 186 (91), charts with tool facts 96 (48).
+    - 10,328 rows, 6.0 M tokens. Inherited from U5: derivation version 2, flow years over a whole life, no compositions.
+  - **Config:** U5's, with U6's data, seed 2026111719 and U5's adapter as the start (sha256 35db2390…, the file U5 wrote). Training plan: 5,164 iterations; the data hashes match the manifest. At the start `ollama serve` was running with no model loaded.
+  - Expected (PST): trained about 02:45 Wednesday, scored on dev6 about 03:15.
+- **How the calendar replies decide** (read for the 12.12 causes; nothing registered or changed). Counts from `scripts/phase6/decision_first.py` (fit samples and dev6 only):
+  - In the training answers without tool facts (`worked.explain_request`), the first sentence already carries the decision. An answer starts "参考时刻：{zone} 在该日期为 UTC+8…". A refusal starts "参考日期 M 月 D 日落在{节}可能的交节日期（约 …）内…" or "没有时区工具时，我不能凭记忆确定 {zone} …". No earlier sentence compares the date with the window or states the zone's rule (`worked.known_offset`: Shanghai's uncertain and daylight-saving years, the fixed zones with their first year, the seasonal months).
+  - The models know the windows: every window they state is the right one. The comparison is what fails. Example: "参考日期 10 月 6 日落在寒露可能的交节日期（约 10 月 7–9 日）内".
+    - Refusals with the window sentence whose own date lies outside the window they state: U4's sample C 27 of 96 (24 wrong), U5's 22 of 75 (20 wrong); dev6 U3v 7 (6 wrong), U4 5 (4 wrong), U5 3 (3 wrong).
+  - Offset refusals for a zone and date whose offset the rule gives:
+    - U5's sample C 10. Five are answerable requests refused. The other five needed the tool for a solar-term reason, so the status was right for the wrong reason.
+    - dev6: U3v 3, U4 1, U5 8.
+  - On dev6 these two kinds are 9 of U3v's 18 calendar errors, 5 of U4's 19 and 11 of U5's 26. Several other errors are the reverse: a definite chart for a date inside a window, or for a Shanghai 1990 summer date.
+  - **Candidate change:** write the checks before the decision: the zone's rule for that date, then the date against the nearest solar-term window. Answered requests already do this in their month step ("3 月 26 日在惊蛰（约 3 月 4–7 日）之后、清明（约 4 月 4–6 日）之前").
+    - Not registered. It is examined if the chain ends with 12.12 unmet, or put to the user as a separate improvement.

@@ -105,5 +105,22 @@
    "p6u4c": 739
   },
   "levels_without_a_new_best": 0
+ },
+ {
+  "decision": "next",
+  "level": 6,
+  "runs": [
+   "u6"
+  ],
+  "parent": "u5",
+  "dev6_correct": {
+   "p6u2": 733,
+   "p6u3": 722,
+   "p6u3v": 730,
+   "p6u4": 740,
+   "p6u4c": 739,
+   "p6u5": 740
+  },
+  "levels_without_a_new_best": 1
  }
 ]
