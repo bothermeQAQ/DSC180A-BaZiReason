@@ -340,3 +340,15 @@ Decisions, surprises and negative results, in order. Plan: [`phase6_execution_pr
     - 10,566 rows, 6.0 M tokens. Inherited from U6: derivation version 2, flow years over a whole life, no compositions, calendar weights by family, the short system prompt.
   - **Config:** U6's, with U7's data, seed 2026111720 and U6's adapter as the start (sha256 61bd3554…, the file U6 wrote). Training plan: 5,283 iterations; the data hashes match the manifest. Validation loss 0.0044 before the first update.
   - Expected (PST): trained about 09:00 Wednesday, scored on dev6 about 09:30.
+- **U7 scored on dev6: not a new best** (training 04:42-08:52, 4.17 h, 5,283 iterations, the last checkpoint chosen by validation loss (0.0041), peak memory 22.3 GB; scored 08:52-09:22). Model alone:
+  - **Rule items 739/822 (89.9%)**, below U6's 747: template rules 287/294 (U6 288), independent 139/140 (140), blind wording 184/188 (184), combinations 31/100 (36), counterfactual 98/100 (99). U7 minus U6: −1.0 [−2.7, +0.7] (22 right only for U7, 30 only for U6). Held-out template wording 147/150 (U6 148).
+  - **One level without a new best.** Level 8 starts from U7, the only arm of level 7. The chain's best run stays U6. If U8 is not above 747, the chain ends after level 8.
+  - **Relations 58/64** (U6 62). All three training-wording errors start at the step that collects the relations ("全部关系"), as U5's and U6's did; two held-out and one blind item are wrong too.
+  - **Area of life 44/46** (U6 42), the best of any run. Years outside 2024-2049: 75/77 against 29/29 inside, a gap of 2.6 points. Flow years 60/60.
+  - **Combinations 31/100:** flow year with life stage 6/25 (U6 10), void positions 1/25 (5), revealed stems 10/25 (9), god counts 14/25 (12).
+  - **Statements:** replies with a wrong statement 53/822 (U6 49). Wrong relation statements 29 (U6 14) and pattern statements 37 (28); U6's Ten God slips in combination replies are gone (2; U6 23). One loop; three replies cut off.
+  - **Calendar 202/219** (U6 203): 1 gained and 2 lost against U6; by family the same as U6 except one solar-term window that needs the tool. Answerable requests refused 9/145 (U6 8), definite charts where none exists 6/74 (5), balanced decision accuracy 92.2% (93.2%).
+    - The decide-before-check refusals remain (`decision_first.py`): 5 window refusals of dates outside the window they state (all answerable) and 1 offset refusal for a zone whose offset the rule gives.
+    - U7's 72 Shanghai daylight-saving rows changed nothing on dev6's 4 such requests (2/4, as U6).
+  - **Against pre-registration 12.12** (the chain has not ended): on U6, the chain's best run, conditions 2-4 hold as before. They hold on U7 too (lowest trained type: relations 58/64, 90.6%; year gap 2.6 points).
+  - **Next:** U7's valid6 run (from 09:22, not read), then level 8 from U7: U7's fit samples, U8's build (about 10:55), training (about 4.2 h) and dev6 result (about 15:35 Wednesday). If U8 is not above 747, the chain ends; then valid6 for S2 and S2s, U1 and its diagnostics.

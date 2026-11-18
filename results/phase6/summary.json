@@ -1023,6 +1023,201 @@
     "seconds": 1192.0,
     "completion_tokens": 220412
    }
+  },
+  "p6u6_b": {
+   "label": "p6u6",
+   "sample": "b",
+   "n": 2000,
+   "correct": 1984,
+   "share": 0.992,
+   "left_out_chart_in_training": 0,
+   "by_type": {
+    "ambig:no_rule": [
+     100,
+     100
+    ],
+    "ambig:yongshen_open": [
+     100,
+     100
+    ],
+    "domain": [
+     93,
+     100
+    ],
+    "fact:element_count": [
+     98,
+     100
+    ],
+    "fact:hidden": [
+     100,
+     100
+    ],
+    "fact:life_stage": [
+     100,
+     100
+    ],
+    "fact:luck_direction": [
+     100,
+     100
+    ],
+    "fact:missing_element": [
+     100,
+     100
+    ],
+    "fact:ten_god_branch": [
+     100,
+     100
+    ],
+    "fact:ten_god_stem": [
+     100,
+     100
+    ],
+    "fact:xun_kong": [
+     100,
+     100
+    ],
+    "flow": [
+     99,
+     100
+    ],
+    "gods": [
+     100,
+     100
+    ],
+    "interact": [
+     98,
+     100
+    ],
+    "overview": [
+     99,
+     100
+    ],
+    "pattern": [
+     100,
+     100
+    ],
+    "prediction": [
+     100,
+     100
+    ],
+    "star": [
+     99,
+     100
+    ],
+    "strength": [
+     100,
+     100
+    ],
+    "yongshen": [
+     98,
+     100
+    ]
+   },
+   "stats": {
+    "generated": 2000,
+    "reused": 0,
+    "seconds": 2362.8,
+    "completion_tokens": 572832
+   }
+  },
+  "p6u6_c": {
+   "label": "p6u6",
+   "sample": "c",
+   "n": 780,
+   "correct": 685,
+   "share": 0.8782,
+   "by_type": {
+    "chart_facts:ok": [
+     39,
+     40
+    ],
+    "chart_plain:ok": [
+     34,
+     40
+    ],
+    "dst_fold:ambiguous": [
+     35,
+     35
+    ],
+    "dst_fold:ok": [
+     33,
+     40
+    ],
+    "dst_gap:invalid": [
+     24,
+     24
+    ],
+    "invalid:invalid": [
+     31,
+     40
+    ],
+    "invalid:unsupported": [
+     40,
+     40
+    ],
+    "jie_boundary:ambiguous": [
+     25,
+     26
+    ],
+    "jie_boundary:needs_tool": [
+     34,
+     40
+    ],
+    "jie_boundary:ok": [
+     38,
+     40
+    ],
+    "jie_window:needs_tool": [
+     38,
+     40
+    ],
+    "jie_window:ok": [
+     23,
+     40
+    ],
+    "missing:ambiguous": [
+     37,
+     40
+    ],
+    "missing:ok": [
+     29,
+     31
+    ],
+    "shanghai_dst:needs_tool": [
+     11,
+     32
+    ],
+    "shanghai_dst:ok": [
+     32,
+     32
+    ],
+    "tz_facts:ok": [
+     39,
+     40
+    ],
+    "tz_known:ok": [
+     36,
+     40
+    ],
+    "tz_needs_tool:needs_tool": [
+     29,
+     40
+    ],
+    "zi_transition:ambiguous": [
+     40,
+     40
+    ],
+    "zi_transition:ok": [
+     38,
+     40
+    ]
+   },
+   "stats": {
+    "generated": 778,
+    "reused": 2,
+    "seconds": 1214.6,
+    "completion_tokens": 228922
+   }
   }
  },
  "training": {
@@ -1157,6 +1352,17 @@
    "train_loss_tail": 0.0043,
    "val_loss": 0.003977048210799694,
    "hours": 4.15
+  },
+  "p6u7": {
+   "rows": 10566,
+   "tokens": 5991019,
+   "iterations": [
+    5283,
+    5283
+   ],
+   "train_loss_tail": 0.00376,
+   "val_loss": 0.004072110168635845,
+   "hours": 4.17
   },
   "p8s1": {
    "rows": 7922,
@@ -1360,6 +1566,24 @@
      "p6u5": 740
     },
     "levels_without_a_new_best": 1
+   },
+   {
+    "decision": "next",
+    "level": 7,
+    "runs": [
+     "u7"
+    ],
+    "parent": "u6",
+    "dev6_correct": {
+     "p6u2": 733,
+     "p6u3": 722,
+     "p6u3v": 730,
+     "p6u4": 740,
+     "p6u4c": 739,
+     "p6u5": 740,
+     "p6u6": 747
+    },
+    "levels_without_a_new_best": 0
    }
   ],
   "weights": {
@@ -2142,6 +2366,136 @@
      "star": 0.05,
      "prediction": 0.05
     }
+   },
+   "p6u7": {
+    "source": "results/phase6/own_replies_p6u6_b.jsonl",
+    "left_out": 0,
+    "scored_wrong": {
+     "fact:xun_kong": [
+      100,
+      0
+     ],
+     "fact:element_count": [
+      100,
+      2
+     ],
+     "fact:missing_element": [
+      100,
+      0
+     ],
+     "fact:life_stage": [
+      100,
+      0
+     ],
+     "fact:ten_god_stem": [
+      100,
+      0
+     ],
+     "fact:ten_god_branch": [
+      100,
+      0
+     ],
+     "fact:hidden": [
+      100,
+      0
+     ],
+     "fact:luck_direction": [
+      100,
+      0
+     ],
+     "gods": [
+      100,
+      0
+     ],
+     "strength": [
+      100,
+      0
+     ],
+     "pattern": [
+      100,
+      0
+     ],
+     "yongshen": [
+      100,
+      2
+     ],
+     "interact": [
+      100,
+      2
+     ],
+     "flow": [
+      100,
+      1
+     ],
+     "domain": [
+      100,
+      7
+     ],
+     "overview": [
+      100,
+      1
+     ],
+     "ambig:yongshen_open": [
+      100,
+      0
+     ],
+     "ambig:no_rule": [
+      100,
+      0
+     ],
+     "star": [
+      100,
+      1
+     ],
+     "prediction": [
+      100,
+      0
+     ]
+    },
+    "error": {
+     "fact:xun_kong": 0.0098,
+     "fact:element_count": 0.0294,
+     "fact:missing_element": 0.0098,
+     "fact:life_stage": 0.0098,
+     "fact:ten_god_stem": 0.0098,
+     "fact:ten_god_branch": 0.0098,
+     "fact:hidden": 0.0098,
+     "fact:luck_direction": 0.0098,
+     "gods": 0.0098,
+     "strength": 0.0098,
+     "pattern": 0.0098,
+     "yongshen": 0.0294,
+     "interact": 0.0294,
+     "flow": 0.0196,
+     "domain": 0.0784,
+     "overview": 0.0196,
+     "ambig:yongshen_open": 0.0098,
+     "ambig:no_rule": 0.0098,
+     "star": 0.0196,
+     "prediction": 0.0098
+    },
+    "weights": {
+     "fact:xun_kong": 0.05,
+     "fact:element_count": 0.05,
+     "fact:missing_element": 0.05,
+     "fact:life_stage": 0.05,
+     "fact:ten_god_stem": 0.05,
+     "fact:ten_god_branch": 0.05,
+     "fact:hidden": 0.05,
+     "fact:luck_direction": 0.05,
+     "gods": 0.05,
+     "strength": 0.05,
+     "pattern": 0.05,
+     "yongshen": 0.05,
+     "interact": 0.05,
+     "flow": 0.05,
+     "domain": 0.0784,
+     "overview": 0.05,
+     "ambig:yongshen_open": 0.05,
+     "ambig:no_rule": 0.05,
+     "star": 0.05,
+     "prediction": 0.05
+    }
    }
   }
  },
@@ -2281,7 +2635,8 @@
   "p6u3v",
   "p6u4c",
   "p6u4",
-  "p6u5"
+  "p6u5",
+  "p6u6"
  ],
  "l0": {
   "dev6": {
@@ -2735,6 +3090,36 @@
      219
     ]
    },
+   "p6u7": {
+    "rules": [
+     287,
+     294
+    ],
+    "indep": [
+     139,
+     140
+    ],
+    "blind": [
+     184,
+     188
+    ],
+    "combo": [
+     31,
+     100
+    ],
+    "cf": [
+     98,
+     100
+    ],
+    "all": [
+     739,
+     822
+    ],
+    "calendar": [
+     202,
+     219
+    ]
+   },
    "p8s1": {
     "rules": [
      163,
@@ -2940,6 +3325,22 @@
      "interval95": [
       -0.00853658536585366,
       0.02527075812274368
+     ]
+    }
+   },
+   {
+    "hypothesis": "H8: weighted continuation",
+    "a": "p6u6",
+    "b": "p6u7",
+    "difference": {
+     "n": 822,
+     "n_groups": 772,
+     "difference": -0.009732360097323601,
+     "second_only": 22,
+     "first_only": 30,
+     "interval95": [
+      -0.02689486552567237,
+      0.007326007326007326
      ]
     }
    },
@@ -3610,6 +4011,41 @@
     "n": 822,
     "loops": 0
    },
+   "p6u7": {
+    "checked": {
+     "day_master": 659,
+     "hidden": 977,
+     "pattern": 112,
+     "relation": 808,
+     "stem_relation": 237,
+     "pillar": 353,
+     "flow_year": 430,
+     "ten_god": 205,
+     "spouse_star": 43,
+     "star": 32,
+     "repetition": 1,
+     "xun_kong": 71,
+     "detail": 6
+    },
+    "wrong": {
+     "day_master": 0,
+     "hidden": 0,
+     "pattern": 37,
+     "relation": 29,
+     "stem_relation": 1,
+     "pillar": 0,
+     "flow_year": 5,
+     "ten_god": 2,
+     "spouse_star": 0,
+     "star": 0,
+     "repetition": 1,
+     "xun_kong": 1,
+     "detail": 6
+    },
+    "replies_with_wrong": 53,
+    "n": 822,
+    "loops": 1
+   },
    "p8s1": {
     "checked": {
      "day_master": 618,
@@ -3852,6 +4288,14 @@
      "mean_tokens": 316.6
     }
    },
+   "p6u7": {
+    "L0": {
+     "cut": 3,
+     "n": 822,
+     "wrong": 3,
+     "mean_tokens": 318.0
+    }
+   },
    "p8s1": {
     "L0": {
      "cut": 10,
@@ -4075,6 +4519,20 @@
     ],
     "held_out": [
      148,
+     150
+    ],
+    "blind": [
+     184,
+     188
+    ]
+   },
+   "p6u7": {
+    "seen": [
+     140,
+     144
+    ],
+    "held_out": [
+     147,
      150
     ],
     "blind": [
@@ -4384,6 +4842,24 @@
      33
     ]
    },
+   "p6u7": {
+    "flow_inside": [
+     16,
+     16
+    ],
+    "flow_outside": [
+     44,
+     44
+    ],
+    "domain_inside": [
+     13,
+     13
+    ],
+    "domain_outside": [
+     31,
+     33
+    ]
+   },
    "p8s1": {
     "flow_inside": [
      4,
@@ -4499,6 +4975,11 @@
     "pairs": 50,
     "same_answer": 0
    },
+   "p6u7": {
+    "both": 48,
+    "pairs": 50,
+    "same_answer": 0
+   },
    "p8s1": {
     "both": 39,
     "pairs": 50,
@@ -4574,6 +5055,10 @@
      49,
      50
     ],
+    "p6u7": [
+     50,
+     50
+    ],
     "p8s1": [
      28,
      50
@@ -4641,6 +5126,10 @@
      54
     ],
     "p6u6": [
+     54,
+     54
+    ],
+    "p6u7": [
      54,
      54
     ],
@@ -4714,6 +5203,10 @@
      54,
      54
     ],
+    "p6u7": [
+     54,
+     54
+    ],
     "p8s1": [
      46,
      54
@@ -4782,6 +5275,10 @@
     ],
     "p6u6": [
      40,
+     40
+    ],
+    "p6u7": [
+     39,
      40
     ],
     "p8s1": [
@@ -4854,6 +5351,10 @@
      62,
      64
     ],
+    "p6u7": [
+     58,
+     64
+    ],
     "p8s1": [
      19,
      64
@@ -4922,6 +5423,10 @@
     ],
     "p6u6": [
      59,
+     60
+    ],
+    "p6u7": [
+     60,
      60
     ],
     "p8s1": [
@@ -4994,6 +5499,10 @@
      42,
      46
     ],
+    "p6u7": [
+     44,
+     46
+    ],
     "p8s1": [
      22,
      46
@@ -5061,6 +5570,10 @@
      32
     ],
     "p6u6": [
+     32,
+     32
+    ],
+    "p6u7": [
      32,
      32
     ],
@@ -5134,6 +5647,10 @@
      16,
      16
     ],
+    "p6u7": [
+     16,
+     16
+    ],
     "p8s1": [
      15,
      16
@@ -5204,6 +5721,10 @@
      20,
      20
     ],
+    "p6u7": [
+     19,
+     20
+    ],
     "p8s1": [
      11,
      20
@@ -5271,6 +5792,10 @@
      44
     ],
     "p6u6": [
+     44,
+     44
+    ],
+    "p6u7": [
      44,
      44
     ],
@@ -5344,6 +5869,10 @@
      30,
      30
     ],
+    "p6u7": [
+     29,
+     30
+    ],
     "p8s1": [
      27,
      30
@@ -5411,6 +5940,10 @@
      30
     ],
     "p6u6": [
+     29,
+     30
+    ],
+    "p6u7": [
      29,
      30
     ],
@@ -5484,6 +6017,10 @@
      42,
      43
     ],
+    "p6u7": [
+     43,
+     43
+    ],
     "p8s1": [
      37,
      43
@@ -5551,6 +6088,10 @@
      46
     ],
     "p6u6": [
+     46,
+     46
+    ],
+    "p6u7": [
      46,
      46
     ],
@@ -5624,6 +6165,10 @@
      29,
      29
     ],
+    "p6u7": [
+     29,
+     29
+    ],
     "p8s1": [
      29,
      29
@@ -5694,6 +6239,10 @@
      43,
      44
     ],
+    "p6u7": [
+     42,
+     44
+    ],
     "p8s1": [
      43,
      44
@@ -5761,6 +6310,10 @@
      10
     ],
     "p6u6": [
+     10,
+     10
+    ],
+    "p6u7": [
      10,
      10
     ],
@@ -5834,6 +6387,10 @@
      10,
      10
     ],
+    "p6u7": [
+     10,
+     10
+    ],
     "p8s1": [
      10,
      10
@@ -5902,6 +6459,10 @@
     ],
     "p6u6": [
      10,
+     25
+    ],
+    "p6u7": [
+     6,
      25
     ],
     "p8s1": [
@@ -5974,6 +6535,10 @@
      5,
      25
     ],
+    "p6u7": [
+     1,
+     25
+    ],
     "p8s1": [
      10,
      25
@@ -6044,6 +6609,10 @@
      9,
      25
     ],
+    "p6u7": [
+     10,
+     25
+    ],
     "p8s1": [
      16,
      25
@@ -6112,6 +6681,10 @@
     ],
     "p6u6": [
      12,
+     25
+    ],
+    "p6u7": [
+     14,
      25
     ],
     "p8s1": [
@@ -6232,6 +6805,13 @@
     "refused": 8,
     "definite": 5
    },
+   "p6u7": {
+    "k": 202,
+    "n": 219,
+    "balanced_decision": 0.9217,
+    "refused": 9,
+    "definite": 6
+   },
    "p8s1": {
     "k": 138,
     "n": 219,
@@ -6282,6 +6862,10 @@
     "p6u6": [
      16,
      16
+    ],
+    "p6u7": [
+     16,
+     16
     ]
    },
    "chart_plain:ok": {
@@ -6314,6 +6898,10 @@
      28
     ],
     "p6u6": [
+     26,
+     28
+    ],
+    "p6u7": [
      26,
      28
     ]
@@ -6350,6 +6938,10 @@
     "p6u6": [
      1,
      1
+    ],
+    "p6u7": [
+     1,
+     1
     ]
    },
    "dst_fold:ok": {
@@ -6382,6 +6974,10 @@
      11
     ],
     "p6u6": [
+     8,
+     11
+    ],
+    "p6u7": [
      8,
      11
     ]
@@ -6418,6 +7014,10 @@
     "p6u6": [
      4,
      4
+    ],
+    "p6u7": [
+     4,
+     4
     ]
    },
    "invalid:invalid": {
@@ -6450,6 +7050,10 @@
      12
     ],
     "p6u6": [
+     9,
+     12
+    ],
+    "p6u7": [
      9,
      12
     ]
@@ -6486,6 +7090,10 @@
     "p6u6": [
      8,
      8
+    ],
+    "p6u7": [
+     8,
+     8
     ]
    },
    "jie_boundary:ambiguous": {
@@ -6518,6 +7126,10 @@
      1
     ],
     "p6u6": [
+     1,
+     1
+    ],
+    "p6u7": [
      1,
      1
     ]
@@ -6554,6 +7166,10 @@
     "p6u6": [
      7,
      8
+    ],
+    "p6u7": [
+     7,
+     8
     ]
    },
    "jie_boundary:ok": {
@@ -6586,6 +7202,10 @@
      16
     ],
     "p6u6": [
+     16,
+     16
+    ],
+    "p6u7": [
      16,
      16
     ]
@@ -6622,6 +7242,10 @@
     "p6u6": [
      10,
      10
+    ],
+    "p6u7": [
+     9,
+     10
     ]
    },
    "jie_window:ok": {
@@ -6654,6 +7278,10 @@
      10
     ],
     "p6u6": [
+     6,
+     10
+    ],
+    "p6u7": [
      6,
      10
     ]
@@ -6690,6 +7318,10 @@
     "p6u6": [
      10,
      10
+    ],
+    "p6u7": [
+     10,
+     10
     ]
    },
    "missing:ok": {
@@ -6722,6 +7354,10 @@
      4
     ],
     "p6u6": [
+     4,
+     4
+    ],
+    "p6u7": [
      4,
      4
     ]
@@ -6758,6 +7394,10 @@
     "p6u6": [
      2,
      4
+    ],
+    "p6u7": [
+     2,
+     4
     ]
    },
    "shanghai_dst:ok": {
@@ -6790,6 +7430,10 @@
      4
     ],
     "p6u6": [
+     4,
+     4
+    ],
+    "p6u7": [
      4,
      4
     ]
@@ -6826,6 +7470,10 @@
     "p6u6": [
      7,
      8
+    ],
+    "p6u7": [
+     7,
+     8
     ]
    },
    "tz_known:ok": {
@@ -6858,6 +7506,10 @@
      16
     ],
     "p6u6": [
+     16,
+     16
+    ],
+    "p6u7": [
      16,
      16
     ]
@@ -6894,6 +7546,10 @@
     "p6u6": [
      8,
      8
+    ],
+    "p6u7": [
+     8,
+     8
     ]
    },
    "zi_transition:ambiguous": {
@@ -6928,6 +7584,10 @@
     "p6u6": [
      8,
      8
+    ],
+    "p6u7": [
+     8,
+     8
     ]
    },
    "zi_transition:ok": {
@@ -6960,6 +7620,10 @@
      32
     ],
     "p6u6": [
+     32,
+     32
+    ],
+    "p6u7": [
      32,
      32
     ]
