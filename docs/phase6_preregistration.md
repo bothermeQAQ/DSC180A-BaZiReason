@@ -402,3 +402,17 @@ Written while U7 was training, before U7's dev6 result and before any data, weig
   - the 交节 step compares the date with the nearest window bounds ("6 月 27 日晚于芒种最晚的 6 月 7 日、早于小暑最早的 7 月 6 日 → 不在交节窗口内");
   - the month step refers to the 交节 step ("上一个节是芒种（见交节）") instead of restating the windows. The year, day and hour steps are as before.
   - Measured with the final JSON line (`results/phase6/steps_v3_check.json`): answers with a chart at most 624 tokens of 700 (mean 555; version 2: 542 and 480); area of life at most 1,001 of 1,100 (version 2: 928); relations at most 931 (803). No training answer is over a cap.
+
+### 12.15 Level 10 waits for the user's choice (18 November, 16:10)
+
+The user wrote at 16:05 on 18 November: "once u9 is finished do not start u10 yet, update me, and i will decide whether to start u10 or not". This is recorded before any of U9's data exists: U8's fit samples were being drawn, and U9 is built after them.
+
+- **The hold:** U9 (level 9) is built, trained and scored on dev6 and valid6 as registered. After that, `decide6.py next` does not start level 10 by itself. It waits until the user's choice is recorded in `results/phase6/round2.json` by `decide6.py user 10 start|stop "<the user's words>"`. While it waits it writes "HOLD level 10" to the queue log, and the GPU is idle. Nothing else in the queue changes.
+- **The user decides on dev6** (read freely), like every chain decision so far. valid6 stays unread until the selection.
+- **start:** level 10 runs as registered (sections 10.2 and 10.5, 12.11, 12.13): U10 from U9, with U9's fit samples.
+- **stop:** the chain ends after level 9 by the user's choice. This is recorded as the loop's end, with `"ended_by": "user"`.
+  - It is the chain's end for 12.12: condition 1 holds, and condition 4 reads levels 8 and 9.
+  - It is the chain's end for UD (12.14). UD's parent is the chain's best run on dev6 among U2 (the first parent) and levels 3 to 9; its twin is the level built from that parent.
+  - If the parent is U9, UD has no twin. It then uses seed 2026111724 and is read against its parent, and H12 is reported as untested (12.14).
+- **Code:** `decide6.py` holds in `next` and has a new `user` command. `make_report6.py` lists the choice and how the chain ended among the round-2 decisions. Tests cover the wait, both choices, a choice recorded only once, and UD after a stop.
+- **Unchanged:** the rules of every level that runs, U1, UD, the selection rule and the gate, and the sealed split's rules.
