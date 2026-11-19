@@ -713,6 +713,8 @@ def round2_section(lines, summary):
             elif e["decision"] == "user":  # preregistration 12.15
                 choice = "start it" if e["choice"] == "start" else "end the chain after the level before it"  # fmt: skip
                 lines.append(f"- **Level {e['level']}, the user's choice (preregistration 12.15, {e['time']}):** {choice} (\"{e['said']}\").")  # fmt: skip
+            elif e["decision"] == "end":  # preregistration 12.16
+                lines.append(f"- **After the chain, the user's choice (preregistration 12.16, {e['time']}):** stop everything; not run: valid6 for S2 and S2s, U1 and its diagnostics, UD (\"{e['said']}\").")  # fmt: skip
             elif e["decision"] == "ud":  # preregistration 12.14
                 counts = ", ".join(f"{name(k)} {v}" for k, v in e["dev6_correct"].items())
                 twin = f"its twin {name('p6' + e['twin'])}" if e.get("twin") else "no twin"

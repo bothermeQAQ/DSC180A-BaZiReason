@@ -10,6 +10,7 @@ Round 2 (section 10; every decision is appended to results/phase6/round2.json):
     .venv/bin/python scripts/phase6/decide6.py next      # "<recipe> <parent>" of the next continuation, or "stop"
     .venv/bin/python scripts/phase6/decide6.py ud        # 12.14: UD's parent and twin, after the chain
     .venv/bin/python scripts/phase6/decide6.py user 10 start|stop "<the user's words>"  # 12.15
+    .venv/bin/python scripts/phase6/decide6.py end "<the user's words>"  # 12.16
 
 Reads saved records only. "select" writes results/phase6/selection.json, which opens sealed6.
 """
@@ -212,6 +213,34 @@ def user():
     print(f"level {level}: {choice}")
 
 
+def ended():
+    """Preregistration 12.16: the user's recorded choice to stop everything after the chain."""
+    return next((e for e in recorded() if e.get("decision") == "end"), None)
+
+
+def end():
+    """Preregistration 12.16: records, once, that the user stopped everything after the chain:
+    decide6.py end "<the user's words>"."""
+    said = " ".join(sys.argv[2:]).strip()
+    if not said:
+        sys.exit("usage: decide6.py end <the user's words>")
+    if ended():
+        sys.exit("the user's choice to stop after the chain is already recorded")
+    record({"decision": "end", "said": said, "time": f"{datetime.datetime.now():%Y-%m-%d %H:%M}"})
+    print("everything stops after the chain")
+
+
+def hold_end(every=600):
+    """Preregistration 12.16: the chain has ended and the user stopped everything after it. Says so
+    once on stderr (the queue's log), then waits until the queue is stopped, so that nothing after
+    the chain runs."""
+    print(f"HOLD end {datetime.datetime.now():%m-%d %H:%M:%S}: the chain has ended and the user "
+          "stopped everything after it (preregistration 12.16); nothing more runs",
+          file=sys.stderr, flush=True)  # fmt: skip
+    while True:
+        time.sleep(every)
+
+
 def structure():
     """Round 2 (section 10.2): rank 16 on the last 16 layers, or U1-hi's structure if U1-hi
     was trained and beats U1 on dev6 L0 with a paired lower bound above 0. Prints the build
@@ -302,6 +331,8 @@ def nxt():
         entry["runs"] = [lab[2:] for lab in LEVELS[len(done)]]
     record(entry)
     lines = [arm_line(run, entry["parent"]) for run in entry["runs"]]
+    if not lines and ended():  # 12.16: the chain's end is recorded; nothing after it runs
+        hold_end()
     print("\n".join(lines) if lines else "stop")
 
 
@@ -383,5 +414,6 @@ if __name__ == "__main__":
         "next": nxt,
         "ud": ud,
         "user": user,
+        "end": end,
         "sealed-extra": sealed_extra,
     }[sys.argv[1]]()

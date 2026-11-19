@@ -1,7 +1,9 @@
-"""Phase 6, preregistration 12.15: level 10 waits for the user's choice.
+"""Phase 6, preregistrations 12.15 and 12.16: the user's choices about level 10 and after the chain.
 
 No model is run. After level 9, "decide6.py next" waits until "decide6.py user 10 start|stop"
 has recorded the user's choice; "start" runs level 10 as registered, "stop" ends the chain.
+With "decide6.py end" recorded (12.16), "next" records the chain's end and then holds, so that
+nothing after the chain runs.
 """
 
 import json
@@ -154,7 +156,82 @@ def test_the_report_lists_the_choice_the_end_and_ud(tmp_path, monkeypatch):
     R.round2_section(lines, summary)
     text = "\n".join(lines)
     assert "Level 10, the user's choice (preregistration 12.15, 2026-11-18 21:40):" in text
-    assert "end the chain after the level before it (\"words\")" in text
+    assert 'end the chain after the level before it ("words")' in text
     assert "the loop ends by the user's choice (preregistration 12.15)" in text
     assert "UD (preregistration 12.14):** from the chain's best run, U8" in text
     assert "its twin U9" in text
+
+
+def stop_all():
+    return {"decision": "end", "said": "stop everything", "time": "2026-11-18 20:20"}
+
+
+class Stopped(Exception):
+    """The queue is stopped while "next" holds."""
+
+
+def test_level_10_still_starts_when_everything_stops_after_the_chain(chain, monkeypatch, capsys):
+    D, right, log = chain
+    log += [choice(10, "start"), stop_all()]
+    monkeypatch.setattr(D.time, "sleep", lambda s: pytest.fail("waited before level 10"))
+    D.nxt()
+    out = capsys.readouterr()
+    assert out.out.strip() == "u10 u9" and "HOLD" not in out.err
+    assert log[-1]["runs"] == ["u10"] and log[-1]["parent"] == "u9"
+
+
+def test_after_the_chain_next_records_the_end_then_holds(chain, monkeypatch, capsys):
+    D, right, log = chain
+    right["p6u10"] = 751
+    log += [choice(10, "start"), stop_all()]
+    sleeps = []
+
+    def sleep(seconds):
+        sleeps.append(seconds)
+        if len(sleeps) == 3:
+            raise Stopped
+
+    monkeypatch.setattr(D.time, "sleep", sleep)
+    with pytest.raises(Stopped):
+        D.nxt()
+    out = capsys.readouterr()
+    assert out.out == ""  # no "stop" is printed: the queue does not go on to part 3
+    assert out.err.count("HOLD end") == 1 and sleeps == [600, 600, 600]
+    assert log[-1]["decision"] == "next" and log[-1]["level"] == 11
+    assert log[-1]["runs"] == [] and log[-1]["parent"] is None
+
+
+def test_the_stop_is_recorded_once_with_the_users_words(chain, monkeypatch, capsys):
+    D, right, log = chain
+    monkeypatch.setattr(sys, "argv", ["decide6.py", "end", " "])
+    with pytest.raises(SystemExit, match="usage"):
+        D.end()
+    assert log == []
+    monkeypatch.setattr(sys, "argv", ["decide6.py", "end", "stop", "everything"])
+    D.end()
+    assert capsys.readouterr().out.strip() == "everything stops after the chain"
+    assert log[-1]["decision"] == "end" and log[-1]["said"] == "stop everything"
+    with pytest.raises(SystemExit, match="already recorded"):
+        D.end()
+    assert len(log) == 1
+
+
+def test_the_report_lists_the_stop_after_the_chain(tmp_path, monkeypatch):
+    import make_report6 as R
+
+    entries = [
+        choice(10, "start"),
+        stop_all(),
+        {"decision": "next", "level": 11, "runs": [], "parent": None,
+         "dev6_correct": {"p6u2": 733, "p6u10": 751}},
+    ]  # fmt: skip
+    (tmp_path / "round2.json").write_text(json.dumps(entries, ensure_ascii=False))
+    monkeypatch.setattr(R, "ROOT", tmp_path)
+    lines, summary = [], {}
+    R.round2_section(lines, summary)
+    text = "\n".join(lines)
+    assert "(preregistration 12.15, 2026-11-18 21:40):** start it" in text
+    stop = "After the chain, the user's choice (preregistration 12.16, 2026-11-18 20:20):**"
+    assert f"{stop} stop everything; not run: valid6 for S2 and S2s" in text
+    assert 'U1 and its diagnostics, UD ("stop everything").' in text
+    assert "Chain, level 11:** the loop ends (dev6" in text
