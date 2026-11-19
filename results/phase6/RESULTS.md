@@ -93,6 +93,7 @@ Tokenization: 0 of 60 stem-branch pairs are merged into one token, and 0 stems o
 - **Chain, level 6:** U6 continuation from U5 continuation (dev6 right answers on all rule items: U2 short prompt 733, U3 continuation 722, U3v continuation, steps v2 730, U4 continuation 740, U4c continuation, + composition rows 739, U5 continuation 740).
 - **Chain, level 7:** U7 continuation from U6 continuation (dev6 right answers on all rule items: U2 short prompt 733, U3 continuation 722, U3v continuation, steps v2 730, U4 continuation 740, U4c continuation, + composition rows 739, U5 continuation 740, U6 continuation 747).
 - **Chain, level 8:** U8 continuation from U7 continuation (dev6 right answers on all rule items: U2 short prompt 733, U3 continuation 722, U3v continuation, steps v2 730, U4 continuation 740, U4c continuation, + composition rows 739, U5 continuation 740, U6 continuation 747, U7 continuation 739).
+- **Chain, level 9:** U9 continuation from U8 continuation (dev6 right answers on all rule items: U2 short prompt 733, U3 continuation 722, U3v continuation, steps v2 730, U4 continuation 740, U4c continuation, + composition rows 739, U5 continuation 740, U6 continuation 747, U7 continuation 739, U8 continuation 754).
 
 Question-type weights of the continuations (parent's error on fit sample B; weight = max(error, 0.05)):
 
@@ -131,7 +132,7 @@ Dropped from U1: nothing. Calendar share for U1: unchanged (28%). Best S run on 
 
 ## Split `valid6`
 
-Scored at L0 so far: Phase 2, U2 short prompt, U3 continuation, U3v continuation, steps v2, U4c continuation, + composition rows, U4 continuation, U5 continuation, U6 continuation, U7 continuation. This split is for selection only, so its tables are written when `selection.json` exists (`scripts/phase6/decide6.py select`).
+Scored at L0 so far: Phase 2, U2 short prompt, U3 continuation, U3v continuation, steps v2, U4c continuation, + composition rows, U4 continuation, U5 continuation, U6 continuation, U7 continuation, U8 continuation. This split is for selection only, so its tables are written when `selection.json` exists (`scripts/phase6/decide6.py select`).
 
 ## Split `dev6`
 

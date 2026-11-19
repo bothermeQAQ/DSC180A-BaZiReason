@@ -710,12 +710,21 @@ def round2_section(lines, summary):
                     d = e[key]
                     cells.append(f"{label} {100 * d['difference']:+.1f} [{100 * d['interval95'][0]:+.1f}, {100 * d['interval95'][1]:+.1f}]")  # fmt: skip
                 lines.append(f"- **U2's system prompt:** {e['options'].split()[-1]} (S2s minus S2: {'; '.join(cells)}).")  # fmt: skip
+            elif e["decision"] == "user":  # preregistration 12.15
+                choice = "start it" if e["choice"] == "start" else "end the chain after the level before it"  # fmt: skip
+                lines.append(f"- **Level {e['level']}, the user's choice (preregistration 12.15, {e['time']}):** {choice} (\"{e['said']}\").")  # fmt: skip
+            elif e["decision"] == "ud":  # preregistration 12.14
+                counts = ", ".join(f"{name(k)} {v}" for k, v in e["dev6_correct"].items())
+                twin = f"its twin {name('p6' + e['twin'])}" if e.get("twin") else "no twin"
+                lines.append(f"- **UD (preregistration 12.14):** from the chain's best run, {name('p6' + e['parent'])}; {twin} (dev6 right answers on all rule items: {counts}).")  # fmt: skip
             else:
                 counts = ", ".join(f"{name(k)} {v}" for k, v in e["dev6_correct"].items())
                 runs = " and ".join(name("p6" + r) for r in e.get("runs", []))
                 what = (
                     f"{runs} from {name('p6' + e['parent'])}"
                     if e.get("parent")
+                    else "the loop ends by the user's choice (preregistration 12.15)"
+                    if e.get("ended_by") == "user"
                     else "the loop ends"
                 )
                 again = (

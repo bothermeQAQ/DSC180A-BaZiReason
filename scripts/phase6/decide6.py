@@ -9,6 +9,7 @@ Round 2 (section 10; every decision is appended to results/phase6/round2.json):
     .venv/bin/python scripts/phase6/decide6.py structure # adapter options of round 2
     .venv/bin/python scripts/phase6/decide6.py next      # "<recipe> <parent>" of the next continuation, or "stop"
     .venv/bin/python scripts/phase6/decide6.py ud        # 12.14: UD's parent and twin, after the chain
+    .venv/bin/python scripts/phase6/decide6.py user 10 start|stop "<the user's words>"  # 12.15
 
 Reads saved records only. "select" writes results/phase6/selection.json, which opens sealed6.
 """
@@ -16,6 +17,7 @@ Reads saved records only. "select" writes results/phase6/selection.json, which o
 import datetime
 import json
 import sys
+import time
 from pathlib import Path
 
 sys.path.insert(0, "scripts/phase5")
@@ -45,6 +47,10 @@ ARM_OPTIONS = {
     "p6u4c": "--compose-share 0.10 --years life --calendar-weight-by family",
 }
 CONTINUATIONS = tuple(lab for level in LEVELS for lab in level)
+# Preregistration 12.15 (the user's message of 18 November, 16:05): level 10 starts only after the
+# user's choice is recorded ("decide6.py user 10 start|stop <the user's words>"). Until then "next"
+# waits, and the GPU is idle.
+HELD = (10,)
 # Preregistration 12.14: UD, built after the chain from its best run with derivation version 3.
 # A candidate like every continuation, never a level of the chain.
 EXTRA = ("p6ud",)
@@ -172,6 +178,40 @@ def record(entry):
     (ROOT / "round2.json").write_text(json.dumps(log, ensure_ascii=False, indent=1) + "\n")
 
 
+def users_choice(level, wait=True, every=60):
+    """Preregistration 12.15: the user's recorded choice for a held level, "start" or "stop".
+    With wait, reads round2.json again every minute until the choice is there; the first time,
+    says so on stderr (the queue's log)."""
+    told = False
+    while True:
+        try:
+            found = [e["choice"] for e in recorded() if e.get("decision") == "user" and e.get("level") == level]  # fmt: skip
+        except json.JSONDecodeError:  # being written by "user": read it again
+            found = []
+        if found or not wait:
+            return found[0] if found else None
+        if not told:
+            print(f"HOLD level {level} {datetime.datetime.now():%m-%d %H:%M:%S}: waits for the user's choice "
+                  f"(decide6.py user {level} start|stop)", file=sys.stderr, flush=True)  # fmt: skip
+            told = True
+        time.sleep(every)
+
+
+def user():
+    """Preregistration 12.15: records the user's choice for a held level, once:
+    decide6.py user <level> start|stop "<the user's words>"."""
+    args = sys.argv[2:]
+    if len(args) < 3 or not args[0].isdigit() or int(args[0]) not in HELD or args[1] not in ("start", "stop"):  # fmt: skip
+        sys.exit("usage: decide6.py user <held level> start|stop <the user's words>")
+    level, choice, said = int(args[0]), args[1], " ".join(args[2:])
+    earlier = users_choice(level, wait=False)
+    if earlier:
+        sys.exit(f"level {level}: the user's choice is already recorded ({earlier})")
+    record({"decision": "user", "level": level, "choice": choice, "said": said,
+            "time": f"{datetime.datetime.now():%Y-%m-%d %H:%M}"})  # fmt: skip
+    print(f"level {level}: {choice}")
+
+
 def structure():
     """Round 2 (section 10.2): rank 16 on the last 16 layers, or U1-hi's structure if U1-hi
     was trained and beats U1 on dev6 L0 with a paired lower bound above 0. Prints the build
@@ -254,6 +294,9 @@ def nxt():
         entry["levels_without_a_new_best"] = strikes
         if strikes >= 2 or len(done) == len(LEVELS):
             parent = None
+    # 12.15: a held level waits for the user's choice; "stop" ends the chain here.
+    if parent and entry["level"] in HELD and users_choice(entry["level"]) == "stop":
+        parent, entry["ended_by"] = None, "user"
     if parent:
         entry["parent"] = parent[2:]
         entry["runs"] = [lab[2:] for lab in LEVELS[len(done)]]
@@ -339,5 +382,6 @@ if __name__ == "__main__":
         "prompt": prompt,
         "next": nxt,
         "ud": ud,
+        "user": user,
         "sealed-extra": sealed_extra,
     }[sys.argv[1]]()
