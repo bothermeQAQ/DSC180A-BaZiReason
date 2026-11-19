@@ -416,3 +416,19 @@ The user wrote at 16:05 on 18 November: "once u9 is finished do not start u10 ye
   - If the parent is U9, UD has no twin. It then uses seed 2026111724 and is read against its parent, and H12 is reported as untested (12.14).
 - **Code:** `decide6.py` holds in `next` and has a new `user` command. `make_report6.py` lists the choice and how the chain ended among the round-2 decisions. Tests cover the wait, both choices, a choice recorded only once, and UD after a stop.
 - **Unchanged:** the rules of every level that runs, U1, UD, the selection rule and the gate, and the sealed split's rules.
+
+### 12.16 Level 10 starts, and everything stops after it (18 November, 20:15)
+
+The user wrote on 18 November, after 12.15 was registered: "nevermind, since it is finishing around 10pm, just start u10 as well. once u10 is finished give the whole report and stop everything". This replaces the wait of 12.15. It is recorded before any of U10's data exists: U9 was still training (about step 4,200 at 20:13), and U10 is built only after U9's fit samples.
+
+- **Level 10 starts:** the choice is recorded as `decide6.py user 10 start "<the user's words>"` (12.15), so `decide6.py next` does not wait at level 10. U10 runs as registered (sections 10.2 and 10.5, 12.11, 12.13): from U9, level 9's only arm, with U9's fit samples B and C, then dev6 and valid6 at L0.
+- **The chain ends after level 10,** its last level, as registered. 12.12 is checked on the chain's best run on dev6 among U2 (the first parent) and levels 3 to 10; condition 4 reads levels 9 and 10.
+- **Everything stops after U10:** the choice is recorded once as `decide6.py end "<the user's words>"`. When the chain has ended, `decide6.py next` records the end as before, then writes "HOLD end" to the queue log and waits instead of letting the queue go on. Both queues are then stopped: the main queue (waiting there) and `queue_ud.sh` (still waiting for the main queue). Not run:
+  - valid6 for S2 and S2s (part 3 of the main queue);
+  - U1 as registered and its diagnostics, and the fit samples B for runs without one (part 4);
+  - UD (12.14), so H12 is not tested;
+  - U1-hi.
+- **The whole report** is written from the saved results, with L0 on dev6 as the headline and every number produced by a script. It covers every run of round 2, the chain's decisions and paired differences, the 12.12 check, and what was not run.
+- **The selection and the final test are not run** under this choice. valid6 stays unread and sealed6 stays sealed. If the user later asks for the final test, the order is fixed now: valid6 for S2 and S2s first (part 3, as registered), then `decide6.py select` as written (sections 6, 10.4, 12.4 and 12.14; U1, U1-hi and UD have no valid6 result and so are not candidates), then sealed6 as written.
+- **Code:** `decide6.py` has a new `end` command and the hold after the chain's end. `make_report6.py` lists the stop among the round-2 decisions. Tests cover the hold, that level 10 still starts, and a stop recorded only once.
+- **Unchanged:** the rules of level 10, the selection rule and the gate, and the sealed split's rules.
