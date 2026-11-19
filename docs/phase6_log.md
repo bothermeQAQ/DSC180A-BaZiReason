@@ -390,3 +390,11 @@ Decisions, surprises and negative results, in order. Plan: [`phase6_execution_pr
   - **Against pre-registration 12.12** (the chain has not ended): on U8, condition 2 fails. Relations are 57/64 (89.1%), under 90%. Condition 3 holds (gap 3.9 points). For condition 4, levels 7 and 8 raised the best calendar count by 1 (203 to 204), fewer than 5. U6 meets conditions 2-4 but is no longer the chain's best run.
   - **UD** (12.14) now takes U8 as its parent and U9 as its twin, unless U9 or U10 passes 754. Derivation version 3 rewrites the two steps where U8's relations errors start: the collecting step and the trio step.
   - **Next** (PST): U8's valid6 run (from 15:23, not read). Then level 9 from U8: U8's fit samples, U9's build (about 16:50), training (about 4.1 h) and dev6 (about 21:30 Wednesday). Then level 10 from U9, with dev6 about 03:30 Thursday; the chain ends there. Then valid6 for S2 and S2s, U1 (about 10.5 h) and its diagnostics, `QUEUE_MAIN_DONE` about 20:00 Thursday, then UD (dev6 about 01:00 Friday).
+- **Level 10 waits for the user's choice (pre-registration 12.15).** The user wrote at 16:05: "once u9 is finished do not start u10 yet, update me, and i will decide whether to start u10 or not".
+  - Registered at 16:10 (commit `e5816ea`), before any of U9's data existed. The level-9 decision had already been made by the queue at 15:53 (U9 from U8), and U8's fit samples were being drawn.
+  - **Code** (commit `4eec276`), copied in while no queue step imports `decide6.py` or `make_report6.py` (the next import is the level-10 decision, after U9's valid6 run):
+    - after U9's valid6 run, `decide6.py next` waits and writes "HOLD level 10" to the queue log;
+    - `decide6.py user 10 start|stop "<the user's words>"` records the choice once in `round2.json`, and the waiting queue reads it within a minute;
+    - "stop" ends the chain after level 9 (`"ended_by": "user"`), and UD then follows from the chain's best run;
+    - `make_report6.py` lists the choice, a chain ended by the user and UD's decision.
+  - **Checks:** 7 new tests (`tests/test_phase6_hold.py`: no wait at level 9, the wait and "start", "stop" and UD after it, no effect after level 10, a choice recorded once and only for level 10, a half-written decision file); full suite 295 passed. Against the real decision log, no choice is recorded yet.
