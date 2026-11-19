@@ -1,0 +1,340 @@
+{
+ "recipe": "u9",
+ "data_recipe": "s2",
+ "seed": 2026111722,
+ "token_budget": 6000000,
+ "calendar_share": null,
+ "drop": [],
+ "extra_paraphrases": [
+  "data/phase6/blind/train6b.jsonl",
+  "data/phase6/blind/train6c.jsonl"
+ ],
+ "replies": null,
+ "excluded_charts": 6277,
+ "paraphrases_on_evaluation_charts_left_out": 1,
+ "rows_on_held_out_charts_left_out": {
+  "train": 0,
+  "valid": 0
+ },
+ "system": "short",
+ "parent": "u8",
+ "steps": 2,
+ "weighting": {
+  "source": "results/phase6/own_replies_p6u8_b.jsonl",
+  "left_out": 0,
+  "scored_wrong": {
+   "fact:xun_kong": [
+    100,
+    0
+   ],
+   "fact:element_count": [
+    100,
+    1
+   ],
+   "fact:missing_element": [
+    100,
+    0
+   ],
+   "fact:life_stage": [
+    100,
+    0
+   ],
+   "fact:ten_god_stem": [
+    100,
+    0
+   ],
+   "fact:ten_god_branch": [
+    100,
+    0
+   ],
+   "fact:hidden": [
+    100,
+    0
+   ],
+   "fact:luck_direction": [
+    100,
+    0
+   ],
+   "gods": [
+    100,
+    0
+   ],
+   "strength": [
+    100,
+    0
+   ],
+   "pattern": [
+    100,
+    0
+   ],
+   "yongshen": [
+    100,
+    1
+   ],
+   "interact": [
+    100,
+    5
+   ],
+   "flow": [
+    100,
+    0
+   ],
+   "domain": [
+    100,
+    4
+   ],
+   "overview": [
+    100,
+    1
+   ],
+   "ambig:yongshen_open": [
+    100,
+    0
+   ],
+   "ambig:no_rule": [
+    100,
+    0
+   ],
+   "star": [
+    100,
+    0
+   ],
+   "prediction": [
+    100,
+    0
+   ]
+  },
+  "error": {
+   "fact:xun_kong": 0.0098,
+   "fact:element_count": 0.0196,
+   "fact:missing_element": 0.0098,
+   "fact:life_stage": 0.0098,
+   "fact:ten_god_stem": 0.0098,
+   "fact:ten_god_branch": 0.0098,
+   "fact:hidden": 0.0098,
+   "fact:luck_direction": 0.0098,
+   "gods": 0.0098,
+   "strength": 0.0098,
+   "pattern": 0.0098,
+   "yongshen": 0.0196,
+   "interact": 0.0588,
+   "flow": 0.0098,
+   "domain": 0.049,
+   "overview": 0.0196,
+   "ambig:yongshen_open": 0.0098,
+   "ambig:no_rule": 0.0098,
+   "star": 0.0098,
+   "prediction": 0.0098
+  },
+  "weights": {
+   "fact:xun_kong": 0.05,
+   "fact:element_count": 0.05,
+   "fact:missing_element": 0.05,
+   "fact:life_stage": 0.05,
+   "fact:ten_god_stem": 0.05,
+   "fact:ten_god_branch": 0.05,
+   "fact:hidden": 0.05,
+   "fact:luck_direction": 0.05,
+   "gods": 0.05,
+   "strength": 0.05,
+   "pattern": 0.05,
+   "yongshen": 0.05,
+   "interact": 0.0588,
+   "flow": 0.05,
+   "domain": 0.05,
+   "overview": 0.05,
+   "ambig:yongshen_open": 0.05,
+   "ambig:no_rule": 0.05,
+   "star": 0.05,
+   "prediction": 0.05
+  }
+ },
+ "fit_sample_b_charts_blocked": 1991,
+ "calendar_weighting": {
+  "source": "results/phase6/own_replies_p6u8_c.jsonl",
+  "scored_wrong": {
+   "chart_facts:ok": [
+    40,
+    0
+   ],
+   "chart_plain:ok": [
+    40,
+    5
+   ],
+   "dst_fold:ambiguous": [
+    35,
+    0
+   ],
+   "dst_fold:ok": [
+    40,
+    7
+   ],
+   "dst_gap:invalid": [
+    24,
+    0
+   ],
+   "invalid:invalid": [
+    40,
+    7
+   ],
+   "invalid:unsupported": [
+    40,
+    0
+   ],
+   "jie_boundary:ambiguous": [
+    26,
+    0
+   ],
+   "jie_boundary:needs_tool": [
+    40,
+    7
+   ],
+   "jie_boundary:ok": [
+    40,
+    0
+   ],
+   "jie_window:needs_tool": [
+    40,
+    0
+   ],
+   "jie_window:ok": [
+    40,
+    17
+   ],
+   "missing:ambiguous": [
+    40,
+    0
+   ],
+   "missing:ok": [
+    31,
+    4
+   ],
+   "shanghai_dst:needs_tool": [
+    32,
+    1
+   ],
+   "shanghai_dst:ok": [
+    32,
+    0
+   ],
+   "tz_facts:ok": [
+    40,
+    0
+   ],
+   "tz_known:ok": [
+    40,
+    3
+   ],
+   "tz_needs_tool:needs_tool": [
+    40,
+    11
+   ],
+   "zi_transition:ambiguous": [
+    40,
+    0
+   ],
+   "zi_transition:ok": [
+    40,
+    1
+   ]
+  },
+  "weights": {
+   "chart_facts:ok": 0.506,
+   "chart_plain:ok": 1.4458,
+   "dst_fold:ambiguous": 1.0515,
+   "dst_fold:ok": 1.0515,
+   "dst_gap:invalid": 0.506,
+   "invalid:invalid": 0.9874,
+   "invalid:unsupported": 0.9874,
+   "jie_boundary:ambiguous": 0.7497,
+   "jie_boundary:needs_tool": 0.7497,
+   "jie_boundary:ok": 0.7497,
+   "jie_window:needs_tool": 2.2216,
+   "jie_window:ok": 2.2216,
+   "missing:ambiguous": 0.6932,
+   "missing:ok": 0.6932,
+   "shanghai_dst:needs_tool": 0.506,
+   "shanghai_dst:ok": 0.506,
+   "tz_facts:ok": 0.506,
+   "tz_known:ok": 0.9639,
+   "tz_needs_tool:needs_tool": 2.8916,
+   "zi_transition:ambiguous": 0.506,
+   "zi_transition:ok": 0.506
+  },
+  "by": "family"
+ },
+ "compose_share": 0.0,
+ "years": "life",
+ "files": {
+  "train.jsonl": {
+   "sha256": "0f32b8d5aa458ee1aaf469855eb93ed79fe4c42bb902609f89631d105fa01a5b",
+   "rows": 10643
+  },
+  "valid.jsonl": {
+   "sha256": "3e8b80815b5e02ac4f3432fbe1d286a91045044e67afc72b4b461d32bc85781d",
+   "rows": 275
+  }
+ },
+ "train_summary": {
+  "rows": 10643,
+  "tokens_estimate": 6001611,
+  "families": {
+   "procedure": 5810,
+   "contrast": 710,
+   "chart_plain": 465,
+   "strict_audit": 368,
+   "verify": 365,
+   "jie_window": 350,
+   "mcq3": 254,
+   "invalid": 251,
+   "zi_transition": 212,
+   "claims": 207,
+   "v3_strict": 195,
+   "internal": 172,
+   "jie_boundary": 159,
+   "tz_known": 156,
+   "v4_reasoned": 149,
+   "multi_turn": 146,
+   "dialog": 130,
+   "tz_needs_tool": 106,
+   "dst_fold": 99,
+   "missing": 82,
+   "counterfactual": 70,
+   "policy": 65,
+   "chart_facts": 41,
+   "replay_mcq": 30,
+   "tz_facts": 23,
+   "shanghai_dst": 18,
+   "dst_gap": 10
+  },
+  "family_tokens": {
+   "procedure": 3000495,
+   "contrast": 480012,
+   "strict_audit": 371959,
+   "chart_plain": 287651,
+   "verify": 268903,
+   "v4_reasoned": 207141,
+   "v3_strict": 193001,
+   "mcq3": 142779,
+   "jie_window": 140951,
+   "zi_transition": 129274,
+   "claims": 125476,
+   "jie_boundary": 97571,
+   "tz_known": 97319,
+   "dst_fold": 76720,
+   "dialog": 66259,
+   "invalid": 65849,
+   "internal": 40794,
+   "multi_turn": 39371,
+   "chart_facts": 32760,
+   "counterfactual": 29036,
+   "missing": 27566,
+   "tz_needs_tool": 22294,
+   "tz_facts": 18401,
+   "policy": 15412,
+   "replay_mcq": 14420,
+   "shanghai_dst": 7860,
+   "dst_gap": 2337
+  }
+ }
+}
