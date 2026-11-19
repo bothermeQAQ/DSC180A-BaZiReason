@@ -140,9 +140,227 @@ Question-type weights of the continuations (parent's error on fit sample B; weig
 
 Dropped from U1: nothing. Calendar share for U1: unchanged (28%). Best S run on dev6: S2 + wording.
 
+## Selection (valid6, frozen rule: preregistration sections 6 and 10.4)
+
+| Candidate | All rule items, L0 | Calendar minus Phase 2 [95%] | Calendar gate (lower bound ≥ −7) |
+|---|---:|---|---|
+| S2 + wording | 643/813 (79.1%) | -16.7 [-23.3, -10.1] | fails |
+| S2s (S2 with the short prompt) | 667/813 (82.0%) | -8.6 [-15.9, -1.1] | fails |
+| U2 short prompt | 712/813 (87.6%) | +16.0 [+10.2, +21.8] | passes |
+| U3 continuation | 704/813 (86.6%) | +16.0 [+10.1, +21.4] | passes |
+| U3v continuation, steps v2 | 712/813 (87.6%) | +24.9 [+19.4, +30.7] | passes |
+| U4 continuation | 726/813 (89.3%) | +25.7 [+20.0, +31.4] | passes |
+| U4c continuation, + composition rows | 724/813 (89.1%) | +24.5 [+18.3, +30.5] | passes |
+| U5 continuation | 728/813 (89.5%) | +24.9 [+18.9, +30.8] | passes |
+| U6 continuation | 728/813 (89.5%) | +27.5 [+21.9, +33.3] | passes |
+| U7 continuation | 728/813 (89.5%) | +27.1 [+21.6, +32.9] | passes |
+| U8 continuation | 736/813 (90.5%) | +26.8 [+21.2, +32.8] | passes |
+| U9 continuation | 719/813 (88.4%) | +27.9 [+22.4, +33.6] | passes |
+| U10 continuation | 726/813 (89.3%) | +26.8 [+21.3, +32.3] | passes |
+
+**Selected: U8 continuation.**
+
 ## Split `valid6`
 
-Scored at L0 so far: Phase 2, U2 short prompt, U3 continuation, U3v continuation, steps v2, U4c continuation, + composition rows, U4 continuation, U5 continuation, U6 continuation, U7 continuation, U8 continuation, U9 continuation, U10 continuation. This split is for selection only, so its tables are written when `selection.json` exists (`scripts/phase6/decide6.py select`).
+### Model alone (L0) on `valid6`
+
+| Model | Template rules | Independent | Blind wording | Combinations | Counterfactual | All rule items | Calendar |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| S2 + wording | 210/289 (72.7%) | 128/140 (91.4%) | 167/184 (90.8%) | 48/100 (48.0%) | 90/100 (90.0%) | **643/813 (79.1%)** | 131/269 (48.7%) |
+| U2 short prompt | 252/289 (87.2%) | 137/140 (97.9%) | 182/184 (98.9%) | 46/100 (46.0%) | 95/100 (95.0%) | **712/813 (87.6%)** | 219/269 (81.4%) |
+| U3 continuation | 265/289 (91.7%) | 126/140 (90.0%) | 181/184 (98.4%) | 38/100 (38.0%) | 94/100 (94.0%) | **704/813 (86.6%)** | 219/269 (81.4%) |
+| U3v continuation, steps v2 | 269/289 (93.1%) | 134/140 (95.7%) | 182/184 (98.9%) | 30/100 (30.0%) | 97/100 (97.0%) | **712/813 (87.6%)** | 243/269 (90.3%) |
+| U4c continuation, + composition rows | 270/289 (93.4%) | 139/140 (99.3%) | 182/184 (98.9%) | 37/100 (37.0%) | 96/100 (96.0%) | **724/813 (89.1%)** | 242/269 (90.0%) |
+| U4 continuation | 281/289 (97.2%) | 133/140 (95.0%) | 180/184 (97.8%) | 36/100 (36.0%) | 96/100 (96.0%) | **726/813 (89.3%)** | 245/269 (91.1%) |
+| U5 continuation | 279/289 (96.5%) | 136/140 (97.1%) | 183/184 (99.5%) | 31/100 (31.0%) | 99/100 (99.0%) | **728/813 (89.5%)** | 243/269 (90.3%) |
+| U6 continuation | 281/289 (97.2%) | 135/140 (96.4%) | 183/184 (99.5%) | 33/100 (33.0%) | 96/100 (96.0%) | **728/813 (89.5%)** | 250/269 (92.9%) |
+| U7 continuation | 280/289 (96.9%) | 139/140 (99.3%) | 184/184 (100.0%) | 29/100 (29.0%) | 96/100 (96.0%) | **728/813 (89.5%)** | 249/269 (92.6%) |
+| U8 continuation | 276/289 (95.5%) | 136/140 (97.1%) | 182/184 (98.9%) | 45/100 (45.0%) | 97/100 (97.0%) | **736/813 (90.5%)** | 248/269 (92.2%) |
+| U9 continuation | 279/289 (96.5%) | 139/140 (99.3%) | 183/184 (99.5%) | 21/100 (21.0%) | 97/100 (97.0%) | **719/813 (88.4%)** | 251/269 (93.3%) |
+| U10 continuation | 279/289 (96.5%) | 139/140 (99.3%) | 181/184 (98.4%) | 30/100 (30.0%) | 97/100 (97.0%) | **726/813 (89.3%)** | 248/269 (92.2%) |
+| S2s (S2 with the short prompt) | 218/289 (75.4%) | 136/140 (97.1%) | 173/184 (94.0%) | 52/100 (52.0%) | 88/100 (88.0%) | **667/813 (82.0%)** | 153/269 (56.9%) |
+
+### Round 2 (`valid6`, L0): paired differences, points [95%]
+
+| Hypothesis | Comparison | Rule items | Calendar |
+|---|---|---|---|
+| H7: short system prompt at equal compute (6.0 M-token twin) | S2s (S2 with the short prompt) minus S2 + wording | +3.0 [-0.2, +6.0] | +8.2 [+2.1, +14.4] |
+| Description: 15 M against 6.0 M tokens, same recipe and prompt | U2 short prompt minus S2s (S2 with the short prompt) | +5.5 [+2.9, +8.3] | +24.5 [+17.4, +31.8] |
+| Description: 15 M tokens and the short prompt against the best screening run | U2 short prompt minus S2 + wording | +8.5 [+5.6, +11.5] | +32.7 [+25.4, +39.5] |
+| H8: weighted continuation | U3 continuation minus U2 short prompt | -1.0 [-3.2, +1.1] | +0.0 [-5.6, +5.5] |
+| H8: weighted continuation | U3v continuation, steps v2 minus U2 short prompt | +0.0 [-2.1, +2.2] | +8.9 [+4.2, +14.1] |
+| H8: weighted continuation | U4 continuation minus U3v continuation, steps v2 | +1.7 [-0.1, +3.5] | +0.7 [-2.6, +4.0] |
+| H8: weighted continuation | U4c continuation, + composition rows minus U3v continuation, steps v2 | +1.5 [-0.6, +3.5] | -0.4 [-5.1, +3.9] |
+| H8: weighted continuation | U5 continuation minus U4 continuation | +0.2 [-1.4, +1.9] | -0.7 [-5.1, +3.4] |
+| H8: weighted continuation | U6 continuation minus U5 continuation | +0.0 [-1.7, +1.7] | +2.6 [-1.1, +6.5] |
+| H8: weighted continuation | U7 continuation minus U6 continuation | +0.0 [-1.9, +1.9] | -0.4 [-2.7, +1.8] |
+| H8: weighted continuation | U8 continuation minus U7 continuation | +1.0 [-0.7, +2.8] | -0.4 [-2.9, +1.9] |
+| H8: weighted continuation | U9 continuation minus U8 continuation | -2.1 [-4.2, -0.1] | +1.1 [-1.6, +4.1] |
+| H8: weighted continuation | U10 continuation minus U9 continuation | +0.9 [-0.9, +2.6] | -1.1 [-3.3, +1.1] |
+| H11: composition rows | U4c continuation, + composition rows minus U4 continuation | -0.2 [-2.2, +1.7] | -1.1 [-4.5, +2.1] |
+| H11, only the held-out combinations | U4c continuation, + composition rows minus U4 continuation | +1.0 [-11.0, +13.0] | – |
+| H9: derivation version 2 | U3v continuation, steps v2 minus U3 continuation | +1.0 [-1.2, +3.3] | +8.9 [+4.0, +14.3] |
+| H9, only the items whose derivation changed | U3v continuation, steps v2 minus U3 continuation | +2.7 [-0.5, +6.0] | – |
+
+Rule items are all of the split's unless the row names a subset ("only ...").
+
+### H9, second reading (`valid6`, L0): replies with a wrong statement (claim checker; lower is better)
+
+| | U3 continuation | U3v continuation, steps v2 | U3v continuation, steps v2 minus U3 continuation, points [95%] |
+|---|---:|---:|---|
+| All rule items: replies with a wrong statement | 102/813 (12.5%) | 61/813 (7.5%) | -5.0 [-7.0, -3.1] |
+| Area-of-life items: replies with a wrong hidden-stem statement | 28/45 (62.2%) | 1/45 (2.2%) | -60.0 [-75.6, -44.4] |
+
+### Statements in L0 replies (`valid6`, claim checker)
+
+Look-ups: day master, hidden stems, pillars, spouse star. Computed: 旬空, element counts, pattern, relations, flow years, Ten Gods, strength, stars, life stages.
+
+| Model | Look-up statements wrong | Computed statements wrong | 旬空 | Element counts | Pattern | Relations | Replies with a wrong statement | Loops |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| S2 + wording | 16/2062 (0.8%) | 271/2051 (13.2%) | 17/118 (14.4%) | – | 32/107 (29.9%) | 180/1126 (16.0%) | 85/813 (10.5%) | 9 |
+| U2 short prompt | 36/2097 (1.7%) | 204/1773 (11.5%) | 0/114 (0.0%) | – | 24/102 (23.5%) | 21/871 (2.4%) | 82/813 (10.1%) | 0 |
+| U3 continuation | 41/2186 (1.9%) | 203/1925 (10.5%) | 16/193 (8.3%) | – | 33/106 (31.1%) | 52/922 (5.6%) | 102/813 (12.5%) | 0 |
+| U3v continuation, steps v2 | 1/2054 (0.0%) | 209/1835 (11.4%) | 21/149 (14.1%) | – | 23/102 (22.5%) | 26/908 (2.9%) | 61/813 (7.5%) | 1 |
+| U4c continuation, + composition rows | 0/2001 (0.0%) | 50/1735 (2.9%) | 2/73 (2.7%) | – | 26/101 (25.7%) | 16/888 (1.8%) | 41/813 (5.0%) | 0 |
+| U4 continuation | 0/2026 (0.0%) | 44/1707 (2.6%) | 0/71 (0.0%) | – | 27/102 (26.5%) | 16/888 (1.8%) | 39/813 (4.8%) | 0 |
+| U5 continuation | 0/1983 (0.0%) | 52/1758 (3.0%) | 1/90 (1.1%) | – | 26/102 (25.5%) | 10/892 (1.1%) | 42/813 (5.2%) | 0 |
+| U6 continuation | 0/2074 (0.0%) | 66/1786 (3.7%) | 0/78 (0.0%) | – | 30/105 (28.6%) | 13/892 (1.5%) | 47/813 (5.8%) | 1 |
+| U7 continuation | 0/2065 (0.0%) | 70/1808 (3.9%) | 0/71 (0.0%) | – | 40/122 (32.8%) | 22/940 (2.3%) | 56/813 (6.9%) | 1 |
+| U8 continuation | 0/2099 (0.0%) | 54/1789 (3.0%) | 0/85 (0.0%) | 1/1 (100.0%) | 40/120 (33.3%) | 12/918 (1.3%) | 51/813 (6.3%) | 1 |
+| U9 continuation | 0/2032 (0.0%) | 67/1797 (3.7%) | 1/81 (1.2%) | – | 34/114 (29.8%) | 24/923 (2.6%) | 46/813 (5.7%) | 3 |
+| U10 continuation | 1/2075 (0.0%) | 77/1772 (4.3%) | 3/69 (4.3%) | – | 30/108 (27.8%) | 16/898 (1.8%) | 55/813 (6.8%) | 3 |
+| S2s (S2 with the short prompt) | 24/2093 (1.1%) | 185/1753 (10.6%) | 3/95 (3.2%) | – | 31/97 (32.0%) | 40/833 (4.8%) | 93/813 (11.4%) | 2 |
+
+### Wording (`valid6`, L0)
+
+| Model | Template rules, training wordings | Template rules, held-out wording | Blind wording |
+|---|---:|---:|---:|
+| S2 + wording | 121/154 (78.6%) | 89/135 (65.9%) | 167/184 (90.8%) |
+| U2 short prompt | 136/154 (88.3%) | 116/135 (85.9%) | 182/184 (98.9%) |
+| U3 continuation | 145/154 (94.2%) | 120/135 (88.9%) | 181/184 (98.4%) |
+| U3v continuation, steps v2 | 143/154 (92.9%) | 126/135 (93.3%) | 182/184 (98.9%) |
+| U4c continuation, + composition rows | 150/154 (97.4%) | 120/135 (88.9%) | 182/184 (98.9%) |
+| U4 continuation | 152/154 (98.7%) | 129/135 (95.6%) | 180/184 (97.8%) |
+| U5 continuation | 150/154 (97.4%) | 129/135 (95.6%) | 183/184 (99.5%) |
+| U6 continuation | 151/154 (98.1%) | 130/135 (96.3%) | 183/184 (99.5%) |
+| U7 continuation | 149/154 (96.8%) | 131/135 (97.0%) | 184/184 (100.0%) |
+| U8 continuation | 148/154 (96.1%) | 128/135 (94.8%) | 182/184 (98.9%) |
+| U9 continuation | 151/154 (98.1%) | 128/135 (94.8%) | 183/184 (99.5%) |
+| U10 continuation | 154/154 (100.0%) | 125/135 (92.6%) | 181/184 (98.4%) |
+| S2s (S2 with the short prompt) | 124/154 (80.5%) | 94/135 (69.6%) | 173/184 (94.0%) |
+
+### Question years (`valid6`, L0): inside or outside 2024-2049
+
+Up to U3v every training row asked about years 2024-2049; from level 4 the template rows ask about years of the chart's life.
+
+| Model | Flow year, inside | Flow year, outside | Area of life, inside | Area of life, outside |
+|---|---:|---:|---:|---:|
+| S2 + wording | 10/13 (76.9%) | 35/46 (76.1%) | 10/13 (76.9%) | 18/32 (56.2%) |
+| U2 short prompt | 13/13 (100.0%) | 38/46 (82.6%) | 12/13 (92.3%) | 13/32 (40.6%) |
+| U3 continuation | 13/13 (100.0%) | 39/46 (84.8%) | 11/13 (84.6%) | 23/32 (71.9%) |
+| U3v continuation, steps v2 | 13/13 (100.0%) | 43/46 (93.5%) | 11/13 (84.6%) | 19/32 (59.4%) |
+| U4c continuation, + composition rows | 13/13 (100.0%) | 41/46 (89.1%) | 12/13 (92.3%) | 28/32 (87.5%) |
+| U4 continuation | 13/13 (100.0%) | 43/46 (93.5%) | 13/13 (100.0%) | 31/32 (96.9%) |
+| U5 continuation | 13/13 (100.0%) | 45/46 (97.8%) | 13/13 (100.0%) | 29/32 (90.6%) |
+| U6 continuation | 13/13 (100.0%) | 43/46 (93.5%) | 12/13 (92.3%) | 30/32 (93.8%) |
+| U7 continuation | 13/13 (100.0%) | 44/46 (95.7%) | 12/13 (92.3%) | 30/32 (93.8%) |
+| U8 continuation | 13/13 (100.0%) | 45/46 (97.8%) | 11/13 (84.6%) | 29/32 (90.6%) |
+| U9 continuation | 13/13 (100.0%) | 43/46 (93.5%) | 13/13 (100.0%) | 27/32 (84.4%) |
+| U10 continuation | 13/13 (100.0%) | 45/46 (97.8%) | 12/13 (92.3%) | 32/32 (100.0%) |
+| S2s (S2 with the short prompt) | 12/13 (92.3%) | 26/46 (56.5%) | 11/13 (84.6%) | 17/32 (53.1%) |
+
+### Counterfactual pairs (`valid6`, L0): one character changed, the answer changes
+
+| Model | Items right | Pairs right on both charts | Pairs with the same answer on both charts |
+|---|---:|---:|---:|
+| S2 + wording | 90/100 (90.0%) | 42/50 (84.0%) | 1/50 (2.0%) |
+| U2 short prompt | 95/100 (95.0%) | 46/50 (92.0%) | 1/50 (2.0%) |
+| U3 continuation | 94/100 (94.0%) | 46/50 (92.0%) | 1/50 (2.0%) |
+| U3v continuation, steps v2 | 97/100 (97.0%) | 47/50 (94.0%) | 0/50 (0.0%) |
+| U4c continuation, + composition rows | 96/100 (96.0%) | 47/50 (94.0%) | 0/50 (0.0%) |
+| U4 continuation | 96/100 (96.0%) | 47/50 (94.0%) | 0/50 (0.0%) |
+| U5 continuation | 99/100 (99.0%) | 49/50 (98.0%) | 0/50 (0.0%) |
+| U6 continuation | 96/100 (96.0%) | 46/50 (92.0%) | 0/50 (0.0%) |
+| U7 continuation | 96/100 (96.0%) | 47/50 (94.0%) | 0/50 (0.0%) |
+| U8 continuation | 97/100 (97.0%) | 48/50 (96.0%) | 0/50 (0.0%) |
+| U9 continuation | 97/100 (97.0%) | 48/50 (96.0%) | 0/50 (0.0%) |
+| U10 continuation | 97/100 (97.0%) | 48/50 (96.0%) | 0/50 (0.0%) |
+| S2s (S2 with the short prompt) | 88/100 (88.0%) | 40/50 (80.0%) | 3/50 (6.0%) |
+
+### By question type (`valid6`, L0, all rule items)
+
+| Type | n | S2 + wording | U2 short prompt | U3 continuation | U3v continuation, steps v2 | U4c continuation, + composition rows | U4 continuation | U5 continuation | U6 continuation | U7 continuation | U8 continuation | U9 continuation | U10 continuation | S2s (S2 with the short prompt) |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| interact | 63 | 70% | 94% | 89% | 94% | 92% | 94% | 94% | 95% | 94% | 92% | 98% | 95% | 67% |
+| flow | 59 | 76% | 86% | 88% | 95% | 92% | 95% | 98% | 95% | 97% | 98% | 95% | 98% | 64% |
+| pattern | 54 | 76% | 94% | 94% | 100% | 91% | 98% | 98% | 100% | 100% | 98% | 100% | 87% | 93% |
+| strength | 53 | 79% | 100% | 100% | 100% | 100% | 100% | 100% | 100% | 100% | 98% | 100% | 100% | 85% |
+| gods | 49 | 100% | 96% | 96% | 100% | 100% | 100% | 100% | 100% | 98% | 100% | 98% | 100% | 98% |
+| fact:xun_kong | 46 | 100% | 100% | 100% | 100% | 98% | 100% | 98% | 100% | 100% | 100% | 100% | 100% | 100% |
+| domain | 45 | 62% | 56% | 76% | 67% | 89% | 98% | 93% | 93% | 93% | 89% | 89% | 98% | 62% |
+| fact:ten_god_stem | 44 | 98% | 100% | 100% | 100% | 100% | 100% | 100% | 100% | 100% | 100% | 100% | 100% | 95% |
+| fact:life_stage | 44 | 70% | 93% | 93% | 100% | 100% | 98% | 100% | 100% | 100% | 98% | 100% | 100% | 80% |
+| fact:element_count | 44 | 93% | 91% | 80% | 82% | 93% | 75% | 91% | 84% | 93% | 86% | 89% | 91% | 100% |
+| yongshen | 40 | 70% | 98% | 98% | 100% | 100% | 100% | 100% | 100% | 100% | 100% | 100% | 100% | 85% |
+| ambig | 32 | 100% | 100% | 100% | 97% | 97% | 97% | 100% | 100% | 100% | 100% | 100% | 100% | 100% |
+| fact:ten_god_branch | 30 | 90% | 100% | 100% | 100% | 100% | 100% | 100% | 100% | 100% | 100% | 100% | 100% | 100% |
+| fact:hidden | 30 | 100% | 100% | 100% | 100% | 100% | 100% | 100% | 100% | 100% | 100% | 100% | 97% | 100% |
+| combo:flow_stage | 25 | 20% | 20% | 16% | 16% | 0% | 4% | 12% | 12% | 28% | 8% | 12% | 16% | 12% |
+| combo:kong_positions | 25 | 24% | 40% | 32% | 12% | 52% | 24% | 16% | 32% | 4% | 28% | 16% | 36% | 60% |
+| combo:revealed | 25 | 64% | 56% | 48% | 40% | 40% | 48% | 32% | 44% | 24% | 72% | 24% | 28% | 60% |
+| combo:god_count | 25 | 84% | 68% | 56% | 52% | 56% | 68% | 64% | 44% | 60% | 72% | 32% | 40% | 76% |
+| fact:luck_direction | 24 | 100% | 100% | 83% | 100% | 100% | 100% | 100% | 100% | 100% | 100% | 100% | 100% | 100% |
+| overview | 20 | 45% | 95% | 100% | 100% | 95% | 100% | 100% | 100% | 95% | 90% | 100% | 100% | 55% |
+| star | 16 | 94% | 94% | 100% | 100% | 100% | 94% | 88% | 88% | 100% | 100% | 100% | 100% | 100% |
+| fact:missing_element | 10 | 100% | 100% | 100% | 100% | 100% | 100% | 100% | 100% | 100% | 100% | 100% | 100% | 100% |
+| prediction | 10 | 100% | 100% | 100% | 100% | 100% | 100% | 100% | 100% | 100% | 100% | 100% | 100% | 100% |
+
+### Calendar requests (`valid6`, L0)
+
+| Model | Right | Minus Phase 2 [95%] | Balanced decision accuracy | Answerable refused | Definite where none exists |
+|---|---:|---|---:|---:|---:|
+| Phase 2 | 176/269 (65.4%) | – | 68.8% | 29/175 | 41/94 |
+| S2 + wording | 131/269 (48.7%) | -16.7 [-23.3, -10.1] | 56.1% | 12/175 | 75/94 |
+| U2 short prompt | 219/269 (81.4%) | +16.0 [+10.2, +21.8] | 86.4% | 14/175 | 17/94 |
+| U3 continuation | 219/269 (81.4%) | +16.0 [+10.1, +21.4] | 79.9% | 7/175 | 33/94 |
+| U3v continuation, steps v2 | 243/269 (90.3%) | +24.9 [+19.4, +30.7] | 93.1% | 11/175 | 7/94 |
+| U4c continuation, + composition rows | 242/269 (90.0%) | +24.5 [+18.3, +30.5] | 92.6% | 9/175 | 9/94 |
+| U4 continuation | 245/269 (91.1%) | +25.7 [+20.0, +31.4] | 92.1% | 9/175 | 10/94 |
+| U5 continuation | 243/269 (90.3%) | +24.9 [+18.9, +30.8] | 91.9% | 19/175 | 4/94 |
+| U6 continuation | 250/269 (92.9%) | +27.5 [+21.9, +33.3] | 94.0% | 8/175 | 7/94 |
+| U7 continuation | 249/269 (92.6%) | +27.1 [+21.6, +32.9] | 93.2% | 7/175 | 9/94 |
+| U8 continuation | 248/269 (92.2%) | +26.8 [+21.2, +32.8] | 93.2% | 7/175 | 9/94 |
+| U9 continuation | 251/269 (93.3%) | +27.9 [+22.4, +33.6] | 93.5% | 6/175 | 9/94 |
+| U10 continuation | 248/269 (92.2%) | +26.8 [+21.3, +32.3] | 92.4% | 6/175 | 11/94 |
+| S2s (S2 with the short prompt) | 153/269 (56.9%) | -8.6 [-15.9, -1.1] | 62.4% | 61/175 | 31/94 |
+
+### Calendar requests by kind (`valid6`, L0)
+
+Right answers by family and expected answer. From level 4 the continuations weight the calendar rows by family, not by kind (preregistration 12.13).
+
+| Family | Expected | n | Phase 2 | U2 short prompt | U3 continuation | U3v continuation, steps v2 | U4 continuation | U4c continuation, + composition rows | U5 continuation | U6 continuation | U7 continuation | U8 continuation | U9 continuation | U10 continuation |
+|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| chart_facts | ok | 19 | 19 | 18 | 19 | 19 | 19 | 19 | 18 | 19 | 19 | 19 | 19 | 19 |
+| chart_plain | ok | 34 | 17 | 28 | 29 | 28 | 32 | 27 | 29 | 33 | 31 | 32 | 32 | 32 |
+| dst_fold | ambiguous | 2 | 1 | 2 | 2 | 1 | 2 | 2 | 2 | 2 | 2 | 2 | 2 | 2 |
+| dst_fold | ok | 13 | 11 | 10 | 10 | 12 | 10 | 10 | 10 | 10 | 10 | 10 | 10 | 10 |
+| dst_gap | invalid | 5 | 5 | 5 | 5 | 5 | 5 | 5 | 5 | 5 | 5 | 5 | 5 | 5 |
+| invalid | invalid | 12 | 9 | 11 | 10 | 10 | 10 | 11 | 10 | 11 | 11 | 11 | 11 | 11 |
+| invalid | unsupported | 12 | 9 | 11 | 9 | 11 | 11 | 11 | 11 | 11 | 11 | 11 | 11 | 11 |
+| jie_boundary | ambiguous | 3 | 3 | 3 | 3 | 3 | 3 | 3 | 3 | 3 | 3 | 3 | 3 | 3 |
+| jie_boundary | needs_tool | 10 | 1 | 7 | 2 | 8 | 9 | 10 | 10 | 9 | 9 | 6 | 10 | 7 |
+| jie_boundary | ok | 20 | 17 | 19 | 19 | 19 | 19 | 20 | 20 | 20 | 20 | 19 | 20 | 20 |
+| jie_window | needs_tool | 12 | 2 | 8 | 0 | 12 | 11 | 10 | 10 | 10 | 10 | 11 | 10 | 11 |
+| jie_window | ok | 12 | 9 | 7 | 11 | 9 | 9 | 11 | 11 | 10 | 11 | 11 | 11 | 11 |
+| missing | ambiguous | 13 | 13 | 12 | 11 | 13 | 13 | 13 | 13 | 13 | 13 | 13 | 13 | 13 |
+| missing | ok | 3 | 2 | 2 | 2 | 2 | 2 | 2 | 1 | 2 | 2 | 2 | 2 | 2 |
+| shanghai_dst | needs_tool | 5 | 0 | 0 | 0 | 4 | 0 | 0 | 5 | 3 | 1 | 3 | 0 | 0 |
+| shanghai_dst | ok | 5 | 4 | 4 | 5 | 5 | 5 | 5 | 5 | 5 | 5 | 5 | 5 | 5 |
+| tz_facts | ok | 10 | 10 | 10 | 10 | 10 | 10 | 10 | 10 | 10 | 10 | 10 | 10 | 10 |
+| tz_known | ok | 19 | 9 | 14 | 15 | 13 | 16 | 15 | 17 | 17 | 17 | 16 | 17 | 17 |
+| tz_needs_tool | needs_tool | 10 | 6 | 10 | 9 | 10 | 10 | 10 | 10 | 10 | 10 | 10 | 10 | 10 |
+| zi_transition | ambiguous | 10 | 2 | 7 | 9 | 10 | 10 | 10 | 10 | 10 | 10 | 10 | 10 | 10 |
+| zi_transition | ok | 40 | 27 | 31 | 39 | 39 | 39 | 38 | 33 | 37 | 39 | 39 | 40 | 39 |
 
 ## Split `dev6`
 
