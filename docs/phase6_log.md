@@ -398,3 +398,12 @@ Decisions, surprises and negative results, in order. Plan: [`phase6_execution_pr
     - "stop" ends the chain after level 9 (`"ended_by": "user"`), and UD then follows from the chain's best run;
     - `make_report6.py` lists the choice, a chain ended by the user and UD's decision.
   - **Checks:** 7 new tests (`tests/test_phase6_hold.py`: no wait at level 9, the wait and "start", "stop" and UD after it, no effect after level 10, a choice recorded once and only for level 10, a half-written decision file); full suite 295 passed. Against the real decision log, no choice is recorded yet.
+- **Level 10 starts, and everything stops after it (pre-registration 12.16).** The user wrote (received by 20:13): "nevermind, since it is finishing around 10pm, just start u10 as well. once u10 is finished give the whole report and stop everything".
+  - Registered at 20:15 (commit `e79cc56`), before any of U10's data existed: U9 was at about step 4,200 of its training.
+  - **Code** (commit `e1bb4db`), written while no queue step imports `decide6.py` or `make_report6.py` (the next import is the level-10 decision, after U9's valid6 run):
+    - `decide6.py end "<the user's words>"` records the stop once in `round2.json`;
+    - when the chain has ended, `decide6.py next` records the end as before, then holds and writes "HOLD end" to the queue log, instead of letting the queue go on to part 3;
+    - `make_report6.py` lists the choice among the round-2 decisions.
+  - **Recorded** at 20:24 with the user's words: `decide6.py user 10 start` and `decide6.py end`. Read back from `round2.json`: level 10's choice is start, and the stop is recorded.
+  - **Checks:** 4 new tests (level 10 still starts with the stop recorded; after the chain, `next` records the end and holds without printing "stop"; the stop is recorded once, with the user's words; the report line); full suite 299 passed.
+  - **What follows:** U10 from U9 (U9's fit samples from about 22:00, training about 4.1 h, dev6 about 03:40 Thursday, valid6 about 04:10), then HOLD end; both queues are then stopped and the whole report is written. Not run: valid6 for S2 and S2s, U1 and its diagnostics, UD (so H12 is untested), U1-hi. The selection and sealed6 are not run.
