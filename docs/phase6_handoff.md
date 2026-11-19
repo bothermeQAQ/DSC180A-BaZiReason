@@ -1,6 +1,38 @@
 # Phase 6 handoff: state, findings and how to continue
 
-Last updated: Sunday 15 November 2026, 23:10 PST, by the lead agent (Claude Fable 5.2). Branch `phase6/model-capability`; commit locally, never push. Read this file first, then [`phase6_log.md`](phase6_log.md) (what happened, in order) and [`phase6_preregistration.md`](phase6_preregistration.md) (the frozen rules; sections 10 to 12 are the current plan).
+Last updated: Thursday 19 November 2026, 04:30 PST, by the lead agent (section 0 is current; sections 1 to 3 and 9 are history). Branch `phase6/model-capability`; commit locally, never push. Read this file first, then [`phase6_log.md`](phase6_log.md) (what happened, in order) and [`phase6_preregistration.md`](phase6_preregistration.md) (the frozen rules; sections 10 to 12 are the current plan).
+
+## 0. State on Thursday 19 November 2026, 04:30 PST
+
+This section supersedes sections 1 to 3 and 9.
+
+**Nothing is running.**
+
+- The chain ended after level 10. `round2.json` has the end entry: level 11, no runs, two levels without a new best.
+- Everything stopped as the user chose (pre-registration 12.16). The queue held at "HOLD end" (04:23), and the lead agent stopped both queues at 04:24.
+- `valid6` is unread and `sealed6` is sealed. `results/phase6/selection.json` does not exist.
+
+**Read first:**
+
+- [`phase6_round2_report.md`](phase6_round2_report.md): the whole report.
+  - The best run on dev6 is U8, with 754/822.
+  - 12.12 is not met: relations are 57/64 on U8.
+  - On the 722 non-combination items, U6 (711), U9 (706) and U8 (704) are level.
+- Then [`phase6_log.md`](phase6_log.md).
+
+**Run nothing unless the user asks.** If they do, use one of these two paths. Keep one GPU job at a time.
+
+1. **UD (12.14), only if it can start by 27 November,** and before the final test, since UD is a candidate. `queue_ud.sh` waits for `QUEUE_MAIN_DONE`, which will never come now, so run its steps after the wait (lines 21 to 40) by hand or from a copy without the wait:
+   1. `.venv/bin/python scripts/phase6/decide6.py ud` records parent U8 and twin U9, and prints `ud u8 --steps 3 --seed-from u9`.
+   2. U8's fit samples B and C already exist.
+   3. Build with those arguments, train (about 4.2 h), then dev6 and valid6 at L0.
+   4. After dev6, run: truncation, the report, `first_error.py --labels p6ud`, `decision_first.py dev6 p6ud p6u9`. H12 is UD minus U9.
+2. **The final test, in the order fixed by 12.16:**
+   1. `PYTHONPATH=src .venv-mlx/bin/python scripts/phase6/run6.py --split valid6 --labels p6s2 p6s2s --parts rules indep blind combo cf calendar --levels L0` (about 1 h).
+   2. `PYTHONPATH=src .venv/bin/python scripts/phase6/decide6.py select`. Run it once; it opens the sealed split.
+   3. `nohup sh scripts/phase6/queue_sealed6.sh > artifacts/logs/p6_queue_sealed6.log 2>&1 &` (about 30 h). Every access is logged in `results/phase6/sealed_access.jsonl`.
+
+   U1, U1-hi and UD (if not run) have no valid6 result, so they are not candidates. `decide6.py sealed-extra` keeps only runs that have dev6 records.
 
 ## 1. What is running
 

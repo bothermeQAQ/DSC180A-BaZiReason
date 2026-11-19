@@ -2274,6 +2274,26 @@
      "p6u9": 730
     },
     "levels_without_a_new_best": 1
+   },
+   {
+    "decision": "next",
+    "level": 11,
+    "runs": [],
+    "parent": null,
+    "dev6_correct": {
+     "p6u2": 733,
+     "p6u3": 722,
+     "p6u3v": 730,
+     "p6u4": 740,
+     "p6u4c": 739,
+     "p6u5": 740,
+     "p6u6": 747,
+     "p6u7": 739,
+     "p6u8": 754,
+     "p6u9": 730,
+     "p6u10": 733
+    },
+    "levels_without_a_new_best": 2
    }
   ],
   "weights": {
@@ -3719,7 +3739,8 @@
   "p6u6",
   "p6u7",
   "p6u8",
-  "p6u9"
+  "p6u9",
+  "p6u10"
  ],
  "l0": {
   "dev6": {

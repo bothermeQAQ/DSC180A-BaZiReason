@@ -103,6 +103,7 @@ Tokenization: 0 of 60 stem-branch pairs are merged into one token, and 0 stems o
 - **Level 10, the user's choice (preregistration 12.15, 2026-11-18 20:24):** start it ("nevermind, since it is finishing around 10pm, just start u10 as well. once u10 is finished give the whole report and stop everything").
 - **After the chain, the user's choice (preregistration 12.16, 2026-11-18 20:24):** stop everything; not run: valid6 for S2 and S2s, U1 and its diagnostics, UD ("nevermind, since it is finishing around 10pm, just start u10 as well. once u10 is finished give the whole report and stop everything").
 - **Chain, level 10:** U10 continuation from U9 continuation (dev6 right answers on all rule items: U2 short prompt 733, U3 continuation 722, U3v continuation, steps v2 730, U4 continuation 740, U4c continuation, + composition rows 739, U5 continuation 740, U6 continuation 747, U7 continuation 739, U8 continuation 754, U9 continuation 730).
+- **Chain, level 11:** the loop ends (dev6 right answers on all rule items: U2 short prompt 733, U3 continuation 722, U3v continuation, steps v2 730, U4 continuation 740, U4c continuation, + composition rows 739, U5 continuation 740, U6 continuation 747, U7 continuation 739, U8 continuation 754, U9 continuation 730, U10 continuation 733).
 
 Question-type weights of the continuations (parent's error on fit sample B; weight = max(error, 0.05)):
 
@@ -141,7 +142,7 @@ Dropped from U1: nothing. Calendar share for U1: unchanged (28%). Best S run on 
 
 ## Split `valid6`
 
-Scored at L0 so far: Phase 2, U2 short prompt, U3 continuation, U3v continuation, steps v2, U4c continuation, + composition rows, U4 continuation, U5 continuation, U6 continuation, U7 continuation, U8 continuation, U9 continuation. This split is for selection only, so its tables are written when `selection.json` exists (`scripts/phase6/decide6.py select`).
+Scored at L0 so far: Phase 2, U2 short prompt, U3 continuation, U3v continuation, steps v2, U4c continuation, + composition rows, U4 continuation, U5 continuation, U6 continuation, U7 continuation, U8 continuation, U9 continuation, U10 continuation. This split is for selection only, so its tables are written when `selection.json` exists (`scripts/phase6/decide6.py select`).
 
 ## Split `dev6`
 
