@@ -476,3 +476,17 @@ Decisions, surprises and negative results, in order. Plan: [`phase6_execution_pr
   - **U8 minus G1** (the chatbot's model): all rule items +35.2 [+32.4, +38.0] (1,336 against 829); without the combinations +38.0 [+35.3, +40.8]; G1's calendar part is still to be scored.
   - **U8 minus Phase 2:** all rule items +67.9 [+65.4, +70.4] (357); calendar +20.6 [+17.1, +24.0] (583).
   - **U8 minus the untuned base:** all rule items +79.8 [+77.4, +82.1] (186); calendar +90.2 [+88.1, +92.3] (15).
+- **The sealed queue restarted at 20:35** (the watcher's first restart: no Ollama model runner for 5 minutes, from 20:30). It skipped every finished part and scores G1's calendar part first; `sealed_access.jsonl` has its second line. The watcher stays on for further memory failures.
+- **Sealed6 at L0 finished (20 November, 10:05)** for all 18 runs, with no further interruption after the 20:35 restart. Model alone, rule items of 1,441 (without the combinations, of 1,281) and calendar of 816:
+  - **U8 (selected) 1,336 (92.7%); 1,259 (98.3%); calendar 751 (92.0%).** The other chain runs: U4c 1,310, U4 and U6 1,307, U3v and U5 1,305, U2 1,300, U7 1,299, U3 1,269. Calendar: U6 754, U4c 753, U8 751, U4 750, U7 748, U3v 727, U5 717, U2 and U3 668.
+  - **Earlier runs:** S2s 1,185, S2 1,147, S1-8B 1,015, S1 996, A1 874, G1 829, U0 567, Phase 2 357, the untuned base 186. Calendar: Phase 2 583, G1 550, U0 536, A1 527, S1-8B 509, S2s 481, S2 459, S1 452, the base 15.
+  - **U8's lead over the late chain runs is in the combinations again,** as on dev6: combinations U8 77/160, U4c 60, U5 and U6 56, U4 49, U7 46 (U2 88, U3 77). U8 minus U6: +2.0 [+0.7, +3.3] on all rule items, +0.6 [−0.2, +1.4] without the combinations. On sealed6 the combination lead holds on fresh items, so it is not only dev6 noise.
+  - **U8 minus G1 on calendar:** +24.6 [+20.9, +28.2] (751 against 550).
+  - **Hypotheses on sealed6** (rule items; calendar):
+    - H7, S2s minus S2: +2.6 [+0.5, +4.8]; +2.7 [−0.6, +6.1] (dev6: +0.1 [−2.9, +3.2]).
+    - 15 M against 6.0 M tokens, U2 minus S2s: +8.0 [+6.0, +10.0]; +22.9 [+19.4, +26.3].
+    - H8, the whole chain, U8 minus U2: +2.5 [+1.0, +4.1] (without the combinations +3.7 [+2.4, +5.0]); +10.2 [+7.3, +13.0].
+    - H9, U3v minus U3: +2.5 [+0.7, +4.3]; +7.2 [+4.3, +10.1].
+    - H10, S1-8B minus S1: +1.3 [−1.2, +3.9]; +7.0 [+3.7, +10.7].
+    - H11, U4c minus U4: +0.2 [−1.1, +1.5] (combinations only +6.9 [−2.5, +16.2]); +0.4 [−1.3, +2.0].
+  - **Next** (`queue_sealed6.sh`, from 10:05): L1, L2, L3, L3w and L4 for U8, A1 and G1 on the rule parts; then the base at L1 to L3; then L5 for G1 and U8.
