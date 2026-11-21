@@ -490,3 +490,25 @@ Decisions, surprises and negative results, in order. Plan: [`phase6_execution_pr
     - H10, S1-8B minus S1: +1.3 [−1.2, +3.9]; +7.0 [+3.7, +10.7].
     - H11, U4c minus U4: +0.2 [−1.1, +1.5] (combinations only +6.9 [−2.5, +16.2]); +0.4 [−1.3, +2.0].
   - **Next** (`queue_sealed6.sh`, from 10:05): L1, L2, L3, L3w and L4 for U8, A1 and G1 on the rule parts; then the base at L1 to L3; then L5 for G1 and U8.
+- **Sealed6, levels of help for U8, A1 and G1 (20 November, 10:05-19:35; 9.5 h).** All rule items (1,441; L3w keeps the 1,329 items with a wrong conclusion to give). Each level is its own set of prompts, with each model's own system prompt; nothing repairs or replaces an answer:
+
+  | Model | L0 alone | L1 raw facts | L2 rule text | L3 right conclusion | L3w right / follows the wrong one |
+  |---|---:|---:|---:|---:|---:|
+  | U8 (selected) | 1,336 (92.7%) | 1,309 (90.8%) | 1,158 (80.4%) | 1,304 (90.5%) | 1,050 (79.0%) / 122 (9.2%) |
+  | A1 | 874 (60.7%) | 803 (55.7%) | 604 (41.9%) | 1,010 (70.1%) | 640 (48.2%) / 207 (15.6%) |
+  | G1 | 829 (57.5%) | 719 (49.9%) | 549 (38.1%) | 1,006 (69.8%) | 124 (9.3%) / 814 (61.2%) |
+
+  - **Level minus L0, paired, points [95%]:** U8 L1 −1.9 [−3.3, −0.6], L2 −12.4 [−14.6, −10.0], L3 −2.2 [−3.7, −0.8]. A1 L1 −4.9 [−7.4, −2.6], L2 −18.7 [−21.8, −15.7], L3 +9.4 [+6.8, +12.1]. G1 L1 −7.6 [−10.2, −5.1], L2 −19.4 [−22.8, −16.3], L3 +12.3 [+8.6, +15.8].
+  - **U8 does best alone.** Raw facts and the right conclusion cost it about 2 points, and rule text costs 12.4. The one part where help raises U8 is the combinations: 77/160 alone, 101 with rule text, 95 with the right conclusion. Elsewhere rule text lowers it, mostly on the template rules (452 to 310 of 462).
+  - **Why U8 drops with rule text (U8's lost answers on the template rules and the blind wording):** at L2, 189 answers right at L0 are wrong, and 22 of them have no readable conclusion. The rest are complete replies whose values change, across many question types: interactions, flow-year specials, the Ten-God stems, trigger years, stars and patterns. At L3 the 66 lost answers there sit mostly in flow-year branch relations (22), whether a star question is definite (16) and the overview's pattern (10). The text is not new to U8: from U2 on, its training mixture (data recipe s3, `src/bazireason/train_data6.py`) has rows with raw facts or the same rule text (`ladder.rule_text`) in the prompt, and rows that check a supplied reference conclusion by deriving it, half of them wrong. Why the help lowers U8 anyway is not established. These counts come from a scratch script that compares U8's L0 and L2/L3 conclusions field by field; they are not a registered measure.
+  - **A wrong conclusion:** G1, which Phase 5 trained to use a supplied conclusion, follows it in 61.2% of the items. U8 follows it in 9.2% and A1 in 15.6%. U8 mostly keeps its own derivation, as its verify rows train (derive, compare, keep the derivation), so it is the hardest to mislead and the least helped by a right conclusion.
+  - **Self-correction (L4; every wrong L0 answer plus 60 right ones per part):**
+
+    | Model | a: re-check (fixed / broke) | b: told there is an error | c: told which field is wrong |
+    |---|---|---|---|
+    | U8 | 11/105 (10.5%) / 16/300 (5.3%) | 16/105 (15.2%) / 26/300 (8.7%) | 11/105 (10.5%) / 22/300 (7.3%) |
+    | A1 | 11/567 (1.9%) / 5/300 (1.7%) | 12/567 (2.1%) / 13/300 (4.3%) | 22/567 (3.9%) / 14/300 (4.7%) |
+    | G1 | 5/612 (0.8%) / 0/297 (0.0%) | 4/612 (0.7%) / 2/297 (0.7%) | 14/612 (2.3%) / 9/297 (3.0%) |
+
+    - **P-6 (L4a: fix at least 25%, break at most 2%) is not met** for U8: it fixes 10.5% and breaks 5.3%. U8's fixes are almost all combinations (10 of 11 in L4a, 15 of 16 in L4b). Since U8 is right far more often than wrong, any of the three checks would lose more right answers than it repairs. No model here corrects itself usefully.
+  - **Next** (`queue_sealed6.sh`, from 19:35): the untuned base at L1, L2 and L3 (about 5 to 6 h, judging by its 1.9 h at L0 on the same parts); then L5, the Phase 5 hybrid system, for G1 and U8 on the template rules, independent and blind parts (about 1 to 1.5 h). Expected end: about 02:30 to 03:30 on 21 November, later if the GPU runs out of memory again.
