@@ -1,6 +1,25 @@
 # Phase 6 handoff: state, findings and how to continue
 
-Last updated: Thursday 19 November 2026, 04:30 PST, by the lead agent (section 0 is current; sections 1 to 3 and 9 are history). Branch `phase6/model-capability`; commit locally, never push. Read this file first, then [`phase6_log.md`](phase6_log.md) (what happened, in order) and [`phase6_preregistration.md`](phase6_preregistration.md) (the frozen rules; sections 10 to 12 are the current plan).
+Last updated: Friday 20 November 2026, 19:45 PST, by the lead agent (section 00 is current; section 0 and sections 1 to 3 and 9 are history). Branch `phase6/model-capability`; commit locally, never push. Read this file first, then [`phase6_log.md`](phase6_log.md) (what happened, in order) and [`phase6_preregistration.md`](phase6_preregistration.md) (the frozen rules; sections 10 to 12 are the current plan).
+
+## 00. State on Friday 20 November 2026, 19:45 PST: the final test is running
+
+This section supersedes section 0. **The sealed queue is running; do not start any other GPU job.**
+
+- **The user's choice (19 November, 08:40):** "Final test only". UD (12.14) is not run, so H12 stays untested.
+- **Done, once each:**
+  - valid6 for S2 and S2s.
+  - `decide6.py select` (19 November, 09:44) selected **U8** (valid6 736/813), and `results/phase6/selection.json` is committed (acecc24). **Never rerun the selection:** it would overwrite that file.
+- **sealed6 is open and is scored once.** `scripts/phase6/queue_sealed6.sh` has run since 19 November, 09:44 (log `artifacts/logs/p6_queue_sealed6.log`). Every access is logged in `results/phase6/sealed_access.jsonl`. Never rerun or delete a sealed part.
+  - L0 for all 18 runs is done (commit f584790): U8 1,336/1,441 rule items (92.7%), calendar 751/816.
+  - The levels of help (L1, L2, L3, L3w and L4) for U8, A1 and G1 are done (commit bc316db).
+  - Still running: the untuned base at L1 to L3 (from 19:35), then `run_l5.py` for G1 and U8. Expected `QUEUE_SEALED6_DONE`: about 02:30 to 03:30 on 21 November.
+- **Out-of-memory watcher.** The user's own Ollama (`bikeshare-coder`) caused a Metal out-of-memory failure at 20:22 on 19 November. `artifacts/logs/sealed_watch.sh` (nohup, log `artifacts/logs/p6_sealed_watch.log`) restarts the queue after an "Insufficient Memory" failure, once no `ollama runner` process has existed for 5 minutes. It makes at most 6 restarts; restart 1 happened at 20:35, 19 November. Never stop or change the user's Ollama.
+- **At `QUEUE_SEALED6_DONE`:**
+  1. Run `truncation6.py` (`.venv-mlx`), then `make_report6.py` (`.venv`).
+  2. Add the sealed results to `docs/phase6_round2_report.md`: the headline, U8 against A1, G1, the base and Phase 2, the hypotheses, the levels of help and L5.
+  3. Update this file, the log and the memory.
+  4. Commit locally (no push) and tell the user.
 
 ## 0. State on Thursday 19 November 2026, 04:30 PST
 
