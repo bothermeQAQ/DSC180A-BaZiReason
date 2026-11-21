@@ -512,3 +512,29 @@ Decisions, surprises and negative results, in order. Plan: [`phase6_execution_pr
 
     - **P-6 (L4a: fix at least 25%, break at most 2%) is not met** for U8: it fixes 10.5% and breaks 5.3%. U8's fixes are almost all combinations (10 of 11 in L4a, 15 of 16 in L4b). Since U8 is right far more often than wrong, any of the three checks would lose more right answers than it repairs. No model here corrects itself usefully.
   - **Next** (`queue_sealed6.sh`, from 19:35): the untuned base at L1, L2 and L3 (about 5 to 6 h, judging by its 1.9 h at L0 on the same parts); then L5, the Phase 5 hybrid system, for G1 and U8 on the template rules, independent and blind parts (about 1 to 1.5 h). Expected end: about 02:30 to 03:30 on 21 November, later if the GPU runs out of memory again.
+- **Sealed6, the untuned base at L1 to L3 (20 November 19:35 to 21 November 00:37; 5.0 h).** All rule items:
+  - L0 186 (12.9%), L1 227 (15.8%), L2 359 (24.9%), L3 364 (25.3%).
+  - Level minus L0: L1 +2.8 [+1.3, +4.3], L2 +12.0 [+9.8, +14.0], L3 +12.4 [+10.1, +14.5].
+  - About half of its replies reach the 1,100-token cap at every level: L0 49.1%, L1 44.6%, L2 54.7%, L3 49.8%.
+- **Sealed6, L5: the Phase 5 hybrid system for G1 and U8 (00:37 to 02:02; 1.4 h).** It covers the template rules, independent and blind parts (1,121 items). These are system accuracy, not model accuracy:
+  - **Final system answers:** 1,099/1,121 (98.0%) with either generator (459, 280 and 360 by part). The two differ on 2 blind items, one each way.
+  - **Routed right:** 460/462, 280/280, 358/379.
+  - **Repaired:** 93 with G1, 185 with U8. **Engine fallback:** 2 with G1, 14 with U8.
+  - **U8 alone on the same items:** 1,104/1,121 (98.5%).
+    - U8 alone minus the system: +0.4 [−0.6, +1.5]; with G1 inside, +0.4 [−0.6, +1.4].
+    - By part: template rules −1.5 [−2.8, −0.2], independent −1.8 [−3.6, −0.4], blind +4.5 [+2.4, +6.9]. On the blind part the router sends 21 of 379 to the wrong type.
+  - **The generators' own replies inside the system:** G1 1,011/1,121, U8 930/1,121.
+- **`QUEUE_SEALED6_DONE 02:02:35` (21 November).**
+  - The watcher exited by itself (`WATCH_DONE 11-21 02:03:18`). There was one restart in all (19 November, 20:35).
+  - `results/phase6/sealed_access.jsonl` has five lines. Nothing is running.
+- **The final reports (21 November).**
+  - **`truncation6.py` and `make_report6.py` rerun.** `results/phase6/RESULTS.md` now has the `sealed6` section.
+    - Pre-registered comparisons met: P-1 +32.1 [+29.4, +34.7], P-2, P-3, P-4 and P-7.
+    - Not met: P-5 (L1 − L0 −1.9) and P-6 (self-correction). H1 is not met either.
+  - **New: `scripts/phase6/sealed_extras6.py`.** It prints only. It gives the report's other sealed tables and breakdowns from the saved records; the breakdowns are descriptive, not registered.
+  - **`docs/phase6_round2_report.md`, new section 0:** the final test. Sections 1 to 8 are kept as the dev6 report of 19 November, with notes where they are out of date.
+  - **U8's calendar errors on sealed6 (65):**
+    - 28 answerable requests refused;
+    - 15 definite charts where none exists;
+    - 22 right decisions with wrong pillars. The day pillar is wrong in all 22, and the hour pillar in 21: day-count arithmetic.
+  - **Trained types on sealed6:** every type with 30 or more items is at 90% or higher. The lowest are element counts 77/85 and relations 100/105. 12.12's verdict stays as registered on dev6 (not met).

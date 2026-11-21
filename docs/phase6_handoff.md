@@ -1,25 +1,34 @@
 # Phase 6 handoff: state, findings and how to continue
 
-Last updated: Friday 20 November 2026, 19:45 PST, by the lead agent (section 00 is current; section 0 and sections 1 to 3 and 9 are history). Branch `phase6/model-capability`; commit locally, never push. Read this file first, then [`phase6_log.md`](phase6_log.md) (what happened, in order) and [`phase6_preregistration.md`](phase6_preregistration.md) (the frozen rules; sections 10 to 12 are the current plan).
+Last updated: Saturday 21 November 2026, 02:30 PST, by the lead agent (section 00 is current; section 0 and sections 1 to 3 and 9 are history). Branch `phase6/model-capability`; commit locally, never push. Read this file first, then [`phase6_log.md`](phase6_log.md) (what happened, in order) and [`phase6_preregistration.md`](phase6_preregistration.md) (the frozen rules; sections 10 to 12 are the current plan).
 
-## 00. State on Friday 20 November 2026, 19:45 PST: the final test is running
+## 00. State on Saturday 21 November 2026, 02:30 PST: the final test is done
 
-This section supersedes section 0. **The sealed queue is running; do not start any other GPU job.**
+This section supersedes section 0. **Nothing is running.**
 
-- **The user's choice (19 November, 08:40):** "Final test only". UD (12.14) is not run, so H12 stays untested.
-- **Done, once each:**
-  - valid6 for S2 and S2s.
-  - `decide6.py select` (19 November, 09:44) selected **U8** (valid6 736/813), and `results/phase6/selection.json` is committed (acecc24). **Never rerun the selection:** it would overwrite that file.
-- **sealed6 is open and is scored once.** `scripts/phase6/queue_sealed6.sh` has run since 19 November, 09:44 (log `artifacts/logs/p6_queue_sealed6.log`). Every access is logged in `results/phase6/sealed_access.jsonl`. Never rerun or delete a sealed part.
-  - L0 for all 18 runs is done (commit f584790): U8 1,336/1,441 rule items (92.7%), calendar 751/816.
-  - The levels of help (L1, L2, L3, L3w and L4) for U8, A1 and G1 are done (commit bc316db).
-  - Still running: the untuned base at L1 to L3 (from 19:35), then `run_l5.py` for G1 and U8. Expected `QUEUE_SEALED6_DONE`: about 02:30 to 03:30 on 21 November.
-- **Out-of-memory watcher.** The user's own Ollama (`bikeshare-coder`) caused a Metal out-of-memory failure at 20:22 on 19 November. `artifacts/logs/sealed_watch.sh` (nohup, log `artifacts/logs/p6_sealed_watch.log`) restarts the queue after an "Insufficient Memory" failure, once no `ollama runner` process has existed for 5 minutes. It makes at most 6 restarts; restart 1 happened at 20:35, 19 November. Never stop or change the user's Ollama.
-- **At `QUEUE_SEALED6_DONE`:**
-  1. Run `truncation6.py` (`.venv-mlx`), then `make_report6.py` (`.venv`).
-  2. Add the sealed results to `docs/phase6_round2_report.md`: the headline, U8 against A1, G1, the base and Phase 2, the hypotheses, the levels of help and L5.
-  3. Update this file, the log and the memory.
-  4. Commit locally (no push) and tell the user.
+**What ran:**
+
+- **The user's choice (19 November, 08:40):** "Final test only". UD (12.14) was not run, so H12 stays untested.
+- **The selection, run once** (19 November, 09:44), picked **U8**: valid6 736/813. `results/phase6/selection.json` is committed (acecc24). **Never rerun the selection:** it would overwrite that file.
+- **The sealed runs, once** (`scripts/phase6/queue_sealed6.sh`, 19 November 09:44 to 21 November 02:02; `QUEUE_SEALED6_DONE`).
+  - Every access is in `results/phase6/sealed_access.jsonl` (five lines). Never rerun or delete a sealed part.
+  - **One restart:** the queue ran out of GPU memory at 20:22 on 19 November, because the user's own Ollama loaded a model. The watcher restarted it at 20:35, and has since exited (`WATCH_DONE`).
+
+**Results:** section 0 of `docs/phase6_round2_report.md`, and the `sealed6` part of `results/phase6/RESULTS.md`.
+
+- **U8 alone on sealed6:**
+  - all rule items 1,336/1,441 (92.7%);
+  - without the combinations 1,259/1,281 (98.3%);
+  - combinations 77/160;
+  - calendar 751/816 (92.0%).
+- **Against the other models:** U8 − A1 is +32.1 [+29.4, +34.7]. U8 alone is level with the Phase 5 hybrid system: +0.4 [−0.6, +1.5] on the 1,121 items the system covers.
+- **Pre-registered comparisons:** P-1, P-2, P-3, P-4 and P-7 are met. P-5 (L1 − L0) and P-6 (self-correction) are not.
+
+**What is left:**
+
+- **Writing.** It starts 29 November; the report is due 4 December 2026. The final numbers are in section 0 of the round-2 report.
+- **No GPU job is planned.** No new run may be scored on sealed6: it has been used once.
+- **The chatbot (Quarter 2).** Its default is G1. Switching it to U8 is the user's decision; nothing has been changed.
 
 ## 0. State on Thursday 19 November 2026, 04:30 PST
 
