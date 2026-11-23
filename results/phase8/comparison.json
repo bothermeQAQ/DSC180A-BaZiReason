@@ -1,0 +1,3883 @@
+{
+  "bootstrap_draws": 10000,
+  "bootstrap_seed": 82143,
+  "provenance": {
+    "transfer": {
+      "inputs_sha256": "53dad1804bb274a5296dd2e0c4c88847eeb43c8d4dd870bd041d4774e75f658b",
+      "replies_sha256": {
+        "a": "c6fd6289309b48b14c32291164ac173f79584431a7ab67fe69598b6e14ab5d22",
+        "b": "3b4f7a0ef2c1d08d6f0cec809f0f0fec1bc58e351b585de6dbd1bf28530ad88a",
+        "g": "488b7e8c402cbdf26de55009769c50ade035e5d8e10110e150d4f82042b81df0",
+        "t": "e99b8fe5a262a2bd109a59b0f3e5c8f3f39cf92a097e82827bb38b7b505e34a5"
+      },
+      "adapter_sha256": {
+        "a": "8f5e0d625d9db5c119fee03f281c6b8c564d7db4b681ec34026933c18946328f",
+        "b": "0774616c06bc99af0be1288dfcf849f4d40d41d1711876264e37f96ac8dd05ee",
+        "g": "790f87c137011c24e4cdf21dfe9dfabc7936612f0b19d23b9092cdae8e6778f9",
+        "t": "19dd15624ca30595b62cbca74c30cc96ed8366feece2504bf808a781bc7f8cec"
+      }
+    },
+    "retention": {
+      "inputs_sha256": "2790b2d32cb80bfb56856beebd08c95b5da54e8840f7d820d93e8556fd50f4cf",
+      "replies_sha256": {
+        "a": "084cb6179ea6dd261a6710c946835da13bc090ce1643096a31da0e9fe78d852a",
+        "b": "f91de4d3a51d07eb8273410af91abfe6302fbbf86f179bd7757c9e88bd902ee0",
+        "g": "22946a6c5005c435949a0a57bb2c24d6f4d2232ba655d267bb0c8ae2d3c8d5f3",
+        "t": "9e31dfd4cbaff21df45a14a10ad3b4fe674c250842132cd5ade4e9b3fc8b0699",
+        "u8": "feb3464ed84a98e643752be4575b6dcc411f67d3d66d2b853b8cd4afef1e1cc5"
+      },
+      "adapter_sha256": {
+        "a": "8f5e0d625d9db5c119fee03f281c6b8c564d7db4b681ec34026933c18946328f",
+        "b": "0774616c06bc99af0be1288dfcf849f4d40d41d1711876264e37f96ac8dd05ee",
+        "g": "790f87c137011c24e4cdf21dfe9dfabc7936612f0b19d23b9092cdae8e6778f9",
+        "t": "19dd15624ca30595b62cbca74c30cc96ed8366feece2504bf808a781bc7f8cec",
+        "u8": "bf4007c5fce9202c7bce7791fc8ad019fee7b266821d50b81408cc74ba8475a8"
+      }
+    },
+    "dev": {
+      "inputs_sha256": "e057822f0ef7a444f006eb8b7cd6fcaa5e8805b114c6c97aa5bd5726952e13a0",
+      "replies_sha256": {
+        "a": "1b9e26f0f2bff9815be87ef8eccc3395623bb6b7f8910e54cc2f1f40a57e4a63",
+        "b": "38d062b22217c5596f78b3fe083852b0a44a0650884c6b7fae8fed86ac44b40d",
+        "g": "a5601343088b45ef2138fa50b3b84a6dbf200af78d184ece208cb36f5d50da35",
+        "t": "6cb801bbd358d89ff1bbb4be761f2884e3c13d49680eae6816cf4239c5dbbf25"
+      },
+      "adapter_sha256": {
+        "a": "8f5e0d625d9db5c119fee03f281c6b8c564d7db4b681ec34026933c18946328f",
+        "b": "0774616c06bc99af0be1288dfcf849f4d40d41d1711876264e37f96ac8dd05ee",
+        "g": "790f87c137011c24e4cdf21dfe9dfabc7936612f0b19d23b9092cdae8e6778f9",
+        "t": "19dd15624ca30595b62cbca74c30cc96ed8366feece2504bf808a781bc7f8cec"
+      }
+    }
+  },
+  "transfer": {
+    "novel": {
+      "counts": {
+        "a": {
+          "right": 144,
+          "n": 240,
+          "pct": 60.0
+        },
+        "b": {
+          "right": 150,
+          "n": 240,
+          "pct": 62.5
+        },
+        "g": {
+          "right": 151,
+          "n": 240,
+          "pct": 62.916666666666664
+        },
+        "t": {
+          "right": 145,
+          "n": 240,
+          "pct": 60.416666666666664
+        }
+      },
+      "paired": {
+        "a-b": {
+          "pp": -2.5000000000000004,
+          "chart_ci": [
+            -7.916666666666666,
+            3.3333333333333326
+          ],
+          "family_and_chart_ci": [
+            -12.083333333333332,
+            7.083333333333333
+          ],
+          "leave_one_family_out_range": [
+            -5.0,
+            -0.454545454545455
+          ],
+          "left_only": 23,
+          "right_only": 29
+        },
+        "a-g": {
+          "pp": -2.916666666666667,
+          "chart_ci": [
+            -8.749999999999998,
+            2.500000000000001
+          ],
+          "family_and_chart_ci": [
+            -11.666666666666666,
+            7.083333333333333
+          ],
+          "leave_one_family_out_range": [
+            -5.909090909090909,
+            -0.9090909090909094
+          ],
+          "left_only": 23,
+          "right_only": 30
+        },
+        "a-t": {
+          "pp": -0.416666666666667,
+          "chart_ci": [
+            -7.083333333333333,
+            6.249999999999999
+          ],
+          "family_and_chart_ci": [
+            -14.166666666666666,
+            11.249999999999998
+          ],
+          "leave_one_family_out_range": [
+            -2.727272727272728,
+            4.545454545454546
+          ],
+          "left_only": 37,
+          "right_only": 38
+        },
+        "b-g": {
+          "pp": -0.41666666666666646,
+          "chart_ci": [
+            -5.833333333333333,
+            4.583333333333334
+          ],
+          "family_and_chart_ci": [
+            -7.083333333333333,
+            6.666666666666665
+          ],
+          "leave_one_family_out_range": [
+            -1.8181818181818177,
+            0.9090909090909092
+          ],
+          "left_only": 20,
+          "right_only": 21
+        },
+        "b-t": {
+          "pp": 2.083333333333333,
+          "chart_ci": [
+            -4.166666666666667,
+            7.916666666666668
+          ],
+          "family_and_chart_ci": [
+            -10.0,
+            14.166666666666666
+          ],
+          "leave_one_family_out_range": [
+            -0.9090909090909088,
+            5.454545454545454
+          ],
+          "left_only": 35,
+          "right_only": 30
+        },
+        "g-t": {
+          "pp": 2.5,
+          "chart_ci": [
+            -3.7500000000000004,
+            8.75
+          ],
+          "family_and_chart_ci": [
+            -8.75,
+            13.749999999999998
+          ],
+          "leave_one_family_out_range": [
+            -0.4545454545454544,
+            5.454545454545454
+          ],
+          "left_only": 37,
+          "right_only": 31
+        }
+      },
+      "by_family": {
+        "六合→hidden": {
+          "a": {
+            "right": 19,
+            "n": 20,
+            "pct": 95.0
+          },
+          "b": {
+            "right": 18,
+            "n": 20,
+            "pct": 90.0
+          },
+          "g": {
+            "right": 18,
+            "n": 20,
+            "pct": 90.0
+          },
+          "t": {
+            "right": 15,
+            "n": 20,
+            "pct": 75.0
+          }
+        },
+        "六合→number": {
+          "a": {
+            "right": 18,
+            "n": 20,
+            "pct": 90.0
+          },
+          "b": {
+            "right": 18,
+            "n": 20,
+            "pct": 90.0
+          },
+          "g": {
+            "right": 17,
+            "n": 20,
+            "pct": 85.0
+          },
+          "t": {
+            "right": 19,
+            "n": 20,
+            "pct": 95.0
+          }
+        },
+        "华盖→main": {
+          "a": {
+            "right": 13,
+            "n": 20,
+            "pct": 65.0
+          },
+          "b": {
+            "right": 11,
+            "n": 20,
+            "pct": 55.0
+          },
+          "g": {
+            "right": 14,
+            "n": 20,
+            "pct": 70.0
+          },
+          "t": {
+            "right": 14,
+            "n": 20,
+            "pct": 70.0
+          }
+        },
+        "害→number": {
+          "a": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          },
+          "b": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          },
+          "g": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          },
+          "t": {
+            "right": 19,
+            "n": 20,
+            "pct": 95.0
+          }
+        },
+        "害→stage": {
+          "a": {
+            "right": 1,
+            "n": 20,
+            "pct": 5.0
+          },
+          "b": {
+            "right": 0,
+            "n": 20,
+            "pct": 0.0
+          },
+          "g": {
+            "right": 2,
+            "n": 20,
+            "pct": 10.0
+          },
+          "t": {
+            "right": 2,
+            "n": 20,
+            "pct": 10.0
+          }
+        },
+        "桃花→count": {
+          "a": {
+            "right": 13,
+            "n": 20,
+            "pct": 65.0
+          },
+          "b": {
+            "right": 17,
+            "n": 20,
+            "pct": 85.0
+          },
+          "g": {
+            "right": 15,
+            "n": 20,
+            "pct": 75.0
+          },
+          "t": {
+            "right": 13,
+            "n": 20,
+            "pct": 65.0
+          }
+        },
+        "桃花→element": {
+          "a": {
+            "right": 7,
+            "n": 20,
+            "pct": 35.0
+          },
+          "b": {
+            "right": 11,
+            "n": 20,
+            "pct": 55.0
+          },
+          "g": {
+            "right": 12,
+            "n": 20,
+            "pct": 60.0
+          },
+          "t": {
+            "right": 18,
+            "n": 20,
+            "pct": 90.0
+          }
+        },
+        "桃花→positions": {
+          "a": {
+            "right": 15,
+            "n": 20,
+            "pct": 75.0
+          },
+          "b": {
+            "right": 16,
+            "n": 20,
+            "pct": 80.0
+          },
+          "g": {
+            "right": 17,
+            "n": 20,
+            "pct": 85.0
+          },
+          "t": {
+            "right": 14,
+            "n": 20,
+            "pct": 70.0
+          }
+        },
+        "破→god": {
+          "a": {
+            "right": 9,
+            "n": 20,
+            "pct": 45.0
+          },
+          "b": {
+            "right": 11,
+            "n": 20,
+            "pct": 55.0
+          },
+          "g": {
+            "right": 11,
+            "n": 20,
+            "pct": 55.0
+          },
+          "t": {
+            "right": 4,
+            "n": 20,
+            "pct": 20.0
+          }
+        },
+        "破→stage": {
+          "a": {
+            "right": 1,
+            "n": 20,
+            "pct": 5.0
+          },
+          "b": {
+            "right": 0,
+            "n": 20,
+            "pct": 0.0
+          },
+          "g": {
+            "right": 1,
+            "n": 20,
+            "pct": 5.0
+          },
+          "t": {
+            "right": 1,
+            "n": 20,
+            "pct": 5.0
+          }
+        },
+        "驿马→god": {
+          "a": {
+            "right": 14,
+            "n": 20,
+            "pct": 70.0
+          },
+          "b": {
+            "right": 9,
+            "n": 20,
+            "pct": 45.0
+          },
+          "g": {
+            "right": 8,
+            "n": 20,
+            "pct": 40.0
+          },
+          "t": {
+            "right": 11,
+            "n": 20,
+            "pct": 55.0
+          }
+        },
+        "驿马→positions": {
+          "a": {
+            "right": 14,
+            "n": 20,
+            "pct": 70.0
+          },
+          "b": {
+            "right": 19,
+            "n": 20,
+            "pct": 95.0
+          },
+          "g": {
+            "right": 16,
+            "n": 20,
+            "pct": 80.0
+          },
+          "t": {
+            "right": 15,
+            "n": 20,
+            "pct": 75.0
+          }
+        }
+      }
+    },
+    "familiar": {
+      "counts": {
+        "a": {
+          "right": 193,
+          "n": 240,
+          "pct": 80.41666666666667
+        },
+        "b": {
+          "right": 189,
+          "n": 240,
+          "pct": 78.75
+        },
+        "g": {
+          "right": 186,
+          "n": 240,
+          "pct": 77.5
+        },
+        "t": {
+          "right": 183,
+          "n": 240,
+          "pct": 76.25
+        }
+      },
+      "paired": {
+        "a-b": {
+          "pp": 1.6666666666666667,
+          "chart_ci": [
+            0.0,
+            3.75
+          ],
+          "family_and_chart_ci": [
+            -0.8333333333333334,
+            5.416666666666666
+          ],
+          "leave_one_family_out_range": [
+            0.4545454545454547,
+            1.8181818181818183
+          ],
+          "left_only": 5,
+          "right_only": 1
+        },
+        "a-g": {
+          "pp": 2.916666666666667,
+          "chart_ci": [
+            0.8333333333333331,
+            5.416666666666666
+          ],
+          "family_and_chart_ci": [
+            0.0,
+            7.5
+          ],
+          "leave_one_family_out_range": [
+            1.363636363636364,
+            3.181818181818182
+          ],
+          "left_only": 8,
+          "right_only": 1
+        },
+        "a-t": {
+          "pp": 4.166666666666666,
+          "chart_ci": [
+            1.6666666666666667,
+            7.083333333333333
+          ],
+          "family_and_chart_ci": [
+            0.4166666666666667,
+            9.166666666666666
+          ],
+          "leave_one_family_out_range": [
+            2.727272727272727,
+            4.545454545454546
+          ],
+          "left_only": 11,
+          "right_only": 1
+        },
+        "b-g": {
+          "pp": 1.2500000000000002,
+          "chart_ci": [
+            -0.8333333333333334,
+            3.3333333333333335
+          ],
+          "family_and_chart_ci": [
+            -0.8333333333333334,
+            4.166666666666666
+          ],
+          "leave_one_family_out_range": [
+            0.9090909090909092,
+            1.363636363636364
+          ],
+          "left_only": 5,
+          "right_only": 2
+        },
+        "b-t": {
+          "pp": 2.5000000000000004,
+          "chart_ci": [
+            0.0,
+            5.0
+          ],
+          "family_and_chart_ci": [
+            -0.8333333333333334,
+            7.083333333333333
+          ],
+          "leave_one_family_out_range": [
+            0.9090909090909094,
+            2.727272727272728
+          ],
+          "left_only": 8,
+          "right_only": 2
+        },
+        "g-t": {
+          "pp": 1.2500000000000002,
+          "chart_ci": [
+            -0.4166666666666667,
+            2.9166666666666665
+          ],
+          "family_and_chart_ci": [
+            -1.25,
+            5.416666666666667
+          ],
+          "leave_one_family_out_range": [
+            -0.4545454545454544,
+            1.8181818181818183
+          ],
+          "left_only": 4,
+          "right_only": 1
+        }
+      },
+      "by_family": {
+        "六合→hidden": {
+          "a": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          },
+          "b": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          },
+          "g": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          },
+          "t": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          }
+        },
+        "六合→number": {
+          "a": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          },
+          "b": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          },
+          "g": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          },
+          "t": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          }
+        },
+        "华盖→main": {
+          "a": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          },
+          "b": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          },
+          "g": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          },
+          "t": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          }
+        },
+        "害→number": {
+          "a": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          },
+          "b": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          },
+          "g": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          },
+          "t": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          }
+        },
+        "害→stage": {
+          "a": {
+            "right": 14,
+            "n": 20,
+            "pct": 70.0
+          },
+          "b": {
+            "right": 11,
+            "n": 20,
+            "pct": 55.0
+          },
+          "g": {
+            "right": 10,
+            "n": 20,
+            "pct": 50.0
+          },
+          "t": {
+            "right": 11,
+            "n": 20,
+            "pct": 55.0
+          }
+        },
+        "桃花→count": {
+          "a": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          },
+          "b": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          },
+          "g": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          },
+          "t": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          }
+        },
+        "桃花→element": {
+          "a": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          },
+          "b": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          },
+          "g": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          },
+          "t": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          }
+        },
+        "桃花→positions": {
+          "a": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          },
+          "b": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          },
+          "g": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          },
+          "t": {
+            "right": 16,
+            "n": 20,
+            "pct": 80.0
+          }
+        },
+        "破→god": {
+          "a": {
+            "right": 8,
+            "n": 20,
+            "pct": 40.0
+          },
+          "b": {
+            "right": 7,
+            "n": 20,
+            "pct": 35.0
+          },
+          "g": {
+            "right": 7,
+            "n": 20,
+            "pct": 35.0
+          },
+          "t": {
+            "right": 7,
+            "n": 20,
+            "pct": 35.0
+          }
+        },
+        "破→stage": {
+          "a": {
+            "right": 10,
+            "n": 20,
+            "pct": 50.0
+          },
+          "b": {
+            "right": 10,
+            "n": 20,
+            "pct": 50.0
+          },
+          "g": {
+            "right": 9,
+            "n": 20,
+            "pct": 45.0
+          },
+          "t": {
+            "right": 9,
+            "n": 20,
+            "pct": 45.0
+          }
+        },
+        "驿马→god": {
+          "a": {
+            "right": 1,
+            "n": 20,
+            "pct": 5.0
+          },
+          "b": {
+            "right": 1,
+            "n": 20,
+            "pct": 5.0
+          },
+          "g": {
+            "right": 0,
+            "n": 20,
+            "pct": 0.0
+          },
+          "t": {
+            "right": 0,
+            "n": 20,
+            "pct": 0.0
+          }
+        },
+        "驿马→positions": {
+          "a": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          },
+          "b": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          },
+          "g": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          },
+          "t": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          }
+        }
+      }
+    },
+    "switch": {
+      "counts": {
+        "a": {
+          "right": 24,
+          "n": 80,
+          "pct": 30.0
+        },
+        "b": {
+          "right": 22,
+          "n": 80,
+          "pct": 27.5
+        },
+        "g": {
+          "right": 19,
+          "n": 80,
+          "pct": 23.75
+        },
+        "t": {
+          "right": 25,
+          "n": 80,
+          "pct": 31.25
+        }
+      },
+      "paired": {
+        "a-b": {
+          "pp": 2.5,
+          "chart_ci": [
+            -8.75,
+            13.750000000000002
+          ],
+          "family_and_chart_ci": [
+            -12.5,
+            18.75
+          ],
+          "leave_one_family_out_range": [
+            -3.3333333333333335,
+            6.666666666666667
+          ],
+          "left_only": 11,
+          "right_only": 9
+        },
+        "a-g": {
+          "pp": 6.25,
+          "chart_ci": [
+            -1.25,
+            13.750000000000002
+          ],
+          "family_and_chart_ci": [
+            -3.75,
+            17.5
+          ],
+          "leave_one_family_out_range": [
+            3.3333333333333335,
+            8.333333333333332
+          ],
+          "left_only": 8,
+          "right_only": 3
+        },
+        "a-t": {
+          "pp": -1.25,
+          "chart_ci": [
+            -12.5,
+            10.0
+          ],
+          "family_and_chart_ci": [
+            -13.750000000000002,
+            12.499999999999998
+          ],
+          "leave_one_family_out_range": [
+            -3.3333333333333335,
+            1.6666666666666667
+          ],
+          "left_only": 11,
+          "right_only": 12
+        },
+        "b-g": {
+          "pp": 3.7500000000000004,
+          "chart_ci": [
+            -5.0,
+            12.5
+          ],
+          "family_and_chart_ci": [
+            -7.500000000000001,
+            17.5
+          ],
+          "leave_one_family_out_range": [
+            9.25185853854297e-16,
+            6.666666666666667
+          ],
+          "left_only": 9,
+          "right_only": 6
+        },
+        "b-t": {
+          "pp": -3.75,
+          "chart_ci": [
+            -15.0,
+            7.5
+          ],
+          "family_and_chart_ci": [
+            -25.0,
+            15.0
+          ],
+          "leave_one_family_out_range": [
+            -10.0,
+            5.0
+          ],
+          "left_only": 10,
+          "right_only": 13
+        },
+        "g-t": {
+          "pp": -7.5,
+          "chart_ci": [
+            -18.75,
+            3.7500000000000004
+          ],
+          "family_and_chart_ci": [
+            -25.0,
+            8.75
+          ],
+          "leave_one_family_out_range": [
+            -11.666666666666666,
+            -1.6666666666666663
+          ],
+          "left_only": 9,
+          "right_only": 15
+        }
+      },
+      "by_family": {
+        "害→stage": {
+          "a": {
+            "right": 1,
+            "n": 20,
+            "pct": 5.0
+          },
+          "b": {
+            "right": 0,
+            "n": 20,
+            "pct": 0.0
+          },
+          "g": {
+            "right": 1,
+            "n": 20,
+            "pct": 5.0
+          },
+          "t": {
+            "right": 1,
+            "n": 20,
+            "pct": 5.0
+          }
+        },
+        "破→god": {
+          "a": {
+            "right": 7,
+            "n": 20,
+            "pct": 35.0
+          },
+          "b": {
+            "right": 9,
+            "n": 20,
+            "pct": 45.0
+          },
+          "g": {
+            "right": 7,
+            "n": 20,
+            "pct": 35.0
+          },
+          "t": {
+            "right": 6,
+            "n": 20,
+            "pct": 30.0
+          }
+        },
+        "破→stage": {
+          "a": {
+            "right": 2,
+            "n": 20,
+            "pct": 10.0
+          },
+          "b": {
+            "right": 3,
+            "n": 20,
+            "pct": 15.0
+          },
+          "g": {
+            "right": 0,
+            "n": 20,
+            "pct": 0.0
+          },
+          "t": {
+            "right": 2,
+            "n": 20,
+            "pct": 10.0
+          }
+        },
+        "驿马→god": {
+          "a": {
+            "right": 14,
+            "n": 20,
+            "pct": 70.0
+          },
+          "b": {
+            "right": 10,
+            "n": 20,
+            "pct": 50.0
+          },
+          "g": {
+            "right": 11,
+            "n": 20,
+            "pct": 55.0
+          },
+          "t": {
+            "right": 16,
+            "n": 20,
+            "pct": 80.0
+          }
+        }
+      }
+    },
+    "consumer": {
+      "counts": {
+        "a": {
+          "right": 73,
+          "n": 80,
+          "pct": 91.25
+        },
+        "b": {
+          "right": 52,
+          "n": 80,
+          "pct": 65.0
+        },
+        "g": {
+          "right": 30,
+          "n": 80,
+          "pct": 37.5
+        },
+        "t": {
+          "right": 38,
+          "n": 80,
+          "pct": 47.5
+        }
+      },
+      "paired": {
+        "a-b": {
+          "pp": 26.25,
+          "chart_ci": [
+            13.750000000000002,
+            38.75
+          ],
+          "family_and_chart_ci": [
+            -7.112366251504751e-16,
+            52.5
+          ],
+          "leave_one_family_out_range": [
+            18.333333333333336,
+            36.66666666666667
+          ],
+          "left_only": 28,
+          "right_only": 7
+        },
+        "a-g": {
+          "pp": 53.75,
+          "chart_ci": [
+            41.25,
+            66.25
+          ],
+          "family_and_chart_ci": [
+            36.25000000000001,
+            71.25
+          ],
+          "leave_one_family_out_range": [
+            46.666666666666664,
+            58.333333333333336
+          ],
+          "left_only": 46,
+          "right_only": 3
+        },
+        "a-t": {
+          "pp": 43.75,
+          "chart_ci": [
+            32.5,
+            55.00000000000001
+          ],
+          "family_and_chart_ci": [
+            28.750000000000004,
+            57.49999999999999
+          ],
+          "leave_one_family_out_range": [
+            41.66666666666667,
+            48.333333333333336
+          ],
+          "left_only": 36,
+          "right_only": 1
+        },
+        "b-g": {
+          "pp": 27.500000000000004,
+          "chart_ci": [
+            18.75,
+            36.25
+          ],
+          "family_and_chart_ci": [
+            0.0,
+            56.25
+          ],
+          "leave_one_family_out_range": [
+            15.000000000000002,
+            36.66666666666667
+          ],
+          "left_only": 23,
+          "right_only": 1
+        },
+        "b-t": {
+          "pp": 17.5,
+          "chart_ci": [
+            7.5,
+            26.25
+          ],
+          "family_and_chart_ci": [
+            0.0,
+            37.5
+          ],
+          "leave_one_family_out_range": [
+            11.666666666666666,
+            23.333333333333332
+          ],
+          "left_only": 17,
+          "right_only": 3
+        },
+        "g-t": {
+          "pp": -10.0,
+          "chart_ci": [
+            -18.75,
+            -1.25
+          ],
+          "family_and_chart_ci": [
+            -26.249999999999996,
+            1.25
+          ],
+          "leave_one_family_out_range": [
+            -13.333333333333334,
+            -3.333333333333335
+          ],
+          "left_only": 3,
+          "right_only": 11
+        }
+      },
+      "by_family": {
+        "害→stage": {
+          "a": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          },
+          "b": {
+            "right": 10,
+            "n": 20,
+            "pct": 50.0
+          },
+          "g": {
+            "right": 10,
+            "n": 20,
+            "pct": 50.0
+          },
+          "t": {
+            "right": 10,
+            "n": 20,
+            "pct": 50.0
+          }
+        },
+        "破→god": {
+          "a": {
+            "right": 16,
+            "n": 20,
+            "pct": 80.0
+          },
+          "b": {
+            "right": 17,
+            "n": 20,
+            "pct": 85.0
+          },
+          "g": {
+            "right": 8,
+            "n": 20,
+            "pct": 40.0
+          },
+          "t": {
+            "right": 10,
+            "n": 20,
+            "pct": 50.0
+          }
+        },
+        "破→stage": {
+          "a": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          },
+          "b": {
+            "right": 10,
+            "n": 20,
+            "pct": 50.0
+          },
+          "g": {
+            "right": 10,
+            "n": 20,
+            "pct": 50.0
+          },
+          "t": {
+            "right": 10,
+            "n": 20,
+            "pct": 50.0
+          }
+        },
+        "驿马→god": {
+          "a": {
+            "right": 17,
+            "n": 20,
+            "pct": 85.0
+          },
+          "b": {
+            "right": 15,
+            "n": 20,
+            "pct": 75.0
+          },
+          "g": {
+            "right": 2,
+            "n": 20,
+            "pct": 10.0
+          },
+          "t": {
+            "right": 8,
+            "n": 20,
+            "pct": 40.0
+          }
+        }
+      }
+    },
+    "day_dependent": {
+      "counts": {
+        "a": {
+          "right": 25,
+          "n": 80,
+          "pct": 31.25
+        },
+        "b": {
+          "right": 20,
+          "n": 80,
+          "pct": 25.0
+        },
+        "g": {
+          "right": 22,
+          "n": 80,
+          "pct": 27.5
+        },
+        "t": {
+          "right": 18,
+          "n": 80,
+          "pct": 22.5
+        }
+      },
+      "paired": {
+        "a-b": {
+          "pp": 6.25,
+          "chart_ci": [
+            -3.75,
+            16.249999999999996
+          ],
+          "family_and_chart_ci": [
+            -8.75,
+            22.5
+          ],
+          "leave_one_family_out_range": [
+            0.0,
+            11.666666666666666
+          ],
+          "left_only": 11,
+          "right_only": 6
+        },
+        "a-g": {
+          "pp": 3.749999999999999,
+          "chart_ci": [
+            -7.500000000000001,
+            15.000000000000002
+          ],
+          "family_and_chart_ci": [
+            -14.999999999999996,
+            23.75
+          ],
+          "leave_one_family_out_range": [
+            -5.000000000000001,
+            8.333333333333332
+          ],
+          "left_only": 14,
+          "right_only": 11
+        },
+        "a-t": {
+          "pp": 8.75,
+          "chart_ci": [
+            -2.5,
+            20.0
+          ],
+          "family_and_chart_ci": [
+            -6.25,
+            26.25
+          ],
+          "leave_one_family_out_range": [
+            3.3333333333333326,
+            13.333333333333334
+          ],
+          "left_only": 15,
+          "right_only": 8
+        },
+        "b-g": {
+          "pp": -2.5000000000000004,
+          "chart_ci": [
+            -11.25,
+            6.25
+          ],
+          "family_and_chart_ci": [
+            -11.250000000000002,
+            7.500000000000001
+          ],
+          "leave_one_family_out_range": [
+            -5.000000000000001,
+            -4.625929269271485e-16
+          ],
+          "left_only": 5,
+          "right_only": 7
+        },
+        "b-t": {
+          "pp": 2.4999999999999987,
+          "chart_ci": [
+            -7.500000000000001,
+            13.749999999999998
+          ],
+          "family_and_chart_ci": [
+            -16.249999999999996,
+            26.25
+          ],
+          "leave_one_family_out_range": [
+            -8.333333333333332,
+            6.666666666666665
+          ],
+          "left_only": 12,
+          "right_only": 10
+        },
+        "g-t": {
+          "pp": 5.0,
+          "chart_ci": [
+            -6.25,
+            16.25
+          ],
+          "family_and_chart_ci": [
+            -15.000000000000002,
+            27.499999999999996
+          ],
+          "leave_one_family_out_range": [
+            -5.0,
+            11.666666666666666
+          ],
+          "left_only": 14,
+          "right_only": 10
+        }
+      }
+    },
+    "other": {
+      "counts": {
+        "a": {
+          "right": 119,
+          "n": 160,
+          "pct": 74.375
+        },
+        "b": {
+          "right": 130,
+          "n": 160,
+          "pct": 81.25
+        },
+        "g": {
+          "right": 129,
+          "n": 160,
+          "pct": 80.625
+        },
+        "t": {
+          "right": 127,
+          "n": 160,
+          "pct": 79.375
+        }
+      },
+      "paired": {
+        "a-b": {
+          "pp": -6.875000000000001,
+          "chart_ci": [
+            -13.750000000000002,
+            0.0
+          ],
+          "family_and_chart_ci": [
+            -18.125000000000004,
+            3.75
+          ],
+          "leave_one_family_out_range": [
+            -9.285714285714286,
+            -4.2857142857142865
+          ],
+          "left_only": 12,
+          "right_only": 23
+        },
+        "a-g": {
+          "pp": -6.25,
+          "chart_ci": [
+            -12.5,
+            0.0
+          ],
+          "family_and_chart_ci": [
+            -16.249999999999996,
+            2.5
+          ],
+          "leave_one_family_out_range": [
+            -7.8571428571428585,
+            -3.571428571428571
+          ],
+          "left_only": 9,
+          "right_only": 19
+        },
+        "a-t": {
+          "pp": -5.0,
+          "chart_ci": [
+            -13.125,
+            3.125
+          ],
+          "family_and_chart_ci": [
+            -23.125,
+            10.0
+          ],
+          "leave_one_family_out_range": [
+            -8.571428571428573,
+            2.1428571428571432
+          ],
+          "left_only": 22,
+          "right_only": 30
+        },
+        "b-g": {
+          "pp": 0.6250000000000002,
+          "chart_ci": [
+            -5.625,
+            6.875000000000001
+          ],
+          "family_and_chart_ci": [
+            -8.125,
+            9.375
+          ],
+          "leave_one_family_out_range": [
+            -1.4285714285714282,
+            2.857142857142857
+          ],
+          "left_only": 15,
+          "right_only": 14
+        },
+        "b-t": {
+          "pp": 1.8750000000000002,
+          "chart_ci": [
+            -5.625,
+            9.375
+          ],
+          "family_and_chart_ci": [
+            -12.5,
+            15.625
+          ],
+          "leave_one_family_out_range": [
+            -0.7142857142857141,
+            7.142857142857142
+          ],
+          "left_only": 23,
+          "right_only": 20
+        },
+        "g-t": {
+          "pp": 1.25,
+          "chart_ci": [
+            -6.25,
+            8.75
+          ],
+          "family_and_chart_ci": [
+            -11.875,
+            13.125
+          ],
+          "leave_one_family_out_range": [
+            -0.7142857142857141,
+            5.714285714285714
+          ],
+          "left_only": 23,
+          "right_only": 21
+        }
+      }
+    },
+    "novel_by_writer_form": {
+      "0": {
+        "a": {
+          "right": 85,
+          "n": 120,
+          "pct": 70.83333333333333
+        },
+        "b": {
+          "right": 87,
+          "n": 120,
+          "pct": 72.5
+        },
+        "g": {
+          "right": 92,
+          "n": 120,
+          "pct": 76.66666666666667
+        },
+        "t": {
+          "right": 81,
+          "n": 120,
+          "pct": 67.5
+        }
+      },
+      "1": {
+        "a": {
+          "right": 59,
+          "n": 120,
+          "pct": 49.166666666666664
+        },
+        "b": {
+          "right": 63,
+          "n": 120,
+          "pct": 52.5
+        },
+        "g": {
+          "right": 59,
+          "n": 120,
+          "pct": 49.166666666666664
+        },
+        "t": {
+          "right": 64,
+          "n": 120,
+          "pct": 53.333333333333336
+        }
+      }
+    },
+    "matched_wordings": {
+      "a": {
+        "n": 240,
+        "both": 126,
+        "novel_only": 18,
+        "familiar_only": 67
+      },
+      "b": {
+        "n": 240,
+        "both": 136,
+        "novel_only": 14,
+        "familiar_only": 53
+      },
+      "g": {
+        "n": 240,
+        "both": 137,
+        "novel_only": 14,
+        "familiar_only": 49
+      },
+      "t": {
+        "n": 240,
+        "both": 130,
+        "novel_only": 15,
+        "familiar_only": 53
+      }
+    },
+    "matched_hard_charts": {
+      "a": {
+        "differing_switch": {
+          "n": 73,
+          "both": 9,
+          "neither": 43
+        },
+        "hard": {
+          "n": 80,
+          "novel": 25,
+          "isolated": 73,
+          "both": 21,
+          "isolated_only": 52,
+          "novel_only": 4
+        },
+        "same_value_switch": {
+          "n": 7,
+          "both": 4,
+          "neither": 1
+        }
+      },
+      "b": {
+        "differing_switch": {
+          "n": 73,
+          "both": 11,
+          "neither": 48
+        },
+        "hard": {
+          "n": 80,
+          "novel": 20,
+          "isolated": 52,
+          "both": 18,
+          "isolated_only": 34,
+          "novel_only": 2
+        },
+        "same_value_switch": {
+          "n": 7,
+          "both": 2,
+          "neither": 3
+        }
+      },
+      "g": {
+        "differing_switch": {
+          "n": 73,
+          "both": 12,
+          "neither": 52
+        },
+        "hard": {
+          "n": 80,
+          "novel": 22,
+          "isolated": 30,
+          "both": 12,
+          "isolated_only": 18,
+          "novel_only": 10
+        },
+        "same_value_switch": {
+          "n": 7,
+          "both": 3,
+          "neither": 2
+        }
+      },
+      "t": {
+        "differing_switch": {
+          "n": 73,
+          "both": 8,
+          "neither": 44
+        },
+        "hard": {
+          "n": 80,
+          "novel": 18,
+          "isolated": 38,
+          "both": 9,
+          "isolated_only": 29,
+          "novel_only": 9
+        },
+        "same_value_switch": {
+          "n": 7,
+          "both": 2,
+          "neither": 3
+        }
+      }
+    },
+    "novel_trace_on_misses": {
+      "a": {
+        "counts": {
+          "misses": 96,
+          "parsed_final": 93,
+          "recognized_first_step": 74,
+          "correct_first_branch": 62
+        },
+        "examples": [
+          {
+            "id": "transfer-00-03-novel",
+            "edge": "六合→hidden",
+            "gold": [
+              "己",
+              "癸",
+              "辛"
+            ],
+            "branch": "丑",
+            "raw": "1. 原局日支为子，查与日支相合的地支可得丑。\n2. 将丑用于下步，丑藏己、癸、辛，本气为己。因此本气在前的常用次序列全为[\"己\"]。\n结论JSON: {\"answer\":[\"己\"]}"
+          },
+          {
+            "id": "transfer-01-07-novel",
+            "edge": "六合→number",
+            "gold": 3,
+            "branch": "丑",
+            "raw": "1. 原局日支为子，查与日支相合的地支可得子午。\n2. 将子午用于下步，子藏癸，藏有癸。因此单独算有1项。\n结论JSON: {\"answer\":1}"
+          },
+          {
+            "id": "transfer-01-09-novel",
+            "edge": "六合→number",
+            "gold": 2,
+            "branch": "亥",
+            "raw": "1. 原局年支为寅，查与之相合（六合）的支可得亥。\n2. 将亥用于下步，亥藏壬、甲，本气为壬。因此共2支，藏干为[\"壬\",\"甲\"]。结论JSON: {\"answer\":2}"
+          }
+        ]
+      },
+      "b": {
+        "counts": {
+          "misses": 90,
+          "parsed_final": 78,
+          "recognized_first_step": 71,
+          "correct_first_branch": 58
+        },
+        "examples": [
+          {
+            "id": "transfer-00-03-novel",
+            "edge": "六合→hidden",
+            "gold": [
+              "己",
+              "癸",
+              "辛"
+            ],
+            "branch": "丑",
+            "raw": "1. 原局日支为子，查与日支相合（合化）的地支可得丑。\n2. 将丑用于下步，丑藏己、癸、辛，本气为己。因此本气在前的天干为[\"己\"]。\n结论JSON: {\"answer\":[\"己\"]}"
+          },
+          {
+            "id": "transfer-00-09-novel",
+            "edge": "六合→hidden",
+            "gold": [
+              "壬",
+              "甲"
+            ],
+            "branch": "亥",
+            "raw": "1. 原局年支为寅，查与年支相合的地支可得亥子丑。\n2. 将亥子丑用于下步，亥属水，为阴干；子属水，为阴干；丑属土，为阴干。\n3. 本气为比劫（比肩、劫财）取癸、甲、乙，按本气在前的顺序排列为乙、甲、癸。\n结论JSON: {\"answer\":[\"乙\",\"甲\",\"癸\"]}"
+          },
+          {
+            "id": "transfer-01-08-novel",
+            "edge": "六合→number",
+            "gold": 2,
+            "branch": "亥",
+            "raw": "1. 原局日支为寅，查与日支相合（合化）的地支可得亥子丑。\n2. 将亥子丑用于下步，亥属水，子属水，丑属土，为阳干、阴干、中气三干，分别按藏干表核对，其中藏干为甲、乙、丙、丁、戊，为五干。因此全部藏干为[\"甲\",\"乙\",\"丙\",\"丁\",\"戊\"]。\n3. 逐项检查藏干：甲属木、乙属木、丙属火、丁属火、戊属土，共 5 项，但重复的不算，为 5 项。\n结论JSON: {\"answer\":5}"
+          }
+        ]
+      },
+      "g": {
+        "counts": {
+          "misses": 89,
+          "parsed_final": 74,
+          "recognized_first_step": 72,
+          "correct_first_branch": 57
+        },
+        "examples": [
+          {
+            "id": "transfer-00-03-novel",
+            "edge": "六合→hidden",
+            "gold": [
+              "己",
+              "癸",
+              "辛"
+            ],
+            "branch": "丑",
+            "raw": "1. 原局日支为子，查与日支相合（合化）的地支可得丑。\n2. 将丑用于下步，丑藏己、癸、辛，本气为己。因此本气在前的天干为[\"己\"]。\n结论JSON: {\"answer\":[\"己\"]}"
+          },
+          {
+            "id": "transfer-00-16-novel",
+            "edge": "六合→hidden",
+            "gold": [
+              "己",
+              "丁",
+              "乙"
+            ],
+            "branch": "未",
+            "raw": "1. 原局年支为午，查与年支相合的地支可得未。\n2. 将未用于下步，未藏己、丁、乙，本气为己。因此本气在前的天干为[\"己\"]。\n结论JSON: {\"answer\":[\"己\"]}"
+          },
+          {
+            "id": "transfer-01-08-novel",
+            "edge": "六合→number",
+            "gold": 2,
+            "branch": "亥",
+            "raw": "1. 原局日支为寅，查与日支相合（合化）的地支可得亥子丑。\n2. 将亥子丑用于下步，亥藏壬、甲，子藏癸，丑藏己、癸、辛，本气为己。因此藏干为[\"壬\",\"甲\",\"癸\",\"己\",\"癸\",\"辛\"]。\n3. 本气己为阴干，不算。\n4. 阴阳相异：亥卯未三合、寅午戌半合火局、巳酉丑金局、寅卯辰三会木方、巳午未六合（合化土）、申酉戌相害、亥子丑三会水局、寅卯辰半合木局、巳午未相冲、寅卯辰三刑、巳酉丑金局、寅午戌半合火局、申酉戌相破。\n5. 本气己为阴干，不算。\n6. 阴阳相异：亥卯未三合、寅午戌半合火局、巳酉丑金局、寅卯辰三会木方、巳午未六合（合化土）、申酉戌相害、亥子丑三会水局、寅卯辰半合木局、巳午未相冲、寅卯辰三刑、巳酉丑金局、寅午戌半合火局、申酉戌相破。\n7. 本气己为阴干，不算。\n8. 阴阳相异：亥卯未三合、寅午戌半合火局、巳酉丑金局、寅卯辰三会木方、巳午未六合（合化土）、申酉戌相害、亥子丑三会水局、寅卯辰半合木局、巳午未相冲、寅卯辰三刑、巳酉丑金局、寅午戌半合火局、申酉戌相破。\n9. 本气己为阴干，不算。\n10. 阴阳相异：亥卯未三合、寅午戌半合火局、巳酉丑金局、寅卯辰三会木方、巳午未六合（合化土）、申酉戌相害、亥子丑三会水局、寅卯辰半合木局、巳午未相冲、寅卯辰三刑、巳酉丑金局、寅午戌半合火局、申酉戌相破。\n11. 本气己为阴干，不算。\n12. 阴阳相异：亥卯未三合、寅午戌半合火局、巳酉丑金局、寅卯辰三会木方、巳午未六合（合化土）、申酉戌相害、亥子丑三会水局、寅卯辰半合木局、巳午未相冲、寅卯辰三刑、巳酉丑金局、寅午戌半合火局、申酉戌相破。\n13. 本气己为阴干，不算。\n14. 阴阳相异：亥卯未三合、寅午戌半合火局、巳酉丑金局、寅卯辰三会木方、巳午未六合（合化土）、申酉戌相害、亥子丑三会水局、寅卯辰半合木局、巳午未相冲、寅卯辰三刑、巳酉丑金局、寅午戌半合火局、申酉戌相破。\n15. 本气己为阴干，不算。\n16. 阴阳相异：亥卯未三合、寅午戌半合火局、巳酉丑金局、寅卯辰三会木方、巳午未六合（合化土）、申酉戌相害、亥子丑三会水局、寅卯辰半合木局、巳午未相冲、寅卯辰三刑、巳酉丑金局、寅午戌半合火局、申酉戌相破。\n17. 本气己为阴干，不算。\n18. 阴阳相异：亥卯未三合、寅午戌半合火局、巳酉丑金局、寅卯辰三会木方、巳午未六合（合化土）、申酉戌相害、亥子丑三会水局、寅卯辰半合木局、巳午未相冲、寅卯辰三刑、巳酉丑金局、寅午戌半合火局、申酉戌相破。\n19. 本气己为阴干，不算。\n20. 阴阳相异：亥卯未三合、寅午戌半合火局、巳酉丑金局、寅卯辰三会木方、巳午未六合（合化土）、申酉戌相害、亥子丑三会水局、寅卯辰半合木局、巳午未相冲、寅卯辰三刑、巳酉丑金局、寅午戌半合火局、申酉戌相破。\n"
+          }
+        ]
+      },
+      "t": {
+        "counts": {
+          "misses": 95,
+          "parsed_final": 74,
+          "recognized_first_step": 70,
+          "correct_first_branch": 51
+        },
+        "examples": [
+          {
+            "id": "transfer-00-04-novel",
+            "edge": "六合→hidden",
+            "gold": [
+              "辛"
+            ],
+            "branch": "酉",
+            "raw": "1. 来源：从原局日支出发，另取与之相合（六合）的一支。原局输入=辰。日支辰属申子辰三合局，本气为戊；藏干=[\"戊\",\"乙\",\"癸\"]。\n2. 本气戊：取戊，记作戊；所得地支=申。\n3. 本步输入=申。核对：申藏庚、壬、戊，本气为庚；藏干=[\"庚\",\"壬\",\"戊\"]。\n结论JSON: {\"answer\":[\"庚\",\"壬\",\"戊\"]}"
+          },
+          {
+            "id": "transfer-00-13-novel",
+            "edge": "六合→hidden",
+            "gold": [
+              "丁",
+              "己"
+            ],
+            "branch": "午",
+            "raw": "1. 来源：与原局年支出发，另取与之相合（六合）的一支。原局输入=未。核对：未藏己、丁、乙，本气为己；藏干=[\"己\",\"丁\",\"乙\"]。\n2. 本步输入=未。核对：未藏己、丁、乙，本气为己；藏干=[\"己\",\"丁\",\"乙\"]。\n3. 本气=\"己\"；核对：己属土，逐月取气；本气为己。\n结论JSON: {\"answer\":[\"己\"]}"
+          },
+          {
+            "id": "transfer-00-14-novel",
+            "edge": "六合→hidden",
+            "gold": [
+              "辛"
+            ],
+            "branch": "酉",
+            "raw": "1. 来源：从原局日支出发，另取与之相合（六合）的一支。原局输入=辰。日支辰属申子辰三合局，本气为戊；藏干=[\"戊\",\"乙\",\"癸\"]。\n2. 本气戊：取戊，记作戊；所得地支=申。\n3. 本步输入=申。核对：申藏庚、壬、戊，本气为庚；藏干=[\"庚\",\"壬\",\"戊\"]。\n结论JSON: {\"answer\":[\"庚\",\"壬\",\"戊\"]}"
+          }
+        ]
+      }
+    },
+    "novel_natal_shortcut": {
+      "right": 30,
+      "n": 240,
+      "pct": 12.5
+    }
+  },
+  "retention": {
+    "rules": {
+      "counts": {
+        "a": {
+          "right": 394,
+          "n": 400,
+          "pct": 98.5
+        },
+        "b": {
+          "right": 392,
+          "n": 400,
+          "pct": 98.0
+        },
+        "g": {
+          "right": 394,
+          "n": 400,
+          "pct": 98.5
+        },
+        "t": {
+          "right": 393,
+          "n": 400,
+          "pct": 98.25
+        },
+        "u8": {
+          "right": 399,
+          "n": 400,
+          "pct": 99.75
+        }
+      },
+      "paired": {
+        "a-b": {
+          "pp": 0.5,
+          "chart_ci": [
+            -0.75,
+            1.9999999999999998
+          ],
+          "left_only": 5,
+          "right_only": 3
+        },
+        "a-g": {
+          "pp": 0.0,
+          "chart_ci": [
+            -1.0,
+            1.0
+          ],
+          "left_only": 2,
+          "right_only": 2
+        },
+        "a-t": {
+          "pp": 0.25,
+          "chart_ci": [
+            -1.0,
+            1.5000000000000002
+          ],
+          "left_only": 4,
+          "right_only": 3
+        },
+        "a-u8": {
+          "pp": -1.25,
+          "chart_ci": [
+            -2.2500000000000004,
+            -0.25
+          ],
+          "left_only": 0,
+          "right_only": 5
+        },
+        "b-g": {
+          "pp": -0.5,
+          "chart_ci": [
+            -2.0,
+            0.75
+          ],
+          "left_only": 3,
+          "right_only": 5
+        },
+        "b-t": {
+          "pp": -0.25,
+          "chart_ci": [
+            -1.7500000000000002,
+            1.25
+          ],
+          "left_only": 4,
+          "right_only": 5
+        },
+        "b-u8": {
+          "pp": -1.75,
+          "chart_ci": [
+            -3.0000000000000004,
+            -0.5
+          ],
+          "left_only": 0,
+          "right_only": 7
+        },
+        "g-t": {
+          "pp": 0.25,
+          "chart_ci": [
+            -0.5,
+            1.0
+          ],
+          "left_only": 2,
+          "right_only": 1
+        },
+        "g-u8": {
+          "pp": -1.25,
+          "chart_ci": [
+            -2.5,
+            -0.25
+          ],
+          "left_only": 0,
+          "right_only": 5
+        },
+        "t-u8": {
+          "pp": -1.5,
+          "chart_ci": [
+            -2.75,
+            -0.5
+          ],
+          "left_only": 0,
+          "right_only": 6
+        }
+      },
+      "by_task": {
+        "ambig:no_rule": {
+          "a": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          },
+          "b": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          },
+          "g": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          },
+          "t": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          },
+          "u8": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          }
+        },
+        "ambig:yongshen_open": {
+          "a": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          },
+          "b": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          },
+          "g": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          },
+          "t": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          },
+          "u8": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          }
+        },
+        "domain": {
+          "a": {
+            "right": 17,
+            "n": 20,
+            "pct": 85.0
+          },
+          "b": {
+            "right": 19,
+            "n": 20,
+            "pct": 95.0
+          },
+          "g": {
+            "right": 19,
+            "n": 20,
+            "pct": 95.0
+          },
+          "t": {
+            "right": 18,
+            "n": 20,
+            "pct": 90.0
+          },
+          "u8": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          }
+        },
+        "fact:element_count": {
+          "a": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          },
+          "b": {
+            "right": 19,
+            "n": 20,
+            "pct": 95.0
+          },
+          "g": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          },
+          "t": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          },
+          "u8": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          }
+        },
+        "fact:hidden": {
+          "a": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          },
+          "b": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          },
+          "g": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          },
+          "t": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          },
+          "u8": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          }
+        },
+        "fact:life_stage": {
+          "a": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          },
+          "b": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          },
+          "g": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          },
+          "t": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          },
+          "u8": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          }
+        },
+        "fact:luck_direction": {
+          "a": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          },
+          "b": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          },
+          "g": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          },
+          "t": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          },
+          "u8": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          }
+        },
+        "fact:missing_element": {
+          "a": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          },
+          "b": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          },
+          "g": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          },
+          "t": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          },
+          "u8": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          }
+        },
+        "fact:ten_god_branch": {
+          "a": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          },
+          "b": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          },
+          "g": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          },
+          "t": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          },
+          "u8": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          }
+        },
+        "fact:ten_god_stem": {
+          "a": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          },
+          "b": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          },
+          "g": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          },
+          "t": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          },
+          "u8": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          }
+        },
+        "fact:xun_kong": {
+          "a": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          },
+          "b": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          },
+          "g": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          },
+          "t": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          },
+          "u8": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          }
+        },
+        "flow": {
+          "a": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          },
+          "b": {
+            "right": 18,
+            "n": 20,
+            "pct": 90.0
+          },
+          "g": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          },
+          "t": {
+            "right": 19,
+            "n": 20,
+            "pct": 95.0
+          },
+          "u8": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          }
+        },
+        "gods": {
+          "a": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          },
+          "b": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          },
+          "g": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          },
+          "t": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          },
+          "u8": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          }
+        },
+        "interact": {
+          "a": {
+            "right": 19,
+            "n": 20,
+            "pct": 95.0
+          },
+          "b": {
+            "right": 18,
+            "n": 20,
+            "pct": 90.0
+          },
+          "g": {
+            "right": 18,
+            "n": 20,
+            "pct": 90.0
+          },
+          "t": {
+            "right": 18,
+            "n": 20,
+            "pct": 90.0
+          },
+          "u8": {
+            "right": 19,
+            "n": 20,
+            "pct": 95.0
+          }
+        },
+        "overview": {
+          "a": {
+            "right": 19,
+            "n": 20,
+            "pct": 95.0
+          },
+          "b": {
+            "right": 19,
+            "n": 20,
+            "pct": 95.0
+          },
+          "g": {
+            "right": 19,
+            "n": 20,
+            "pct": 95.0
+          },
+          "t": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          },
+          "u8": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          }
+        },
+        "pattern": {
+          "a": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          },
+          "b": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          },
+          "g": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          },
+          "t": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          },
+          "u8": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          }
+        },
+        "prediction": {
+          "a": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          },
+          "b": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          },
+          "g": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          },
+          "t": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          },
+          "u8": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          }
+        },
+        "star": {
+          "a": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          },
+          "b": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          },
+          "g": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          },
+          "t": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          },
+          "u8": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          }
+        },
+        "strength": {
+          "a": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          },
+          "b": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          },
+          "g": {
+            "right": 19,
+            "n": 20,
+            "pct": 95.0
+          },
+          "t": {
+            "right": 19,
+            "n": 20,
+            "pct": 95.0
+          },
+          "u8": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          }
+        },
+        "yongshen": {
+          "a": {
+            "right": 19,
+            "n": 20,
+            "pct": 95.0
+          },
+          "b": {
+            "right": 19,
+            "n": 20,
+            "pct": 95.0
+          },
+          "g": {
+            "right": 19,
+            "n": 20,
+            "pct": 95.0
+          },
+          "t": {
+            "right": 19,
+            "n": 20,
+            "pct": 95.0
+          },
+          "u8": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          }
+        }
+      }
+    },
+    "calendar": {
+      "counts": {
+        "a": {
+          "right": 361,
+          "n": 400,
+          "pct": 90.25
+        },
+        "b": {
+          "right": 362,
+          "n": 400,
+          "pct": 90.5
+        },
+        "g": {
+          "right": 361,
+          "n": 400,
+          "pct": 90.25
+        },
+        "t": {
+          "right": 359,
+          "n": 400,
+          "pct": 89.75
+        },
+        "u8": {
+          "right": 364,
+          "n": 400,
+          "pct": 91.0
+        }
+      },
+      "paired": {
+        "a-b": {
+          "pp": -0.25,
+          "chart_ci": [
+            -0.75,
+            0.0
+          ],
+          "left_only": 0,
+          "right_only": 1
+        },
+        "a-g": {
+          "pp": 0.0,
+          "chart_ci": [
+            -1.5000000000000002,
+            1.5000000000000002
+          ],
+          "left_only": 6,
+          "right_only": 6
+        },
+        "a-t": {
+          "pp": 0.5,
+          "chart_ci": [
+            -1.0000000000000002,
+            2.25
+          ],
+          "left_only": 8,
+          "right_only": 6
+        },
+        "a-u8": {
+          "pp": -0.75,
+          "chart_ci": [
+            -3.733050847457627,
+            2.0254237288135593
+          ],
+          "left_only": 15,
+          "right_only": 18
+        },
+        "b-g": {
+          "pp": 0.25,
+          "chart_ci": [
+            -1.25,
+            1.7500000000000002
+          ],
+          "left_only": 6,
+          "right_only": 5
+        },
+        "b-t": {
+          "pp": 0.75,
+          "chart_ci": [
+            -0.9999999999999999,
+            2.5
+          ],
+          "left_only": 9,
+          "right_only": 6
+        },
+        "b-u8": {
+          "pp": -0.5,
+          "chart_ci": [
+            -3.48305790960452,
+            2.2671610169491494
+          ],
+          "left_only": 15,
+          "right_only": 17
+        },
+        "g-t": {
+          "pp": 0.5,
+          "chart_ci": [
+            -0.7500000000000001,
+            2.0
+          ],
+          "left_only": 5,
+          "right_only": 3
+        },
+        "g-u8": {
+          "pp": -0.75,
+          "chart_ci": [
+            -3.7415254237288136,
+            2.0250105932203377
+          ],
+          "left_only": 18,
+          "right_only": 21
+        },
+        "t-u8": {
+          "pp": -1.25,
+          "chart_ci": [
+            -4.007936507936508,
+            1.5
+          ],
+          "left_only": 18,
+          "right_only": 23
+        }
+      },
+      "by_task": {
+        "chart_facts": {
+          "a": {
+            "right": 19,
+            "n": 19,
+            "pct": 100.0
+          },
+          "b": {
+            "right": 19,
+            "n": 19,
+            "pct": 100.0
+          },
+          "g": {
+            "right": 19,
+            "n": 19,
+            "pct": 100.0
+          },
+          "t": {
+            "right": 19,
+            "n": 19,
+            "pct": 100.0
+          },
+          "u8": {
+            "right": 18,
+            "n": 19,
+            "pct": 94.73684210526316
+          }
+        },
+        "chart_plain": {
+          "a": {
+            "right": 15,
+            "n": 19,
+            "pct": 78.94736842105263
+          },
+          "b": {
+            "right": 15,
+            "n": 19,
+            "pct": 78.94736842105263
+          },
+          "g": {
+            "right": 14,
+            "n": 19,
+            "pct": 73.6842105263158
+          },
+          "t": {
+            "right": 14,
+            "n": 19,
+            "pct": 73.6842105263158
+          },
+          "u8": {
+            "right": 17,
+            "n": 19,
+            "pct": 89.47368421052632
+          }
+        },
+        "dst_fold": {
+          "a": {
+            "right": 44,
+            "n": 48,
+            "pct": 91.66666666666667
+          },
+          "b": {
+            "right": 44,
+            "n": 48,
+            "pct": 91.66666666666667
+          },
+          "g": {
+            "right": 44,
+            "n": 48,
+            "pct": 91.66666666666667
+          },
+          "t": {
+            "right": 44,
+            "n": 48,
+            "pct": 91.66666666666667
+          },
+          "u8": {
+            "right": 43,
+            "n": 48,
+            "pct": 89.58333333333333
+          }
+        },
+        "dst_gap": {
+          "a": {
+            "right": 16,
+            "n": 16,
+            "pct": 100.0
+          },
+          "b": {
+            "right": 16,
+            "n": 16,
+            "pct": 100.0
+          },
+          "g": {
+            "right": 16,
+            "n": 16,
+            "pct": 100.0
+          },
+          "t": {
+            "right": 16,
+            "n": 16,
+            "pct": 100.0
+          },
+          "u8": {
+            "right": 16,
+            "n": 16,
+            "pct": 100.0
+          }
+        },
+        "invalid": {
+          "a": {
+            "right": 18,
+            "n": 19,
+            "pct": 94.73684210526316
+          },
+          "b": {
+            "right": 18,
+            "n": 19,
+            "pct": 94.73684210526316
+          },
+          "g": {
+            "right": 18,
+            "n": 19,
+            "pct": 94.73684210526316
+          },
+          "t": {
+            "right": 18,
+            "n": 19,
+            "pct": 94.73684210526316
+          },
+          "u8": {
+            "right": 17,
+            "n": 19,
+            "pct": 89.47368421052632
+          }
+        },
+        "jie_boundary": {
+          "a": {
+            "right": 61,
+            "n": 61,
+            "pct": 100.0
+          },
+          "b": {
+            "right": 61,
+            "n": 61,
+            "pct": 100.0
+          },
+          "g": {
+            "right": 61,
+            "n": 61,
+            "pct": 100.0
+          },
+          "t": {
+            "right": 61,
+            "n": 61,
+            "pct": 100.0
+          },
+          "u8": {
+            "right": 59,
+            "n": 61,
+            "pct": 96.72131147540983
+          }
+        },
+        "jie_window": {
+          "a": {
+            "right": 15,
+            "n": 19,
+            "pct": 78.94736842105263
+          },
+          "b": {
+            "right": 15,
+            "n": 19,
+            "pct": 78.94736842105263
+          },
+          "g": {
+            "right": 15,
+            "n": 19,
+            "pct": 78.94736842105263
+          },
+          "t": {
+            "right": 14,
+            "n": 19,
+            "pct": 73.6842105263158
+          },
+          "u8": {
+            "right": 16,
+            "n": 19,
+            "pct": 84.21052631578948
+          }
+        },
+        "missing": {
+          "a": {
+            "right": 19,
+            "n": 19,
+            "pct": 100.0
+          },
+          "b": {
+            "right": 19,
+            "n": 19,
+            "pct": 100.0
+          },
+          "g": {
+            "right": 19,
+            "n": 19,
+            "pct": 100.0
+          },
+          "t": {
+            "right": 19,
+            "n": 19,
+            "pct": 100.0
+          },
+          "u8": {
+            "right": 19,
+            "n": 19,
+            "pct": 100.0
+          }
+        },
+        "shanghai_dst": {
+          "a": {
+            "right": 30,
+            "n": 36,
+            "pct": 83.33333333333333
+          },
+          "b": {
+            "right": 30,
+            "n": 36,
+            "pct": 83.33333333333333
+          },
+          "g": {
+            "right": 33,
+            "n": 36,
+            "pct": 91.66666666666667
+          },
+          "t": {
+            "right": 32,
+            "n": 36,
+            "pct": 88.88888888888889
+          },
+          "u8": {
+            "right": 23,
+            "n": 36,
+            "pct": 63.888888888888886
+          }
+        },
+        "tz_facts": {
+          "a": {
+            "right": 18,
+            "n": 18,
+            "pct": 100.0
+          },
+          "b": {
+            "right": 18,
+            "n": 18,
+            "pct": 100.0
+          },
+          "g": {
+            "right": 18,
+            "n": 18,
+            "pct": 100.0
+          },
+          "t": {
+            "right": 18,
+            "n": 18,
+            "pct": 100.0
+          },
+          "u8": {
+            "right": 18,
+            "n": 18,
+            "pct": 100.0
+          }
+        },
+        "tz_known": {
+          "a": {
+            "right": 12,
+            "n": 18,
+            "pct": 66.66666666666667
+          },
+          "b": {
+            "right": 13,
+            "n": 18,
+            "pct": 72.22222222222223
+          },
+          "g": {
+            "right": 13,
+            "n": 18,
+            "pct": 72.22222222222223
+          },
+          "t": {
+            "right": 12,
+            "n": 18,
+            "pct": 66.66666666666667
+          },
+          "u8": {
+            "right": 16,
+            "n": 18,
+            "pct": 88.88888888888889
+          }
+        },
+        "tz_needs_tool": {
+          "a": {
+            "right": 18,
+            "n": 18,
+            "pct": 100.0
+          },
+          "b": {
+            "right": 18,
+            "n": 18,
+            "pct": 100.0
+          },
+          "g": {
+            "right": 18,
+            "n": 18,
+            "pct": 100.0
+          },
+          "t": {
+            "right": 18,
+            "n": 18,
+            "pct": 100.0
+          },
+          "u8": {
+            "right": 15,
+            "n": 18,
+            "pct": 83.33333333333333
+          }
+        },
+        "zi_transition": {
+          "a": {
+            "right": 76,
+            "n": 90,
+            "pct": 84.44444444444444
+          },
+          "b": {
+            "right": 76,
+            "n": 90,
+            "pct": 84.44444444444444
+          },
+          "g": {
+            "right": 73,
+            "n": 90,
+            "pct": 81.11111111111111
+          },
+          "t": {
+            "right": 74,
+            "n": 90,
+            "pct": 82.22222222222223
+          },
+          "u8": {
+            "right": 87,
+            "n": 90,
+            "pct": 96.66666666666667
+          }
+        }
+      }
+    },
+    "calendar_behavior": {
+      "a": {
+        "answerable": 248,
+        "nonanswerable": 152,
+        "false_refusal": 30,
+        "definitive_on_nonanswer": 6
+      },
+      "b": {
+        "answerable": 248,
+        "nonanswerable": 152,
+        "false_refusal": 30,
+        "definitive_on_nonanswer": 6
+      },
+      "g": {
+        "answerable": 248,
+        "nonanswerable": 152,
+        "false_refusal": 34,
+        "definitive_on_nonanswer": 2
+      },
+      "t": {
+        "answerable": 248,
+        "nonanswerable": 152,
+        "false_refusal": 34,
+        "definitive_on_nonanswer": 3
+      },
+      "u8": {
+        "answerable": 248,
+        "nonanswerable": 152,
+        "false_refusal": 13,
+        "definitive_on_nonanswer": 19
+      }
+    }
+  },
+  "dev": {
+    "full": {
+      "counts": {
+        "a": {
+          "right": 118,
+          "n": 140,
+          "pct": 84.28571428571429
+        },
+        "b": {
+          "right": 114,
+          "n": 140,
+          "pct": 81.42857142857143
+        },
+        "g": {
+          "right": 107,
+          "n": 140,
+          "pct": 76.42857142857143
+        },
+        "t": {
+          "right": 112,
+          "n": 140,
+          "pct": 80.0
+        }
+      },
+      "paired": {
+        "a-b": {
+          "pp": 2.857142857142857,
+          "chart_ci": [
+            0.0,
+            6.428571428571428
+          ],
+          "family_and_chart_ci": [
+            -0.7142857142857143,
+            8.571428571428571
+          ],
+          "leave_one_family_out_range": [
+            0.8333333333333337,
+            3.3333333333333335
+          ],
+          "left_only": 5,
+          "right_only": 1
+        },
+        "a-g": {
+          "pp": 7.8571428571428585,
+          "chart_ci": [
+            3.571428571428571,
+            12.142857142857144
+          ],
+          "family_and_chart_ci": [
+            0.0,
+            19.285714285714285
+          ],
+          "leave_one_family_out_range": [
+            4.166666666666668,
+            9.166666666666668
+          ],
+          "left_only": 12,
+          "right_only": 1
+        },
+        "a-t": {
+          "pp": 4.2857142857142865,
+          "chart_ci": [
+            0.0,
+            8.571428571428571
+          ],
+          "family_and_chart_ci": [
+            -1.4285714285714286,
+            12.142857142857144
+          ],
+          "leave_one_family_out_range": [
+            1.6666666666666674,
+            5.000000000000001
+          ],
+          "left_only": 9,
+          "right_only": 3
+        },
+        "b-g": {
+          "pp": 5.0,
+          "chart_ci": [
+            2.142857142857143,
+            8.571428571428571
+          ],
+          "family_and_chart_ci": [
+            0.0,
+            12.857142857142856
+          ],
+          "leave_one_family_out_range": [
+            2.4999999999999996,
+            5.833333333333333
+          ],
+          "left_only": 7,
+          "right_only": 0
+        },
+        "b-t": {
+          "pp": 1.4285714285714286,
+          "chart_ci": [
+            -2.142857142857143,
+            5.714285714285714
+          ],
+          "family_and_chart_ci": [
+            -2.142857142857143,
+            6.428571428571428
+          ],
+          "leave_one_family_out_range": [
+            0.8333333333333334,
+            1.6666666666666667
+          ],
+          "left_only": 5,
+          "right_only": 3
+        },
+        "g-t": {
+          "pp": -3.571428571428571,
+          "chart_ci": [
+            -7.142857142857142,
+            -0.7142857142857143
+          ],
+          "family_and_chart_ci": [
+            -9.285714285714286,
+            0.0
+          ],
+          "leave_one_family_out_range": [
+            -4.166666666666666,
+            -1.6666666666666667
+          ],
+          "left_only": 0,
+          "right_only": 5
+        }
+      },
+      "by_family": {
+        "六合→stage": {
+          "a": {
+            "right": 12,
+            "n": 20,
+            "pct": 60.0
+          },
+          "b": {
+            "right": 9,
+            "n": 20,
+            "pct": 45.0
+          },
+          "g": {
+            "right": 6,
+            "n": 20,
+            "pct": 30.0
+          },
+          "t": {
+            "right": 8,
+            "n": 20,
+            "pct": 40.0
+          }
+        },
+        "华盖→hidden": {
+          "a": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          },
+          "b": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          },
+          "g": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          },
+          "t": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          }
+        },
+        "害→god": {
+          "a": {
+            "right": 6,
+            "n": 20,
+            "pct": 30.0
+          },
+          "b": {
+            "right": 5,
+            "n": 20,
+            "pct": 25.0
+          },
+          "g": {
+            "right": 1,
+            "n": 20,
+            "pct": 5.0
+          },
+          "t": {
+            "right": 4,
+            "n": 20,
+            "pct": 20.0
+          }
+        },
+        "桃花→main": {
+          "a": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          },
+          "b": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          },
+          "g": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          },
+          "t": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          }
+        },
+        "破→positions": {
+          "a": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          },
+          "b": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          },
+          "g": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          },
+          "t": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          }
+        },
+        "驿马→count": {
+          "a": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          },
+          "b": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          },
+          "g": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          },
+          "t": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          }
+        },
+        "驿马→element": {
+          "a": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          },
+          "b": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          },
+          "g": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          },
+          "t": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          }
+        }
+      }
+    },
+    "twin": {
+      "counts": {
+        "a": {
+          "right": 124,
+          "n": 140,
+          "pct": 88.57142857142857
+        },
+        "b": {
+          "right": 116,
+          "n": 140,
+          "pct": 82.85714285714286
+        },
+        "g": {
+          "right": 118,
+          "n": 140,
+          "pct": 84.28571428571429
+        },
+        "t": {
+          "right": 114,
+          "n": 140,
+          "pct": 81.42857142857143
+        }
+      },
+      "paired": {
+        "a-b": {
+          "pp": 5.714285714285714,
+          "chart_ci": [
+            1.4285714285714286,
+            10.0
+          ],
+          "family_and_chart_ci": [
+            -1.4285714285714286,
+            17.142857142857142
+          ],
+          "leave_one_family_out_range": [
+            0.8333333333333331,
+            6.666666666666667
+          ],
+          "left_only": 10,
+          "right_only": 2
+        },
+        "a-g": {
+          "pp": 4.2857142857142865,
+          "chart_ci": [
+            0.0,
+            8.571428571428571
+          ],
+          "family_and_chart_ci": [
+            -0.7142857142857143,
+            12.142857142857144
+          ],
+          "leave_one_family_out_range": [
+            1.6666666666666674,
+            5.000000000000001
+          ],
+          "left_only": 8,
+          "right_only": 2
+        },
+        "a-t": {
+          "pp": 7.142857142857142,
+          "chart_ci": [
+            2.857142857142857,
+            11.428571428571429
+          ],
+          "family_and_chart_ci": [
+            0.0,
+            17.857142857142854
+          ],
+          "leave_one_family_out_range": [
+            4.166666666666666,
+            8.333333333333332
+          ],
+          "left_only": 11,
+          "right_only": 1
+        },
+        "b-g": {
+          "pp": -1.4285714285714286,
+          "chart_ci": [
+            -5.0,
+            2.142857142857143
+          ],
+          "family_and_chart_ci": [
+            -7.857142857142857,
+            3.571428571428571
+          ],
+          "leave_one_family_out_range": [
+            -2.5,
+            0.8333333333333334
+          ],
+          "left_only": 3,
+          "right_only": 5
+        },
+        "b-t": {
+          "pp": 1.4285714285714286,
+          "chart_ci": [
+            -2.857142857142857,
+            5.714285714285714
+          ],
+          "family_and_chart_ci": [
+            -5.0,
+            10.0
+          ],
+          "leave_one_family_out_range": [
+            -1.6666666666666667,
+            3.3333333333333335
+          ],
+          "left_only": 6,
+          "right_only": 4
+        },
+        "g-t": {
+          "pp": 2.857142857142857,
+          "chart_ci": [
+            -0.7142857142857143,
+            7.142857142857142
+          ],
+          "family_and_chart_ci": [
+            -0.7142857142857143,
+            9.285714285714286
+          ],
+          "leave_one_family_out_range": [
+            0.8333333333333337,
+            3.3333333333333335
+          ],
+          "left_only": 6,
+          "right_only": 2
+        }
+      },
+      "by_family": {
+        "六合→stage": {
+          "a": {
+            "right": 16,
+            "n": 20,
+            "pct": 80.0
+          },
+          "b": {
+            "right": 9,
+            "n": 20,
+            "pct": 45.0
+          },
+          "g": {
+            "right": 12,
+            "n": 20,
+            "pct": 60.0
+          },
+          "t": {
+            "right": 11,
+            "n": 20,
+            "pct": 55.0
+          }
+        },
+        "华盖→hidden": {
+          "a": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          },
+          "b": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          },
+          "g": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          },
+          "t": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          }
+        },
+        "害→god": {
+          "a": {
+            "right": 8,
+            "n": 20,
+            "pct": 40.0
+          },
+          "b": {
+            "right": 7,
+            "n": 20,
+            "pct": 35.0
+          },
+          "g": {
+            "right": 6,
+            "n": 20,
+            "pct": 30.0
+          },
+          "t": {
+            "right": 3,
+            "n": 20,
+            "pct": 15.0
+          }
+        },
+        "桃花→main": {
+          "a": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          },
+          "b": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          },
+          "g": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          },
+          "t": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          }
+        },
+        "破→positions": {
+          "a": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          },
+          "b": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          },
+          "g": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          },
+          "t": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          }
+        },
+        "驿马→count": {
+          "a": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          },
+          "b": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          },
+          "g": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          },
+          "t": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          }
+        },
+        "驿马→element": {
+          "a": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          },
+          "b": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          },
+          "g": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          },
+          "t": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          }
+        }
+      }
+    },
+    "alternate": {
+      "counts": {
+        "a": {
+          "right": 112,
+          "n": 140,
+          "pct": 80.0
+        },
+        "b": {
+          "right": 113,
+          "n": 140,
+          "pct": 80.71428571428571
+        },
+        "g": {
+          "right": 108,
+          "n": 140,
+          "pct": 77.14285714285714
+        },
+        "t": {
+          "right": 101,
+          "n": 140,
+          "pct": 72.14285714285714
+        }
+      },
+      "paired": {
+        "a-b": {
+          "pp": -0.7142857142857143,
+          "chart_ci": [
+            -4.285714285714286,
+            2.857142857142857
+          ],
+          "family_and_chart_ci": [
+            -6.428571428571428,
+            5.0
+          ],
+          "leave_one_family_out_range": [
+            -2.5000000000000004,
+            0.8333333333333334
+          ],
+          "left_only": 3,
+          "right_only": 4
+        },
+        "a-g": {
+          "pp": 2.8571428571428577,
+          "chart_ci": [
+            -1.4285714285714286,
+            7.142857142857144
+          ],
+          "family_and_chart_ci": [
+            -4.285714285714286,
+            11.428571428571429
+          ],
+          "leave_one_family_out_range": [
+            4.625929269271485e-16,
+            5.000000000000001
+          ],
+          "left_only": 8,
+          "right_only": 4
+        },
+        "a-t": {
+          "pp": 7.8571428571428585,
+          "chart_ci": [
+            2.857142857142857,
+            12.857142857142856
+          ],
+          "family_and_chart_ci": [
+            -4.303571428571414,
+            25.71428571428571
+          ],
+          "leave_one_family_out_range": [
+            0.0,
+            10.833333333333334
+          ],
+          "left_only": 15,
+          "right_only": 4
+        },
+        "b-g": {
+          "pp": 3.571428571428571,
+          "chart_ci": [
+            0.0,
+            7.142857142857142
+          ],
+          "family_and_chart_ci": [
+            0.0,
+            9.285714285714286
+          ],
+          "leave_one_family_out_range": [
+            2.5,
+            4.166666666666666
+          ],
+          "left_only": 6,
+          "right_only": 1
+        },
+        "b-t": {
+          "pp": 8.571428571428571,
+          "chart_ci": [
+            5.0,
+            12.857142857142856
+          ],
+          "family_and_chart_ci": [
+            0.0,
+            22.142857142857146
+          ],
+          "leave_one_family_out_range": [
+            2.4999999999999996,
+            10.0
+          ],
+          "left_only": 12,
+          "right_only": 0
+        },
+        "g-t": {
+          "pp": 5.0,
+          "chart_ci": [
+            1.428571428571428,
+            9.285714285714286
+          ],
+          "family_and_chart_ci": [
+            -3.571428571428571,
+            16.42857142857143
+          ],
+          "leave_one_family_out_range": [
+            0.0,
+            6.666666666666667
+          ],
+          "left_only": 9,
+          "right_only": 2
+        }
+      },
+      "by_family": {
+        "六合→stage": {
+          "a": {
+            "right": 12,
+            "n": 20,
+            "pct": 60.0
+          },
+          "b": {
+            "right": 10,
+            "n": 20,
+            "pct": 50.0
+          },
+          "g": {
+            "right": 8,
+            "n": 20,
+            "pct": 40.0
+          },
+          "t": {
+            "right": 1,
+            "n": 20,
+            "pct": 5.0
+          }
+        },
+        "华盖→hidden": {
+          "a": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          },
+          "b": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          },
+          "g": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          },
+          "t": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          }
+        },
+        "害→god": {
+          "a": {
+            "right": 3,
+            "n": 20,
+            "pct": 15.0
+          },
+          "b": {
+            "right": 3,
+            "n": 20,
+            "pct": 15.0
+          },
+          "g": {
+            "right": 1,
+            "n": 20,
+            "pct": 5.0
+          },
+          "t": {
+            "right": 2,
+            "n": 20,
+            "pct": 10.0
+          }
+        },
+        "桃花→main": {
+          "a": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          },
+          "b": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          },
+          "g": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          },
+          "t": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          }
+        },
+        "破→positions": {
+          "a": {
+            "right": 19,
+            "n": 20,
+            "pct": 95.0
+          },
+          "b": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          },
+          "g": {
+            "right": 19,
+            "n": 20,
+            "pct": 95.0
+          },
+          "t": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          }
+        },
+        "驿马→count": {
+          "a": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          },
+          "b": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          },
+          "g": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          },
+          "t": {
+            "right": 18,
+            "n": 20,
+            "pct": 90.0
+          }
+        },
+        "驿马→element": {
+          "a": {
+            "right": 18,
+            "n": 20,
+            "pct": 90.0
+          },
+          "b": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          },
+          "g": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          },
+          "t": {
+            "right": 20,
+            "n": 20,
+            "pct": 100.0
+          }
+        }
+      }
+    }
+  },
+  "screening": {
+    "checks": {
+      "a_minus_b_at_least_4pp": false,
+      "a_minus_b_fixed_edge_95_lower_above_zero": false,
+      "a_minus_g_positive": false,
+      "a_minus_g_rules_meets_point_margin": true,
+      "a_minus_u8_rules_meets_point_margin": true,
+      "a_minus_g_calendar_meets_point_margin": true,
+      "a_minus_u8_calendar_meets_point_margin": true
+    },
+    "passes": false
+  }
+}

@@ -1,0 +1,2249 @@
+{
+ "counts": {
+  "groups": 120,
+  "full": 17,
+  "twin": 11,
+  "producer": 38,
+  "consumer": 15,
+  "oracle": 32,
+  "distractor": 13,
+  "cue": 24,
+  "both_primitives": 3,
+  "both_twins": 3,
+  "miss": 103,
+  "miss_bad_pre": 101,
+  "oracle_rescue": 24,
+  "oracle_break": 9,
+  "unparsed": 4,
+  "wrong_equals_natal": 35
+ },
+ "by_family": {
+  "冲→stage": {
+   "groups": 18,
+   "full": 4,
+   "twin": 1,
+   "producer": 7,
+   "consumer": 2,
+   "oracle": 3,
+   "distractor": 0,
+   "cue": 2,
+   "both_primitives": 0,
+   "both_twins": 0,
+   "miss": 14,
+   "miss_bad_pre": 14,
+   "oracle_rescue": 3,
+   "oracle_break": 4,
+   "unparsed": 1,
+   "wrong_equals_natal": 3
+  },
+  "六合→god": {
+   "groups": 17,
+   "full": 1,
+   "twin": 4,
+   "producer": 8,
+   "consumer": 1,
+   "oracle": 5,
+   "distractor": 3,
+   "cue": 4,
+   "both_primitives": 1,
+   "both_twins": 0,
+   "miss": 16,
+   "miss_bad_pre": 15,
+   "oracle_rescue": 4,
+   "oracle_break": 0,
+   "unparsed": 1,
+   "wrong_equals_natal": 11
+  },
+  "害→positions": {
+   "groups": 17,
+   "full": 1,
+   "twin": 0,
+   "producer": 4,
+   "consumer": 3,
+   "oracle": 6,
+   "distractor": 2,
+   "cue": 2,
+   "both_primitives": 0,
+   "both_twins": 0,
+   "miss": 16,
+   "miss_bad_pre": 16,
+   "oracle_rescue": 5,
+   "oracle_break": 0,
+   "unparsed": 1,
+   "wrong_equals_natal": 0
+  },
+  "破→element": {
+   "groups": 17,
+   "full": 2,
+   "twin": 1,
+   "producer": 1,
+   "consumer": 0,
+   "oracle": 8,
+   "distractor": 4,
+   "cue": 2,
+   "both_primitives": 0,
+   "both_twins": 1,
+   "miss": 15,
+   "miss_bad_pre": 15,
+   "oracle_rescue": 6,
+   "oracle_break": 0,
+   "unparsed": 0,
+   "wrong_equals_natal": 0
+  },
+  "破→count": {
+   "groups": 17,
+   "full": 6,
+   "twin": 3,
+   "producer": 1,
+   "consumer": 6,
+   "oracle": 5,
+   "distractor": 4,
+   "cue": 7,
+   "both_primitives": 1,
+   "both_twins": 1,
+   "miss": 11,
+   "miss_bad_pre": 10,
+   "oracle_rescue": 3,
+   "oracle_break": 4,
+   "unparsed": 1,
+   "wrong_equals_natal": 3
+  },
+  "驿马→main": {
+   "groups": 17,
+   "full": 3,
+   "twin": 2,
+   "producer": 13,
+   "consumer": 2,
+   "oracle": 5,
+   "distractor": 0,
+   "cue": 6,
+   "both_primitives": 1,
+   "both_twins": 1,
+   "miss": 14,
+   "miss_bad_pre": 14,
+   "oracle_rescue": 3,
+   "oracle_break": 1,
+   "unparsed": 0,
+   "wrong_equals_natal": 7
+  },
+  "桃花→hidden": {
+   "groups": 17,
+   "full": 0,
+   "twin": 0,
+   "producer": 4,
+   "consumer": 1,
+   "oracle": 0,
+   "distractor": 0,
+   "cue": 1,
+   "both_primitives": 0,
+   "both_twins": 0,
+   "miss": 17,
+   "miss_bad_pre": 17,
+   "oracle_rescue": 0,
+   "oracle_break": 0,
+   "unparsed": 0,
+   "wrong_equals_natal": 11
+  }
+ },
+ "prerequisite_flag": true,
+ "examples": [
+  {
+   "id": "diagnostic-0000-full",
+   "family": "冲→stage",
+   "branch": "巳",
+   "natal": "帝旺",
+   "gold": "胎",
+   "got": "病",
+   "obs": {
+    "full": false,
+    "twin": false,
+    "producer": false,
+    "consumer": false,
+    "oracle": false,
+    "distractor": false,
+    "cue": false
+   },
+   "raw": "1. 年支亥藏壬、甲，第一个壬是本气。\n2. 日主癸（水，阴）；本气在子。\n3. 从子起顺数十二宫：子（沐浴）、丑（冠带）、寅（临官）、卯（帝旺）、辰（衰）、巳（病）、午（死）、未（墓）、申（绝）、酉（胎）、戌（养）、亥（病）。\n4. 在上面找年支亥：亥病，所以年支亥属亥病。\n5. 日主癸为阴干，十二宫逆行；子（沐浴）、亥（病）。\n结论JSON: {\"answer\":\"病\"}"
+  },
+  {
+   "id": "diagnostic-0001-full",
+   "family": "六合→god",
+   "branch": "酉",
+   "natal": "正官",
+   "gold": "偏印",
+   "got": "正官",
+   "obs": {
+    "full": false,
+    "twin": true,
+    "producer": false,
+    "consumer": false,
+    "oracle": false,
+    "distractor": false,
+    "cue": false
+   },
+   "raw": "1. 年支辰藏戊、乙、癸，第一个戊是本气。\n2. 日主癸（水，阴）；本气戊（土，阳）。\n3. 五行：土克水，克我者为官杀。\n4. 阴阳相异：官杀里异性的是正官。\n结论JSON: {\"answer\":\"正官\"}"
+  },
+  {
+   "id": "diagnostic-0002-full",
+   "family": "害→positions",
+   "branch": "巳",
+   "natal": [
+    "年柱"
+   ],
+   "gold": [
+    "时柱"
+   ],
+   "got": [
+    "申"
+   ],
+   "obs": {
+    "full": false,
+    "twin": false,
+    "producer": false,
+    "consumer": true,
+    "oracle": false,
+    "distractor": false,
+    "cue": false
+   },
+   "raw": "1. 年支寅属木，与之成六害的是亥；旬首是甲寅。\n2. 日支申属金，与申相同地支的：年支寅、月支戌、时支午，都不含申；与申相同五行的：无。\n3. 核对：四柱地支寅、戌、申、午，与申相同的是日支申。\n结论JSON: {\"answer\":[\"申\"]}"
+  },
+  {
+   "id": "diagnostic-0003-full",
+   "family": "破→element",
+   "branch": "酉",
+   "natal": "水",
+   "gold": "金",
+   "got": "丑",
+   "obs": {
+    "full": false,
+    "twin": false,
+    "producer": false,
+    "consumer": false,
+    "oracle": true,
+    "distractor": false,
+    "cue": false
+   },
+   "raw": "1. 年支是子。\n2. 地支卡片：子：六合丑，冲午，刑卯，害未，破酉，半合申、辰（申子辰水局），三会亥子丑；戌：六合卯，冲辰，刑丑、未，害酉，破未，半合午（寅午戌火局），三会申酉戌；申：六合巳，冲寅，刑巳、寅，害亥，破巳，半合子（申子辰水局），三会申酉戌；午：六合未，冲子，自刑，害丑，破卯，半合寅、戌（寅午戌火局），三会巳午未。\n3. 查卡片：子：六合丑，冲午，刑卯，害未，破酉，半合申、辰（申子辰水局），三会亥子丑；戌：六合卯，冲辰，刑丑、未，害酉，破未，半合午（寅午戌火局），三会申酉戌；申：六合巳，冲寅，刑巳、寅，害亥，破巳，半合子（申子辰水局），三会申酉戌；午：六合未，冲子，自刑，害丑，破卯，半合寅、戌（寅午戌火局），三会巳午未。\n4. 符合约定的：子与午相冲，所以年支子的六合是丑。\n结论JSON: {\"answer\":\"丑\"}"
+  },
+  {
+   "id": "diagnostic-0004-full",
+   "family": "破→count",
+   "branch": "未",
+   "natal": 2,
+   "gold": 2,
+   "got": 1,
+   "obs": {
+    "full": false,
+    "twin": false,
+    "producer": false,
+    "consumer": false,
+    "oracle": false,
+    "distractor": false,
+    "cue": false
+   },
+   "raw": "1. 年支戌藏戊、辛、丁，第一个戊是本气。\n2. 月支子藏癸（本气）。\n3. 日支亥藏壬、甲，第一个壬是本气。\n4. 时支辰藏戊、乙、癸，第一个戊是本气。\n5. 核对：戌与亥，亥戌相破。\n6. 日支亥与年支戌既不相同也不相破，不算。\n7. 与年支戌相同地支的：无。\n8. 与月支子相同地支的：无。\n9. 与日支亥相同地支的：亥。\n10. 与时支辰相同地支的：辰。\n11. 三个中与年支戌相同的是辰，共 1 个。\n结论JSON: {\"answer\":1}"
+  },
+  {
+   "id": "diagnostic-0005-full",
+   "family": "驿马→main",
+   "branch": "申",
+   "natal": "甲",
+   "gold": "庚",
+   "got": "甲",
+   "obs": {
+    "full": false,
+    "twin": false,
+    "producer": false,
+    "consumer": false,
+    "oracle": false,
+    "distractor": false,
+    "cue": true
+   },
+   "raw": "1. 年支寅藏甲、丙、戊，第一个甲是本气。\n2. 日主丁（火，阴）；本气甲（木，阳）。\n3. 本气甲木生日主丁火（生我），甲为阳干、丁为阴干，阴阳相异，故为正印。\n结论JSON: {\"answer\":\"甲\"}"
+  },
+  {
+   "id": "diagnostic-0006-full",
+   "family": "桃花→hidden",
+   "branch": "酉",
+   "natal": [
+    "癸"
+   ],
+   "gold": [
+    "辛"
+   ],
+   "got": [],
+   "obs": {
+    "full": false,
+    "twin": false,
+    "producer": true,
+    "consumer": false,
+    "oracle": false,
+    "distractor": false,
+    "cue": false
+   },
+   "raw": "1. 日支子藏癸，第一个癸是本气。\n2. 十神表（日主戊，土，阳）：从土起按相生次序，土比劫→金食伤→水财→木官杀→火印；阳干取比肩、食神、偏财、七杀、偏印，阴干取劫财、伤官、正财、正官、正印。即：戊比肩、己劫财；庚食神、辛伤官；壬偏财、癸正财；甲七杀、乙正官；丙偏印、丁正印。\n3. 本气癸查表为正财。\n4. 年、月、时三干是辛、丁、丁。按本气、中气、余气的顺序看是否透出：\n5. 癸（本气，正财）：在辛、丁、丁中没有出现 → 不取。\n6. 都不取，回到本气癸，记作正财格。\n7. 这是“月令透干取格”的约定；多干并透、会合变格各家处理不同，格名不代表吉凶。\n结论JSON: {\"answer\":[]}"
+  },
+  {
+   "id": "diagnostic-0007-full",
+   "family": "冲→stage",
+   "branch": "戌",
+   "natal": "冠带",
+   "gold": "墓",
+   "got": "偏强",
+   "obs": {
+    "full": false,
+    "twin": false,
+    "producer": false,
+    "consumer": false,
+    "oracle": true,
+    "distractor": false,
+    "cue": true
+   },
+   "raw": "1. 年支辰属申子辰三合局，与寅既不相冲也不相刑 → 无。\n2. 月支未属亥卯未三合局，与寅：无。\n3. 日支寅属寅午戌三合局，与未：无。\n4. 时支巳属巳酉丑金局，与寅：无。\n5. 核对：辰、未、寅、巳四支卡片，寅巳不在同一支，不相冲。\n6. 与日支寅相冲的是申。\n7. 日主戊属土，按相生次序土比劫→金食伤→水财→木官杀→火印；按相生次序看是否与申相生，不相生。\n8. 阴阳相异：土克水，我克者为财。\n9. 五行位次：从土起按相生次序，土比劫→金食伤→水财→木官杀→火印；比劫位旺、印位相、食伤位休、财位囚、官杀位死。\n10. 得令：月令未属土；旺或相才得令 → 是。\n11. 得地（地支藏干里有没有土）：年支辰藏戊、乙、癸：有戊；月支未藏己、丁、乙：有己；日支寅藏甲、丙、戊：有戊；时支巳藏丙、庚、戊：有戊。有 4 支，至少一支即得地 → 是。\n12. 得势（其余三干中在比劫位或印位的个数）：年干壬（水）在财位，不算；月干丁（火）在印位，算；时干丁（火）在印位，算。共 2 个，至少两个才算 → 是。\n13. 三项中占 3 项，占两项及以上为偏强 → 偏强。这是计数约定，各派权重不同。\n结论JSON: {\"answer\":\"偏强\"}"
+  },
+  {
+   "id": "diagnostic-0008-full",
+   "family": "六合→god",
+   "branch": "寅",
+   "natal": "比肩",
+   "gold": "食神",
+   "got": "比肩",
+   "obs": {
+    "full": false,
+    "twin": false,
+    "producer": false,
+    "consumer": false,
+    "oracle": false,
+    "distractor": false,
+    "cue": true
+   },
+   "raw": "1. 年支亥藏壬、甲，第一个壬是本气。\n2. 日主壬（水，阳）；本气壬（水，阳）。\n3. 十神表（日主壬，水，阳）：从水起按相生次序，水比劫→木食伤→火财→土官杀→金印；阳干取比肩、食神、偏财、七杀、偏印，阴干取劫财、伤官、正财、正官、正印。即：壬比肩、癸劫财；甲食神、乙伤官；丙偏财、丁正财；戊七杀、己正官；庚偏印、辛正印。\n4. 本气壬查表为比肩。\n结论JSON: {\"answer\":\"比肩\"}"
+  },
+  {
+   "id": "diagnostic-0011-full",
+   "family": "破→count",
+   "branch": "亥",
+   "natal": 1,
+   "gold": 0,
+   "got": 1,
+   "obs": {
+    "full": false,
+    "twin": false,
+    "producer": false,
+    "consumer": false,
+    "oracle": false,
+    "distractor": false,
+    "cue": false
+   },
+   "raw": "1. 年支寅藏甲、丙、戊，第一个甲是本气。\n2. 月支申藏庚、壬、戊，第一个庚是本气。\n3. 日支午藏丁、己，第一个丁是本气。\n4. 时支巳藏丙、庚、戊，第一个丙是本气。\n5. 核对：本气是甲、庚、丁、丙。按本气、中气、余气的顺序看是否透出。\n6. 都不取，回到本气：甲、庚、丁、丙。\n7. 与年支寅相同的是甲，共 1 个。\n8. 这是只数四个地支里与年支相同的，不算藏干：1 个。\n结论JSON: {\"answer\":1}"
+  },
+  {
+   "id": "diagnostic-0012-full",
+   "family": "驿马→main",
+   "branch": "申",
+   "natal": "甲",
+   "gold": "庚",
+   "got": "甲",
+   "obs": {
+    "full": false,
+    "twin": false,
+    "producer": false,
+    "consumer": false,
+    "oracle": false,
+    "distractor": false,
+    "cue": false
+   },
+   "raw": "1. 日支寅藏甲、丙、戊，第一个甲是本气。\n2. 日支本气甲查表为甲（本气甲，中气乙，余气丙）。\n结论JSON: {\"answer\":\"甲\"}"
+  },
+  {
+   "id": "diagnostic-0013-full",
+   "family": "桃花→hidden",
+   "branch": "卯",
+   "natal": [
+    "甲",
+    "丙",
+    "戊"
+   ],
+   "gold": [
+    "乙"
+   ],
+   "got": [
+    "甲",
+    "丙",
+    "戊"
+   ],
+   "obs": {
+    "full": false,
+    "twin": false,
+    "producer": false,
+    "consumer": false,
+    "oracle": false,
+    "distractor": false,
+    "cue": false
+   },
+   "raw": "1. 日支寅藏甲、丙、戊，第一个甲是本气。\n2. 日支是寅。\n3. 查藏干表：寅：甲、丙、戊（本气在前）。\n结论JSON: {\"answer\":[\"甲\",\"丙\",\"戊\"]}"
+  },
+  {
+   "id": "diagnostic-0014-full",
+   "family": "冲→stage",
+   "branch": "未",
+   "natal": "养",
+   "gold": "衰",
+   "got": "长生",
+   "obs": {
+    "full": false,
+    "twin": false,
+    "producer": true,
+    "consumer": false,
+    "oracle": false,
+    "distractor": false,
+    "cue": false
+   },
+   "raw": "1. 日支为丑。\n2. 查两支卡片：丑：六合子，冲未，刑戌、未，害午，破辰，半合酉（巳酉丑金局），三会亥子丑。\n3. 与丑六合的是子。\n4. 日主辛属金，按相生次序金比劫→水食伤→木财→火官杀→土印；按相生次序金比劫→水食伤→木财→火官杀→土印；按相生次序金比劫→水食伤→木财→火官杀→土印。\n5. 子属水。查表：辛：长生在子，沐浴在丑，冠带在寅，临官在卯，帝旺在辰，衰在巳，病在午，死在未，墓在申，绝在酉，胎在戌，养在亥。\n6. 日主辛在子的长生，所以“长生”。\n结论JSON: {\"answer\":\"长生\"}"
+  },
+  {
+   "id": "diagnostic-0015-full",
+   "family": "六合→god",
+   "branch": "巳",
+   "natal": "偏财",
+   "gold": "比肩",
+   "got": "偏印",
+   "obs": {
+    "full": false,
+    "twin": false,
+    "producer": false,
+    "consumer": false,
+    "oracle": true,
+    "distractor": false,
+    "cue": false
+   },
+   "raw": "1. 日支申属申子辰三合局，六合为寅卯辰。\n2. 本气藏干：寅藏甲、丙、戊，第一个甲是本气。\n3. 日主丙（火，阳）；本气甲（木，阳）。\n4. 五行：木生火，生我者为印。\n5. 阴阳相同：印里同性的是偏印。\n结论JSON: {\"answer\":\"偏印\"}"
+  },
+  {
+   "id": "diagnostic-0016-full",
+   "family": "害→positions",
+   "branch": "寅",
+   "natal": [
+    "日柱"
+   ],
+   "gold": [
+    "时柱"
+   ],
+   "got": [],
+   "obs": {
+    "full": false,
+    "twin": false,
+    "producer": true,
+    "consumer": false,
+    "oracle": false,
+    "distractor": false,
+    "cue": false
+   },
+   "raw": "1. 日支为巳。与巳相冲的是亥；与巳相刑的是寅、申；与巳相破的是亥、巳。\n2. 查两支卡片，看是否与巳相冲或相刑：年支戌：戌不在巳卡 → 无；月支未：未不在巳卡 → 无；日支巳：同支，巳不是自刑 → 无；时支寅：寅不在巳卡 → 无。\n3. 相冲的支：亥。四柱中与亥相冲的柱：无。\n4. 相刑的支：寅、申。四柱中与寅相刑的柱：无；与申相刑的柱：无。\n5. 约定：与日支同支的柱，不特别论断 → 无。\n6. 与日支巳相破的支：亥。四柱中与亥相冲或刑害的柱：无。\n7. 都不成立，回到最初约定：与日支巳相冲或相刑的柱，按原义取。\n8. 与日支巳相冲的柱：亥。在四柱中出现的支：无。\n9. 与日支巳相刑的柱：寅、申。在四柱中出现的支：时支寅。\n10. 符合约定的柱：时支寅。这只是符号上的关系，不算。\n结论JSON: {\"answer\":[]}"
+  },
+  {
+   "id": "diagnostic-0019-full",
+   "family": "驿马→main",
+   "branch": "亥",
+   "natal": "辛",
+   "gold": "壬",
+   "got": "辛",
+   "obs": {
+    "full": false,
+    "twin": false,
+    "producer": true,
+    "consumer": false,
+    "oracle": true,
+    "distractor": false,
+    "cue": false
+   },
+   "raw": "1. 日支酉藏辛，第一个辛是本气。\n2. 日支是酉。\n3. 查本气：辛（本气，阴干）。\n结论JSON: {\"answer\":\"辛\"}"
+  },
+  {
+   "id": "diagnostic-0020-full",
+   "family": "桃花→hidden",
+   "branch": "子",
+   "natal": [
+    "壬",
+    "甲"
+   ],
+   "gold": [
+    "癸"
+   ],
+   "got": [
+    "壬",
+    "甲"
+   ],
+   "obs": {
+    "full": false,
+    "twin": false,
+    "producer": false,
+    "consumer": false,
+    "oracle": false,
+    "distractor": false,
+    "cue": true
+   },
+   "raw": "1. 年支是亥。\n2. 查藏干表：亥藏壬、甲（本气壬，中气甲）。\n结论JSON: {\"answer\":[\"壬\",\"甲\"]}"
+  },
+  {
+   "id": "diagnostic-0021-full",
+   "family": "冲→stage",
+   "branch": "申",
+   "natal": "死",
+   "gold": "沐浴",
+   "got": "比劫位",
+   "obs": {
+    "full": false,
+    "twin": false,
+    "producer": false,
+    "consumer": false,
+    "oracle": false,
+    "distractor": false,
+    "cue": false
+   },
+   "raw": "1. 年支寅藏甲、丙、戊，第一个甲是本气。\n2. 日主己（土，阴）；本气在午。\n3. 从甲起按相生次序，土比劫→金食伤→水财→木官杀→火印；比劫位旺、印位相、食伤位休、财位囚、官杀位死。\n4. 在本气甲的位置，甲为本气，是比劫位。\n结论JSON: {\"answer\":\"比劫位\"}"
+  },
+  {
+   "id": "diagnostic-0022-full",
+   "family": "六合→god",
+   "branch": "午",
+   "natal": "食神",
+   "gold": "比肩",
+   "got": "食神",
+   "obs": {
+    "full": false,
+    "twin": true,
+    "producer": true,
+    "consumer": false,
+    "oracle": false,
+    "distractor": false,
+    "cue": false
+   },
+   "raw": "1. 年支未藏己、丁、乙，第一个己是本气。\n2. 日主丁（火，阴）；本气己（土，阴）。\n3. 十神表（日主丁，火，阴）：从火起按相生次序，火比劫→土食伤→金财→水官杀→木印；阴干取比肩、食神、偏财、七杀、偏印，阳干取劫财、伤官、正财、正官、正印。即：丙劫财、丁比肩；戊伤官、己食神；庚正财、辛偏财；壬正官、癸七杀；甲正印、乙偏印。\n4. 本气己查表为食神。\n结论JSON: {\"answer\":\"食神\"}"
+  },
+  {
+   "id": "diagnostic-0023-full",
+   "family": "害→positions",
+   "branch": "寅",
+   "natal": [
+    "日柱"
+   ],
+   "gold": [
+    "年柱",
+    "月柱"
+   ],
+   "got": [
+    "庚寅"
+   ],
+   "obs": {
+    "full": false,
+    "twin": false,
+    "producer": true,
+    "consumer": false,
+    "oracle": false,
+    "distractor": false,
+    "cue": false
+   },
+   "raw": "1. 日支是巳。\n2. 查两支卡片，巳：六合申，冲亥，刑寅、申，害寅，破申，半合酉（巳酉丑金局），三会巳午未。\n3. 巳与何支相刑、相害？巳申相刑、寅申相害、巳酉半合金局、巳亥相冲、巳午相破。\n4. 按上面找的：寅申相刑、寅申相害，所以与巳既相刑又相害的是寅。\n5. 核对：寅申相刑、寅申相害，成立。旬首是庚寅。\n6. 与日支巳相刑的：无；与日支巳相害的：寅。\n7. 在四柱中属寅的：年柱庚寅。\n8. 与日支巳既相刑又相害的支卡片：寅。对应柱名：年柱庚寅。\n结论JSON: {\"answer\":[\"庚寅\"]}"
+  },
+  {
+   "id": "diagnostic-0024-full",
+   "family": "破→element",
+   "branch": "辰",
+   "natal": "土",
+   "gold": "土",
+   "got": "午未",
+   "obs": {
+    "full": false,
+    "twin": false,
+    "producer": false,
+    "consumer": false,
+    "oracle": true,
+    "distractor": false,
+    "cue": false
+   },
+   "raw": "1. 年支是丑。\n2. 查两支卡片，找与丑相冲的：未。\n3. 查两支卡片，找与未相刑的：丑未相冲、丑未相刑。\n4. 查两支卡片，找与未相破的：午。\n5. 四支卡片：丑未相冲、丑未相刑、午未相破。\n6. 符合约定的是午未：午未相破。\n结论JSON: {\"answer\":\"午未\"}"
+  },
+  {
+   "id": "diagnostic-0025-full",
+   "family": "破→count",
+   "branch": "巳",
+   "natal": 1,
+   "gold": 0,
+   "got": 1,
+   "obs": {
+    "full": false,
+    "twin": true,
+    "producer": false,
+    "consumer": false,
+    "oracle": false,
+    "distractor": false,
+    "cue": true
+   },
+   "raw": "1. 日支申属金。\n2. 五行：同为金的：年支未、月支卯、日支申、时支卯，其中是金的：日支申。\n3. 得到：1 支，与其他三支都不同，分别属土、木、金、木，五行属金的：日支申。\n结论JSON: {\"answer\":1}"
+  },
+  {
+   "id": "diagnostic-0026-full",
+   "family": "驿马→main",
+   "branch": "亥",
+   "natal": "丙",
+   "gold": "壬",
+   "got": "丙",
+   "obs": {
+    "full": false,
+    "twin": false,
+    "producer": true,
+    "consumer": false,
+    "oracle": false,
+    "distractor": false,
+    "cue": true
+   },
+   "raw": "1. 日支巳藏丙、庚、戊，第一个丙是本气。\n2. 日支巳本气为丙（火，阳）。\n结论JSON: {\"answer\":\"丙\"}"
+  },
+  {
+   "id": "diagnostic-0027-full",
+   "family": "桃花→hidden",
+   "branch": "子",
+   "natal": [
+    "壬",
+    "甲"
+   ],
+   "gold": [
+    "癸"
+   ],
+   "got": [
+    "壬",
+    "甲"
+   ],
+   "obs": {
+    "full": false,
+    "twin": false,
+    "producer": false,
+    "consumer": false,
+    "oracle": false,
+    "distractor": false,
+    "cue": false
+   },
+   "raw": "1. 年支是亥。\n2. 查藏干表：亥藏壬、甲（本气壬，中气甲）。\n结论JSON: {\"answer\":[\"壬\",\"甲\"]}"
+  },
+  {
+   "id": "diagnostic-0028-full",
+   "family": "冲→stage",
+   "branch": "子",
+   "natal": "帝旺",
+   "gold": "胎",
+   "got": "养",
+   "obs": {
+    "full": false,
+    "twin": false,
+    "producer": false,
+    "consumer": false,
+    "oracle": false,
+    "distractor": false,
+    "cue": false
+   },
+   "raw": "1. 年支午藏丁、己，与年支午相冲的是子；与子相冲的是午。\n2. 日主丙属火，按相生次序火比劫→土食伤→金财→水官杀→木印；按相生次序火比劫→土食伤→金财→水官杀→木印；按相生次序火比劫→土食伤→金财→水官杀→木印。\n3. 查表：丙的长生在寅，顺行：寅比劫、卯印、辰食神、巳财、午官、未劫、申死、酉墓、戌绝、亥胎、子养、丑疾。\n4. 在上面找年支午的冲合：午在子，所以是子。\n5. 日主丙在子时为养。\n结论JSON: {\"answer\":\"养\"}"
+  },
+  {
+   "id": "diagnostic-0029-full",
+   "family": "六合→god",
+   "branch": "申",
+   "natal": "劫财",
+   "gold": "正财",
+   "got": "劫财",
+   "obs": {
+    "full": false,
+    "twin": false,
+    "producer": true,
+    "consumer": true,
+    "oracle": false,
+    "distractor": false,
+    "cue": true
+   },
+   "raw": "1. 日支巳藏丙、庚、戊，第一个丙是本气。\n2. 日主丁（火，阴）；本气丙（火，阳）。\n3. 五行：同为火，同我者为比劫。\n4. 阴阳相异：比劫里异性的是劫财。\n结论JSON: {\"answer\":\"劫财\"}"
+  },
+  {
+   "id": "diagnostic-0030-full",
+   "family": "害→positions",
+   "branch": "辰",
+   "natal": [
+    "年柱",
+    "时柱"
+   ],
+   "gold": [],
+   "got": null,
+   "obs": {
+    "full": false,
+    "twin": false,
+    "producer": false,
+    "consumer": false,
+    "oracle": true,
+    "distractor": false,
+    "cue": false
+   },
+   "raw": "1. 年支卯属亥卯未三合局，与之相同的是亥、卯、未。\n2. 日支巳属巳酉丑三合局，与之相同的是巳、酉、丑。\n3. 三合局中是比劫还是合化：没有指定流派，不能替你默认，请先看十神。\n4. 日主癸（水，阴）；年干辛（金，阴）；月干甲（木，阳）；时干乙（木，阴）。\n5. 十神表（日主癸，水，阴）：从水起按相生次序，水比劫→木食伤→火财→土官杀→金印；阴干取比肩、食神、偏财、七杀、偏印，阳干取劫财、伤官、正财、正官、正印。即：壬劫财、癸比肩；甲伤官、乙食神；丙正财、丁偏财；戊正官、己七杀；庚正印、辛偏印。\n6. 年干辛：查表，辛为偏印。\n7. 月干甲：查表，甲为伤官。\n8. 时干乙：查表，乙为食神。\n9. 都是比劫或印：年干偏印、月干伤官、时干食神。逐项检查十神。\n10. 与年支卯相同地支的：亥、卯、未。\n11. 这些地支里是比劫还是合化：没有指定流派，不能替你默认，请先看十神。\n12. 日支巳属巳酉丑三合局，与之相同的是巳、酉、丑。\n13. 三合局中是比劫还是合化：没有指定流派，不能替你默认，请先看十神。\n14. 与年支卯相同地支的：亥、卯、未。\n15. 这些地支里是比劫还是合化：没有指定流派，不能替你默认，请先看十神。\n16. 与年支卯相同地支的：亥、卯、未。\n17. 三合局中是比劫还是合化：没有指定流派，不能替你默认，请先看十神。\n18. 日支巳属巳酉丑三合局，与之相同的是巳、酉、丑。\n19. 三合局中是比劫还是合化：没有指定流派，不能替你默认，请先看十神。\n20. 与年支卯相同地支的：亥、卯、未。\n21. 这些地支里是比劫还是合化：没有指定流派，不能替你默认，请先看十神。\n22. 日支巳属巳酉丑三合局，与之相同的是巳、酉、丑。\n23. 三合局中是比劫还是合化：没有指定流派，不能替你默认，请先看十神。\n24. 与年支卯相同地支的：亥、卯、未。\n25. 这些地支里是比劫还是合化：没有指定流派，不能替你默认，请先看十神。\n26. 日支巳属巳酉丑三合局，与之相同的是巳、酉、丑。\n27. 三合局中是比劫还是合化：没有指定流派，不能替你默认，请先看十神。\n28. 与年支卯相同地支的：亥、卯、未。\n29. 这些地支里是比劫还是合化：没有指定流派，不能替你默认，请先看十神。\n30. 日支巳属巳酉丑三合局，与之相同的是巳、酉、丑。\n31. 三合局中是比劫还是合化：没有指定流派，不能替你默认，请先看十神。\n32. 与年支卯相同地支的：亥、卯、未。\n33. 这些地支里是比劫还是合化：没有指定流派，不能替你默认，请先看十神。\n34. 日支巳属巳酉丑三合局，与之相同的是巳、酉、丑。\n35. 三合局中是比劫还是合化：没有指定流派，不能替你默认，请先看十神。\n36. 与年支卯相同地支的：亥、卯、未。\n37. 这些地支里是比劫还是合化：没有指定流派，不能替你默认，请先看十神。\n38. 日支巳属巳酉丑三合局，与之相同的是巳、酉、丑。\n39. 三合局中是比劫还是合化：没有指定流派，不能替你默认，请先看十神。\n40. 与年支卯相同地支的"
+  },
+  {
+   "id": "diagnostic-0031-full",
+   "family": "破→element",
+   "branch": "未",
+   "natal": "土",
+   "gold": "土",
+   "got": "食神",
+   "obs": {
+    "full": false,
+    "twin": false,
+    "producer": false,
+    "consumer": false,
+    "oracle": false,
+    "distractor": false,
+    "cue": false
+   },
+   "raw": "1. 年支戌藏戊、辛、丁，第一个戊是本气。\n2. 日主丙（火，阳）；本气戊（土，阳）。\n3. 五行：火生土，我生者为食伤。\n4. 阴阳相同：食伤里同性的是食神。\n结论JSON: {\"answer\":\"食神\"}"
+  },
+  {
+   "id": "diagnostic-0033-full",
+   "family": "驿马→main",
+   "branch": "寅",
+   "natal": "癸",
+   "gold": "甲",
+   "got": "劫财",
+   "obs": {
+    "full": false,
+    "twin": false,
+    "producer": true,
+    "consumer": false,
+    "oracle": false,
+    "distractor": false,
+    "cue": true
+   },
+   "raw": "1. 日支子藏癸，第一个癸是本气。\n2. 日支子与申既不相冲又不相刑，不需要特别约定。\n3. 本气癸为阴干、庚为阳干，阴阳相异，故为劫财。\n结论JSON: {\"answer\":\"劫财\"}"
+  },
+  {
+   "id": "diagnostic-0034-full",
+   "family": "桃花→hidden",
+   "branch": "酉",
+   "natal": [
+    "庚",
+    "壬",
+    "戊"
+   ],
+   "gold": [
+    "辛"
+   ],
+   "got": [
+    "庚"
+   ],
+   "obs": {
+    "full": false,
+    "twin": false,
+    "producer": false,
+    "consumer": false,
+    "oracle": false,
+    "distractor": false,
+    "cue": false
+   },
+   "raw": "1. 日支申藏庚、壬、戊，第一个庚是本气。\n2. 十神表（日主壬，水，阳）：从水起按相生次序，水比劫→木食伤→火财→土官杀→金印；阳干取比肩、食神、偏财、七杀、偏印，阴干取劫财、伤官、正财、正官、正印。即：壬比肩、癸劫财；甲食神、乙伤官；丙偏财、丁正财；戊七杀、己正官；庚偏印、辛正印。\n3. 本气庚查表为偏印。\n4. 年、月、时三干是庚、癸、癸。按本气、中气、余气的顺序看是否透出：\n5. 庚（本气，偏印）：在庚、癸、癸中出现；偏印不是比劫 → 透出，取庚，记作偏印格。\n6. 这是搭配的名称，不是吉凶判断。\n结论JSON: {\"answer\":[\"庚\"]}"
+  },
+  {
+   "id": "diagnostic-0035-full",
+   "family": "冲→stage",
+   "branch": "巳",
+   "natal": "长生",
+   "gold": "病",
+   "got": "长生",
+   "obs": {
+    "full": false,
+    "twin": true,
+    "producer": false,
+    "consumer": false,
+    "oracle": false,
+    "distractor": false,
+    "cue": false
+   },
+   "raw": "1. 年支亥藏壬、甲，第一个壬是本气。\n2. 日主甲（木，阳）；本气壬（水，阳）。\n3. 五行位次：从木起按相生次序，木比劫→火食伤→土财→金官杀→水印；比劫位旺、印位相、食伤位休、财位囚、官杀位死、印位墓。\n4. 阶段名：长生、沐浴、冠带、临官、帝旺、衰、病、死、墓、绝、胎、养。\n5. 日主甲为阳干，长生在亥。\n6. 从亥起顺数十二宫：亥长生、子沐浴、丑冠带、寅临官、卯帝旺、辰衰、巳病、午死、未墓、申绝、酉胎、戌养。\n7. 在上面找年支亥：亥长生，所以年支亥为长生。\n结论JSON: {\"answer\":\"长生\"}"
+  },
+  {
+   "id": "diagnostic-0036-full",
+   "family": "六合→god",
+   "branch": "丑",
+   "natal": "比肩",
+   "gold": "七杀",
+   "got": "建禄",
+   "obs": {
+    "full": false,
+    "twin": false,
+    "producer": true,
+    "consumer": false,
+    "oracle": true,
+    "distractor": true,
+    "cue": false
+   },
+   "raw": "1. 年支子藏癸，第一个癸是本气。\n2. 日主癸水生癸（我生）。\n3. 十神表（日主癸，水，阴）：从水起按相生次序，水比劫→木食伤→火财→土官杀→金印；阴干取比肩、食神、偏财、七杀、偏印，阳干取劫财、伤官、正财、正官、正印。即：壬劫财、癸比肩；甲伤官、乙食神；丙正财、丁偏财；戊正官、己七杀；庚正印、辛偏印。\n4. 本气癸查表为比肩。\n5. 本气是比肩（比劫）→ 按约定不看透干：比肩取建禄 → 建禄格。\n结论JSON: {\"answer\":\"建禄\"}"
+  },
+  {
+   "id": "diagnostic-0037-full",
+   "family": "害→positions",
+   "branch": "戌",
+   "natal": [
+    "日柱"
+   ],
+   "gold": [
+    "年柱"
+   ],
+   "got": [
+    "年支戌"
+   ],
+   "obs": {
+    "full": false,
+    "twin": false,
+    "producer": true,
+    "consumer": false,
+    "oracle": false,
+    "distractor": false,
+    "cue": false
+   },
+   "raw": "1. 日支为酉。\n2. 查两支卡片，酉：六合辰，冲卯，自刑，害戌，破子，半合巳、丑（巳酉丑金局），三会申酉戌。\n3. 十神表（日主癸，水，阴）：从水起按相生次序，水比劫→木食伤→火财→土官杀→金印；阴干取比肩、食神、偏财、七杀、偏印，阳干取劫财、伤官、正财、正官、正印。即：壬劫财、癸比肩；甲伤官、乙食神；丙正财、丁偏财；戊正官、己七杀；庚正印、辛偏印。\n4. 地支卡片：戌：六合卯，冲辰，刑丑、未，害酉，破未，半合午（寅午戌火局），三会申酉戌；亥：六合寅，冲巳，自刑，害申，破寅，半合卯（亥卯未木局），三会亥子丑；酉：六合辰，冲卯，自刑，害戌，破子，半合巳、丑（巳酉丑金局），三会申酉戌；寅：六合亥，冲申，刑巳、申，害巳，破亥，半合午（寅午戌火局），三会寅卯辰。\n5. 日支酉的六合：辰；日支酉的冲：卯；日支酉的刑：酉酉自刑；日支酉的害：戌。\n6. 核对：害戌的柱：年柱庚戌。四柱地支为年支戌、月支亥、日支酉、时支寅，其中与戌相害的是年支戌。\n结论JSON: {\"answer\":[\"年支戌\"]}"
+  },
+  {
+   "id": "diagnostic-0038-full",
+   "family": "破→element",
+   "branch": "寅",
+   "natal": "水",
+   "gold": "木",
+   "got": "火",
+   "obs": {
+    "full": false,
+    "twin": false,
+    "producer": false,
+    "consumer": false,
+    "oracle": false,
+    "distractor": false,
+    "cue": false
+   },
+   "raw": "1. 年支是亥。\n2. 查两支卡片，亥：六合寅，冲巳，自刑，害申，破寅，半合卯（亥卯未木局），三会亥子丑。\n3. 与亥相冲的是巳。\n4. 查一下：巳与亥：巳亥相冲、巳亥相刑、巳亥相破。\n5. 三合、三会：亥子丑三会亥卯未。\n6. 全部关系：巳亥相冲、巳亥相刑、巳亥相破。\n7. 符合约定的是：巳亥相冲、巳亥相刑、巳亥相破。\n8. 与年支亥相冲的是巳。\n9. 巳属火。\n结论JSON: {\"answer\":\"火\"}"
+  },
+  {
+   "id": "diagnostic-0039-full",
+   "family": "破→count",
+   "branch": "卯",
+   "natal": 2,
+   "gold": 0,
+   "got": 1,
+   "obs": {
+    "full": false,
+    "twin": false,
+    "producer": false,
+    "consumer": false,
+    "oracle": false,
+    "distractor": false,
+    "cue": false
+   },
+   "raw": "1. 日支为午。\n2. 查两支卡片：戌：属土；巳：属火；未：属土。\n3. 与午相同的是未。\n4. 个数为 1。\n结论JSON: {\"answer\":1}"
+  },
+  {
+   "id": "diagnostic-0041-full",
+   "family": "桃花→hidden",
+   "branch": "卯",
+   "natal": [
+    "戊",
+    "辛",
+    "丁"
+   ],
+   "gold": [
+    "乙"
+   ],
+   "got": [
+    "正财"
+   ],
+   "obs": {
+    "full": false,
+    "twin": false,
+    "producer": true,
+    "consumer": false,
+    "oracle": false,
+    "distractor": false,
+    "cue": false
+   },
+   "raw": "1. 日支戌藏戊、辛、丁，第一个戊是本气。\n2. 十神表（日主丙，火，阳）：从火起按相生次序，火比劫→土食伤→金财→水官杀→木印；阳干取比肩、食神、偏财、七杀、偏印，阴干取劫财、伤官、正财、正官、正印。即：丙比肩、丁劫财；戊食神、己伤官；庚偏财、辛正财；壬七杀、癸正官；甲偏印、乙正印。\n3. 本气戊查表为食神。\n4. 年、月、时三干是辛、庚、丙。按本气、中气、余气的顺序看是否透出：\n5. 戊（本气，食神）：在辛、庚、丙中没有出现 → 不取。\n6. 辛（中气，正财）：在辛、庚、丙中出现；正财不是比劫 → 透出，取辛，记作正财格。\n7. 这是搭配的名称，不是吉凶判断。\n结论JSON: {\"answer\":[\"正财\"]}"
+  },
+  {
+   "id": "diagnostic-0042-full",
+   "family": "冲→stage",
+   "branch": "戌",
+   "natal": "墓",
+   "gold": "冠带",
+   "got": null,
+   "obs": {
+    "full": false,
+    "twin": false,
+    "producer": false,
+    "consumer": false,
+    "oracle": false,
+    "distractor": false,
+    "cue": false
+   },
+   "raw": "1. 年支辰属申子辰三合局，六合酉，冲戌，自刑，害卯，破丑，半合子（申子辰），三会寅卯辰。\n2. 日主辛属金，十二长生顺行；辛的长生在子。\n3. 从子起顺数十二宫：子长生、丑沐浴、寅冠带、卯临官、辰帝旺、巳衰、午病、未死、申墓、酉绝、戌胎、亥养。\n4. 在上面找年支辰：辰属申子辰三合局，六合酉，冲戌，自刑，害卯，破丑，半合子（申子辰），三会寅卯辰。\n5. 查两支卡片，辰：六合酉，冲戌，自刑，害卯，破丑，半合子（申子辰），三会寅卯辰。\n6. 找与辰相冲的支：戌。\n7. 查表：戌：六合卯，冲辰，刑丑、未，害酉，破未，半合午（寅午戌火局），三会申酉戌。\n8. 日主辛属金，十二长生顺行；辛的长生在子。\n9. 从子起顺数十二宫：子长生、丑沐浴、寅冠带、卯临官、辰帝旺、巳衰、午病、未死、申墓、酉绝、戌胎、亥养。\n10. 在上面找年支辰：辰属申子辰三合局，六合酉，冲戌，自刑，害卯，破丑，半合子（申子辰），三会寅卯辰。\n11. 查两支卡片，辰：六合酉，冲戌，自刑，害卯，破丑，半合子（申子辰），三会寅卯辰。\n12. 找与辰相冲的支：戌。\n13. 查表：戌：六合卯，冲辰，刑丑、未，害酉，破未，半合午（寅午戌火局），三会申酉戌。\n14. 日主辛属金，十二长生顺行；辛的长生在子。\n15. 从子起顺数十二宫：子长生、丑沐浴、寅冠带、卯临官、辰帝旺、巳衰、午病、未死、申墓、酉绝、戌胎、亥养。\n16. 在上面找年支辰：辰属申子辰三合局，六合酉，冲戌，自刑，害卯，破丑，半合子（申子辰），三会寅卯辰。\n17. 查两支卡片，辰：六合酉，冲戌，自刑，害卯，破丑，半合子（申子辰），三会寅卯辰。\n18. 找与辰相冲的支：戌。\n19. 查表：戌：六合卯，冲辰，刑丑、未，害酉，破未，半合午（寅午戌火局），三会申酉戌。\n20. 日主辛属金，十二长生顺行；辛的长生在子。\n21. 从子起顺数十二宫：子长生、丑沐浴、寅冠带、卯临官、辰帝旺、巳衰、午病、未死、申墓、酉绝、戌胎、亥养。\n22. 在上面找年支辰：辰属申子辰三合局，六合酉，冲戌，自刑，害卯，破丑，半合子（申子辰），三会寅卯辰。\n23. 查两支卡片，辰：六合酉，冲戌，自刑，害卯，破丑，半合子（申子辰），三会寅卯辰。\n24. 找与辰相冲的支：戌。\n25. 查表：戌：六合卯，冲辰，刑丑、未，害酉，破未，半合午（寅午戌火局），三会申酉戌。\n26. 日主辛属金，十二长生顺行；辛的长生在子。\n27. 从子起顺数十二宫：子长生、丑沐浴、寅冠带、卯临官、辰帝旺、巳衰、午病、未死、申墓、酉绝、戌胎、亥养。\n28. 在上面找年支辰：辰属申子辰三合局，六合酉，冲戌，自刑，害卯，破丑，半合子（申子辰），三会寅卯辰。\n29. 查两支卡片，辰：六合酉，冲戌，自刑，害卯，破丑，半合子（申子辰），三会寅卯辰。\n30. 找与辰相冲的支：戌。\n31. 查表：戌：六合卯，冲辰，刑丑、未，害酉，破未，半"
+  },
+  {
+   "id": "diagnostic-0043-full",
+   "family": "六合→god",
+   "branch": "未",
+   "natal": "比肩",
+   "gold": "食神",
+   "got": "比肩",
+   "obs": {
+    "full": false,
+    "twin": false,
+    "producer": false,
+    "consumer": false,
+    "oracle": false,
+    "distractor": false,
+    "cue": false
+   },
+   "raw": "1. 年支午藏丁、己，第一个丁是本气。\n2. 日主丁（火，阴）；本气丁（火，阴）。\n3. 五行：同为火，同我者为比劫。\n4. 阴阳相同：比劫里同性的是比肩。\n结论JSON: {\"answer\":\"比肩\"}"
+  },
+  {
+   "id": "diagnostic-0044-full",
+   "family": "害→positions",
+   "branch": "午",
+   "natal": [
+    "日柱"
+   ],
+   "gold": [],
+   "got": [
+    "壬子"
+   ],
+   "obs": {
+    "full": false,
+    "twin": false,
+    "producer": false,
+    "consumer": false,
+    "oracle": true,
+    "distractor": true,
+    "cue": true
+   },
+   "raw": "1. 日支为丑。\n2. 查两支卡片，找与丑相冲的：子丑六合（合化土）。\n3. 查两支卡片，找与丑相刑的：丑刑未。\n4. 查两支卡片，找与丑相破的：无。\n5. 查两支卡片，找与丑相害的：无。\n6. 结论：与日支丑相冲的是子。\n7. 核对：子丑六合（合化土） → 子。\n8. 按约定顺序给出柱名：年柱壬子、月柱辛亥、日柱己丑、时柱甲子。\n9. 符合约定的柱：年柱壬子。\n结论JSON: {\"answer\":[\"壬子\"]}"
+  },
+  {
+   "id": "diagnostic-0045-full",
+   "family": "破→element",
+   "branch": "丑",
+   "natal": "土",
+   "gold": "土",
+   "got": "破",
+   "obs": {
+    "full": false,
+    "twin": false,
+    "producer": false,
+    "consumer": false,
+    "oracle": true,
+    "distractor": false,
+    "cue": true
+   },
+   "raw": "1. 日支为辰。\n2. 查两支卡片，辰：六合酉，冲戌，自刑，害卯，破丑，半合子（申子辰水局），三会寅卯辰。\n3. 全部关系：辰酉六合（合化金）、辰戌相冲、辰卯相害、卯辰相破。\n4. 成对的支卡片：卯辰。五虎遁：己年寅月起丙，子月是第 11 月，月干应为丙；给出的是丙子。\n5. 与日支辰既不相同也不相冲，没有重复；旬首是己，子不落在此旬，不取。\n6. 核对：卯辰相破。如果对方是比劫或印，且阴阳相同，可以相合（合化土）。\n结论JSON: {\"answer\":\"破\"}"
+  },
+  {
+   "id": "diagnostic-0047-full",
+   "family": "驿马→main",
+   "branch": "寅",
+   "natal": "戊",
+   "gold": "甲",
+   "got": "寅",
+   "obs": {
+    "full": false,
+    "twin": false,
+    "producer": true,
+    "consumer": false,
+    "oracle": true,
+    "distractor": false,
+    "cue": false
+   },
+   "raw": "1. 日支辰藏戊、乙、癸，第一个戊是本气。\n2. 日支辰属申子辰三合局，驿马在寅。\n3. 核对：寅不在日支、月支、时支，不取。\n结论JSON: {\"answer\":\"寅\"}"
+  },
+  {
+   "id": "diagnostic-0048-full",
+   "family": "桃花→hidden",
+   "branch": "午",
+   "natal": [
+    "己",
+    "癸",
+    "辛"
+   ],
+   "gold": [
+    "丁",
+    "己"
+   ],
+   "got": [
+    "己",
+    "癸",
+    "辛"
+   ],
+   "obs": {
+    "full": false,
+    "twin": false,
+    "producer": true,
+    "consumer": false,
+    "oracle": false,
+    "distractor": false,
+    "cue": false
+   },
+   "raw": "1. 日支是丑。\n2. 查藏干表：丑藏己、癸、辛（本气己，中气癸，余气辛）。\n结论JSON: {\"answer\":[\"己\",\"癸\",\"辛\"]}"
+  },
+  {
+   "id": "diagnostic-0049-full",
+   "family": "冲→stage",
+   "branch": "巳",
+   "natal": "长生",
+   "gold": "病",
+   "got": "偏强",
+   "obs": {
+    "full": false,
+    "twin": false,
+    "producer": false,
+    "consumer": false,
+    "oracle": false,
+    "distractor": false,
+    "cue": false
+   },
+   "raw": "1. 年支亥藏壬、甲，第一个壬是本气。\n2. 日主甲（木，阳）；本气壬（水，阳）。\n3. 五行位次：从木起按相生次序，木比劫→火食伤→土财→金官杀→水印；比劫位旺、印位相、食伤位休、财位囚、官杀位死。\n4. 得令：本气壬在水位 → 相；旺或相才得令 → 是。\n5. 得地（地支藏干里有没有木）：年支亥藏壬、甲：有甲；月支午藏丁、己：没有木；日支寅藏甲、丙、戊：有甲；时支辰藏戊、乙、癸：有乙。有 3 支，至少一支即得地 → 是。\n6. 得势（其余三干中在比劫位或印位的个数）：年干辛（金）在官杀位，不算；月干甲（木）在比劫位，算；时干戊（土）在财位，不算。共 1 个，至少两个才算 → 否。\n7. 三项中占 2 项，占两项及以上为偏强 → 偏强。这是计数约定，各派权重不同。\n结论JSON: {\"answer\":\"偏强\"}"
+  },
+  {
+   "id": "diagnostic-0050-full",
+   "family": "六合→god",
+   "branch": "亥",
+   "natal": "七杀",
+   "gold": "偏财",
+   "got": "七杀",
+   "obs": {
+    "full": false,
+    "twin": true,
+    "producer": false,
+    "consumer": false,
+    "oracle": false,
+    "distractor": false,
+    "cue": false
+   },
+   "raw": "1. 年支寅藏甲、丙、戊，第一个甲是本气。\n2. 日主戊（土，阳）；本气甲（木，阳）。\n3. 十神表（日主戊，土，阳）：从土起按相生次序，土比劫→金食伤→水财→木官杀→火印；阳干取比肩、食神、偏财、七杀、偏印，阴干取劫财、伤官、正财、正官、正印。即：戊比肩、己劫财；庚食神、辛伤官；壬偏财、癸正财；甲七杀、乙正官；丙偏印、丁正印。\n4. 甲查表为七杀。\n结论JSON: {\"answer\":\"七杀\"}"
+  },
+  {
+   "id": "diagnostic-0051-full",
+   "family": "害→positions",
+   "branch": "亥",
+   "natal": [
+    "日柱",
+    "时柱"
+   ],
+   "gold": [],
+   "got": [
+    "寅"
+   ],
+   "obs": {
+    "full": false,
+    "twin": false,
+    "producer": false,
+    "consumer": true,
+    "oracle": true,
+    "distractor": false,
+    "cue": false
+   },
+   "raw": "1. 日支申属申子辰三合局，六合亥卯未，冲寅午戌，刑巳、寅，害亥，破巳，半合子（申子辰），三会申酉戌。\n2. 与申相冲的是寅；与申相刑的是寅、申；与申相害的是寅。\n3. 查两支卡片，寅：六合亥，冲申，刑巳、申，害寅，破亥，半合午（寅午戌），三会寅卯辰。\n4. 与申相冲的是寅。原局中年支是寅。\n结论JSON: {\"answer\":[\"寅\"]}"
+  },
+  {
+   "id": "diagnostic-0052-full",
+   "family": "破→element",
+   "branch": "巳",
+   "natal": "金",
+   "gold": "火",
+   "got": "木",
+   "obs": {
+    "full": false,
+    "twin": false,
+    "producer": true,
+    "consumer": false,
+    "oracle": false,
+    "distractor": false,
+    "cue": false
+   },
+   "raw": "1. 年支申属金。\n2. 查两支卡片，看是否与申相同：无；与申相冲的是寅，与申相刑的是寅、申，与申相破的是寅、申。\n3. 日支巳属火。查两支卡片，看是否与巳相同：无；与巳相冲的是亥，与巳相刑的是寅、申，与巳相破的是亥、巳。\n4. 己与巳：巳不是自刑 → 无。\n5. 都不与巳相同，回到原问题：与年支申成六破的是寅、申。\n6. 五行：金、水、木、火、土。与申相同的是金，与申相破的是寅。\n7. 工作人员：寅，五行木。\n结论JSON: {\"answer\":\"木\"}"
+  },
+  {
+   "id": "diagnostic-0053-full",
+   "family": "破→count",
+   "branch": "丑",
+   "natal": 1,
+   "gold": 1,
+   "got": 0,
+   "obs": {
+    "full": false,
+    "twin": false,
+    "producer": false,
+    "consumer": true,
+    "oracle": true,
+    "distractor": true,
+    "cue": false
+   },
+   "raw": "1. 年支辰藏戊、乙、癸，第一个戊是本气。\n2. 日支卯藏乙，第二个乙是中气。\n3. 时支寅藏甲、丙、戊，第三个戊是中气。\n4. 都是比劫或印：辰比肩、卯劫财、寅比肩。\n5. 本气戊查表为偏印。\n6. 年、月、日、时四个干支的五行：年柱壬（水）辰（土）；月柱己（土）酉（金）；日柱乙（木）卯（木）；时柱戊（土）寅（木）。\n7. 本气戊与年支辰同属土，戊为阳干、辰为阳支，阴阳相同，故为偏印。\n8. 阴阳相同：偏印 → 偏印，阳年男命、阴年女命顺用。\n9. 本气戊的克星：水。\n10. 戊与日主乙：无；与年干壬：无；与月干己：无；与时干戊：同支，戊不是自刑 → 无。\n11. 都不与日主乙发生冲突，不需要特别论断。\n结论JSON: {\"answer\":0}"
+  },
+  {
+   "id": "diagnostic-0054-full",
+   "family": "驿马→main",
+   "branch": "申",
+   "natal": "甲",
+   "gold": "庚",
+   "got": "申",
+   "obs": {
+    "full": false,
+    "twin": false,
+    "producer": false,
+    "consumer": false,
+    "oracle": false,
+    "distractor": false,
+    "cue": true
+   },
+   "raw": "1. 年支寅藏甲、丙、戊，第一个甲是本气。\n2. 日主丁（火，阴）；本气甲（木，阳）。\n3. 驿马按三合局查：申子辰在寅、寅午戌在申、巳酉丑在亥、亥卯未在巳。古书以年支查，后来也有以日支查的。年支寅属寅午戌，驿马在申。\n结论JSON: {\"answer\":\"申\"}"
+  },
+  {
+   "id": "diagnostic-0055-full",
+   "family": "桃花→hidden",
+   "branch": "卯",
+   "natal": [
+    "甲",
+    "丙",
+    "戊"
+   ],
+   "gold": [
+    "乙"
+   ],
+   "got": [
+    "甲",
+    "丙",
+    "戊"
+   ],
+   "obs": {
+    "full": false,
+    "twin": false,
+    "producer": false,
+    "consumer": false,
+    "oracle": false,
+    "distractor": false,
+    "cue": false
+   },
+   "raw": "1. 日支寅藏甲、丙、戊，第一个甲是本气。\n2. 日支是寅。\n3. 查藏干表：寅：甲、丙、戊（本气甲，中气丙，余气戊）。\n结论JSON: {\"answer\":[\"甲\",\"丙\",\"戊\"]}"
+  },
+  {
+   "id": "diagnostic-0057-full",
+   "family": "六合→god",
+   "branch": "未",
+   "natal": "七杀",
+   "gold": "偏印",
+   "got": "七杀",
+   "obs": {
+    "full": false,
+    "twin": false,
+    "producer": false,
+    "consumer": false,
+    "oracle": false,
+    "distractor": false,
+    "cue": false
+   },
+   "raw": "1. 年支午藏丁、己，第一个丁是本气。\n2. 日主辛（金，阴）；本气丁（火，阴）。\n3. 五行：火克金，克我者为官杀。\n4. 阴阳相同：官杀里同性的是七杀。\n结论JSON: {\"answer\":\"七杀\"}"
+  },
+  {
+   "id": "diagnostic-0058-full",
+   "family": "害→positions",
+   "branch": "申",
+   "natal": [
+    "年柱",
+    "日柱"
+   ],
+   "gold": [
+    "时柱"
+   ],
+   "got": [],
+   "obs": {
+    "full": false,
+    "twin": false,
+    "producer": false,
+    "consumer": false,
+    "oracle": false,
+    "distractor": false,
+    "cue": false
+   },
+   "raw": "1. 日支为亥，与亥相冲的是巳；与亥相刑的是寅、申；与亥相破的是寅、申。\n2. 日支亥属水，与亥相同五行的有年支子、月支寅、日支亥、时支申。\n3. 全部十二地支里与亥相同五行的：子、寅、亥、申。\n4. 这四支中在年、月、日、时出现的：年支子、月支寅、日支亥、时支申。\n5. 符合约定条件的柱名：年柱壬子、月柱壬寅、日柱己亥、时柱壬申。这只是符号上的重复，不说明什么。\n结论JSON: {\"answer\":[]}"
+  },
+  {
+   "id": "diagnostic-0059-full",
+   "family": "破→element",
+   "branch": "戌",
+   "natal": "土",
+   "gold": "土",
+   "got": "食神格",
+   "obs": {
+    "full": false,
+    "twin": false,
+    "producer": false,
+    "consumer": false,
+    "oracle": false,
+    "distractor": true,
+    "cue": false
+   },
+   "raw": "1. 日支未藏己、丁、乙，第一个己是本气。\n2. 十神表（日主丁，火，阴）：从火起按相生次序，火比劫→土食伤→金财→水官杀→木印；阴干取比肩、食神、偏财、七杀、偏印，阳干取劫财、伤官、正财、正官、正印。即：丙劫财、丁比肩；戊伤官、己食神；庚正财、辛偏财；壬正官、癸七杀；甲正印、乙偏印。\n3. 本气己查表为食神。\n4. 年、月、时三干是辛、乙、乙。按本气、中气、余气的顺序看是否透出：\n5. 己（本气，食神）：在辛、乙、乙中没有出现 → 不取。\n6. 都不取，回到本气己，记作食神格。\n7. 这是“月令透干取格”的约定；多干并透、会合变格各家处理不同，格名不代表吉凶。\n结论JSON: {\"answer\":\"食神格\"}"
+  },
+  {
+   "id": "diagnostic-0060-full",
+   "family": "破→count",
+   "branch": "未",
+   "natal": 2,
+   "gold": 2,
+   "got": 1,
+   "obs": {
+    "full": false,
+    "twin": false,
+    "producer": false,
+    "consumer": false,
+    "oracle": false,
+    "distractor": true,
+    "cue": true
+   },
+   "raw": "1. 日支为戌。\n2. 查两支卡片：寅：寅不在戌卡 → 无；戌：同支，戌不是自刑 → 无；卯：卯不在戌卡 → 无；子：子不在戌卡 → 无。\n3. 五行：木：寅、卯，共 2；火：丙、丁，共 2；土：戌、戌，共 2；金：庚，共 1；水：无，共 0。\n4. 核对：与日支戌相同五行的：戌，共 1；其余五行位次不在戌，不特别论。\n结论JSON: {\"answer\":1}"
+  },
+  {
+   "id": "diagnostic-0061-full",
+   "family": "驿马→main",
+   "branch": "寅",
+   "natal": "庚",
+   "gold": "甲",
+   "got": "伤官",
+   "obs": {
+    "full": false,
+    "twin": false,
+    "producer": true,
+    "consumer": false,
+    "oracle": false,
+    "distractor": false,
+    "cue": false
+   },
+   "raw": "1. 年支申藏庚、壬、戊，第一个庚是本气。\n2. 日主癸水生庚金（我生），庚为阳干、癸为阴干，阴阳相异，故为伤官。\n3. 本气庚查表为伤官。\n结论JSON: {\"answer\":\"伤官\"}"
+  },
+  {
+   "id": "diagnostic-0062-full",
+   "family": "桃花→hidden",
+   "branch": "午",
+   "natal": [
+    "己",
+    "癸",
+    "辛"
+   ],
+   "gold": [
+    "丁",
+    "己"
+   ],
+   "got": [
+    "己",
+    "癸",
+    "辛"
+   ],
+   "obs": {
+    "full": false,
+    "twin": false,
+    "producer": false,
+    "consumer": false,
+    "oracle": false,
+    "distractor": false,
+    "cue": false
+   },
+   "raw": "1. 日支是丑。\n2. 查藏干表：丑藏己、癸、辛（本气己，中气癸，余气辛）。\n结论JSON: {\"answer\":[\"己\",\"癸\",\"辛\"]}"
+  },
+  {
+   "id": "diagnostic-0063-full",
+   "family": "冲→stage",
+   "branch": "卯",
+   "natal": "长生",
+   "gold": "病",
+   "got": [
+    "六合:巳申",
+    "刑:巳申",
+    "破:巳申"
+   ],
+   "obs": {
+    "full": false,
+    "twin": false,
+    "producer": true,
+    "consumer": false,
+    "oracle": false,
+    "distractor": false,
+    "cue": false
+   },
+   "raw": "1. 日支酉藏辛，原支未属土。\n2. 查两支卡片：未：六合午，冲丑，刑戌、丑，害子，破戌，半合卯（亥卯未木局），三会巳午未；巳：六合申，冲亥，刑寅、申，害寅，破申，半合酉（巳酉丑金局），三会巳午未；申：六合巳，冲寅，刑巳、寅，害亥，破巳，半合子（申子辰水局），三会申酉戌。\n3. 符合约定的：巳申六合（合化水）、巳酉半合金局、巳申相刑、巳申相破。\n4. 最后一个：巳申相刑 → 地支卡片：巳申。\n5. 日主丁：丁火克巳土（我克），巳为阴干、丁为阴干，阴阳相同，故为偏财。\n6. 年干辛：查表，辛为阴干、丁为阴干，阴阳相同，故为偏财。\n7. 月干癸：查表，癸为阴干、丁为阴干，阴阳相同，故为偏财。\n8. 时干戊：查表，戊为阳干、丁为阴干，阴阳相异，故为正财。\n9. 都是偏财或正财，回到本问题：地支卡片，巳申：巳申六合（合化水）、巳申相刑、巳申相破。\n10. 符合约定的：巳申六合（合化水）、巳申相刑、巳申相破。这是搭配的名称，不是吉凶判断。\n结论JSON: {\"answer\":[\"六合:巳申\",\"刑:巳申\",\"破:巳申\"]}"
+  },
+  {
+   "id": "diagnostic-0065-full",
+   "family": "害→positions",
+   "branch": "酉",
+   "natal": [
+    "年柱",
+    "月柱",
+    "日柱"
+   ],
+   "gold": [
+    "时柱"
+   ],
+   "got": [],
+   "obs": {
+    "full": false,
+    "twin": false,
+    "producer": false,
+    "consumer": false,
+    "oracle": false,
+    "distractor": false,
+    "cue": false
+   },
+   "raw": "1. 年支戌藏戊、辛、丁，与日支辰：辰戌相冲，冲的是地支，不是比劫 → 无。\n2. 月支辰藏戊、乙、癸，与日支辰：同支，辰是自刑 → 无。\n3. 日支辰藏戊、乙、癸，与年支戌：辰戌相冲，冲的是地支，不是比劫 → 无。\n4. 时支酉藏辛，与日支辰：辰酉六合（合化金） → 无。\n5. 核对：年支戌与日支辰：辰戌相冲，冲的是地支，不是比劫 → 无。\n6. 与年支戌相同地支的柱：没有 → 无。\n结论JSON: {\"answer\":[]}"
+  },
+  {
+   "id": "diagnostic-0066-full",
+   "family": "破→element",
+   "branch": "戌",
+   "natal": "土",
+   "gold": "土",
+   "got": "偏强",
+   "obs": {
+    "full": false,
+    "twin": false,
+    "producer": false,
+    "consumer": false,
+    "oracle": true,
+    "distractor": false,
+    "cue": false
+   },
+   "raw": "1. 年支未藏己、丁、乙，第一个己是本气。\n2. 日主辛（金，阴）；本气己（土，阴）。\n3. 五行位次：从金起按相生次序，金比劫→水食伤→木财→火官杀→土印；比劫位旺、印位相、食伤位休、财位囚、官杀位死。\n4. 得令：本气己在土位 → 旺；旺或相才得令 → 是。\n5. 得地（地支藏干里有没有某位）：年支未藏己、丁、乙：有己；月支午藏丁、己：有己；日支亥藏壬、甲：没有己；时支卯藏乙：没有己。有 2 支，至少一支即得地 → 是。\n6. 得势（其余三干中在比劫位或印位的个数）：年干辛（金）在比劫位，算；月干甲（木）在财位，不算；时干辛（金）在比劫位，算。共 2 个，至少两个才算 → 是。\n7. 三项中占 3 项，占两项及以上为偏强 → 偏强。这是计数约定，各派权重不同。\n结论JSON: {\"answer\":\"偏强\"}"
+  },
+  {
+   "id": "diagnostic-0067-full",
+   "family": "破→count",
+   "branch": "丑",
+   "natal": 2,
+   "gold": 2,
+   "got": 7,
+   "obs": {
+    "full": false,
+    "twin": false,
+    "producer": false,
+    "consumer": false,
+    "oracle": false,
+    "distractor": false,
+    "cue": false
+   },
+   "raw": "1. 年支辰藏戊、乙、癸，第一个戊是本气。\n2. 月支未藏己、丁、乙，第二个己是中气。\n3. 日支子藏癸，第三个癸是余气。\n4. 时支卯藏乙，第四个乙是余气。\n5. 全部地支卡片：辰：戊、乙、癸；未：己、丁、乙；子：癸；卯：乙。\n6. 本气戊查表为阳干、阴干、正官，不用特别记。\n7. 余干取比肩、食神、偏财（比劫）：壬比肩、癸食神、甲偏财。\n8. 阴阳相异：比肩里异性的是劫财。\n9. 个数：戊（本气）1个，乙（余干）3个，癸（余干）2个，丁（中气）1个，共 7 个。\n10. 这是只数八个字的约定；如果按别的约定重新核对，可以把结果发来再比对。\n结论JSON: {\"answer\":7}"
+  },
+  {
+   "id": "diagnostic-0068-full",
+   "family": "驿马→main",
+   "branch": "巳",
+   "natal": "壬",
+   "gold": "丙",
+   "got": "巳",
+   "obs": {
+    "full": false,
+    "twin": false,
+    "producer": false,
+    "consumer": true,
+    "oracle": true,
+    "distractor": false,
+    "cue": true
+   },
+   "raw": "1. 年支亥藏壬、甲，第一个壬是本气。\n2. 日主己（土，阴）；本气壬（水，阳）。\n3. 驿马按三合局查：申子辰在寅、寅午戌在申、巳酉丑在亥、亥卯未在巳。古书以年支查，后来也有以日支查的。年支亥属亥卯未，驿马在巳。\n结论JSON: {\"answer\":\"巳\"}"
+  },
+  {
+   "id": "diagnostic-0069-full",
+   "family": "桃花→hidden",
+   "branch": "酉",
+   "natal": [
+    "庚",
+    "壬",
+    "戊"
+   ],
+   "gold": [
+    "辛"
+   ],
+   "got": [
+    "庚",
+    "壬",
+    "戊"
+   ],
+   "obs": {
+    "full": false,
+    "twin": false,
+    "producer": false,
+    "consumer": false,
+    "oracle": false,
+    "distractor": false,
+    "cue": false
+   },
+   "raw": "1. 日支申藏庚、壬、戊，第一个庚是本气。\n2. 日支是申。\n3. 查藏干表：申：庚、壬、戊（本气庚，中气壬，余气戊）。\n结论JSON: {\"answer\":[\"庚\",\"壬\",\"戊\"]}"
+  },
+  {
+   "id": "diagnostic-0071-full",
+   "family": "六合→god",
+   "branch": "午",
+   "natal": "劫财",
+   "gold": "正印",
+   "got": "劫财",
+   "obs": {
+    "full": false,
+    "twin": true,
+    "producer": false,
+    "consumer": false,
+    "oracle": false,
+    "distractor": false,
+    "cue": false
+   },
+   "raw": "1. 年支未藏己、丁、乙，第一个己是本气。\n2. 日主戊（土，阳）；本气己（土，阴）。\n3. 十神表（日主戊，土，阳）：从土起按相生次序，土比劫→金食伤→水财→木官杀→火印；阳干取比肩、食神、偏财、七杀、偏印，阴干取劫财、伤官、正财、正官、正印。即：戊比肩、己劫财；庚食神、辛伤官；壬偏财、癸正财；甲七杀、乙正官；丙偏印、丁正印。\n4. 本气己查表为劫财。\n结论JSON: {\"answer\":\"劫财\"}"
+  },
+  {
+   "id": "diagnostic-0072-full",
+   "family": "害→positions",
+   "branch": "辰",
+   "natal": [
+    "年柱"
+   ],
+   "gold": [
+    "月柱",
+    "日柱"
+   ],
+   "got": [],
+   "obs": {
+    "full": false,
+    "twin": false,
+    "producer": false,
+    "consumer": false,
+    "oracle": false,
+    "distractor": false,
+    "cue": false
+   },
+   "raw": "1. 年支卯属亥卯未三合局，与之相冲的是酉；与卯相刑的是子，与卯相破的是午。\n2. 日支戌属寅午戌三合局，与戌相冲的是辰；与戌相刑的是卯、酉；与戌相破的是未。\n3. 查两支卡片，看是否与年支卯相冲或相刑：酉在卯卡的刑 → 卯酉相冲、卯酉相刑；与卯相破的是午。\n4. 符合约定的：酉。这只是符号上的对应，不算。\n5. 核对：年支卯与酉相冲 → 冲克 → 全部五合 → 冲克 → 无。\n6. 结论：与年支卯相冲的是酉。按规则，这类十神不算。\n结论JSON: {\"answer\":[]}"
+  },
+  {
+   "id": "diagnostic-0073-full",
+   "family": "破→element",
+   "branch": "亥",
+   "natal": "木",
+   "gold": "水",
+   "got": "申",
+   "obs": {
+    "full": false,
+    "twin": false,
+    "producer": false,
+    "consumer": false,
+    "oracle": false,
+    "distractor": true,
+    "cue": false
+   },
+   "raw": "1. 年支是寅。\n2. 查两支卡片，寅：六合亥，冲申，刑巳、申，害巳，破亥，半合午（寅午戌火局），三会寅卯辰。\n3. 约定：流年天干地支中与年支寅相冲的是申。\n4. 逐年（每年天干地支各不同）取次年：1990–1999 年中流年天干地支为庚申、辛酉、壬戌、癸亥、甲子、乙丑、丙寅、丁卯、戊辰、己巳的有1990庚申。\n5. 核对：庚申与庚寅：无合冲刑害破 → 无。\n6. 再次核对：申与寅：无合冲刑害破 → 无。\n7. 结论：年支寅与之相冲的是申。\n结论JSON: {\"answer\":\"申\"}"
+  },
+  {
+   "id": "diagnostic-0075-full",
+   "family": "驿马→main",
+   "branch": "寅",
+   "natal": "戊",
+   "gold": "甲",
+   "got": "偏财",
+   "obs": {
+    "full": false,
+    "twin": true,
+    "producer": true,
+    "consumer": false,
+    "oracle": false,
+    "distractor": false,
+    "cue": false
+   },
+   "raw": "1. 年支辰藏戊、乙、癸，第一个戊是本气。\n2. 日主甲（木，阳）；本气戊（土，阳）。\n3. 五行：木克土，我克者为财。\n4. 阴阳相同：财里同性的是偏财。\n结论JSON: {\"answer\":\"偏财\"}"
+  },
+  {
+   "id": "diagnostic-0076-full",
+   "family": "桃花→hidden",
+   "branch": "午",
+   "natal": [
+    "辛"
+   ],
+   "gold": [
+    "丁",
+    "己"
+   ],
+   "got": [],
+   "obs": {
+    "full": false,
+    "twin": false,
+    "producer": false,
+    "consumer": false,
+    "oracle": false,
+    "distractor": false,
+    "cue": false
+   },
+   "raw": "1. 日支酉藏辛，第一个辛是本气。\n2. 十神表（日主丁，火，阴）：从火起按相生次序，火比劫→土食伤→金财→水官杀→木印；阴干取比肩、食神、偏财、七杀、偏印，阳干取劫财、伤官、正财、正官、正印。即：丙劫财、丁比肩；戊伤官、己食神；庚正财、辛偏财；壬正官、癸七杀；甲正印、乙偏印。\n3. 本气辛查表为偏财。\n4. 年、月、时三干是庚、庚、丁。按本气、中气、余气的顺序看是否透出：\n5. 辛（本气，偏财）：在庚、庚、丁中没有出现 → 不取。\n6. 都不取，回到本气辛，记作偏财格。\n7. 这是“月令透干取格”的约定；多干并透、会合变格各家处理不同，格名不代表吉凶。\n结论JSON: {\"answer\":[]}"
+  },
+  {
+   "id": "diagnostic-0077-full",
+   "family": "冲→stage",
+   "branch": "辰",
+   "natal": "养",
+   "gold": "衰",
+   "got": [
+    "帝旺",
+    "临官",
+    "冠带"
+   ],
+   "obs": {
+    "full": false,
+    "twin": false,
+    "producer": true,
+    "consumer": false,
+    "oracle": false,
+    "distractor": false,
+    "cue": false
+   },
+   "raw": "1. 年支戌藏戊、辛、丁，与日主同属火；戌不是自刑 → 无。\n2. 月支寅藏甲、丙、戊，与日主同属火；寅不是自刑 → 无。\n3. 日支巳藏丙、庚、戊，与日主同属火；巳不是自刑 → 无。\n4. 时支未藏己、丁、乙，与日主同属火；未不是自刑 → 无。\n5. 核对：无任何一干支与日主丁发生自刑 → 无。\n6. 与日主丁相同属性的地支：午、巳、辰。\n7. 这些地支藏有火或寅午戌火局：午、巳、辰。\n8. 日主丁的十二长生：长生在寅，顺行：寅长生、卯沐浴、辰冠带、巳临官、午帝旺、未衰、申病、酉死、戌墓、亥绝、子胎、丑养。\n9. 在上面找与日主丁相同属性的地支：午、巳、辰。它们的十二长生：午帝旺、巳临官、辰冠带。\n10. 与日主丁相同属性的是火。火与日主同属火，与我相同的是比劫→午、巳、辰。\n11. 都是比劫，所以十二长生顺行；午帝旺、巳临官、辰冠带。\n结论JSON: {\"answer\":[\"帝旺\",\"临官\",\"冠带\"]}"
+  },
+  {
+   "id": "diagnostic-0078-full",
+   "family": "六合→god",
+   "branch": "卯",
+   "natal": "七杀",
+   "gold": "伤官",
+   "got": "七杀",
+   "obs": {
+    "full": false,
+    "twin": false,
+    "producer": true,
+    "consumer": false,
+    "oracle": false,
+    "distractor": false,
+    "cue": false
+   },
+   "raw": "1. 年支戌藏戊、辛、丁，第一个戊是本气。\n2. 日主壬（水，阳）；本气戊（土，阳）。\n3. 五行：土克水，克我者为官杀。\n4. 阴阳相同：官杀里同性的是七杀。\n结论JSON: {\"answer\":\"七杀\"}"
+  },
+  {
+   "id": "diagnostic-0079-full",
+   "family": "害→positions",
+   "branch": "子",
+   "natal": [
+    "日柱"
+   ],
+   "gold": [
+    "年柱"
+   ],
+   "got": [
+    "未"
+   ],
+   "obs": {
+    "full": false,
+    "twin": false,
+    "producer": false,
+    "consumer": false,
+    "oracle": false,
+    "distractor": false,
+    "cue": false
+   },
+   "raw": "1. 日支未属土。从土起按相生次序，土比劫→金食伤→水财→木官杀→火印；比劫位旺、印位相、食伤位休、财位囚、官杀位死。\n2. 在比劫位中找与未相同五行的：年支亥属水，不相同；月支卯属木，不相同；时支申属金，不相同。\n3. 核对：原局四柱地支五行：年支亥、月支卯、日支未、时支申。五行为木、火、土、金、水，与未同为土的：日支未。\n4. 约定：比劫位中同为土的：日支未。逐项检查五行，看是否与原局三干五支相符：年干辛（金）；月干辛（金）；时干甲（木）；藏干：年支亥（水）；月支卯（木）；日支未（土）；时支申（金）。\n5. 与日支未相同五行的：日支未。符合约定的有 1 支，支名未。\n结论JSON: {\"answer\":[\"未\"]}"
+  },
+  {
+   "id": "diagnostic-0080-full",
+   "family": "破→element",
+   "branch": "午",
+   "natal": "木",
+   "gold": "火",
+   "got": "偏强",
+   "obs": {
+    "full": false,
+    "twin": false,
+    "producer": false,
+    "consumer": false,
+    "oracle": false,
+    "distractor": false,
+    "cue": false
+   },
+   "raw": "1. 年支卯藏乙，与年支卯相冲的是酉；与卯相刑的是子、寅。\n2. 日主丙（火，阳）；本气属火。\n3. 五行位次：从火起按相生次序，火比劫→土食伤→金财→水官杀→木印；比劫位旺、印位相、食伤位休、财位囚、官杀位死。\n4. 得令：月令午属火；旺或相才得令 → 是。\n5. 得地（地支藏干里有没有火）：年支卯藏乙：没有火；月支午藏丁、己：有丁；日支辰藏戊、乙、癸：没有火；时支辰藏戊、乙、癸：没有火。有 1 支，至少一支即得地 → 是。\n6. 得势（其余三干中在比劫位或印位的个数）：年干辛（金）在财位，不算；月干甲（木）在印位，算；时干壬（水）在官杀位，不算。共 1 个，至少两个才算 → 否。\n7. 三项中占 2 项，占两项及以上为偏强 → 偏强。这是计数约定，各派权重不同。\n结论JSON: {\"answer\":\"偏强\"}"
+  },
+  {
+   "id": "diagnostic-0082-full",
+   "family": "驿马→main",
+   "branch": "亥",
+   "natal": "丙",
+   "gold": "壬",
+   "got": "丙",
+   "obs": {
+    "full": false,
+    "twin": false,
+    "producer": true,
+    "consumer": false,
+    "oracle": false,
+    "distractor": false,
+    "cue": false
+   },
+   "raw": "1. 日支巳藏丙、庚、戊，第一个丙是本气。\n2. 日支巳本气为丙（火，阴）。\n结论JSON: {\"answer\":\"丙\"}"
+  },
+  {
+   "id": "diagnostic-0083-full",
+   "family": "桃花→hidden",
+   "branch": "卯",
+   "natal": [
+    "戊",
+    "辛",
+    "丁"
+   ],
+   "gold": [
+    "乙"
+   ],
+   "got": [
+    "戊"
+   ],
+   "obs": {
+    "full": false,
+    "twin": false,
+    "producer": false,
+    "consumer": true,
+    "oracle": false,
+    "distractor": false,
+    "cue": false
+   },
+   "raw": "1. 年支是戌。\n2. 查藏干表：戌藏戊、辛、丁（本气戊，中气辛，余气丁）。\n3. 日主戊（土，阳）；本气戊（比肩）。\n4. 本气戊查表为戊（比肩）。\n5. 阴阳相同：戊为阳干、戊为阳干，阴阳相同，故为比肩。\n6. 本气戊的比劫：查表为戊（比肩）。\n结论JSON: {\"answer\":[\"戊\"]}"
+  },
+  {
+   "id": "diagnostic-0084-full",
+   "family": "冲→stage",
+   "branch": "丑",
+   "natal": "冠带",
+   "gold": "墓",
+   "got": "子午相冲",
+   "obs": {
+    "full": false,
+    "twin": false,
+    "producer": true,
+    "consumer": false,
+    "oracle": false,
+    "distractor": false,
+    "cue": false
+   },
+   "raw": "1. 日支未属土。从土起按相生次序，土比劫→金食伤→水财→木官杀→火印；比劫阶段为午。\n2. 查两支卡片，看有没有与未相冲的：卯未相冲、子午相冲、丑未相冲、寅午戌相冲、巳酉丑相冲、亥卯未相冲。\n3. 符合约定的：亥卯未相冲。\n4. 日主丁属火。从火起按相生次序，火比劫→土食伤→金财→水官杀→木印；比劫阶段为午。\n5. 查两支卡片，看有没有与午相冲的：子午相冲、卯未相冲、寅午戌相冲、巳酉丑相冲、亥卯未相冲。\n6. 符合约定的：子午相冲。\n7. 日主丁属火。从火起按相生次序，火比劫→土食伤→金财→水官杀→木印；比劫阶段为午。\n8. 查两支卡片，看有没有与午相冲的：子午相冲、卯未相冲、寅午戌相冲、巳酉丑相冲、亥卯未相冲。\n9. 符合约定的：子午相冲。\n10. 与日支未相冲的是亥卯未。本项目以亥卯未相冲的支卡片为准，后续按这个约定来分析。\n结论JSON: {\"answer\":\"子午相冲\"}"
+  },
+  {
+   "id": "diagnostic-0085-full",
+   "family": "六合→god",
+   "branch": "未",
+   "natal": "劫财",
+   "gold": "伤官",
+   "got": "劫财",
+   "obs": {
+    "full": false,
+    "twin": false,
+    "producer": false,
+    "consumer": false,
+    "oracle": false,
+    "distractor": false,
+    "cue": false
+   },
+   "raw": "1. 年支午藏丁、己，第一个丁是本气。\n2. 日主丙（火，阳）；本气丁（火，阴）。\n3. 五行：同为火，同我者为比劫。\n4. 阴阳相异：比劫里异性的是劫财。\n结论JSON: {\"answer\":\"劫财\"}"
+  },
+  {
+   "id": "diagnostic-0086-full",
+   "family": "害→positions",
+   "branch": "子",
+   "natal": [
+    "年柱",
+    "月柱"
+   ],
+   "gold": [
+    "日柱"
+   ],
+   "got": [],
+   "obs": {
+    "full": false,
+    "twin": false,
+    "producer": false,
+    "consumer": false,
+    "oracle": false,
+    "distractor": false,
+    "cue": false
+   },
+   "raw": "1. 年支未属土；未戌相刑、未戌相破、丑未相冲、午未相害、子未相害、丑未相刑。\n2. 与年支未相冲的是丑。\n3. 查两支卡片，丑：六合子，冲未，刑戌、未，害午，破辰，半合酉（巳酉丑金局），三会亥子丑。\n4. 与年支未相冲的支卡片：丑。\n5. 核对四柱：年柱辛未、月柱乙未、日柱辛亥、时柱丁酉。其中是丑的：没有。\n6. 与年支未相冲的支，原局没有 → 无。\n结论JSON: {\"answer\":[]}"
+  },
+  {
+   "id": "diagnostic-0087-full",
+   "family": "破→element",
+   "branch": "卯",
+   "natal": "火",
+   "gold": "木",
+   "got": "偏财",
+   "obs": {
+    "full": false,
+    "twin": false,
+    "producer": false,
+    "consumer": false,
+    "oracle": false,
+    "distractor": false,
+    "cue": false
+   },
+   "raw": "1. 日支是午。\n2. 查两支卡片，午：六合未，冲子，自刑，害丑，破卯，半合寅、戌（寅午戌火局），三会巳午未。\n3. 十神表（日主壬，水，阳）：从水起按相生次序，水比劫→木食伤→火财→土官杀→金印；阳干取比肩、食神、偏财、七杀、偏印，阴干取劫财、伤官、正财、正官、正印。即：壬比肩、癸劫财；甲食神、乙伤官；丙偏财、丁正财；戊七杀、己正官；庚偏印、辛正印。\n4. 约定：流年天干是比劫或印，流支是比劫或印。\n5. 逐年（每年天干、地支各往后一位）：2026：2026 − 4 = 2022；60×33 = 1980，2022 − 1980 = 42；42 = 10×4 + 2 → 第 2 干丙（甲为 0）；42 = 12×3 + 6 → 第 6 支午（子为 0）；2026 年为丙午年。\n6. 验证：丙火生日主壬水（生我），丙为阳干、壬为阳干，阴阳相同，故为偏财。同时午属火，是财。\n7. 结论：丙午。\n结论JSON: {\"answer\":\"偏财\"}"
+  },
+  {
+   "id": "diagnostic-0088-full",
+   "family": "破→count",
+   "branch": "戌",
+   "natal": 2,
+   "gold": 2,
+   "got": 1,
+   "obs": {
+    "full": false,
+    "twin": false,
+    "producer": false,
+    "consumer": false,
+    "oracle": true,
+    "distractor": false,
+    "cue": false
+   },
+   "raw": "1. 年支未藏己、丁、乙，第一个己是本气。\n2. 日主乙（木，阴）；本气己（土，阴）。\n3. 五行位次：从木起按相生次序，木比劫→火食伤→土财→金官杀→水印；比劫位旺、印位相、食伤位休、财位囚、官杀位死。\n4. 相生次序：木比劫→火食伤→土财→金官杀→水印；比劫位旺、印位相、食伤位休、财位囚、官杀位死。\n5. 本气己查表为土。\n6. 本气是土，阴干或阳干都算。\n7. 阴阳相同：己、癸，阴阳不同，不取。\n8. 只数本气，不算中气，不算余气。\n结论JSON: {\"answer\":1}"
+  },
+  {
+   "id": "diagnostic-0089-full",
+   "family": "驿马→main",
+   "branch": "亥",
+   "natal": "丙",
+   "gold": "壬",
+   "got": "丙",
+   "obs": {
+    "full": false,
+    "twin": false,
+    "producer": true,
+    "consumer": false,
+    "oracle": false,
+    "distractor": false,
+    "cue": false
+   },
+   "raw": "1. 日支巳藏丙、庚、戊，第一个丙是本气。\n2. 日支巳本气为丙（火，阴）。\n结论JSON: {\"answer\":\"丙\"}"
+  },
+  {
+   "id": "diagnostic-0090-full",
+   "family": "桃花→hidden",
+   "branch": "卯",
+   "natal": [
+    "丁",
+    "己"
+   ],
+   "gold": [
+    "乙"
+   ],
+   "got": [
+    "丁",
+    "己",
+    "乙"
+   ],
+   "obs": {
+    "full": false,
+    "twin": false,
+    "producer": false,
+    "consumer": false,
+    "oracle": false,
+    "distractor": false,
+    "cue": false
+   },
+   "raw": "1. 年支午藏丁、己，第一个丁是本气。\n2. 日支未藏己、丁、乙，第一个己是本气。\n3. 时支未藏己、丁、乙，第一个己是本气。\n4. 把这三个支里用到的干支按本气、中气、余气的顺序排列。\n5. 都是比劫或印：丁、己、丁、乙。\n6. 本气丁：丁\n7. 中气己：己\n8. 余气乙：乙\n9. 按本气、中气、余气的顺序排列：丁、己、乙。\n结论JSON: {\"answer\":[\"丁\",\"己\",\"乙\"]}"
+  },
+  {
+   "id": "diagnostic-0091-full",
+   "family": "冲→stage",
+   "branch": "酉",
+   "natal": "病",
+   "gold": "长生",
+   "got": "病",
+   "obs": {
+    "full": false,
+    "twin": false,
+    "producer": false,
+    "consumer": true,
+    "oracle": true,
+    "distractor": false,
+    "cue": false
+   },
+   "raw": "1. 年支卯藏乙，与年支卯相冲的是酉；旬首是甲寅。\n2. 日主丁为阴干，十二长生逆行；丁的长生在酉。\n3. 从酉起逆数十二宫：酉长生、申沐浴、未冠带、午临官、巳帝旺、辰衰、卯病、寅死、丑墓、子绝、亥胎、戌养。\n4. 在上面找年支卯：卯病，所以年支卯为病。\n结论JSON: {\"answer\":\"病\"}"
+  },
+  {
+   "id": "diagnostic-0092-full",
+   "family": "六合→god",
+   "branch": "子",
+   "natal": "偏印",
+   "gold": "食神",
+   "got": "伤官",
+   "obs": {
+    "full": false,
+    "twin": false,
+    "producer": true,
+    "consumer": false,
+    "oracle": false,
+    "distractor": true,
+    "cue": false
+   },
+   "raw": "1. 日支为丑。\n2. 查两支卡片，丑：六合子，冲未，刑戌、未，害午，破辰，半合酉（巳酉丑金局），三会亥子丑。\n3. 本气藏干：己、癸、辛（本气己，中气癸，余气辛）。\n4. 日主辛：金，阴干，阴干取比肩，阳干取劫财。即：庚劫财、辛比肩；壬食神、癸伤官；甲正官、乙七杀；丙劫财、丁伤官；戊正印、己偏印；庚劫财、辛比肩。\n5. 本气己：查表，己为偏印。\n6. 阴阳相异：偏印里异性的是伤官。\n结论JSON: {\"answer\":\"伤官\"}"
+  },
+  {
+   "id": "diagnostic-0093-full",
+   "family": "害→positions",
+   "branch": "子",
+   "natal": [
+    "年柱",
+    "月柱",
+    "日柱"
+   ],
+   "gold": [
+    "时柱"
+   ],
+   "got": [],
+   "obs": {
+    "full": false,
+    "twin": false,
+    "producer": false,
+    "consumer": false,
+    "oracle": false,
+    "distractor": false,
+    "cue": false
+   },
+   "raw": "1. 年支未藏己、丁、乙，与年支同支的是年支未。\n2. 月支辰藏戊、乙、癸，与月支辰不同。\n3. 日支丑藏己、癸、辛，与日支丑不同。\n4. 时支亥藏壬、甲，与时支亥不同。\n5. 核对：年支未不同，月支辰不同，日支丑不同，时支亥不同。\n6. 无与年支未相同支卡片，回到原局四柱重新核对：年支未，月支辰，日支丑，时支亥。与年支未相同支的：没有。\n结论JSON: {\"answer\":[]}"
+  },
+  {
+   "id": "diagnostic-0094-full",
+   "family": "破→element",
+   "branch": "丑",
+   "natal": "土",
+   "gold": "土",
+   "got": [
+    "木",
+    "火",
+    "土"
+   ],
+   "obs": {
+    "full": false,
+    "twin": false,
+    "producer": false,
+    "consumer": false,
+    "oracle": true,
+    "distractor": true,
+    "cue": true
+   },
+   "raw": "1. 日支为辰。\n2. 查两支卡片，找与辰相冲的支：寅午戌。\n3. 这三支中与辰相冲的是寅、午、戌。\n4. 核对五行：寅属木，午属火，戌属土。\n5. 五行：木、火、土。这是搭配的五行，不是比劫或印，不作其他推断。\n结论JSON: {\"answer\":[\"木\",\"火\",\"土\"]}"
+  },
+  {
+   "id": "diagnostic-0095-full",
+   "family": "破→count",
+   "branch": "午",
+   "natal": 1,
+   "gold": 0,
+   "got": null,
+   "obs": {
+    "full": false,
+    "twin": false,
+    "producer": false,
+    "consumer": false,
+    "oracle": false,
+    "distractor": false,
+    "cue": true
+   },
+   "raw": "1. 年支卯藏乙，第一个乙是本气。\n2. 月支丑藏己、癸、辛，第二个己是中气。\n3. 日支辰藏戊、乙、癸，第三个癸是余气。\n4. 时支辰藏戊、乙、癸，第四个癸是余气。\n5. 本气乙与中气己不同，不相冲，不相刑，不相破，不相害，不相破，不相半合，三干五支都不取，回到本气乙，记作乙。\n6. 乙与日主甲：甲乙相合（合化土）。\n7. 乙与年支卯：卯乙相冲、卯乙相刑 → 乙卯相冲、乙卯相刑。\n8. 乙与月支丑：丑不在乙的冲、刑 → 无。\n9. 乙与日支辰：辰不在乙的冲、刑 → 无。\n10. 乙与时支辰：辰不在乙的冲、刑 → 无。\n11. 与日主甲：甲乙相合（合化土）。\n12. 天干五合：甲己、乙庚、丙辛、丁壬、戊癸；天干相冲：甲庚、乙辛、丙壬、丁癸。\n13. 地支卡片：卯：六合戌，冲酉，刑子，害辰，破午，半合亥、未（亥卯未木局），三会寅卯辰；丑：六合子，冲未，刑戌、未，害午，破辰，半合酉（巳酉丑金局），三会亥子丑；辰：六合酉，冲戌，自刑，害卯，破丑，半合子（申子辰水局），三会寅卯辰。\n14. 卯与子：子在卯卡的六合 → 子卯六合（合化木）。\n15. 子与丑：丑在子卡的六合 → 子丑六合（合化土）。\n16. 子与日支辰：辰在子卡的破 → 子辰相破。\n17. 子与时支辰：同支，辰是自刑 → 辰辰自刑。\n18. 与日主甲：甲乙相合（合化土）。\n19. 天干五合：甲己、乙庚、丙辛、丁壬、戊癸；天干相冲：甲庚、乙辛、丙壬、丁癸。地支相冲：卯酉、寅午、巳酉、丑未、子卯。\n20. 地支卡片：卯：六合戌，冲酉，刑子，害辰，破午，半合亥、未（亥卯未木局），三会寅卯辰；丑：六合子，冲未，刑戌、未，害午，破辰，半合酉（巳酉丑金局），三会亥子丑；辰：六合酉，冲戌，自刑，害卯，破丑，半合子（申子辰水局），三会寅卯辰。\n21. 卯与子：子在卯卡的六合 → 子卯六合（合化木）。\n22. 子与丑：丑在子卡的六合 → 子丑六合（合化土）。\n23. 子与日支辰：辰在子卡的破 → 子辰相破。\n24. 子与时支辰：同支，辰是自刑 → 辰辰自刑。\n25. 与日主甲：甲乙相合（合化土）。\n26. 天干五合：甲己、乙庚、丙辛、丁壬、戊癸；天干相冲：甲庚、乙辛、丙壬、丁癸。地支相冲：卯酉、寅午、巳酉、丑未、子卯。\n27. 地支卡片：卯：六合戌，冲酉，刑子，害辰，破午，半合亥、未（亥卯未木局），三会寅卯辰；丑：六合子，冲未，刑戌、未，害午，破辰，半合酉（巳酉丑金局），三会亥子丑；辰：六合酉，冲戌，自刑，害卯，破丑，半合子（申子辰水局），三会寅卯辰。\n28. 卯与子：子在卯卡的六合 → 子卯六合（合化木）。\n29. 子与丑：丑在子卡的六合 → 子丑六合（合化土）。\n30. 子与日支辰：辰在子卡的破 → 子辰相破。\n31. 子与时支辰：同支，辰是自刑 → 辰辰自刑。\n32. 与日主甲：甲乙相合（合化土）。\n33"
+  },
+  {
+   "id": "diagnostic-0096-full",
+   "family": "驿马→main",
+   "branch": "申",
+   "natal": "戊",
+   "gold": "庚",
+   "got": "甲",
+   "obs": {
+    "full": false,
+    "twin": false,
+    "producer": true,
+    "consumer": false,
+    "oracle": false,
+    "distractor": false,
+    "cue": false
+   },
+   "raw": "1. 日支戌藏戊、辛、丁，第一个戊是本气。\n2. 日支戌的驿马在寅。\n3. 查藏干表：寅藏甲、丙、戊。\n结论JSON: {\"answer\":\"甲\"}"
+  },
+  {
+   "id": "diagnostic-0097-full",
+   "family": "桃花→hidden",
+   "branch": "子",
+   "natal": [
+    "己",
+    "丁",
+    "乙"
+   ],
+   "gold": [
+    "癸"
+   ],
+   "got": [
+    "己",
+    "丁",
+    "乙"
+   ],
+   "obs": {
+    "full": false,
+    "twin": false,
+    "producer": false,
+    "consumer": false,
+    "oracle": false,
+    "distractor": false,
+    "cue": false
+   },
+   "raw": "1. 日支未藏己、丁、乙，第一个己是本气。\n2. 日支未属土，是阴干或阳干？没有指定，不能确定，不特别论断。\n3. 核对：未藏己、丁、乙，第一个己是本气。\n结论JSON: {\"answer\":[\"己\",\"丁\",\"乙\"]}"
+  },
+  {
+   "id": "diagnostic-0099-full",
+   "family": "六合→god",
+   "branch": "辰",
+   "natal": "食神",
+   "gold": "劫财",
+   "got": "食神",
+   "obs": {
+    "full": false,
+    "twin": false,
+    "producer": true,
+    "consumer": false,
+    "oracle": true,
+    "distractor": true,
+    "cue": true
+   },
+   "raw": "1. 日支酉藏辛，第一个辛是本气。\n2. 日主己（土，阴）；本气辛（金，阴）。\n3. 五行：土生金，我生者为食伤。\n4. 阴阳相同：食伤里同性的是食神。\n结论JSON: {\"answer\":\"食神\"}"
+  },
+  {
+   "id": "diagnostic-0100-full",
+   "family": "害→positions",
+   "branch": "巳",
+   "natal": [
+    "年柱",
+    "时柱"
+   ],
+   "gold": [],
+   "got": [
+    "寅",
+    "辰",
+    "酉",
+    "卯"
+   ],
+   "obs": {
+    "full": false,
+    "twin": false,
+    "producer": false,
+    "consumer": false,
+    "oracle": true,
+    "distractor": true,
+    "cue": false
+   },
+   "raw": "1. 年支寅属木，与之成六害的是亥；旬首是甲寅。\n2. 日支酉属金，与之成六害的是卯；旬首是乙卯。\n3. 查两支卡片，寅：六合亥，冲申，刑巳、申，害巳，破亥，半合午（寅午戌火局），三会寅卯辰；卯：六合戌，冲酉，刑子，害辰，破午，半合亥、未（亥卯未木局），三会寅卯辰。\n4. 符合约定的支卡片：寅、辰、酉、卯。\n5. 五行：木：寅、卯；火：无；土：无；金：酉；水：无。\n6. 属木的：寅、卯；属火的：无；属土的：无；属金的：酉；属水的：无。\n7. 符合五行的：寅、卯、酉。\n8. 按照原局顺序，寅在前，然后是辰、酉、卯。\n结论JSON: {\"answer\":[\"寅\",\"辰\",\"酉\",\"卯\"]}"
+  },
+  {
+   "id": "diagnostic-0101-full",
+   "family": "破→element",
+   "branch": "寅",
+   "natal": "水",
+   "gold": "木",
+   "got": "戌亥",
+   "obs": {
+    "full": false,
+    "twin": false,
+    "producer": false,
+    "consumer": false,
+    "oracle": false,
+    "distractor": false,
+    "cue": false
+   },
+   "raw": "1. 年支是亥。\n2. 查五行位次：从亥起顺数，亥是第 10 位。\n3. 第 10 位是戌。\n4. 查两支卡片，戌亥：亥戌相破。\n结论JSON: {\"answer\":\"戌亥\"}"
+  },
+  {
+   "id": "diagnostic-0102-full",
+   "family": "破→count",
+   "branch": "酉",
+   "natal": 1,
+   "gold": 0,
+   "got": 1,
+   "obs": {
+    "full": false,
+    "twin": true,
+    "producer": true,
+    "consumer": true,
+    "oracle": false,
+    "distractor": false,
+    "cue": false
+   },
+   "raw": "1. 日支为子。\n2. 查两支卡片：戌：六合卯，冲辰，刑丑、未，害酉，破未，半合午（寅午戌火局），三会申酉戌；未：六合午，冲丑，刑戌、丑，害子，破戌，半合卯（亥卯未木局），三会巳午未；子：六合丑，冲午，刑卯，害未，破酉，半合申、辰（申子辰水局），三会亥子丑。\n3. 全部关系：戌未子：未戌相破；寅戌：无；寅未：无；寅子：无。\n4. 成对的支卡片：未戌。五虎遁：庚年寅月起戊，未月是第 6 月，月干应为癸；给出的是癸未。\n5. 核对：未戌相破 ✓。\n6. 原局地支卡片：戌、未、子、寅。其中与未相同的是未，共 1 支。\n结论JSON: {\"answer\":1}"
+  },
+  {
+   "id": "diagnostic-0103-full",
+   "family": "驿马→main",
+   "branch": "寅",
+   "natal": "庚",
+   "gold": "甲",
+   "got": "庚",
+   "obs": {
+    "full": false,
+    "twin": false,
+    "producer": true,
+    "consumer": false,
+    "oracle": false,
+    "distractor": false,
+    "cue": false
+   },
+   "raw": "1. 日支申藏庚、壬、戊，第一个庚是本气。\n2. 日支本气庚查出后，按相生次序庚→辛→壬→癸（本气庚，中气辛，余气壬、癸）。\n3. 在庚、辛、壬、癸中找第一个不被本气或中气替代的干支 → 庚。\n结论JSON: {\"answer\":\"庚\"}"
+  },
+  {
+   "id": "diagnostic-0104-full",
+   "family": "桃花→hidden",
+   "branch": "酉",
+   "natal": [
+    "癸"
+   ],
+   "gold": [
+    "辛"
+   ],
+   "got": [
+    "癸"
+   ],
+   "obs": {
+    "full": false,
+    "twin": false,
+    "producer": true,
+    "consumer": false,
+    "oracle": false,
+    "distractor": false,
+    "cue": false
+   },
+   "raw": "1. 日支子藏癸，第一个癸是本气。\n2. 十神表（日主戊，土，阳）：从土起按相生次序，土比劫→金食伤→水财→木官杀→火印；阳干取比肩、食神、偏财、七杀、偏印，阴干取劫财、伤官、正财、正官、正印。即：戊比肩、己劫财；庚食神、辛伤官；壬偏财、癸正财；甲七杀、乙正官；丙偏印、丁正印。\n3. 本气癸查表为正财。\n4. 年、月、时三干是己、丁、壬。按本气、中气、余气的顺序看是否透出：\n5. 癸（本气，正财）：在己、丁、壬中没有出现 → 不取。\n6. 都不取，回到本气癸，记作正财格。\n7. 这是“月令透干取格”的约定；多干并透、会合变格各家处理不同，格名不代表吉凶。\n结论JSON: {\"answer\":[\"癸\"]}"
+  },
+  {
+   "id": "diagnostic-0105-full",
+   "family": "冲→stage",
+   "branch": "酉",
+   "natal": "病",
+   "gold": "长生",
+   "got": "病",
+   "obs": {
+    "full": false,
+    "twin": false,
+    "producer": true,
+    "consumer": false,
+    "oracle": false,
+    "distractor": false,
+    "cue": false
+   },
+   "raw": "1. 日支卯属亥卯未三合局，与之相冲的是酉；2. 查两支卡片，卯酉：卯酉相冲，三合局。\n3. 日主丁为阴干，十二长生逆行；丁的长生在酉。\n4. 从酉起逆数十二宫：酉长生、申沐浴、未冠带、午临官、巳帝旺、辰衰、卯病、寅死、丑墓、子绝、亥胎、戌养。\n5. 在上面找日支卯：卯病，所以日支卯为病。\n结论JSON: {\"answer\":\"病\"}"
+  },
+  {
+   "id": "diagnostic-0106-full",
+   "family": "六合→god",
+   "branch": "寅",
+   "natal": "正印",
+   "gold": "劫财",
+   "got": null,
+   "obs": {
+    "full": false,
+    "twin": false,
+    "producer": true,
+    "consumer": false,
+    "oracle": false,
+    "distractor": false,
+    "cue": false
+   },
+   "raw": "1. 日支为亥。\n2. 查两支卡片，亥：六合寅，冲巳，自刑，害申，破寅，半合卯（亥卯未木局），三会亥子丑。\n3. 六合：亥寅。本气藏干：甲、丙、戊。\n4. 日主乙：木，阴干，阴干取比肩、食神、偏财、七杀（木克土，我克者为财，财生官杀，官杀喜印，印喜比劫，比劫喜食伤，食伤喜财，财生官杀，官杀喜印，印喜比劫，比劫喜食伤，食伤喜财，财生官杀，官杀喜印，印喜比劫，比劫喜食伤，食伤喜财，财生官杀，官杀喜印，印喜比劫，比劫喜食伤，食伤喜财，财生官杀，官杀喜印，印喜比劫，比劫喜食伤，食伤喜财，财生官杀，官杀喜印，印喜比劫，比劫喜食伤，食伤喜财，财生官杀，官杀喜印，印喜比劫，比劫喜食伤，食伤喜财，财生官杀，官杀喜印，印喜比劫，比劫喜食伤，食伤喜财，财生官杀，官杀喜印，印喜比劫，比劫喜食伤，食伤喜财，财生官杀，官杀喜印，印喜比劫，比劫喜食伤，食伤喜财，财生官杀，官杀喜印，印喜比劫，比劫喜食伤，食伤喜财，财生官杀，官杀喜印，印喜比劫，比劫喜食伤，食伤喜财，财生官杀，官杀喜印，印喜比劫，比劫喜食伤，食伤喜财，财生官杀，官杀喜印，印喜比劫，比劫喜食伤，食伤喜财，财生官杀，官杀喜印，印喜比劫，比劫喜食伤，食伤喜财，财生官杀，官杀喜印，印喜比劫，比劫喜食伤，食伤喜财，财生官杀，官杀喜印，印喜比劫，比劫喜食伤，食伤喜财，财生官杀，官杀喜印，印喜比劫，比劫喜食伤，食伤喜财，财生官杀，官杀喜印，印喜比劫，比劫喜食伤，食伤喜财，财生官杀，官杀喜印，印喜比劫，比劫喜食伤，食伤喜财，财生官杀，官杀喜印，印喜比劫，比劫喜食伤，食伤喜财，财生官杀，官杀喜印，印喜比劫，比劫喜食伤，食伤喜财，财生官杀，官杀喜印，印喜比劫，比劫喜食伤，食伤喜财，财生官杀，官杀喜印，印喜比劫，比劫喜食伤，食伤喜财，财生官杀，官杀喜印，印喜比劫，比劫喜食伤，食伤喜财，财生官杀，官杀喜印，印喜比劫，比劫喜食伤，食伤喜财，财生官杀，官杀喜印，印喜比劫，比劫喜食伤，食伤喜财，财生官杀，官杀喜印，印喜比劫，比劫喜食伤，食伤喜财，财生官杀，官杀喜印，印喜比劫，比劫喜食伤，食伤喜财，财生官杀，官杀喜印，印喜比劫，比劫喜食伤，食伤喜财，财生官杀，官杀喜印，印喜比劫，比劫喜食伤，食伤喜财，财生官杀，官杀喜印，印喜比劫，比劫喜食伤，食伤喜财，财生官杀，官杀喜印，印喜比劫，比劫喜食伤，食伤喜财，财生官杀，官杀喜印，印喜比劫，比劫喜食伤，食伤喜财，财生官杀，官杀喜印，印喜比劫，比劫喜食伤，食伤喜财，财生官杀，官杀喜印，印喜比劫，比劫喜食伤，食伤喜财，财生官杀，官杀喜印，印喜比劫，比劫喜食伤，食伤喜财，财生官杀，官杀喜印，印喜比劫，比劫喜食伤，食伤喜财，财生官杀，官杀喜印"
+  },
+  {
+   "id": "diagnostic-0107-full",
+   "family": "害→positions",
+   "branch": "未",
+   "natal": [
+    "年柱",
+    "日柱"
+   ],
+   "gold": [
+    "月柱"
+   ],
+   "got": [
+    "午"
+   ],
+   "obs": {
+    "full": false,
+    "twin": false,
+    "producer": true,
+    "consumer": false,
+    "oracle": false,
+    "distractor": false,
+    "cue": false
+   },
+   "raw": "1. 日支为子。\n2. 查两支卡片，找到与子相冲的：午。\n3. 查两支卡片，找到与子既不相冲又不相刑害的：未。\n4. 与子相刑的：丑、未。\n5. 与子相破的是：午。\n6. 与子相害的是：未。\n7. 三干逐一查：年干辛为阴干，阴年男命大运逆行；月干乙为阴干，阴年男命大运逆行；日干壬为阳干，阳年男命大运顺行；时干戊为阳干，阳年男命大运顺行。\n8. 都是阴干或阳干，与日支子相冲的：午。\n9. 核对：午与子既不相冲、不相刑、不相破，但相害 → 午。\n结论JSON: {\"answer\":[\"午\"]}"
+  },
+  {
+   "id": "diagnostic-0108-full",
+   "family": "破→element",
+   "branch": "亥",
+   "natal": "木",
+   "gold": "水",
+   "got": "金",
+   "obs": {
+    "full": false,
+    "twin": false,
+    "producer": false,
+    "consumer": false,
+    "oracle": true,
+    "distractor": false,
+    "cue": false
+   },
+   "raw": "1. 日支为寅，与寅相冲的是申。\n2. 查两支卡片，申：六合巳，冲寅，刑巳、寅，害亥，破巳，半合子（申子辰水局），三会申酉戌。\n3. 全部关系：寅申相冲、寅申相刑、寅申相破。\n4. 与日支寅相冲的是申。\n5. 五行：申属金。\n结论JSON: {\"answer\":\"金\"}"
+  },
+  {
+   "id": "diagnostic-0109-full",
+   "family": "破→count",
+   "branch": "丑",
+   "natal": 2,
+   "gold": 2,
+   "got": 0,
+   "obs": {
+    "full": false,
+    "twin": false,
+    "producer": false,
+    "consumer": false,
+    "oracle": true,
+    "distractor": false,
+    "cue": true
+   },
+   "raw": "1. 日支为辰。\n2. 查两支卡片：申：申属金；辰：辰属土；子：子属水。\n3. 成六破的：辰酉六合（合化金）、寅午戌火局、巳酉丑金局、亥卯未木局。\n4. 日支辰属土，与它成六破的是酉。\n5. 全局地支是申、辰、辰、子。其中是酉的：没有。\n6. 个数为 0。\n结论JSON: {\"answer\":0}"
+  },
+  {
+   "id": "diagnostic-0111-full",
+   "family": "桃花→hidden",
+   "branch": "卯",
+   "natal": [
+    "甲",
+    "丙",
+    "戊"
+   ],
+   "gold": [
+    "乙"
+   ],
+   "got": [
+    "甲",
+    "丙",
+    "戊"
+   ],
+   "obs": {
+    "full": false,
+    "twin": false,
+    "producer": false,
+    "consumer": false,
+    "oracle": false,
+    "distractor": false,
+    "cue": false
+   },
+   "raw": "1. 日支寅藏甲、丙、戊，第一个甲是本气。\n2. 日支是寅。\n3. 查藏干表：寅：甲、丙、戊（本气在前）。\n结论JSON: {\"answer\":[\"甲\",\"丙\",\"戊\"]}"
+  },
+  {
+   "id": "diagnostic-0113-full",
+   "family": "六合→god",
+   "branch": "巳",
+   "natal": "七杀",
+   "gold": "食神",
+   "got": "比肩",
+   "obs": {
+    "full": false,
+    "twin": false,
+    "producer": false,
+    "consumer": false,
+    "oracle": true,
+    "distractor": false,
+    "cue": true
+   },
+   "raw": "1. 日支申属申子辰三合局，六合为寅午戌。\n2. 本气藏干：寅藏甲、丙、戊，午藏丁、己，戌藏戊、辛、丁。\n3. 日主甲（木，阳）；本气藏干甲（本气甲）。\n4. 十神表（日主甲，木，阳）：从木起按相生次序，木比劫→火食伤→土财→金官杀→水印；阳干取比肩、食神、偏财、七杀、偏印，阴干取劫财、伤官、正财、正官、正印。即：甲比肩、乙劫财；丙食神、丁伤官；戊偏财、己正财；庚七杀、辛正官；壬偏印、癸正印。\n5. 本气甲查表为比肩。\n结论JSON: {\"answer\":\"比肩\"}"
+  },
+  {
+   "id": "diagnostic-0114-full",
+   "family": "害→positions",
+   "branch": "巳",
+   "natal": [
+    "日柱",
+    "时柱"
+   ],
+   "gold": [],
+   "got": [
+    "月支亥"
+   ],
+   "obs": {
+    "full": false,
+    "twin": false,
+    "producer": false,
+    "consumer": false,
+    "oracle": true,
+    "distractor": false,
+    "cue": false
+   },
+   "raw": "1. 日支为寅，与寅相冲的是申；与寅相刑的是亥、寅，与寅相害的是亥。\n2. 查两支卡片，亥：六合寅，冲申，刑寅，害亥，破巳，半合卯（亥卯未木局），三会亥子丑。\n3. 与寅相害的是亥。\n4. 在四柱中找地支是亥的：月支亥。\n5. 核对：亥与寅，寅亥相害，成立；亥为阴干、寅为阳干，阴阳相异，故为相害。\n结论JSON: {\"answer\":[\"月支亥\"]}"
+  },
+  {
+   "id": "diagnostic-0115-full",
+   "family": "破→element",
+   "branch": "卯",
+   "natal": "火",
+   "gold": "木",
+   "got": "土",
+   "obs": {
+    "full": false,
+    "twin": false,
+    "producer": false,
+    "consumer": false,
+    "oracle": false,
+    "distractor": false,
+    "cue": false
+   },
+   "raw": "1. 日支是午。\n2. 查两支卡片：戌：六合卯，冲辰，刑丑、未，害酉，破未，半合午（寅午戌火局），三会巳午未；子：六合丑，冲午，刑卯，害未，破酉，半合申、辰（申子辰水局），三会亥子丑；未：六合午，冲丑，刑戌、丑，害子，破戌，半合卯（亥卯未木局），三会巳午未。\n3. 符合约定的：午未：午未六合（合化土）。\n4. 核对：六合（合化土）→ 土。这是搭配的名称，不是吉凶判断。\n结论JSON: {\"answer\":\"土\"}"
+  },
+  {
+   "id": "diagnostic-0118-full",
+   "family": "桃花→hidden",
+   "branch": "子",
+   "natal": [
+    "壬",
+    "甲"
+   ],
+   "gold": [
+    "癸"
+   ],
+   "got": [
+    "壬",
+    "甲"
+   ],
+   "obs": {
+    "full": false,
+    "twin": false,
+    "producer": false,
+    "consumer": false,
+    "oracle": false,
+    "distractor": false,
+    "cue": false
+   },
+   "raw": "1. 年支是亥。\n2. 查藏干表：亥藏壬、甲（本气壬，中气甲）。\n结论JSON: {\"answer\":[\"壬\",\"甲\"]}"
+  },
+  {
+   "id": "diagnostic-0119-full",
+   "family": "冲→stage",
+   "branch": "子",
+   "natal": "胎",
+   "gold": "帝旺",
+   "got": "临官",
+   "obs": {
+    "full": false,
+    "twin": false,
+    "producer": true,
+    "consumer": false,
+    "oracle": true,
+    "distractor": false,
+    "cue": false
+   },
+   "raw": "1. 日支午藏丁、己，第一个丁是本气。\n2. 十二长生：甲长生、乙沐浴、丙冠带、丁临官、戊帝旺、己衰、庚病、辛死、壬墓、癸绝、甲胎、乙养。\n3. 本气丁：临官，所以日支午为临官。\n结论JSON: {\"answer\":\"临官\"}"
+  }
+ ]
+}

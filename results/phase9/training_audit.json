@@ -1,0 +1,37 @@
+{
+  "counts": {
+    "fresh_rows": 2016,
+    "s_x_changed_op": 1423,
+    "common_rows": 3036,
+    "shared_existing_graph_replays": 1358
+  },
+  "added_vs_sparse": 29,
+  "excluded_edges_expanded": [
+    "害→stage",
+    "桃花→element",
+    "破→god",
+    "驿马→god",
+    "驿马→positions"
+  ],
+  "input_branch_cardinality_by_operation": {
+    "count": 12,
+    "element": 12,
+    "god": 8,
+    "hidden": 12,
+    "main": 12,
+    "number": 12,
+    "positions": 12,
+    "stage": 12
+  },
+  "observed_joint_day_branch_operation_cells": 766,
+  "total_possible_joint_cells": 960,
+  "counterfactual_pairs_per_arm": 1008,
+  "dataset_checks": [
+    "Pre-existing graph replay within original training edges",
+    "Identical row, source, natal chart, anchor and realized intermediate across all arms",
+    "No repeated fresh prompt in any arm",
+    "Exact matched (day stem, derived branch, operation) histogram",
+    "Each paired question changes the demanded operation with fixed source, anchor, chart, branch and template style",
+    "Independent library/table reconstruction agrees with every strict typed final answer"
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "data/phase7/dev.jsonl": "e057822f0ef7a444f006eb8b7cd6fcaa5e8805b114c6c97aa5bd5726952e13a0",
+  "results/phase8/retention_audit.json": "5180beb78aa8eb3cb01bcaa0aff13ed5bad08f0f516a80927465ab669a8d1497",
+  "data/phase8/training_manifest.json": "af50d14ce10d0b4b021577135f735a9c14582781e44187fd1e7ec53374838400",
+  "data/phase8/retention_manifest.json": "b8db021ca619339cf0b2e2390afd90366472bd3988276883b46b82fcca7ddd1e",
+  "data/phase8/transfer_manifest.json": "cbd3026c9d77307c89c248a6edd034e724430c4119ec6cf9d0ff8700c9fedab6",
+  "data/phase8/retention.jsonl": "2790b2d32cb80bfb56856beebd08c95b5da54e8840f7d820d93e8556fd50f4cf",
+  "data/phase8/transfer.jsonl": "53dad1804bb274a5296dd2e0c4c88847eeb43c8d4dd870bd041d4774e75f658b",
+  "scripts/phase8/panel.py": "7a797e1ff6a5239e38f31ecacfa195ab19c980e4e7e7fca00d9e3cb846259b92",
+  "scripts/phase8/retention.py": "8f135cc9e7fbe266c4f199374aa5489b5ae37f09c81ba2ea2880da02b4ce9592",
+  "scripts/phase8/audit_retention.py": "fe9a206bfa3b57fd67c5ed9668d2515252d58592b62b4cf6e605068d3e62ecda"
+}

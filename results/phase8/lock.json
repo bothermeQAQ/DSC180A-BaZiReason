@@ -1,0 +1,15 @@
+{
+  "data/phase8/a/train.jsonl": "b28a3c3e3a76d1869b32f7676ac3c27d0187cdb101b33391757085fd62bfd9b0",
+  "data/phase8/a/valid.jsonl": "fea6acacf04fadbfadb7302daac0f1c72f2850cdb9d02a1ee28feb8476332b16",
+  "data/phase8/b/train.jsonl": "255e94929c776189af7360ea592083ee0b34fc2edfb7cc9c36cba4a38d3e4183",
+  "data/phase8/b/valid.jsonl": "fea6acacf04fadbfadb7302daac0f1c72f2850cdb9d02a1ee28feb8476332b16",
+  "configs/phase8/a.yaml": "84a67ac6aba3e71ed0319c9dabe9adb7969da5127731e8cc593ec46cd724128e",
+  "configs/phase8/b.yaml": "ad31ee5abe606a1e59ccfc1c42d81fcc78b358666877c561b7d770f921933240",
+  "data/phase8/training_manifest.json": "af50d14ce10d0b4b021577135f735a9c14582781e44187fd1e7ec53374838400",
+  "docs/phase8_protocol.md": "c70ee53246ff7ac63eec208a2fb4236d2241463b062218754eacff97221f1eed",
+  "scripts/phase8/train.py": "f97f314b329f5dcd9a88e88943fa44b422d78e970ab53caf7f11a3876af87ca0",
+  "scripts/phase8/build_training.py": "f98fcacb8c13da4a6a0984455001a740b5cb4d39401c3a19d02e94f5e046b778",
+  "scripts/phase8/run.py": "15394f24c2e69066f60fbf2302dca50f12785a36aa273a4ec04bff530ad39b93",
+  "scripts/phase8/evaluate.py": "1b69b363c238ba71d709ef1bedd84cd51b3d14abeb4f130a8f7d08771079d3f5",
+  "scripts/phase8/analyze.py": "d808cf076e6651458e5d2791929dcfae899cd183075577af3d820af3874e3d44"
+}

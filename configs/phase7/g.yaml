@@ -1,0 +1,35 @@
+run_name: bazireason-phase7-g
+model: models/qwen3-4b-instruct-2507-mlx-4bit
+base_model:
+  repo: Qwen/Qwen3-4B-Instruct-2507
+  revision: cdbee75f17c01a7cc42f958dc650907174af0554
+  license: Apache-2.0
+  quantization: mlx_lm convert -q --q-bits 4 --q-group-size 64 (mlx-lm 0.32.2)
+data:
+  train: data/phase7/g/train.jsonl
+  valid: data/phase7/g/valid.jsonl
+  valid_rows: 64
+adapter_dir: artifacts/adapters/bazireason-phase7-g
+log_dir: results/phase7/training/g
+seed: 710223
+fine_tune_type: lora
+num_layers: 16
+lora_parameters:
+  rank: 16
+  scale: 2.0
+  dropout: 0.05
+optimizer: adamw
+weight_decay: 0.01
+learning_rate: 0.0001
+warmup_updates: 40
+end_learning_rate: 1.0e-05
+batch_size: 2
+grad_accumulation_steps: 2
+epochs: 1.0
+max_seq_length: 2048
+steps_per_report: 20
+steps_per_eval: 3952
+steps_per_save: 3952
+mask_prompt: true
+enable_thinking: false
+init_adapter: artifacts/adapters/bazireason-qwen3-4b-lora-p6-u8/adapters.safetensors

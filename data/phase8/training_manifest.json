@@ -1,0 +1,83 @@
+{
+  "seed": 810117,
+  "parent": "artifacts/adapters/bazireason-phase7-g/adapters.safetensors",
+  "parent_sha256": "790f87c137011c24e4cdf21dfe9dfabc7936612f0b19d23b9092cdae8e6778f9",
+  "hashes": {
+    "a": {
+      "train": "b28a3c3e3a76d1869b32f7676ac3c27d0187cdb101b33391757085fd62bfd9b0",
+      "valid": "fea6acacf04fadbfadb7302daac0f1c72f2850cdb9d02a1ee28feb8476332b16",
+      "config": "84a67ac6aba3e71ed0319c9dabe9adb7969da5127731e8cc593ec46cd724128e"
+    },
+    "b": {
+      "train": "255e94929c776189af7360ea592083ee0b34fc2edfb7cc9c36cba4a38d3e4183",
+      "valid": "fea6acacf04fadbfadb7302daac0f1c72f2850cdb9d02a1ee28feb8476332b16",
+      "config": "ad31ee5abe606a1e59ccfc1c42d81fcc78b358666877c561b7d770f921933240"
+    }
+  },
+  "stats": {
+    "a": {
+      "rows": 4960,
+      "updates": 1240,
+      "sequence": 1512734,
+      "supervised_logged": 810267,
+      "padded": 1614944,
+      "atomic_counts": {
+        "stage": 960,
+        "god": 960
+      }
+    },
+    "b": {
+      "rows": 4960,
+      "updates": 1240,
+      "sequence": 1506180,
+      "supervised_logged": 801313,
+      "padded": 1590752,
+      "atomic_counts": {
+        "main": 480,
+        "count": 480,
+        "hidden": 480,
+        "positions": 480
+      }
+    }
+  },
+  "common_rows": 3040,
+  "common_tokens": {
+    "calendar": 450036,
+    "procedure": 350230,
+    "contrast": 100553,
+    "other": 50425,
+    "p7_graph": 250018
+  },
+  "fresh_chart_years": [
+    1870,
+    1871,
+    1872,
+    1873,
+    1874,
+    1875,
+    1876,
+    1877,
+    1878,
+    1879,
+    1880,
+    1881,
+    1882,
+    1883,
+    1884,
+    1885,
+    1886,
+    1887,
+    1888,
+    1889
+  ],
+  "fresh_chart_keys_sha256": "5cc29884f29a128fed206f55c490fe770d6c5f2b0b056e99d9e94bf0274c030d",
+  "legacy_exclusion_keys": 96397,
+  "fresh_chart_count": 1920,
+  "branch_overlap": {
+    "same_as_day_branch": 159,
+    "present_in_chart": 587
+  },
+  "training_script_sha256": "f98fcacb8c13da4a6a0984455001a740b5cb4d39401c3a19d02e94f5e046b778",
+  "matched_unit": "identical chart, branch, template version and classroom format",
+  "stem_branch_reps_per_target_consumer": 8
+}

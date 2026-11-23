@@ -1,0 +1,319 @@
+{
+  "counts": {
+    "g": {
+      "novel_misses": 155,
+      "novel_unparsed_among_misses": 25,
+      "deep_second_step_matters": 88,
+      "deep_right_when_second_step_matters": 11,
+      "deep_matches_skip_second_step": 20,
+      "deep_misses": 82,
+      "deep_unparsed_among_misses": 11,
+      "stage_wrong_other_class": 7,
+      "deep_changed_branch_n": 88,
+      "deep_changed_branch_right": 13,
+      "deep_natal_answer_differs": 83,
+      "deep_right_when_natal_answer_differs": 12,
+      "deep_all_shortcuts_wrong_n": 71,
+      "deep_all_shortcuts_wrong_right": 10,
+      "stage_wrong_same_class": 26,
+      "god_wrong_same_class": 30,
+      "novel_changed_branch_n": 124,
+      "novel_changed_branch_right": 18,
+      "novel_natal_answer_differs": 121,
+      "novel_right_when_natal_answer_differs": 18,
+      "stage_unparsed": 11,
+      "god_unparsed": 1,
+      "god_wrong_other_class": 4
+    },
+    "a": {
+      "novel_misses": 170,
+      "novel_unparsed_among_misses": 4,
+      "deep_second_step_matters": 88,
+      "deep_right_when_second_step_matters": 16,
+      "deep_matches_skip_second_step": 27,
+      "deep_misses": 77,
+      "deep_unparsed_among_misses": 0,
+      "deep_changed_branch_n": 88,
+      "deep_changed_branch_right": 18,
+      "deep_natal_answer_differs": 83,
+      "deep_right_when_natal_answer_differs": 17,
+      "deep_all_shortcuts_wrong_n": 71,
+      "deep_all_shortcuts_wrong_right": 14,
+      "stage_wrong_other_class": 17,
+      "stage_wrong_same_class": 26,
+      "god_wrong_other_class": 4,
+      "god_wrong_same_class": 38,
+      "novel_changed_branch_n": 124,
+      "novel_changed_branch_right": 8,
+      "novel_natal_answer_differs": 121,
+      "novel_right_when_natal_answer_differs": 8,
+      "stage_unparsed": 2
+    },
+    "s": {
+      "deep_second_step_matters": 88,
+      "deep_right_when_second_step_matters": 12,
+      "deep_matches_skip_second_step": 19,
+      "deep_misses": 81,
+      "deep_unparsed_among_misses": 2,
+      "novel_misses": 153,
+      "novel_unparsed_among_misses": 5,
+      "stage_wrong_same_class": 30,
+      "deep_changed_branch_n": 88,
+      "deep_changed_branch_right": 14,
+      "deep_natal_answer_differs": 83,
+      "deep_right_when_natal_answer_differs": 13,
+      "deep_all_shortcuts_wrong_n": 71,
+      "deep_all_shortcuts_wrong_right": 11,
+      "god_wrong_same_class": 34,
+      "novel_changed_branch_n": 124,
+      "novel_changed_branch_right": 14,
+      "novel_natal_answer_differs": 121,
+      "novel_right_when_natal_answer_differs": 14,
+      "stage_wrong_other_class": 11,
+      "god_wrong_other_class": 2,
+      "god_unparsed": 2
+    },
+    "x": {
+      "novel_misses": 156,
+      "novel_unparsed_among_misses": 2,
+      "deep_second_step_matters": 88,
+      "deep_right_when_second_step_matters": 7,
+      "deep_matches_skip_second_step": 27,
+      "deep_misses": 86,
+      "deep_unparsed_among_misses": 3,
+      "stage_wrong_other_class": 15,
+      "deep_changed_branch_n": 88,
+      "deep_changed_branch_right": 10,
+      "deep_natal_answer_differs": 83,
+      "deep_right_when_natal_answer_differs": 9,
+      "deep_all_shortcuts_wrong_n": 71,
+      "deep_all_shortcuts_wrong_right": 6,
+      "god_wrong_same_class": 34,
+      "novel_changed_branch_n": 124,
+      "novel_changed_branch_right": 13,
+      "novel_natal_answer_differs": 121,
+      "novel_right_when_natal_answer_differs": 13,
+      "stage_wrong_same_class": 27,
+      "god_wrong_other_class": 6,
+      "god_unparsed": 1
+    },
+    "p": {
+      "novel_misses": 149,
+      "novel_unparsed_among_misses": 3,
+      "deep_second_step_matters": 88,
+      "deep_right_when_second_step_matters": 22,
+      "deep_matches_skip_second_step": 12,
+      "stage_wrong_other_class": 12,
+      "deep_changed_branch_n": 88,
+      "deep_changed_branch_right": 24,
+      "deep_natal_answer_differs": 83,
+      "deep_right_when_natal_answer_differs": 21,
+      "deep_all_shortcuts_wrong_n": 71,
+      "deep_all_shortcuts_wrong_right": 18,
+      "deep_misses": 70,
+      "deep_unparsed_among_misses": 5,
+      "god_wrong_same_class": 37,
+      "novel_changed_branch_n": 124,
+      "novel_changed_branch_right": 20,
+      "novel_natal_answer_differs": 121,
+      "novel_right_when_natal_answer_differs": 20,
+      "stage_wrong_same_class": 34,
+      "god_wrong_other_class": 1
+    }
+  },
+  "examples": {
+    "g": {
+      "hidden": {
+        "id": "p9-transfer-0-00-novel-hidden",
+        "source": "三合生",
+        "op": "hidden",
+        "gold": [
+          "甲",
+          "丙",
+          "戊"
+        ],
+        "branch": "寅",
+        "reply": "1. 年支为寅，查与年支相同支卡片可得寅属寅午戌，本气为甲。\n2. 从甲起顺数：甲、乙、丙（本气、中气、余气）。\n3. 将上述内容填入列表：[\"甲\",\"乙\",\"丙\"]。\n结论JSON: {\"answer\":[\"甲\",\"乙\",\"丙\"]}",
+        "consumer_reply": "1. 月支为寅，查藏干表：寅藏甲、丙、戊（本气甲，中气丙，余气戊）。\n结论JSON: {\"answer\":[\"甲\",\"丙\",\"戊\"]}",
+        "producer_reply": "1. 年支是寅。\n2. 查找与年支所属的三合组：寅属寅午戌，所以三合组为寅午戌。\n3. 三合组的生、旺、墓顺序：申子辰、亥卯未、寅午戌、巳酉丑。\n4. 按这个顺序取生支：寅午戌 → 生支为寅。\n结论JSON: {\"answer\":\"寅\"}"
+      },
+      "element": {
+        "id": "p9-transfer-0-00-novel-element",
+        "source": "三合生",
+        "op": "element",
+        "gold": "木",
+        "branch": "寅",
+        "reply": "1. 年支是寅，查与年支五行相同的小组合可得寅午戌。\n2. 将寅午戌用于下步，寅属木，是立春时的本气；午属火，是立夏时的本气；戌属土，是申酉戌的本气。\n3. 将寅午戌用于下步，寅属木，是立春时的本气；午属火，是立夏时的本气；戌属土，是申酉戌的本气。\n4. 将寅午戌用于下步，寅属木，是立春时的本气；午属火，是立夏时的本气；戌属土，是申酉戌的本气。\n5. 将寅午戌用于下步，寅属木，是立春时的本气；午属火，是立夏时的本气；戌属土，是申酉戌的本气。\n6. 将寅午戌用于下步，寅属木，是立春时的本气；午属火，是立夏时的本气；戌属土，是申酉戌的本气。\n7. 将寅午戌用于下步，寅属木，是立春时的本气；午属火，是立夏时的本气；戌属土，是申酉戌的本气。\n8. 将寅午戌用于下步，寅属木，是立春时的本气；午属火，是立夏时的本气；戌属土，是申酉戌的本气。\n9. 将寅午戌用于下步，寅属木，是立春时的本气；午属火，是立夏时的本气；戌属土，是申酉戌的本气。\n10. 将寅午戌用于下步，寅属木，是立春时的本气；午属火，是立夏时的本气；戌属土，是申酉戌的本气。\n11. 将寅午戌用于下步，寅属木，是立春时的本气；午属火，是立夏时的本气；戌属土，是申酉戌的本气。\n12. 将寅午戌用于下步，寅属木，是立春时的本气；午属火，是立夏时的本气；戌属土，是申酉戌的本气。\n13. 将寅午戌用于下步，寅属木，是立春时的本气；午属火，是立夏时的本气；戌属土，是申酉戌的本气。\n14. 将寅午戌用于下步，寅属木，是立春时的本气；午属火，是立夏时的本气；戌属土，是申酉戌的本气。\n15. 将寅午戌用于下步，寅属木，是立春时的本气；午属火，是立夏时的本气；戌属土，是申酉戌的本气。\n16. 将寅午戌用于下步，寅属木，是立春时的本气；午属火，是立夏时的本气；戌属土，是申酉戌的本气。\n17. 将寅午戌用于下步，寅属木，是立春时的本气；午属火，是立夏时的本气；戌属土，是申酉戌的本气。\n18. 将寅午戌用于下步，寅属木，是立春时的本气；午属火，是立夏时的本气；戌属土，是申酉戌的本气。\n19. 将寅午戌用于下步，寅属木，是立春时的本气；午属火，是立夏时的本气；戌属土，是申酉戌的本气。\n20. 将寅午戌用于下步，寅属木，是立春时的本气；午属火，是立夏时的本气；戌属土，是申酉戌的本气。\n21. 将寅午戌用于下步，寅属木，是立春时的本气；午属火，是立夏时的本气；戌属土，是申酉戌的本气。\n22. 将寅午戌用于下步，寅属木，是立春时的本气；午属火，是立夏时的本气；戌属土，是申酉戌的本气。\n23. 将寅午戌用于下步，寅属木，是立春时的本气；午属火，是立夏时的本气；戌属土，是申酉戌的本气。\n24. 将寅午戌用于下步，寅属木，是立春时的本气；午属火，是立",
+        "consumer_reply": "1. 年支是寅。\n2. 查藏干表：寅藏甲、丙、戊（本气甲，中气丙，余气戊）。\n3. 将甲用于下步，甲木生日主丙火（生我），甲不是本气，不取。\n4. 余干和支的五行：寅属木。因此支本身的五行归属是\"木\"。\n结论JSON: {\"answer\":\"木\"}",
+        "producer_reply": "1. 年支是寅。\n2. 查找与年支所属的三合组：寅属寅午戌，所以三合组为寅午戌。\n3. 三合组的生、旺、墓顺序：申子辰、亥卯未、寅午戌、巳酉丑。\n4. 按这个顺序取生支：寅午戌 → 生支为寅。\n结论JSON: {\"answer\":\"寅\"}"
+      },
+      "stage": {
+        "id": "p9-transfer-0-02-novel-stage",
+        "source": "三合生",
+        "op": "stage",
+        "gold": "胎",
+        "branch": "亥",
+        "reply": "1. 年支为亥，查与年支所属三合组可得亥卯未。\n2. 将亥用于下步，亥属亥卯未，本气为壬。因此三干为壬、癸、甲（本气、中气、余气）。\n3. 日干己属土，从酉长生起逆数至亥。因此日干落亥，应记为死。\n结论JSON: {\"answer\":\"死\"}",
+        "consumer_reply": "1. 日主己为阴干，十二长生逆行；己的长生在酉。\n2. 从酉起逆数：酉长生、申沐浴、未冠带、午临官、巳帝旺、辰衰、卯病、寅死、丑墓、子绝、亥胎。\n3. 数到年支亥为胎。\n结论JSON: {\"answer\":\"胎\"}",
+        "producer_reply": "1. 年支是亥。\n2. 查三合局表：亥卯未。\n3. 将亥用于下步，亥属亥卯未，本气为亥。因此地支是亥。\n结论JSON: {\"answer\":\"亥\"}"
+      }
+    },
+    "a": {
+      "hidden": {
+        "id": "p9-transfer-0-06-novel-hidden",
+        "source": "三合生",
+        "op": "hidden",
+        "gold": [
+          "壬",
+          "甲"
+        ],
+        "branch": "亥",
+        "reply": "1. 年支为卯，查与它所属的三合组可得亥卯未。\n2. 将亥卯未用于下步，亥生壬，卯生乙，未生己、丁、乙。因此藏干为[\"壬\",\"乙\",\"己\",\"丁\",\"乙\"]。\n结论JSON: {\"answer\":[\"壬\",\"乙\",\"己\",\"丁\",\"乙\"]}",
+        "consumer_reply": "1. 亥支藏壬、甲（本气壬，临官甲）。\n结论JSON: {\"answer\":[\"壬\",\"甲\"]}",
+        "producer_reply": "1. 年支是卯。\n2. 查组资料：亥卯未。\n3. 将亥卯未用于下步，亥生寅，卯生四，未生午，按顺推取生支。\n结论JSON: {\"answer\":\"亥\"}"
+      },
+      "stage": {
+        "id": "p9-transfer-0-08-novel-stage",
+        "source": "三合生",
+        "op": "stage",
+        "gold": "临官",
+        "branch": "申",
+        "reply": "1. 年支为辰，查与辰有关的三合组可得申子辰。\n2. 将申子辰用于下步，申属金，为阳干；庚属金，为阳干；阴阳相同，故为比肩。\n3. 日干庚属金，按相生次序金比劫→水食伤→木财→火官杀→土印；比肩为比劫，不计入。\n4. 以长生为第0位，庚到申顺数4步，第4位为帝旺。\n结论JSON: {\"answer\":\"帝旺\"}",
+        "consumer_reply": "1. 日元庚为阳干，十二长生顺行；庚的长生在巳。\n2. 从巳起顺数：巳长生、午沐浴、未冠带、申临官。\n3. 数到申为临官。\n结论JSON: {\"answer\":\"临官\"}",
+        "producer_reply": "1. 年支是辰，查与辰有关的三合组可得申子辰。\n2. 将申子辰用于下步，申属金，是金的克；子属水，是食伤；丑属土，是财。\n3. 申子辰三支中，生支为申。\n结论JSON: {\"answer\":\"申\"}"
+      },
+      "element": {
+        "id": "p9-transfer-0-12-novel-element",
+        "source": "三合生",
+        "op": "element",
+        "gold": "木",
+        "branch": "寅",
+        "reply": "1. 日支为戌，查与日支同组的三合组可得寅午戌。\n2. 将寅午戌用于下步，寅属木，午属火，戌属土。因此三支的五行归属为[\"木\",\"火\",\"土\"]。\n结论JSON: {\"answer\":[\"木\",\"火\",\"土\"]}",
+        "consumer_reply": "1. 三合局：寅属木；三会局：寅属木。\n2. 将两者归一：木。\n结论JSON: {\"answer\":\"木\"}",
+        "producer_reply": "1. 日支为戌，查与日支所属的三合组可得寅午戌。\n2. 将寅午戌用于下步，寅属木，午属火，戌属土。逐柱比较：年酉金（略）、月未土（略）、日戌土（取）、时亥水（略）。因此取寅。\n结论JSON: {\"answer\":\"寅\"}"
+      },
+      "god": {
+        "id": "p9-transfer-0-20-novel-god",
+        "source": "三合生",
+        "op": "god",
+        "gold": "正印",
+        "branch": "巳",
+        "reply": "1. 日支为酉，查与日酉相同组的三合局可得巳酉丑。\n2. 将巳酉丑用于下步，巳属火，为阳干；巳为阴干时取辛，阳干时取丙。按相生次序火比劫→土食伤→金财→水官杀→木印；阳干取比肩、食神、偏财、七杀、偏印，阴干取劫财、伤官、正财、正官、正印。即丙比肩、丁劫财、戊食神、己偏财、庚七杀、辛正官、壬偏印、癸正官。\n3. 以本气丙为对照干，丙是比肩，所以日支酉为比肩。\n结论JSON: {\"answer\":\"比肩\"}",
+        "consumer_reply": "1. 巳支藏丙、庚、戊，取本气丙为对照干。\n2. 日主是己，丙火生日主己土（生我），阴阳相异，故为正印。\n结论JSON: {\"answer\":\"正印\"}",
+        "producer_reply": "1. 日支为酉，查与日支所属相同组的三合局。\n2. 三合局：申子辰、亥卯未、寅午戌、巳酉丑。\n3. 将酉用于下步，酉属巳酉丑，本气为巳。\n结论JSON: {\"answer\":\"巳\"}"
+      }
+    },
+    "s": {
+      "god": {
+        "id": "p9-transfer-2-13-novel-god",
+        "source": "三会孟",
+        "op": "god",
+        "gold": "七杀",
+        "branch": "寅",
+        "reply": "1. 日支是寅，查与日支所属的三会组可得寅午戌。\n2. 接下来用刚才所得的寅午戌组计算。寅属木。原局逐干查得年午属火、月戌属土、日寅属木、时子属水。本气排在第一，是比劫。日主戊土生比劫（火与土相同），阴阳相异，故为劫财。\n结论JSON: {\"answer\":\"劫财\"}",
+        "consumer_reply": "1. 依命盘核对题目所指的地支。日支是寅，本气为甲。\n2. 日主戊（土，阳）；本气甲（木，阳）。\n3. 五行：木克土，克我者为官杀。\n4. 阴阳相同：官杀里同性的是七杀。\n结论JSON: {\"answer\":\"七杀\"}",
+        "producer_reply": "1. 日支是寅，查与日支所属的三会组可得寅午戌。\n2. 在寅午戌中，孟支是寅。\n结论JSON: {\"answer\":\"寅\"}"
+      },
+      "element": {
+        "id": "p9-transfer-2-23-novel-element",
+        "source": "三会孟",
+        "op": "element",
+        "gold": "木",
+        "branch": "寅",
+        "reply": "1. 依命盘核对题目所指的地支。日支是寅，查与日支同组的三会。\n2. 三会逐柱查得：寅卯辰、巳午未、申酉戌、亥子丑。\n3. 接下来用刚才所得的组——寅卯辰——定位。孟位是第1位，用刚才所得的第1支。\n结论JSON: {\"answer\":\"寅\"}",
+        "consumer_reply": "1. 依命盘核对题目所指的地支。题目明确指出是寅。\n2. 查藏干表：寅藏甲、丙、戊（本气甲，中气丙，余气戊）。\n3. 按本气取用：甲查表为木。因此本气归木。\n结论JSON: {\"answer\":\"木\"}",
+        "producer_reply": "1. 依命盘核对题目所指的地支。日支是寅，查与日支相同地支的组得寅午戌。\n2. 接下来用刚才所得的寅午戌组计算。寅位属木。原局逐柱查得年卯属木、月未属土、日寅属木、时巳属火。因此本命日支所在的组是寅午戌。\n3. 用刚才所得的寅午戌组计算。寅位属木。原局逐柱查得年卯属木、月未属土、日寅属木、时巳属火。因此本命日支所在的组是寅午戌。\n4. 原局逐柱查得年卯属木、月未属土、日寅属木、时巳属火。因此本命日支所在的组是寅午戌。\n5. 用刚才所得的寅午戌组计算。寅位属木。原局逐柱查得年卯属木、月未属土、日寅属木、时巳属火。因此本命日支所在的组是寅午戌。\n6. 原局逐柱查得年卯属木、月未属土、日寅属木、时巳属火。因此本命日支所在的组是寅午戌。\n7. 用刚才所得的寅午戌组计算。寅位属木。原局逐柱查得年卯属木、月未属土、日寅属木、时巳属火。因此本命日支所在的组是寅午戌。\n8. 原局逐柱查得年卯属木、月未属土、日寅属木、时巳属火。因此本命日支所在的组是寅午戌。\n9. 用刚才所得的寅午戌组计算。寅位属木。原局逐柱查得年卯属木、月未属土、日寅属木、时巳属火。因此本命日支所在的组是寅午戌。\n10. 原局逐柱查得年卯属木、月未属土、日寅属木、时巳属火。因此本命日支所在的组是寅午戌。\n结论JSON: {\"answer\":\"寅\"}"
+      },
+      "stage": {
+        "id": "p9-transfer-3-01-novel-stage",
+        "source": "三会季",
+        "op": "stage",
+        "gold": "养",
+        "branch": "戌",
+        "reply": "1. 依命盘核对题目所指的地支。日支是戌，查与日支相同的地支得卯。\n2. 接下来用刚才所得的卯支计算。甲干长生在亥，顺行至卯共4步。以长生为第0位，第4位是帝旺。\n结论JSON: {\"answer\":\"帝旺\"}",
+        "consumer_reply": "1. 依命盘核对题目所指的地支。日支是戌，查与日干甲相关的资料。\n2. 甲的长生在亥，顺行至寅共11步。\n3. 从亥起顺数：亥长生、子沐浴、丑冠带、寅临官、卯帝旺、辰衰、巳病、午死、未墓、申绝、酉胎、戌养。\n4. 数到日支戌为养。\n结论JSON: {\"answer\":\"养\"}",
+        "producer_reply": "1. 依命盘核对题目所指的地支。日支是戌，查三会资料。\n2. 三会逐柱查得申酉戌。用刚才所得的季支替换原局。\n结论JSON: {\"answer\":\"戌\"}"
+      },
+      "hidden": {
+        "id": "p9-transfer-3-04-novel-hidden",
+        "source": "三会季",
+        "op": "hidden",
+        "gold": [
+          "己",
+          "丁",
+          "乙"
+        ],
+        "branch": "未",
+        "reply": "1. 依命盘核对题目所指的地支。日支是巳，查三会表对日支的归属。丁酉属巳酉丑，季位是丑。\n2. 接下来用刚才所得的丑支计算。丑的藏干依次为己、癸、辛。按本气在前保留整张清单。\n结论JSON: {\"answer\":[\"己\",\"癸\",\"辛\"]}",
+        "consumer_reply": "1. 依命盘核对题目所指的地支。题目明确指出是未。\n2. 接下来用刚才所得的未支计算。未的藏干依次为己、丁、乙。\n结论JSON: {\"answer\":[\"己\",\"丁\",\"乙\"]}",
+        "producer_reply": "1. 依命盘核对题目所指的地支。日支是巳，查三会资料。\n2. 三会逐组检查：寅卯辰、巳午未、申酉戌、亥子丑。其中是比对日支的组——巳午未。\n3. 该组的季位是未。\n结论JSON: {\"answer\":\"未\"}"
+      }
+    },
+    "x": {
+      "god": {
+        "id": "p9-transfer-0-02-novel-god",
+        "source": "三合生",
+        "op": "god",
+        "gold": "正财",
+        "branch": "亥",
+        "reply": "1. 年支是亥，查与年支所属的三合组得亥卯未。\n2. 接下来用刚才所得的亥卯未组计算。本气排在第二位，是卯。日干己，日主己土克卯木（我克），阴阳相同，故为偏财。\n结论JSON: {\"answer\":\"偏财\"}",
+        "consumer_reply": "1. 依命盘核对题目所指的地支。题目指出的支是亥。\n2. 接下来用刚才所得的支计算。亥的藏干依次为壬、甲。本气排在第一，是壬。\n3. 日主己（土，阴）；本气壬（水，阳）。\n4. 五行：土克水，我克者为财。\n5. 阴阳相异：财里异性的是正财。\n结论JSON: {\"answer\":\"正财\"}",
+        "producer_reply": "1. 年支是亥。\n2. 查找地支表：亥卯未属亥卯未组，生支为亥。\n结论JSON: {\"answer\":\"亥\"}"
+      },
+      "stage": {
+        "id": "p9-transfer-0-11-novel-stage",
+        "source": "三合生",
+        "op": "stage",
+        "gold": "胎",
+        "branch": "亥",
+        "reply": "1. 依命盘核对题目所指的地支。日支是未，查与日支相同地支的组得亥卯未。\n2. 接下来用刚才所得的亥卯未组计算。亥卯未的生、旺、墓顺序是亥长生、子沐浴、丑冠带、寅临官、卯帝旺、辰衰、巳病、午死、未墓。\n3. 从亥起顺数到未。亥长生、子沐浴、丑冠带、寅临官、卯帝旺、辰衰、巳病、午死、未墓。共9步。\n4. 第9位是墓，用刚才所得的墓位。\n结论JSON: {\"answer\":\"墓\"}",
+        "consumer_reply": "1. 日主丁为阴干，十二长生逆行；丁的长生在酉。\n2. 从酉起逆数：酉长生、申沐浴、未冠带、午临官、巳帝旺、辰衰、卯病、寅死、丑墓、子绝、亥胎、戌养。\n3. 数到支卡片所指的地支。依此顺序，亥胎是第 10 位。\n结论JSON: {\"answer\":\"胎\"}",
+        "producer_reply": "1. 依命盘核对题目所指的地支。日支是未，查与日支同组的三合局得亥卯未。\n2. 接下来用刚才所得的亥卯未计算。日支未属亥卯未，从亥起逆数到亥。因此本命日支所在的组生位所指的地支为\"亥\"。\n结论JSON: {\"answer\":\"亥\"}"
+      },
+      "hidden": {
+        "id": "p9-transfer-1-04-novel-hidden",
+        "source": "三合旺",
+        "op": "hidden",
+        "gold": [
+          "癸"
+        ],
+        "branch": "子",
+        "reply": "1. 依命盘核对题目所指的地支。年支是子，查与年支相同地支的组得申子辰。\n2. 接下来用刚才所得的申子辰组计算。申子辰的顺序是申属金，子属水，辰属土。从申起顺数至辰，第3位是辰。\n3. 在辰支中藏戊、乙、癸，本气为戊。按藏干次序写成列表并以本气开头。\n结论JSON: {\"answer\":[\"戊\",\"乙\",\"癸\"]}",
+        "consumer_reply": "1. 依命盘核对题目所指的地支。题目问的是子支。\n2. 查藏干表：子藏癸（本气在前）。\n结论JSON: {\"answer\":[\"癸\"]}",
+        "producer_reply": "1. 依命盘核对题目所指的地支。年支是子，查与年支相同地支的组得申子辰。\n2. 接下来用刚才所得的申子辰组计算。申属金，旺于子，故旺位为子。\n结论JSON: {\"answer\":\"子\"}"
+      },
+      "element": {
+        "id": "p9-transfer-1-04-novel-element",
+        "source": "三合旺",
+        "op": "element",
+        "gold": "水",
+        "branch": "子",
+        "reply": "1. 依命盘核对题目所指的地支。年支是子，查与年支相同地支的组得申子辰。\n2. 接下来用刚才所得的申子辰组计算。申属金，是旺位。\n3. 依命盘核对题目所指的地支。年支是子，查与年支相同地支的组得申子辰。\n4. 接下来用刚才所得的申子辰组计算。申属金，是旺位。\n5. 在木火土金水这五类之中，这一支应归金类。\n结论JSON: {\"answer\":\"金\"}",
+        "consumer_reply": "1. 依命盘核对题目所指的地支。题目问的是子支应归哪类。\n2. 查类表：木：甲乙；火：丙丁；土：戊己；金：庚辛；水：壬癸。\n3. 将子用于上面找得的类表，子归水。\n结论JSON: {\"answer\":\"水\"}",
+        "producer_reply": "1. 依命盘核对题目所指的地支。年支是子，查与年支相同地支的组得申子辰。\n2. 接下来用刚才所得的申子辰组计算。申属金，旺于子，故旺位为子。\n结论JSON: {\"answer\":\"子\"}"
+      }
+    },
+    "p": {
+      "stage": {
+        "id": "p9-transfer-0-01-novel-stage",
+        "source": "三合生",
+        "op": "stage",
+        "gold": "绝",
+        "branch": "巳",
+        "reply": "1. 原局年支为巳，查与年支相同的支=巳。\n2. 执行三会支=巳酉丑，输入支=巳。巳属巳酉丑，该组的第1位为巳。\n3. 将第1位用于下步，巳属火，为阳干，阳年男命大运顺行，阴年女命大运逆行，但年干丁为阴干，阴年男命大运逆行，阳年女命大运顺行，所以大运方向与年干相反。\n4. 年干丁为阴干，阴年男命大运逆行，阳年女命大运顺行，故大运方向为逆行。\n5. 大运逆行，从月支巳逆推至年支巳，共10步。以第1位为生位，第10位为死位。\n6. 执行死位，输入支=死位，输出死位=死位。\n结论JSON: {\"answer\":\"死位\"}",
+        "consumer_reply": "1. 日主壬为阳干，十二长生顺行；壬的长生在申。\n2. 从申起顺数十二宫：申长生、酉沐浴、戌冠带、亥临官、子帝旺、丑衰、寅病、卯死、辰墓、巳绝。\n3. 在上面找支=巳的柱：巳绝，所以本支为绝。\n结论JSON: {\"answer\":\"绝\"}",
+        "producer_reply": "1. 原局年支为巳，查与年支相同的支=巳。\n2. 将巳用于下步，巳属巳酉丑，三支依次为巳、酉、丑。\n3. 本组生位为巳，是生位，故取巳。\n结论JSON: {\"answer\":\"巳\"}"
+      },
+      "element": {
+        "id": "p9-transfer-0-01-novel-element",
+        "source": "三合生",
+        "op": "element",
+        "gold": "火",
+        "branch": "巳",
+        "reply": "1. 原局年支为巳，查与年支相同的支=巳。\n2. 将巳用于下步，巳属火，为阴干阳支。地支藏干依次为丙、庚、戊，本气为丙。\n3. 将本气丙用于下步，丙属火，为阳干阴支。地支藏干依次为戊、己、庚，本气为戊。\n4. 将本气戊用于下步，戊属土，为阳干阴支。地支藏干依次为己、庚、辛，本气为己。\n5. 将本气己用于下步，己属土，为阴干阴支。地支藏干依次为庚、辛、壬，本气为庚。\n6. 将本气庚用于下步，庚属金，为阳干阳支。地支藏干依次为辛、壬、癸，本气为辛。\n7. 将本气辛用于下步，辛属金，为阴干阳支。地支藏干依次为壬、癸、甲，本气为壬。\n8. 将本气壬用于下步，壬属水，为阳干阴支。地支藏干依次为癸、甲、乙，本气为癸。\n9. 将本气癸用于下步，癸属水，为阴干阴支。地支藏干依次为甲、乙、丙，本气为甲。\n10. 将本气甲用于下步，甲属木，为阳干阴支。地支藏干依次为乙、丙、丁，本气为乙。\n11. 将本气乙用于下步，乙属木，为阴干阳支。地支藏干依次为丙、丁、戊，本气为丙。\n12. 将本气丙用于下步，丙属火，为阳干阴支。地支藏干依次为丁、戊、己，本气为丁。\n13. 将本气丁用于下步，丁属火，为阴干阳支。地支藏干依次为戊、己、庚，本气为戊。\n14. 将本气戊用于下步，戊属土，为阳干阴支。地支藏干依次为己、庚、辛，本气为己。\n15. 将本气己用于下步，己属土，为阴干阴支。地支藏干依次为庚、辛、壬，本气为庚。\n16. 将本气庚用于下步，庚属金，为阳干阳支。地支藏干依次为辛、壬、癸，本气为辛。\n17. 将本气辛用于下步，辛属金，为阴干阳支。地支藏干依次为壬、癸、甲，本气为壬。\n18. 将本气壬用于下步，壬属水，为阳干阴支。地支藏干依次为癸、甲、乙，本气为癸。\n19. 将本气癸用于下步，癸属水，为阴干阴支。地支藏干依次为甲、乙、丙，本气为甲。\n20. 将本气甲用于下步，甲属木，为阳干阴支。地支藏干依次为乙、丙、丁，本气为乙。\n21. 将本气乙用于下步，乙属木，为阴干阳支。地支藏干依次为丙、丁、戊，本气为丙。\n22. 将本气丙用于下步，丙属火，为阳干阴支。地支藏干依次为丁、戊、己，本气为丁。\n23. 将本气丁用于下步，丁属火，为阴干阳支。地支藏干依次为戊、己、庚，本气为戊。\n24. 将本气戊用于下步，戊属土，为阳干阴支。地支藏干依次为己、庚、辛，本气为己。\n25. 将本气己用于下步，己属土，为阴干阴支。地支藏干依次为庚、辛、壬，本气为庚。\n26. 将本气庚用于下步，庚属金，为阳干阳支。地支藏干依次为辛、壬、癸，本气为辛。\n27. 将本气辛用于下步，辛属金，为阴干阳支。地支藏干依次为壬、癸、甲，本气为壬。\n28. 将本气壬用于下步，壬属水，为阳干阴支。地支藏干依次为癸、甲、乙，本气为癸。\n29. 将本气癸用于下步，癸属水，为阴干阴支。地支藏干依次为甲、乙、丙，本气为",
+        "consumer_reply": "1. 月支是巳。\n2. 查藏干表：巳藏丙、庚、戊（本气丙，中气庚，余气戊）。\n3. 执行藏干支，输入支=巳。巳属火。因此三会、三合、六亲以火示。\n结论JSON: {\"answer\":\"火\"}",
+        "producer_reply": "1. 原局年支为巳，查与年支相同的支=巳。\n2. 将巳用于下步，巳属巳酉丑，三支依次为巳、酉、丑。\n3. 本组生位为巳，是生位，故取巳。\n结论JSON: {\"answer\":\"巳\"}"
+      }
+    }
+  }
+}

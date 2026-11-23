@@ -1,0 +1,46 @@
+{
+  "panel": "transfer",
+  "sha256": "ec77457aa4b9bcf5549b2f8cf6b7fd7054fa2acb19c3962c58a248dc2c58db4d",
+  "generator_sha256": "cee4f5cb152f98ecc45f54556aad8d8028d6db4c4c714e082b42866efefd06b9",
+  "seed": 910409,
+  "training_inputs": {
+    "data/phase9/p/train.jsonl": "7e4d8e46f50b6897d55ba461a470db3fe631884f3016a0159c0d8691061c9982",
+    "data/phase9/s/train.jsonl": "f50544fc6efd1cd1fdb70f1a51b7f2204a094edfb80a2c2ae6b4b0651144f7f0",
+    "data/phase9/x/train.jsonl": "88eff260dcbc062bf5be4ea9f513646697de0029fa832ed7a5f29430857c1cac",
+    "data/phase9/p/valid.jsonl": "fea6acacf04fadbfadb7302daac0f1c72f2850cdb9d02a1ee28feb8476332b16",
+    "data/phase9/s/valid.jsonl": "fea6acacf04fadbfadb7302daac0f1c72f2850cdb9d02a1ee28feb8476332b16",
+    "data/phase9/x/valid.jsonl": "fea6acacf04fadbfadb7302daac0f1c72f2850cdb9d02a1ee28feb8476332b16"
+  },
+  "historical_files": 133,
+  "historical_keys": 105639,
+  "groups": 96,
+  "rows": 960,
+  "conditions": {
+    "novel": 192,
+    "familiar": 192,
+    "consumer": 192,
+    "closed": 96,
+    "operation": 96,
+    "producer": 96,
+    "deep": 96
+  },
+  "families": {
+    "三合生→hidden": 12,
+    "三合生→element": 12,
+    "三合生→stage": 12,
+    "三合生→god": 12,
+    "三合旺→stage": 12,
+    "三合旺→god": 12,
+    "三合旺→element": 12,
+    "三合旺→hidden": 12,
+    "三会孟→stage": 12,
+    "三会孟→god": 12,
+    "三会孟→hidden": 12,
+    "三会孟→element": 12,
+    "三会季→stage": 12,
+    "三会季→god": 12,
+    "三会季→element": 12,
+    "三会季→hidden": 12
+  },
+  "protocol": "Group = chart. All primary producer×consumer cells have equal weight. Pair operations within each chart. Primary includes complete source lookup table. Closed removes only that table. Canonical wording uses familiar consumer vocabulary with the same answer schema. Operation classification uses exact single-letter answers. Depth-three and bridge are unaided. Outcomes were not consulted."
+}

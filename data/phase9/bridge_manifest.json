@@ -1,0 +1,28 @@
+{
+  "panel": "bridge",
+  "sha256": "5b591377f2223a3b77febc2ba60086973b41990c52eb6d79cf900fe031016794",
+  "generator_sha256": "cee4f5cb152f98ecc45f54556aad8d8028d6db4c4c714e082b42866efefd06b9",
+  "seed": 910421,
+  "training_inputs": {
+    "data/phase9/p/train.jsonl": "7e4d8e46f50b6897d55ba461a470db3fe631884f3016a0159c0d8691061c9982",
+    "data/phase9/s/train.jsonl": "f50544fc6efd1cd1fdb70f1a51b7f2204a094edfb80a2c2ae6b4b0651144f7f0",
+    "data/phase9/x/train.jsonl": "88eff260dcbc062bf5be4ea9f513646697de0029fa832ed7a5f29430857c1cac",
+    "data/phase9/p/valid.jsonl": "fea6acacf04fadbfadb7302daac0f1c72f2850cdb9d02a1ee28feb8476332b16",
+    "data/phase9/s/valid.jsonl": "fea6acacf04fadbfadb7302daac0f1c72f2850cdb9d02a1ee28feb8476332b16",
+    "data/phase9/x/valid.jsonl": "fea6acacf04fadbfadb7302daac0f1c72f2850cdb9d02a1ee28feb8476332b16"
+  },
+  "historical_files": 133,
+  "historical_keys": 105639,
+  "groups": 160,
+  "rows": 160,
+  "conditions": {
+    "bridge": 160
+  },
+  "families": {
+    "害→stage": 40,
+    "破→god": 40,
+    "驿马→positions": 40,
+    "桃花→element": 40
+  },
+  "protocol": "Group = chart. All primary producer×consumer cells have equal weight. Pair operations within each chart. Primary includes complete source lookup table. Closed removes only that table. Canonical wording uses familiar consumer vocabulary with the same answer schema. Operation classification uses exact single-letter answers. Depth-three and bridge are unaided. Outcomes were not consulted."
+}

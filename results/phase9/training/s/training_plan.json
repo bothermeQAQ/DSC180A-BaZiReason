@@ -1,0 +1,32 @@
+{
+  "run_name": "bazireason-phase9-s",
+  "config_file": "configs/phase9/s.yaml",
+  "config_sha256": "b59b8eadd237e27fcaea64753e682e46691b8bf273558c645c1b768bbfa788a6",
+  "init_adapter": "artifacts/adapters/bazireason-phase7-g/adapters.safetensors",
+  "init_adapter_sha256": "790f87c137011c24e4cdf21dfe9dfabc7936612f0b19d23b9092cdae8e6778f9",
+  "train_file_sha256": "f50544fc6efd1cd1fdb70f1a51b7f2204a094edfb80a2c2ae6b4b0651144f7f0",
+  "valid_file_sha256": "fea6acacf04fadbfadb7302daac0f1c72f2850cdb9d02a1ee28feb8476332b16",
+  "train_rows": 5052,
+  "valid_rows_for_selection": 64,
+  "train_sequence_tokens_per_epoch": 1589249,
+  "iterations": 2526,
+  "start_iteration": 0,
+  "batch_size": 2,
+  "grad_accumulation_steps": 2,
+  "optimizer_updates": 1263,
+  "trainable_parameters": 14680064,
+  "stored_array_elements": 643356160,
+  "note_parameters": "stored_array_elements counts packed 4-bit arrays, not the 4.02e9 base parameters; trainable_parameters is the exact LoRA size.",
+  "software": {
+    "mlx": "0.32.4",
+    "mlx_lm": "0.32.2"
+  },
+  "device": {
+    "device_name": "Apple M5",
+    "max_recommended_working_set_size": 26800603136,
+    "memory_size": 34359738368,
+    "architecture": "applegpu_g17g",
+    "max_buffer_length": 20100448256,
+    "resource_limit": 499000
+  }
+}

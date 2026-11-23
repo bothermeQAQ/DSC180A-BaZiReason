@@ -1,0 +1,38 @@
+{
+  "common_rows": 4683,
+  "experiment_rows": 3221,
+  "panels": {
+    "diagnostic": 840,
+    "dev": 420,
+    "mix": 280,
+    "retention": 482
+  },
+  "chart_panels": {
+    "diagnostic": 120,
+    "dev": 140,
+    "mix": 140,
+    "retention": 240
+  },
+  "directed_graphs": [
+    22,
+    7,
+    7,
+    12
+  ],
+  "sha256": {
+    "data/phase7/dev.jsonl": "e057822f0ef7a444f006eb8b7cd6fcaa5e8805b114c6c97aa5bd5726952e13a0",
+    "data/phase7/diagnostic.jsonl": "b620d6afd884e24322097a7299d7c40df32b0075c4d1add928d756a792499224",
+    "data/phase7/mix.jsonl": "33892e5319f178241fca1de5660354b1bb10848e4d6da099c9ce5ca47436e20e",
+    "data/phase7/panel_manifest.json": "58351b15fe593b04ed959606c083c33612c644ba1189f26a41d229d21cd00705",
+    "data/phase7/retention.jsonl": "662361b5655aabf7de105a7caf24a11ad8a0d0b267272e787424f6f62d8bea63",
+    "data/phase7/training_manifest.json": "b18fce1e2551f7efb3a6e4da64e6f347714f85152697e323ce4a5d005367da8d",
+    "docs/phase7_pilot_protocol.md": "baeeba313a4d6598f10aaa787ecb0121ec03541e9092e60d6e99d30fb5f09181",
+    "scripts/phase7/audit.py": "f1134ad316615c0ca7bdfdf6e9a72280433d39c14ce704191de3010c0279b9a0",
+    "scripts/phase7/build_panel.py": "9ce7d62d0a01e36f3f8848c88d889ed8eeb4efe59556ccb15983b7db91c562b3",
+    "scripts/phase7/build_retention.py": "a2d85f6f4a43427308847a540b673fc24fd2af57d803bccc28c28ba36f12dbe7",
+    "scripts/phase7/build_training.py": "399f1eb91c6602b8b7f4fbce72d61e31a2991c59fc2d9b76fdbce5dda2fcab3a",
+    "scripts/phase7/evaluate.py": "f1c0cc9887c027e04655292eba7d25330b4cdbda6c10463caf7bf565c1d4423d",
+    "scripts/phase7/graphs.py": "051576cc25db0031f796032205494e4f6f4452576b77b786d03a48d6da05c67f",
+    "scripts/phase7/train.py": "bbb628ba2c16f93e0521333eed502d68bbe7ac4b449c9d7e4ab93be610238bbf"
+  }
+}

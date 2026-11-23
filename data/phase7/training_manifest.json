@@ -1,0 +1,54 @@
+{
+  "seed": 710223,
+  "common_tokens": {
+    "calendar": 900022,
+    "procedure": 1140167,
+    "contrast": 240565,
+    "other": 120551
+  },
+  "common_rows": 4683,
+  "graph_rows": 3221,
+  "stats": {
+    "r": {
+      "rows": 7904,
+      "updates": 1976,
+      "sequence": 3000713,
+      "loss": 1787341,
+      "padded": 3141600,
+      "max_length": 1644
+    },
+    "g": {
+      "rows": 7904,
+      "updates": 1976,
+      "sequence": 2994562,
+      "loss": 1775789,
+      "padded": 3133728,
+      "max_length": 1644
+    },
+    "t": {
+      "rows": 7904,
+      "updates": 1976,
+      "sequence": 3009352,
+      "loss": 1790579,
+      "padded": 3153248,
+      "max_length": 1644
+    }
+  },
+  "hashes": {
+    "r": {
+      "train": "0e9fd1b89755b9d180ab193a0e6fe651ac8b7484ee557d8847bd4ef9dec92082",
+      "config": "f6305ae34a676d01379e8a41a67a9b7bcc384bda4294e29e8197eda7eec9f9ca",
+      "valid": "fea6acacf04fadbfadb7302daac0f1c72f2850cdb9d02a1ee28feb8476332b16"
+    },
+    "g": {
+      "train": "4cbf2bf5b6000e394419583c0bf466369b87d4f7440fa93dbb10d7dde9e7ffbe",
+      "config": "130bae29548ffe2da9973fa1d767ef6ee0aac64be2331cab30f259453fb57c83",
+      "valid": "fea6acacf04fadbfadb7302daac0f1c72f2850cdb9d02a1ee28feb8476332b16"
+    },
+    "t": {
+      "train": "c0a9e084b69ecbb6b8bec48827de8d4d9b00602687f5f2f50e5b529430730233",
+      "config": "dc4a5aa1ca0f36348816f3c3906b5243c79e1b8e59a891f16ef05b9e1fdde8f5",
+      "valid": "fea6acacf04fadbfadb7302daac0f1c72f2850cdb9d02a1ee28feb8476332b16"
+    }
+  }
+}

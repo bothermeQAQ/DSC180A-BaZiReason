@@ -1,0 +1,9 @@
+{
+  "panel": "context.jsonl",
+  "sha256": "910c807a88f6e05a144e3256f65cf273a7994d6483de8d872894864cf21f7cd7",
+  "seed": 710239,
+  "groups": 56,
+  "conditions": ["L0", "L1", "L2", "L3", "L3w"],
+  "purpose": "Secondary prompt robustness on fresh charts, eight per dev edge. Locked before any arm trained. No effect on the pilot decision. Run only after core arms and their development evaluations if sufficient budget remains.",
+  "gold": "Cross-checked independent graph labels. L3w uses another downstream value reachable on the same chart under a different branch, and the same verified heading as L3."
+}

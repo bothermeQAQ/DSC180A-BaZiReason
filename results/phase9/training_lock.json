@@ -1,0 +1,18 @@
+{
+  "configs/phase9/p.yaml": "ee80c9fd197359a64c4999b63ef1e386f60fd2357f0bbcf0996c652daf4ec5b9",
+  "configs/phase9/s.yaml": "b59b8eadd237e27fcaea64753e682e46691b8bf273558c645c1b768bbfa788a6",
+  "configs/phase9/x.yaml": "1178bbf3ad2a4f2c67ab4b62430122b3d8b656dcba8c8bbbe5539c0c92319263",
+  "data/phase9/p/train.jsonl": "7e4d8e46f50b6897d55ba461a470db3fe631884f3016a0159c0d8691061c9982",
+  "data/phase9/p/valid.jsonl": "fea6acacf04fadbfadb7302daac0f1c72f2850cdb9d02a1ee28feb8476332b16",
+  "data/phase9/s/train.jsonl": "f50544fc6efd1cd1fdb70f1a51b7f2204a094edfb80a2c2ae6b4b0651144f7f0",
+  "data/phase9/s/valid.jsonl": "fea6acacf04fadbfadb7302daac0f1c72f2850cdb9d02a1ee28feb8476332b16",
+  "data/phase9/training_manifest.json": "fc7d257509d6599c1a45e12a6eb7c3d68e097b41c8720f71eb5152a281306bb3",
+  "data/phase9/x/train.jsonl": "88eff260dcbc062bf5be4ea9f513646697de0029fa832ed7a5f29430857c1cac",
+  "data/phase9/x/valid.jsonl": "fea6acacf04fadbfadb7302daac0f1c72f2850cdb9d02a1ee28feb8476332b16",
+  "docs/phase9_protocol.md": "b9eb815545296ae5d683f8917f2fbf4bb05d4ecd075f30e0664c459d7e3d57d3",
+  "scripts/phase2/train_lora.py": "c47a71054cae70b1ac681c89d5d78e6850a6dd4953b09dca6b0fd3705c5ef261",
+  "scripts/phase9/build_training.py": "a22cd1609b9e53fca07b0029f4241e4903cb6b0febf1bd73bf17c57bf65eb476",
+  "scripts/phase9/evaluate.py": "f249adf1614bf8ddbcb8a251155f7cafe5be408737a00381c6dfd5070c6c9778",
+  "scripts/phase9/run.py": "6862c45abb151e3aeaf5e427b134c8ad3ebd6a27bf5a632851b4c79cc79ca3ae",
+  "scripts/phase9/train.py": "12a7ea2a7a5b03a88a840d46f71b9cf568e8f3d9ad3aa35868fff2971a65ed0f"
+}

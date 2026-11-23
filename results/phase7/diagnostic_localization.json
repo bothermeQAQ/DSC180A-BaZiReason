@@ -1,0 +1,10 @@
+{
+  "strict_misses": 103,
+  "schema_only_detected": 0,
+  "producer_only_failed": 6,
+  "consumer_only_failed": 31,
+  "both_failed": 64,
+  "both_passed": 2,
+  "semantic_misses": 103,
+  "semantic_prerequisite_failure": 101
+}

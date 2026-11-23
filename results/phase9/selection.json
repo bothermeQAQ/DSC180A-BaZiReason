@@ -1,0 +1,26 @@
+{
+  "s": {
+    "Primary above G": true,
+    "Unaided bridge above G": true,
+    "rules vs G": true,
+    "rules vs U8": true,
+    "calendar vs G": true,
+    "calendar vs U8": true
+  },
+  "x": {
+    "Primary above G": false,
+    "Unaided bridge above G": true,
+    "rules vs G": true,
+    "rules vs U8": true,
+    "calendar vs G": true,
+    "calendar vs U8": true
+  },
+  "p": {
+    "Primary above G": true,
+    "Unaided bridge above G": true,
+    "rules vs G": true,
+    "rules vs U8": true,
+    "calendar vs G": true,
+    "calendar vs U8": true
+  }
+}

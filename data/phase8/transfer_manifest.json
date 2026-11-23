@@ -1,0 +1,133 @@
+{
+  "sha256": "53dad1804bb274a5296dd2e0c4c88847eeb43c8d4dd870bd041d4774e75f658b",
+  "panel": "transfer.jsonl",
+  "seed": 810821,
+  "generator_sha256": "7a797e1ff6a5239e38f31ecacfa195ab19c980e4e7e7fca00d9e3cb846259b92",
+  "sampled_years": [
+    1915,
+    1916,
+    1917,
+    1918,
+    1919,
+    1935,
+    1936,
+    1937,
+    1938,
+    1939,
+    1955,
+    1956,
+    1957,
+    1958,
+    1959,
+    1975,
+    1976,
+    1977,
+    1978,
+    1979,
+    1995,
+    1996,
+    1997,
+    1998,
+    1999,
+    2015,
+    2016,
+    2017,
+    2018,
+    2019,
+    2035,
+    2036,
+    2037,
+    2038,
+    2039,
+    2055,
+    2056,
+    2057,
+    2058,
+    2059,
+    2075,
+    2076,
+    2077,
+    2078,
+    2079,
+    2095,
+    2096,
+    2097,
+    2098,
+    2099
+  ],
+  "historical_chart_keys": 103084,
+  "phase8_exclusions_sha256": {
+    "data/phase8/train_chart_keys.json": "5cc29884f29a128fed206f55c490fe770d6c5f2b0b056e99d9e94bf0274c030d",
+    "data/phase8/a/train.jsonl": "b28a3c3e3a76d1869b32f7676ac3c27d0187cdb101b33391757085fd62bfd9b0",
+    "data/phase8/a/valid.jsonl": "fea6acacf04fadbfadb7302daac0f1c72f2850cdb9d02a1ee28feb8476332b16",
+    "data/phase8/b/train.jsonl": "255e94929c776189af7360ea592083ee0b34fc2edfb7cc9c36cba4a38d3e4183",
+    "data/phase8/b/valid.jsonl": "fea6acacf04fadbfadb7302daac0f1c72f2850cdb9d02a1ee28feb8476332b16"
+  },
+  "preflight": {
+    "provisional_sha256": "6e328d27af822a49b844fcf5f1d4723679b1768a31db7ea82727078efcb85d1c",
+    "provisional_collision_count": 1,
+    "collision_four_pillars": "乙亥己卯丙戌戊戌",
+    "resolution": "Before any model inference, regenerated with the original seed and excluded realized Phase 8 training and validation charts, then generated retention with these transfer charts excluded. No outcomes consulted."
+  },
+  "edges": [
+    [
+      "六合",
+      "hidden"
+    ],
+    [
+      "六合",
+      "number"
+    ],
+    [
+      "害",
+      "number"
+    ],
+    [
+      "害",
+      "stage"
+    ],
+    [
+      "破",
+      "stage"
+    ],
+    [
+      "破",
+      "god"
+    ],
+    [
+      "驿马",
+      "god"
+    ],
+    [
+      "驿马",
+      "positions"
+    ],
+    [
+      "桃花",
+      "element"
+    ],
+    [
+      "桃花",
+      "positions"
+    ],
+    [
+      "桃花",
+      "count"
+    ],
+    [
+      "华盖",
+      "main"
+    ]
+  ],
+  "groups_per_edge": 20,
+  "conditions": {
+    "novel": 240,
+    "familiar": 240,
+    "switch": 80,
+    "consumer": 80
+  },
+  "design": "Simple random charts without answer or disagreement filtering. Within each edge, source position and evaluator wording are crossed and balanced. All 12 previously reserved directed edges are present. Novel and familiar have identical gold. Switch changes year/day source on 4 day-stem-dependent edges. Consumer gives the correct branch and omits the source lookup.",
+  "exclusions": "Unique four-pillar tuples across groups. Exclude project Phase 2–6 historical input keys as in Phase 7 plus Phase 7 chart metadata and prompts for all panels and splits. Use project test-year blocks. Gold cross-checked with project rule tables and lunar-python-backed independent lookup.",
+  "primary": "Mean strict accuracy across the twelve edges on condition novel. Each contributes 20 charts.",
+  "scope": "Independent evaluation-agent wording, two hand-authored phrasings per operator. Both use the project's chart header and answer format. All data are synthetic. Reserve families are consumed by this experiment."
+}

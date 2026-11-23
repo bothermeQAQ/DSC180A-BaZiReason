@@ -1,0 +1,44 @@
+{
+  "run_name": "bazireason-phase7-g",
+  "config_file": "configs/phase7/g.yaml",
+  "config_sha256": "130bae29548ffe2da9973fa1d767ef6ee0aac64be2331cab30f259453fb57c83",
+  "init_adapter": "artifacts/adapters/bazireason-qwen3-4b-lora-p6-u8/adapters.safetensors",
+  "init_adapter_sha256": "bf4007c5fce9202c7bce7791fc8ad019fee7b266821d50b81408cc74ba8475a8",
+  "train_file_sha256": "4cbf2bf5b6000e394419583c0bf466369b87d4f7440fa93dbb10d7dde9e7ffbe",
+  "valid_file_sha256": "fea6acacf04fadbfadb7302daac0f1c72f2850cdb9d02a1ee28feb8476332b16",
+  "train_rows": 7904,
+  "valid_rows_for_selection": 64,
+  "train_sequence_tokens_per_epoch": 2994562,
+  "iterations": 3952,
+  "start_iteration": 0,
+  "batch_size": 2,
+  "grad_accumulation_steps": 2,
+  "optimizer_updates": 1976,
+  "trainable_parameters": 14680064,
+  "stored_array_elements": 643356160,
+  "note_parameters": "stored_array_elements counts packed 4-bit arrays, not the 4.02e9 base parameters; trainable_parameters is the exact LoRA size.",
+  "software": {
+    "mlx": "0.32.4",
+    "mlx_lm": "0.32.2"
+  },
+  "duration_seconds": 5332.0,
+  "final_train_loss": 0.0010353012476116419,
+  "validation_loss_by_iteration": {
+    "0": 0.0017911059549078345,
+    "3952": 0.0028442558832466602
+  },
+  "initial_validation_loss": 0.0017911059549078345,
+  "initial_weights": "warm start from init_adapter",
+  "selected_checkpoint_iteration": 3952,
+  "selected_validation_loss": 0.0028442558832466602,
+  "selected_adapter": "artifacts/adapters/bazireason-phase7-g/adapters.safetensors",
+  "selected_adapter_sha256": "790f87c137011c24e4cdf21dfe9dfabc7936612f0b19d23b9092cdae8e6778f9",
+  "peak_memory_gb": 19.883955068,
+  "loss_tokens_total": 1783693,
+  "sequence_tokens_processed": 2994562,
+  "checkpoints": [
+    "0003952_adapters.safetensors"
+  ],
+  "resumed_from_iteration": null,
+  "resume_note": null
+}

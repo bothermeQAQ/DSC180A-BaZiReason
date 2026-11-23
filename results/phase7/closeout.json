@@ -1,0 +1,151 @@
+{
+  "rows": {
+    "u8_diagnostic": 840,
+    "u8_dev": 420,
+    "u8_mix": 280,
+    "u8_retention": 482,
+    "u8_context": 280,
+    "r_dev": 420,
+    "r_mix": 280,
+    "r_retention": 482,
+    "r_context": 280,
+    "g_dev": 420,
+    "g_mix": 280,
+    "g_retention": 482,
+    "g_context": 280,
+    "t_dev": 420,
+    "t_mix": 280,
+    "t_retention": 482,
+    "t_context": 280
+  },
+  "context": {
+    "u8": {
+      "L0": {
+        "n": 56,
+        "right": 4,
+        "wrong_hint": 6
+      },
+      "L1": {
+        "n": 56,
+        "right": 6,
+        "wrong_hint": 8
+      },
+      "L2": {
+        "n": 56,
+        "right": 6,
+        "wrong_hint": 4
+      },
+      "L3": {
+        "n": 56,
+        "right": 7,
+        "wrong_hint": 5
+      },
+      "L3w": {
+        "n": 56,
+        "right": 2,
+        "wrong_hint": 5
+      }
+    },
+    "r": {
+      "L0": {
+        "n": 56,
+        "right": 7,
+        "wrong_hint": 5
+      },
+      "L1": {
+        "n": 56,
+        "right": 7,
+        "wrong_hint": 4
+      },
+      "L2": {
+        "n": 56,
+        "right": 6,
+        "wrong_hint": 5
+      },
+      "L3": {
+        "n": 56,
+        "right": 10,
+        "wrong_hint": 6
+      },
+      "L3w": {
+        "n": 56,
+        "right": 4,
+        "wrong_hint": 9
+      }
+    },
+    "g": {
+      "L0": {
+        "n": 56,
+        "right": 46,
+        "wrong_hint": 2
+      },
+      "L1": {
+        "n": 56,
+        "right": 43,
+        "wrong_hint": 4
+      },
+      "L2": {
+        "n": 56,
+        "right": 22,
+        "wrong_hint": 8
+      },
+      "L3": {
+        "n": 56,
+        "right": 48,
+        "wrong_hint": 2
+      },
+      "L3w": {
+        "n": 56,
+        "right": 43,
+        "wrong_hint": 4
+      }
+    },
+    "t": {
+      "L0": {
+        "n": 56,
+        "right": 42,
+        "wrong_hint": 2
+      },
+      "L1": {
+        "n": 56,
+        "right": 41,
+        "wrong_hint": 3
+      },
+      "L2": {
+        "n": 56,
+        "right": 46,
+        "wrong_hint": 0
+      },
+      "L3": {
+        "n": 56,
+        "right": 44,
+        "wrong_hint": 2
+      },
+      "L3w": {
+        "n": 56,
+        "right": 43,
+        "wrong_hint": 3
+      }
+    }
+  },
+  "trace_on_wrong_primary": {
+    "g": {
+      "misses": 33,
+      "readable": 33,
+      "correct_first_branch": 33
+    },
+    "t": {
+      "misses": 28,
+      "readable": 28,
+      "correct_first_branch": 28
+    }
+  },
+  "format_recoveries_on_primary": {
+    "u8": 0,
+    "r": 0,
+    "g": 0,
+    "t": 0
+  },
+  "replies_verified": 6688,
+  "last_reply_time": "2026-11-21T21:19:27.262184-08:00"
+}
