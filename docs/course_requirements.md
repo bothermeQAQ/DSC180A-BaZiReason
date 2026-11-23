@@ -13,6 +13,32 @@ Verified 2026-11-03 against the live 2026-27 site. Times are interpreted in Amer
 
 Sources: [project](https://dsc-capstone.org/2026-27/assignments/projects/q1/), [syllabus](https://dsc-capstone.org/2026-27/syllabus/#general-rubric), [home](https://dsc-capstone.org/2026-27/), [methodology/template](https://dsc-capstone.org/2026-27/assignments/methodology/05/), [scientific writing](https://dsc-capstone.org/2026-27/lessons/04/), [TA check-in](https://dsc-capstone.org/2026-27/assignments/projects/q1-week5-checkin/).
 
+## Week 8/9 TA check-in and final code (verified 2026-11-22)
+
+**Sources:** the [check-in page](https://dsc-capstone.org/2026-27/assignments/projects/q1-week-9-10-checkin/), the [Q1 project page](https://dsc-capstone.org/2026-27/assignments/projects/q1/), the [Q2 proposal page](https://dsc-capstone.org/2026-27/assignments/projects/q2-proposal/) and [Lesson 3](https://dsc-capstone.org/2026-27/lessons/03/).
+
+**The check-in** is an in-person meeting with the assigned TA between 20 and 26 November, 15–30 minutes, with the whole group. It covers:
+- a dry run of every member's elevator pitch;
+- TA feedback on the structure and reproducibility of the Q1 code. The repository needs a README.md with detailed instructions for running the code "with various targets".
+
+**The Q1 code** is graded by the TA and must be in a public GitHub repository. The README must describe:
+- how to access and store the data;
+- the software dependencies;
+- the commands that reproduce the results.
+
+Lesson 3 asks for a build script, `run.py`, with targets for each major step plus the standard `all`, `test` (all targets on unit-test data) and `clean`. It also asks for configuration files and a `requirements.txt`, and for students to justify their code structure.
+
+**Due Friday, 4 December:** the Q1 project (report and code) and the Q2 proposal. The proposal has three parts:
+- the written proposal, a group submission on the LaTeX template;
+- the 6–7-week schedule, a group submission;
+- the elevator pitch: individual, 1–3 minutes, with the rubric rewarding 2–3 minutes. It is recorded as a YouTube video, with a dry run at the check-in.
+
+**Status in this repository:**
+- [x] `README.md` covers data, dependencies, commands and the build targets.
+- [x] `run.py` has the targets `test`, `data`, `baselines`, `reports`, `all`, `clean` and `demo`.
+- [x] `requirements.txt` and `requirements-lock.txt`, with training configurations in `configs/`.
+- [ ] Public `main` updated to the current branch. Until it is pushed, GitHub shows the 6 November checkpoint.
+
 ## Generative AI and academic integrity
 
 Re-read on 2026-11-03:
