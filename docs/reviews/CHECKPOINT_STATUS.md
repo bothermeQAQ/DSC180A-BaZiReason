@@ -1,4 +1,4 @@
-> **Historical status for commit cf3e829 (audit_v2).** The current suite, report and verification are described in [README.md](README.md); the report hash below refers to the earlier PDF.
+> **Historical status for commit cf3e829 (audit_v2).** The current suite, report and verification are described in [README.md](../../README.md); the report hash below refers to the earlier PDF.
 
 # Audited checkpoint status
 

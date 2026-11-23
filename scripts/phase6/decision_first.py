@@ -42,7 +42,8 @@ def fit_rows(label):
 
 def dev6_rows(label):
     items = {
-        r["id"]: r for r in map(json.loads, open("data/phase6/dev6/calendar.jsonl", encoding="utf-8"))
+        r["id"]: r
+        for r in map(json.loads, open("data/phase6/dev6/calendar.jsonl", encoding="utf-8"))
     }
     path = f"results/phase6/dev6/{label}/calendar_L0.jsonl"
     for r in map(json.loads, open(path, encoding="utf-8")):
@@ -63,7 +64,9 @@ def classify_v3(meta, reply):
             known = "unparsable"
         said_tool = "→ 偏移需工具" in zone
         right = known != "unparsable" and said_tool == (known is None)
-        keys.append(("v3 zone", "conclusion right" if right else "conclusion WRONG", f"expected {expected}"))
+        keys.append(
+            ("v3 zone", "conclusion right" if right else "conclusion WRONG", f"expected {expected}")
+        )
     for x in lines:
         match = V3_WINDOW.search(x)
         if match:
@@ -74,7 +77,13 @@ def classify_v3(meta, reply):
                 inside = None
             said_inside = match[3] != "不在交节窗口内"
             right = inside is not None and said_inside == inside
-            keys.append(("v3 window", "conclusion right" if right else "conclusion WRONG", f"expected {expected}"))
+            keys.append(
+                (
+                    "v3 window",
+                    "conclusion right" if right else "conclusion WRONG",
+                    f"expected {expected}",
+                )
+            )
     return keys
 
 
@@ -96,8 +105,11 @@ def classify(meta, reply):
             known = W.known_offset(inputs["timezone"], parse_wall_time(inputs["datetime"])[1])
         except (KeyError, TypeError, ValueError):
             return ("offset", "input not parsable", f"expected {expected}")
-        return ("offset", "offset KNOWABLE" if known is not None else "offset not knowable",
-                f"expected {expected}")
+        return (
+            "offset",
+            "offset KNOWABLE" if known is not None else "offset not knowable",
+            f"expected {expected}",
+        )
     return None
 
 

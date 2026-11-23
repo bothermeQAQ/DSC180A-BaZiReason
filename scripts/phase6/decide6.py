@@ -55,7 +55,17 @@ HELD = (10,)
 # Preregistration 12.14: UD, built after the chain from its best run with derivation version 3.
 # A candidate like every continuation, never a level of the chain.
 EXTRA = ("p6ud",)
-ORDER = ("p6s1", "p6s2", "p6s3", "p6s2s", "p6u1", "p6u1hi", "p6u2", *CONTINUATIONS, *EXTRA)  # earlier first
+ORDER = (
+    "p6s1",
+    "p6s2",
+    "p6s3",
+    "p6s2s",
+    "p6u1",
+    "p6u1hi",
+    "p6u2",
+    *CONTINUATIONS,
+    *EXTRA,
+)  # earlier first
 DROP_NAMES = {
     "wording": ["wording", "contrast"],
     "evidence and self-check": ["evidence", "verify", "selfcheck", "twins"],
@@ -358,7 +368,10 @@ def ud():
                 "dev6_correct": {lab: M.correct(M.rule_records("dev6", lab)) for lab in [first, *reached]}})  # fmt: skip
         earlier = [e for e in recorded() if e.get("decision") == "ud"]
     entry = earlier[0]
-    print(f"ud {entry['parent']} --steps 3" + (f" --seed-from {entry['twin']}" if entry["twin"] else ""))
+    print(
+        f"ud {entry['parent']} --steps 3"
+        + (f" --seed-from {entry['twin']}" if entry["twin"] else "")
+    )
 
 
 def sealed_extra():

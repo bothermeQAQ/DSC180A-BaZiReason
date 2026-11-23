@@ -791,12 +791,16 @@ def round2_compare_section(lines, summary, split):
     pairs.append(("H9: derivation version 2", "p6u3", "p6u3v"))
     pairs.append(("H9, only the items whose derivation changed", "p6u3", "p6u3v"))
     # Preregistration 12.14: UD against its twin (H12) and, as a description, against its parent.
-    decisions = json.loads((ROOT / "round2.json").read_text()) if (ROOT / "round2.json").exists() else []
+    decisions = (
+        json.loads((ROOT / "round2.json").read_text()) if (ROOT / "round2.json").exists() else []
+    )
     for e in decisions:
         if e.get("decision") == "ud":
             if e["twin"]:
                 pairs.append(("H12: derivation version 3", "p6" + e["twin"], "p6ud"))
-                pairs.append(("H12, only the relations and area-of-life items", "p6" + e["twin"], "p6ud"))
+                pairs.append(
+                    ("H12, only the relations and area-of-life items", "p6" + e["twin"], "p6ud")
+                )
             pairs.append(("Description: UD against its parent", "p6" + e["parent"], "p6ud"))
     rows = []
     for title, a, b in pairs:

@@ -151,7 +151,10 @@ def test_version_3_calendar_answers_decide_as_no_tool_expected():
         offset = W.known_offset(inputs["timezone"], wall)
         assert ("→ 偏移需工具。" in steps[0]) == (offset is None), inputs
         if offset is None:
-            assert expected["reason_codes"] == ["utc_offset_required"] and steps[-1] == W.OFFSET_REFUSAL
+            assert (
+                expected["reason_codes"] == ["utc_offset_required"]
+                and steps[-1] == W.OFFSET_REFUSAL
+            )
             seen.add("offset")
             continue
         reference = wall + timedelta(minutes=480 - offset)

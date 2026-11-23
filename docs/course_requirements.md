@@ -47,7 +47,7 @@ The writing lesson contains a stale Monday November 3 checkpoint reference. The 
 ## Compliance checklist
 
 - [x] PDF title, abstract and introduction, including literature/data.
-- [x] Public repository prepared/published as recorded in CHECKPOINT_STATUS.md.
+- [x] Public repository prepared/published as recorded in docs/reviews/CHECKPOINT_STATUS.md.
 - [x] README with setup, data, experiments, checks and limitations.
 - [x] Source and calendar assumptions documented.
 - [ ] Student verifies exact Gradescope deadline/time and assignment.

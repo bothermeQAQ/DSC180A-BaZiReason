@@ -21,9 +21,7 @@ reports/latex/*.pdf
 # Phase 2 local training artifacts (weights and caches are never committed)
 .venv-mlx/
 models/
-artifacts/adapters/**/*.safetensors
-artifacts/models/
-artifacts/logs/
+artifacts/
 
 # External benchmarks are fetched at a pinned commit, never vendored
 external/
@@ -35,3 +33,6 @@ results/phase5/cache/
 # Phase 6: reply cache, and training sets rebuilt bit for bit by scripts/phase6/build_train6.py --check
 results/phase6/cache/
 data/phase6/train/*/train.jsonl
+
+# Outputs of the build script (python run.py ...); committed results live in results/
+build/

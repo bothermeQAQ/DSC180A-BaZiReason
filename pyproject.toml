@@ -30,6 +30,9 @@ testpaths = ["tests"]
 
 [tool.ruff]
 line-length = 100
+# Phases 7-9 scripts were written under a fixed compute budget and are not yet held to the
+# project's lint rules (README, "Phases 7 to 9"); everything else is checked.
+extend-exclude = ["scripts/phase7", "scripts/phase8", "scripts/phase9"]
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "B"]

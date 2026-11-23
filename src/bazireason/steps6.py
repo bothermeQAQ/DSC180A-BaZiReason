@@ -419,8 +419,12 @@ def interact_v3(pillars: dict) -> tuple:
         + "；".join(groups)
         + f"。三支齐全的：{'、'.join(full) or '没有'}。"
     )
-    lines.append("全部关系（上面记作的，按出现顺序，重复的只记一次）：" + ("、".join(every) or "无") + "。")
-    lines.append("相邻两柱之间的（标“相邻”的比对里记作的）：" + ("、".join(adjacent) or "无") + "。")
+    lines.append(
+        "全部关系（上面记作的，按出现顺序，重复的只记一次）：" + ("、".join(every) or "无") + "。"
+    )
+    lines.append(
+        "相邻两柱之间的（标“相邻”的比对里记作的）：" + ("、".join(adjacent) or "无") + "。"
+    )
     assert set(every) == set(R.chart_relations(pillars)), (pillars, every)
     near_keys = {item["key"] for item in D.positioned_relations(pillars) if item["adjacent"]}
     assert set(adjacent) == near_keys, (pillars, adjacent)

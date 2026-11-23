@@ -77,7 +77,9 @@ def rule_items(out, tok, rng):
 
 
 def request(rng):
-    wall = datetime(rng.randrange(1901, 2100), 1, 1) + timedelta(minutes=rng.randrange(366 * 24 * 60))
+    wall = datetime(rng.randrange(1901, 2100), 1, 1) + timedelta(
+        minutes=rng.randrange(366 * 24 * 60)
+    )
     if rng.random() < 0.15:
         wall = wall.replace(hour=23)
     text = wall.strftime("%Y-%m-%dT%H:%M:%S" if rng.random() < 0.7 else "%Y-%m-%dT%H:%M")
@@ -120,7 +122,10 @@ def calendar(out, tok, rng):
                     c["window_conclusion_wrong"] += ("窗口内，需工具" in s) != inside
         k = cell(out, f"calendar:{status}")
         tail = "\n" + final_line(expected)
-        for version, text in ((2, W.numbered(before["steps"]) + tail), (3, W.numbered(steps) + tail)):
+        for version, text in (
+            (2, W.numbered(before["steps"]) + tail),
+            (3, W.numbered(steps) + tail),
+        ):
             n = length(tok, text)
             k[f"v{version}_max"] = max(k[f"v{version}_max"], n)
             k[f"v{version}_sum"] += n
