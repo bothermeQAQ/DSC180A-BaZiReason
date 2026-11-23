@@ -1,6 +1,7 @@
 # BaZiReason: how reliably can language models reason about Chinese Four Pillars (BaZi)?
 
 **DSC 180A Quarter 1 Project** · Yonghao Wang · Domain D25 (LLM Applications) · Mentor: Professor Jingbo Shang
+
 Quarter 2 working title: *BaZi LLM Application*. Checkpoint report: [reports/checkpoint_report.pdf](reports/checkpoint_report.pdf).
 
 BaZi ("eight characters") turns a birth date and time into four pillars of Chinese calendar symbols, then interprets them with traditional rules. Every chart is an exact function of the birth instant and a declared convention, so a model's answers can be checked by code.
@@ -63,7 +64,7 @@ The build script [`run.py`](run.py) calls the library code in `src/bazireason/` 
 
 Targets can be combined, for example `python run.py data baselines`.
 
-Some steps need the MLX environment `.venv-mlx`: the Phase 2 dataset check, the Phase 5 blind-wording check and the demo. Without that environment, `run.py` skips those steps and says so. Set `MLX_PYTHON` to use another interpreter.
+Some steps need the MLX environment `.venv-mlx`: the Phase 2 dataset checks, the Phase 2 report (it draws loss curves with matplotlib), the Phase 5 blind-wording check and the demo. Without that environment, `run.py` skips those steps and says so. Set `MLX_PYTHON` to use another interpreter.
 
 ## Reproducing the model experiments (Apple Silicon)
 
